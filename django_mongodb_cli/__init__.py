@@ -28,16 +28,20 @@ def clone(pyproject_path, clone_dir):
 
     # Regex to extract the URL from the string
     url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
+    branch_pattern = re.compile(r"@([^@]+)$")
 
     # Clone each repository
     for repo_entry in repos:
-        match = url_pattern.search(repo_entry)
-        if match:
-            repo_url = match.group(0)
+        url_match = url_pattern.search(repo_entry)
+        branch_match = branch_pattern.search(repo_entry)
+
+        if url_match:
+            repo_url = url_match.group(0)
             repo_name = os.path.basename(repo_url)
+            branch = branch_match.group(1) if branch_match else "main"
             clone_path = os.path.join(clone_dir, repo_name)
-            click.echo(f"Cloning {repo_url} into {clone_path}")
-            Repo.clone_from(repo_url, clone_path)
+            click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
+            Repo.clone_from(repo_url, clone_path, branch=branch)
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
 
