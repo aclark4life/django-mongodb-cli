@@ -51,14 +51,34 @@ def clone(pyproject_path, clone_dir):
 
 
 @click.command()
-@click.argument("name", nargs=1)
-def startproject(name):
+@click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
+def startproject(delete):
+    if delete:
+        if os.path.isdir("mongo_project"):
+            shutil.rmtree("mongo_project")
+            print("Removed directory: mongo_project")
+        else:
+            print("Skipping: mongo_project does not exist")
+
+        if os.path.isdir("mongo_migrations"):
+            shutil.rmtree("mongo_migrations")
+            print("Removed directory: mongo_migrations")
+        else:
+            print("Skipping: mongo_migrations does not exist")
+
+        if os.path.isfile("manage.py"):
+            os.remove("manage.py")
+            print("Removed file: manage.py")
+        else:
+            print("Skipping: manage.py does not exist")
+
+        exit()
     click.echo(
         subprocess.run(
             [
                 "django-admin",
                 "startproject",
-                name,
+                "mongo_project",
                 ".",
                 "--template",
                 os.path.join(os.path.join("src", "django-mongodb-project")),
