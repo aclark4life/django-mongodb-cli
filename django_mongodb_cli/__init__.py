@@ -1,12 +1,47 @@
 import click
 import os
+import re
 import shutil
 import subprocess
+import toml
+
+from git import Repo
 
 
-@click.group()
-def cli():
-    pass
+@click.command()
+@click.argument(
+    "pyproject_path", type=click.Path(exists=True), default="pyproject.toml"
+)
+@click.argument("clone_dir", type=click.Path(), default="src")
+def clone(pyproject_path, clone_dir):
+    """Clone repositories listed under [tool.django_mongodb_cli] dev in pyproject.toml."""
+    # Read and parse the pyproject.toml file
+    with open(pyproject_path, "r") as f:
+        pyproject_data = toml.load(f)
+
+    # Get the list of repositories
+    repos = pyproject_data.get("tool", {}).get("django_mongodb_cli", {}).get("dev", [])
+
+    if not repos:
+        click.echo("No repositories found under [tool.django_mongodb_cli] dev")
+        return
+
+    # Regex to extract the URL from the string
+    url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
+
+    # Clone each repository
+    for repo_entry in repos:
+        match = url_pattern.search(repo_entry)
+        if match:
+            repo_url = match.group(0)
+            repo_name = os.path.basename(repo_url)
+            clone_path = os.path.join(clone_dir, repo_name)
+            click.echo(f"Cloning {repo_url} into {clone_path}")
+            Repo.clone_from(repo_url, clone_path)
+        else:
+            click.echo(f"Invalid repository entry: {repo_entry}")
+
+    click.echo("All repositories cloned successfully.")
 
 
 @click.command()
@@ -56,4 +91,10 @@ def test(modules, keyword, list_tests):
     mongodb.terminate()
 
 
+@click.group()
+def cli():
+    pass
+
+
+cli.add_command(clone)
 cli.add_command(test)
