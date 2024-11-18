@@ -13,4 +13,4 @@ dependencies = [
 packages = ["django_mongodb_cli"]
 
 [project.scripts]
-dj-m = "dj_m:cli"
+dj-m = "django_mongodb_cli:cli"
