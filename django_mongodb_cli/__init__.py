@@ -1,8 +1,8 @@
 import click
 import os
-import pip
 import re
 import shutil
+import sys
 import subprocess
 import toml
 
@@ -43,11 +43,28 @@ def clone(pyproject_path, clone_dir):
             clone_path = os.path.join(clone_dir, repo_name)
             click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
             Repo.clone_from(repo_url, clone_path, branch=branch)
-            pip.main(["install", "-e", clone_path])
+            subprocess.run([sys.executable, "-m", "pip", "install", clone_path])
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
 
     click.echo("All repositories cloned successfully.")
+
+
+@click.command()
+@click.argument("name", nargs=1)
+def startproject(name):
+    click.echo(
+        subprocess.run(
+            [
+                "django-admin",
+                "startproject",
+                name,
+                ".",
+                "--template",
+                os.path.join(os.path.join("src", "django-mongodb-project")),
+            ]
+        )
+    )
 
 
 @click.command()
@@ -103,4 +120,5 @@ def cli():
 
 
 cli.add_command(clone)
+cli.add_command(startproject)
 cli.add_command(test)
