@@ -1,5 +1,6 @@
 import click
 import os
+import pip
 import re
 import shutil
 import subprocess
@@ -42,6 +43,7 @@ def clone(pyproject_path, clone_dir):
             clone_path = os.path.join(clone_dir, repo_name)
             click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
             Repo.clone_from(repo_url, clone_path, branch=branch)
+            pip.main(["install", "-e", clone_path])
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
 
