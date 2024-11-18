@@ -22,4 +22,4 @@ dev = [
 ]
 
 [project.scripts]
-dj-m = "django_mongodb_cli:cli"
+mongo-django = "django_mongodb_cli:cli"
