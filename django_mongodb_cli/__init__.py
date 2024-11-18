@@ -52,6 +52,30 @@ def clone(pyproject_path, clone_dir):
 
 @click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
+def startapp(delete):
+    if delete:
+        if os.path.isdir("mongo_app"):
+            shutil.rmtree("mongo_app")
+            print("Removed directory: mongo_app")
+        else:
+            print("Skipping: mongo_app does not exist")
+        exit()
+    click.echo(
+        subprocess.run(
+            [
+                sys.executable,
+                "manage.py",
+                "startapp",
+                "mongo_app",
+                "--template",
+                os.path.join(os.path.join("src", "django-mongodb-app")),
+            ]
+        )
+    )
+
+
+@click.command()
+@click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
 def startproject(delete):
     if delete:
         if os.path.isdir("mongo_project"):
@@ -140,5 +164,6 @@ def cli():
 
 
 cli.add_command(clone)
+cli.add_command(startapp)
 cli.add_command(startproject)
 cli.add_command(test)
