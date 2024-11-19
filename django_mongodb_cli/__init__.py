@@ -66,6 +66,7 @@ def clone(pyproject_path, clone_dir, delete):
 
 @click.command()
 def createsuperuser():
+    """Create a superuser with the username 'admin' and the email from git config."""
     try:
         user_email = subprocess.check_output(
             ["git", "config", "user.email"], text=True
