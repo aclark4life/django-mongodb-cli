@@ -25,7 +25,7 @@ dev = [
     "polls @ git+ssh://git@github.com/aclark4life/polls@main",
     "dj-database-url @ git+ssh://git@github.com/jazzband/dj-database-url@django-mongodb",
     "django-debug-toolbar @ git+ssh://git@github.com/jazzband/django-debug-toolbar@main",
-    "django-debug-toolbar-mongo @ git+ssh://git@github.com/aclark4life/django-debug-toolbar-mongo@main",
+    "django-debug-toolbar-mongo @ git+ssh://git@github.com/aclark4life/django-debug-toolbar-mongo@master",
 ]
 
 [project.scripts]
