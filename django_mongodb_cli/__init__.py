@@ -1,12 +1,11 @@
 import click
+import git
 import os
 import re
 import shutil
 import sys
 import subprocess
 import toml
-
-from git import Repo
 
 
 @click.command()
@@ -42,7 +41,10 @@ def clone(pyproject_path, clone_dir):
             branch = branch_match.group(1) if branch_match else "main"
             clone_path = os.path.join(clone_dir, repo_name)
             click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
-            Repo.clone_from(repo_url, clone_path, branch=branch)
+            try:
+                git.Repo.clone_from(repo_url, clone_path, branch=branch)
+            except git.exc.GitCommandError as e:
+                click.echo(f"Failed to clone repository: {e}")
             pyproject_toml = os.path.join(clone_path, "pyproject.toml")
             if os.path.exists(pyproject_toml):
                 subprocess.run(
