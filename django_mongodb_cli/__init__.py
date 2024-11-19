@@ -13,8 +13,16 @@ import toml
     "pyproject_path", type=click.Path(exists=True), default="pyproject.toml"
 )
 @click.argument("clone_dir", type=click.Path(), default="src")
-def clone(pyproject_path, clone_dir):
+@click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
+def clone(pyproject_path, clone_dir, delete):
     """Clone repositories listed under [tool.django_mongodb_cli] dev in pyproject.toml."""
+    if delete:
+        if os.path.isdir("src"):
+            shutil.rmtree("src")
+            print("Removed directory: src")
+        else:
+            print("Skipping: src does not exist")
+        exit()
     # Read and parse the pyproject.toml file
     with open(pyproject_path, "r") as f:
         pyproject_data = toml.load(f)
