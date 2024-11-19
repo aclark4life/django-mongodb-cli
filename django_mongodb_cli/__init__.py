@@ -188,7 +188,10 @@ def startproject(delete):
 @click.option(
     "-l", "--list-tests", default=False, is_flag=True, help="List available tests"
 )
-def test(modules, keyword, list_tests):
+@click.option(
+    "--dry-run", is_flag=True, help="Perform a dry run without executing tests"
+)
+def test(modules, keyword, list_tests, dry_run):
     """
     Run tests for specified modules with an optional keyword filter.
     """
@@ -219,6 +222,8 @@ def test(modules, keyword, list_tests):
         command.extend(["-k", keyword])
 
     click.echo(f"Running command: {' '.join(command)}")
+    if dry_run:
+        exit()
 
     # Start MongoDB
     mongodb = subprocess.Popen(["mongo-launch", "single"])
