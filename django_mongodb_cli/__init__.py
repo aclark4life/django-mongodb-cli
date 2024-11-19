@@ -67,6 +67,7 @@ def clone(pyproject_path, clone_dir, delete):
 @click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
 def startapp(delete):
+    """Run startapp command with the template from src/django-mongodb-app."""
     if delete:
         if os.path.isdir("mongo_app"):
             shutil.rmtree("mongo_app")
@@ -91,6 +92,7 @@ def startapp(delete):
 @click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
 def startproject(delete):
+    """Run startproject command with the template from src/django-mongodb-project."""
     if delete:
         if os.path.isdir("mongo_project"):
             shutil.rmtree("mongo_project")
