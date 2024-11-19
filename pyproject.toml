@@ -22,7 +22,7 @@ dev = [
     "pymongo @ git+ssh://git@github.com/aclark4life/mongo-python-driver@master",
     "django @ git+ssh://git@github.com/aclark4life/django@mongodb-5.0.x",
     "polls @ git+ssh://git@github.com/aclark4life/polls@main",
-    "dj-database-url @ git@github.com:jazzband/dj-database-url.git@master",
+    "dj-database-url @ git+ssh://git@github.com/jazzband/dj-database-url@master",
 ]
 
 [project.scripts]
