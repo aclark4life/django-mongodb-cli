@@ -130,6 +130,16 @@ def installapp(app_name):
 
 
 @click.command()
+def runserver():
+    # Start MongoDB
+    mongodb = subprocess.Popen(["mongo-launch", "single"])
+
+    subprocess.run([sys.executable, "manage.py", "runserver"])
+
+    mongodb.terminate()
+
+
+@click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
 def startapp(delete):
     """Run startapp command with the template from src/django-mongodb-app."""
@@ -266,6 +276,7 @@ def cli():
 cli.add_command(clone)
 cli.add_command(createsuperuser)
 cli.add_command(installapp)
+cli.add_command(runserver)
 cli.add_command(startapp)
 cli.add_command(startproject)
 cli.add_command(test)
