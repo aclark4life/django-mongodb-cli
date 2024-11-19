@@ -65,6 +65,52 @@ def clone(pyproject_path, clone_dir, delete):
 
 
 @click.command()
+@click.argument(
+    "settings_path",
+    type=click.Path(exists=True),
+    default=os.path.join("mongo_project", "settings.py"),
+)
+@click.argument("app_name", default="mongo_app")
+def installapp(settings_path, app_name):
+    """
+    Add `app_name` to the INSTALLED_APPS list in the Django settings file located at `settings_path`,
+    if it is not already present.
+    """
+    try:
+        with open(settings_path, "r") as file:
+            lines = file.readlines()
+
+        installed_apps_started = False
+        modified = False
+
+        for i, line in enumerate(lines):
+            # Detect the INSTALLED_APPS list
+            if "INSTALLED_APPS" in line and "=" in line:
+                installed_apps_started = True
+
+            # Check if the app is already listed
+            if installed_apps_started and app_name in line:
+                click.echo(f"{app_name} is already installed.")
+                return
+
+            # Add the app at the end of the INSTALLED_APPS list
+            if installed_apps_started and "]" in line:  # End of the list
+                lines.insert(i, f'    "{app_name}",\n')
+                modified = True
+                break
+
+        if modified:
+            with open(settings_path, "w") as file:
+                file.writelines(lines)
+            click.echo(f"Added {app_name} to INSTALLED_APPS in {settings_path}.")
+        else:
+            click.echo(f"Could not find INSTALLED_APPS in {settings_path}.")
+
+    except Exception as e:
+        click.echo(f"Error: {e}")
+
+
+@click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
 def startapp(delete):
     """Run startapp command with the template from src/django-mongodb-app."""
@@ -193,6 +239,7 @@ def cli():
 
 
 cli.add_command(clone)
+cli.add_command(installapp)
 cli.add_command(startapp)
 cli.add_command(startproject)
 cli.add_command(test)
