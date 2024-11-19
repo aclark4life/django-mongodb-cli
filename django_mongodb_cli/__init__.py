@@ -209,6 +209,7 @@ def test(modules, keyword, list_tests):
     command.extend(["--parallel", "1"])
     command.extend(["--verbosity", "3"])
     command.extend(["--debug-sql"])
+    command.extend(["--noinput"])
 
     # Add modules to the command
     command.extend(modules)
