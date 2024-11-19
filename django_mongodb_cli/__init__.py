@@ -75,18 +75,31 @@ def startapp(delete):
         else:
             print("Skipping: mongo_app does not exist")
         exit()
-    click.echo(
-        subprocess.run(
-            [
-                sys.executable,
-                "manage.py",
-                "startapp",
-                "mongo_app",
-                "--template",
-                os.path.join(os.path.join("src", "django-mongodb-app")),
-            ]
+    if os.path.exists("manage.py"):
+        click.echo(
+            subprocess.run(
+                [
+                    sys.executable,
+                    "manage.py",
+                    "startapp",
+                    "mongo_app",
+                    "--template",
+                    os.path.join(os.path.join("src", "django-mongodb-app")),
+                ]
+            )
         )
-    )
+    else:
+        click.echo(
+            subprocess.run(
+                [
+                    "django-admin",
+                    "startapp",
+                    "mongo_app",
+                    "--template",
+                    os.path.join(os.path.join("src", "django-mongodb-app")),
+                ]
+            )
+        )
 
 
 @click.command()
