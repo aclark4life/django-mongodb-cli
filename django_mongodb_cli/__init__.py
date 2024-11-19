@@ -65,17 +65,13 @@ def clone(pyproject_path, clone_dir, delete):
 
 
 @click.command()
-@click.argument(
-    "settings_path",
-    type=click.Path(exists=True),
-    default=os.path.join("mongo_project", "settings.py"),
-)
 @click.argument("app_name", default="mongo_app")
-def installapp(settings_path, app_name):
+def installapp(app_name):
     """
     Add `app_name` to the INSTALLED_APPS list in the Django settings file located at `settings_path`,
     if it is not already present.
     """
+    settings_path = os.path.join("mongo_project", "settings.py")
     try:
         with open(settings_path, "r") as file:
             lines = file.readlines()
