@@ -43,7 +43,11 @@ def clone(pyproject_path, clone_dir):
             clone_path = os.path.join(clone_dir, repo_name)
             click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
             Repo.clone_from(repo_url, clone_path, branch=branch)
-            subprocess.run([sys.executable, "-m", "pip", "install", clone_path])
+            pyproject_toml = os.path.join(clone_path, "pyproject.toml")
+            if os.path.exists(pyproject_toml):
+                subprocess.run(
+                    [sys.executable, "-m", "pip", "install", "-e", clone_path]
+                )
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
 
