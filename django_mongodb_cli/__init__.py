@@ -200,7 +200,7 @@ def test(modules, keyword, list_tests):
         exit()
 
     shutil.copyfile(
-        "src/django-mongodb/.github/workflows/mongodb_settings.py",
+        "mongodb_settings.py",
         "src/django/tests/mongodb_settings.py",
     )
 
