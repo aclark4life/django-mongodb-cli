@@ -65,6 +65,28 @@ def clone(pyproject_path, clone_dir, delete):
 
 
 @click.command()
+def createsuperuser():
+    try:
+        user_email = subprocess.check_output(
+            ["git", "config", "user.email"], text=True
+        ).strip()
+        print(f"User email: {user_email}")
+    except subprocess.CalledProcessError:
+        print("Error: Unable to retrieve the user email from git config.")
+    os.environ["DJANGO_SUPERUSER_PASSWORD"] = "admin"
+    subprocess.run(
+        [
+            sys.executable,
+            "manage.py",
+            "createsuperuser",
+            "--noinput",
+            "--username=admin",
+            f"--email={user_email}",
+        ]
+    )
+
+
+@click.command()
 @click.argument("app_name", default="mongo_app")
 def installapp(app_name):
     """
@@ -241,6 +263,7 @@ def cli():
 
 
 cli.add_command(clone)
+cli.add_command(createsuperuser)
 cli.add_command(installapp)
 cli.add_command(startapp)
 cli.add_command(startproject)
