@@ -15,7 +15,8 @@ import toml
 @click.argument("clone_dir", type=click.Path(), default="src")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
-def clone(pyproject_path, clone_dir, delete, update):
+@click.option("-i", "--install", is_flag=True, help="Install checkouts")
+def clone(pyproject_path, clone_dir, delete, update, install):
     """Clone repositories listed under [tool.django_mongodb_cli] dev in pyproject.toml."""
     if delete:
         if os.path.isdir("src"):
@@ -61,7 +62,7 @@ def clone(pyproject_path, clone_dir, delete, update):
             except git.exc.GitCommandError as e:
                 click.echo(f"Failed to clone repository: {e}")
             pyproject_toml = os.path.join(clone_path, "pyproject.toml")
-            if os.path.exists(pyproject_toml):
+            if os.path.exists(pyproject_toml) and install:
                 subprocess.run(
                     [sys.executable, "-m", "pip", "install", "-e", clone_path]
                 )
