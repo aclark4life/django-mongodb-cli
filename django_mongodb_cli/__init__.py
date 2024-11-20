@@ -14,7 +14,8 @@ import toml
 )
 @click.argument("clone_dir", type=click.Path(), default="src")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
-def clone(pyproject_path, clone_dir, delete):
+@click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
+def clone(pyproject_path, clone_dir, delete, update):
     """Clone repositories listed under [tool.django_mongodb_cli] dev in pyproject.toml."""
     if delete:
         if os.path.isdir("src"):
@@ -48,6 +49,12 @@ def clone(pyproject_path, clone_dir, delete):
             repo_name = os.path.basename(repo_url)
             branch = branch_match.group(1) if branch_match else "main"
             clone_path = os.path.join(clone_dir, repo_name)
+
+            if update:
+                click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
+                subprocess.run(["git", "pull"], cwd=clone_path)
+                continue
+
             click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
             try:
                 git.Repo.clone_from(repo_url, clone_path, branch=branch)
