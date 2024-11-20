@@ -231,11 +231,9 @@ def installurl(url_name):
 
 @click.command()
 def runserver():
-    # Start MongoDB
+    """Start MongoDB and run the Django development server."""
     mongodb = subprocess.Popen(["mongo-launch", "single"])
-
     subprocess.run([sys.executable, "manage.py", "runserver"])
-
     mongodb.terminate()
 
 
