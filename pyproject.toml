@@ -4,10 +4,7 @@ version = "0.1.0"
 dependencies = [
     "GitPython",
     "click",
-    "django>5,<5.1",
-    "django-debug-toolbar",
     "django-extensions",
-    "python-webpack-boilerplate",
     "toml",
 ]
 
