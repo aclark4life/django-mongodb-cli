@@ -17,7 +17,7 @@ dev = [
     "django-mongodb-app @ git+ssh://git@github.com/aclark4life/django-mongodb-app@main",
     "django-mongodb-project @ git+ssh://git@github.com/aclark4life/django-mongodb-project@main",
     "pymongo @ git+ssh://git@github.com/aclark4life/mongo-python-driver@master",
-    "django @ git+ssh://git@github.com/aclark4life/django@mongodb-5.0.x",
+    "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.0.x",
     "home @ git+ssh://git@github.com/aclark4life/home@main",
     "polls @ git+ssh://git@github.com/aclark4life/polls@main",
     "dj-database-url @ git+ssh://git@github.com/jazzband/dj-database-url@django-mongodb",
