@@ -1,3 +1,4 @@
+.idea/
 django_mongodb_cli.egg-info/
 django_mongodb_cli/__pycache__/
 manage.py
