@@ -100,7 +100,7 @@ def createsuperuser():
 
 @click.command()
 @click.argument("app_name", default="mongo_app")
-def installapp(app_name):
+def install(app_name):
     """
     Add `app_name` to the INSTALLED_APPS list in the Django settings file located at `settings_path`,
     if it is not already present.
@@ -140,96 +140,96 @@ def installapp(app_name):
         click.echo(f"Error: {e}")
 
 
-@click.command()
-@click.argument("middleware_name")
-def installmiddleware(middleware_name):
-    """
-    Add `middleware_name` to the MIDDLEWARE list in the Django settings file located at settings_path,
-    """
-    settings_path = os.path.join("backend", "settings.py")
-    try:
-        with open(settings_path, "r") as file:
-            lines = file.readlines()
-
-        installed_middleware_started = False
-        modified = False
-
-        for i, line in enumerate(lines):
-            # Detect the INSTALLED_APPS list
-            if "MIDDLEWARE" in line and "=" in line:
-                installed_middleware_started = True
-
-            # Check if the app is already listed
-            if installed_middleware_started and middleware_name in line:
-                click.echo(f"{middleware_name} is already installed.")
-                return
-
-            # Add the app at the end of the INSTALLED_APPS list
-            if installed_middleware_started and "]" in line:  # End of the list
-                lines.insert(i, f'    "{middleware_name}",\n')
-                modified = True
-                break
-
-        if modified:
-            with open(settings_path, "w") as file:
-                file.writelines(lines)
-            click.echo(f"Added {middleware_name} to MIDDLEWARE in {settings_path}.")
-        else:
-            click.echo(f"Could not find MIDDLEWARE in {settings_path}.")
-
-    except Exception as e:
-        click.echo(f"Error: {e}")
-
-
-@click.command()
-@click.argument("url_name")
-def installurl(url_name):
-    """
-    Add `url_name` to the urlpatterns list in the Django urls file located at urls_path
-    """
-    settings_path = os.path.join("backend", "urls.py")
-    import_statement = "from django.urls import include\n"
-
-    try:
-        with open(settings_path, "r") as file:
-            lines = file.readlines()
-
-        installed_urls_started = False
-        modified = False
-
-        for i, line in enumerate(lines):
-            # Check if the import statement is already in the file
-            if import_statement not in lines:
-                # Find the position to insert (typically after other imports)
-                for idx, line in enumerate(lines):
-                    if line.startswith("from") or line.startswith("import"):
-                        continue
-                    lines.insert(idx, import_statement)
-                    break
-            # Detect the urlpatterns list
-            if "urlpatterns" in line and "=" in line:
-                installed_urls_started = True
-
-            # Check if the app is already listed
-            if installed_urls_started and url_name in line:
-                click.echo(f"{url_name} is already installed.")
-                return
-
-            # Add the app at the end of the urlpatterns list
-            if installed_urls_started and "]" in line:  # End of the list
-                lines.insert(i, f'    path("", include("{url_name}")),\n')
-                modified = True
-                break
-
-        if modified:
-            with open(settings_path, "w") as file:
-                file.writelines(lines)
-            click.echo(f"Added {url_name} to urlpatterns in {settings_path}.")
-        else:
-            click.echo(f"Could not find urlpatterns in {settings_path}.")
-
-    except Exception as e:
-        click.echo(f"Error: {e}")
+# @click.command()
+# @click.argument("middleware_name")
+# def installmiddleware(middleware_name):
+#     """
+#     Add `middleware_name` to the MIDDLEWARE list in the Django settings file located at settings_path,
+#     """
+#     settings_path = os.path.join("backend", "settings.py")
+#     try:
+#         with open(settings_path, "r") as file:
+#             lines = file.readlines()
+#
+#         installed_middleware_started = False
+#         modified = False
+#
+#         for i, line in enumerate(lines):
+#             # Detect the INSTALLED_APPS list
+#             if "MIDDLEWARE" in line and "=" in line:
+#                 installed_middleware_started = True
+#
+#             # Check if the app is already listed
+#             if installed_middleware_started and middleware_name in line:
+#                 click.echo(f"{middleware_name} is already installed.")
+#                 return
+#
+#             # Add the app at the end of the INSTALLED_APPS list
+#             if installed_middleware_started and "]" in line:  # End of the list
+#                 lines.insert(i, f'    "{middleware_name}",\n')
+#                 modified = True
+#                 break
+#
+#         if modified:
+#             with open(settings_path, "w") as file:
+#                 file.writelines(lines)
+#             click.echo(f"Added {middleware_name} to MIDDLEWARE in {settings_path}.")
+#         else:
+#             click.echo(f"Could not find MIDDLEWARE in {settings_path}.")
+#
+#     except Exception as e:
+#         click.echo(f"Error: {e}")
+#
+#
+# @click.command()
+# @click.argument("url_name")
+# def installurl(url_name):
+#     """
+#     Add `url_name` to the urlpatterns list in the Django urls file located at urls_path
+#     """
+#     settings_path = os.path.join("backend", "urls.py")
+#     import_statement = "from django.urls import include\n"
+#
+#     try:
+#         with open(settings_path, "r") as file:
+#             lines = file.readlines()
+#
+#         installed_urls_started = False
+#         modified = False
+#
+#         for i, line in enumerate(lines):
+#             # Check if the import statement is already in the file
+#             if import_statement not in lines:
+#                 # Find the position to insert (typically after other imports)
+#                 for idx, line in enumerate(lines):
+#                     if line.startswith("from") or line.startswith("import"):
+#                         continue
+#                     lines.insert(idx, import_statement)
+#                     break
+#             # Detect the urlpatterns list
+#             if "urlpatterns" in line and "=" in line:
+#                 installed_urls_started = True
+#
+#             # Check if the app is already listed
+#             if installed_urls_started and url_name in line:
+#                 click.echo(f"{url_name} is already installed.")
+#                 return
+#
+#             # Add the app at the end of the urlpatterns list
+#             if installed_urls_started and "]" in line:  # End of the list
+#                 lines.insert(i, f'    path("", include("{url_name}")),\n')
+#                 modified = True
+#                 break
+#
+#         if modified:
+#             with open(settings_path, "w") as file:
+#                 file.writelines(lines)
+#             click.echo(f"Added {url_name} to urlpatterns in {settings_path}.")
+#         else:
+#             click.echo(f"Could not find urlpatterns in {settings_path}.")
+#
+#     except Exception as e:
+#         click.echo(f"Error: {e}")
 
 
 @click.command()
@@ -369,9 +369,7 @@ def cli():
 
 cli.add_command(clone)
 cli.add_command(createsuperuser)
-cli.add_command(installapp)
-cli.add_command(installmiddleware)
-cli.add_command(installurl)
+cli.add_command(install)
 cli.add_command(runserver)
 cli.add_command(startapp)
 cli.add_command(startproject)
