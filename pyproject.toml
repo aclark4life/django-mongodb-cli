@@ -5,6 +5,7 @@ dependencies = [
     "GitPython",
     "click",
     "django-extensions",
+    "django-filter",
     "toml",
 ]
 
