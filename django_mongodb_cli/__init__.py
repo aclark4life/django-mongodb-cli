@@ -105,7 +105,7 @@ def installapp(app_name):
     Add `app_name` to the INSTALLED_APPS list in the Django settings file located at `settings_path`,
     if it is not already present.
     """
-    settings_path = os.path.join("mongo_project", "settings.py")
+    settings_path = os.path.join("backend", "settings.py")
     try:
         with open(settings_path, "r") as file:
             lines = file.readlines()
@@ -146,7 +146,7 @@ def installmiddleware(middleware_name):
     """
     Add `middleware_name` to the MIDDLEWARE list in the Django settings file located at settings_path,
     """
-    settings_path = os.path.join("mongo_project", "settings.py")
+    settings_path = os.path.join("backend", "settings.py")
     try:
         with open(settings_path, "r") as file:
             lines = file.readlines()
@@ -187,7 +187,7 @@ def installurl(url_name):
     """
     Add `url_name` to the urlpatterns list in the Django urls file located at urls_path
     """
-    settings_path = os.path.join("mongo_project", "urls.py")
+    settings_path = os.path.join("backend", "urls.py")
     import_statement = "from django.urls import include\n"
 
     try:
@@ -283,11 +283,11 @@ def startapp(delete):
 def startproject(delete):
     """Run startproject command with the template from src/django-mongodb-project."""
     if delete:
-        if os.path.isdir("mongo_project"):
-            shutil.rmtree("mongo_project")
-            print("Removed directory: mongo_project")
+        if os.path.isdir("backend"):
+            shutil.rmtree("backend")
+            print("Removed directory: backend")
         else:
-            print("Skipping: mongo_project does not exist")
+            print("Skipping: backend does not exist")
 
         if os.path.isdir("mongo_migrations"):
             shutil.rmtree("mongo_migrations")
@@ -307,7 +307,7 @@ def startproject(delete):
             [
                 "django-admin",
                 "startproject",
-                "mongo_project",
+                "backend",
                 ".",
                 "--template",
                 os.path.join(os.path.join("src", "django-mongodb-project")),
