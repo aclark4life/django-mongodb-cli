@@ -17,6 +17,7 @@ packages = ["django_mongodb_cli"]
 dev = [
     "django-mongodb @ git+ssh://git@github.com/aclark4life/django-mongodb@main",
     "django-mongodb-app @ git+ssh://git@github.com/aclark4life/django-mongodb-app@main",
+    "django-mongodb-debug @ git+ssh://git@github.com/aclark4life/django-mongodb-debug@main",
     "django-mongodb-project @ git+ssh://git@github.com/aclark4life/django-mongodb-project@main",
     "pymongo @ git+ssh://git@github.com/aclark4life/mongo-python-driver@master",
     "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.0.x",
