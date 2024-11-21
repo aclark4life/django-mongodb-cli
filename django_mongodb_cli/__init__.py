@@ -141,7 +141,7 @@ def installapp(app_name):
 @click.argument("middleware_name")
 def installmiddleware(middleware_name):
     """
-    Add middleware_name to the MIDDLEWARE list in the Django settings file located at settings_path,
+    Add `middleware_name` to the MIDDLEWARE list in the Django settings file located at settings_path,
     """
     settings_path = os.path.join("mongo_project", "settings.py")
     try:
@@ -182,7 +182,7 @@ def installmiddleware(middleware_name):
 @click.argument("url_name")
 def installurl(url_name):
     """
-    Add url_name to the urlpatterns list in the Django urls file located at urls_path
+    Add `url_name` to the urlpatterns list in the Django urls file located at urls_path
     """
     settings_path = os.path.join("mongo_project", "urls.py")
     import_statement = "from django.urls import include\n"
