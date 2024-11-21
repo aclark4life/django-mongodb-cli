@@ -241,16 +241,9 @@ def runserver():
 
 
 @click.command()
-@click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
-def startapp(delete):
+@click.argument("name")
+def startapp(name):
     """Run startapp command with the template from src/django-mongodb-app."""
-    if delete:
-        if os.path.isdir("mongo_app"):
-            shutil.rmtree("mongo_app")
-            print("Removed directory: mongo_app")
-        else:
-            print("Skipping: mongo_app does not exist")
-        exit()
     if os.path.exists("manage.py"):
         click.echo(
             subprocess.run(
@@ -258,7 +251,7 @@ def startapp(delete):
                     sys.executable,
                     "manage.py",
                     "startapp",
-                    "mongo_app",
+                    name,
                     "--template",
                     os.path.join(os.path.join("src", "django-mongodb-app")),
                 ]
@@ -270,7 +263,7 @@ def startapp(delete):
                 [
                     "django-admin",
                     "startapp",
-                    "mongo_app",
+                    name,
                     "--template",
                     os.path.join(os.path.join("src", "django-mongodb-app")),
                 ]
