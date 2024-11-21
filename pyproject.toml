@@ -6,6 +6,7 @@ dependencies = [
     "click",
     "django-extensions",
     "django-filter",
+    "python-webpack-boilerplate",
     "toml",
 ]
 
