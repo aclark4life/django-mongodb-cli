@@ -1,6 +1,13 @@
 default:
     echo 'Hello, world!'
 
+# ---------------------------------------- django ----------------------------------------
+
+[group('django')]
+django-open:
+    open http://localhost:8000
+alias o := django-open
+
 # ---------------------------------------- python ----------------------------------------
 
 # install python dependencies and activate pre-commit hooks
