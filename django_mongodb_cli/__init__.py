@@ -50,11 +50,16 @@ def clone(pyproject_path, clone_dir, delete, update, install):
             repo_name = os.path.basename(repo_url)
             branch = branch_match.group(1) if branch_match else "main"
             clone_path = os.path.join(clone_dir, repo_name)
+            pyproject_toml = os.path.join(clone_path, "pyproject.toml")
 
             if update:
                 click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
                 subprocess.run(["git", "pull"], cwd=clone_path)
-                continue
+
+            if install and os.path.exists(pyproject_toml):
+                subprocess.run(
+                    [sys.executable, "-m", "pip", "install", "-e", clone_path]
+                )
 
             if not os.path.exists(clone_path):
                 click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
@@ -62,13 +67,9 @@ def clone(pyproject_path, clone_dir, delete, update, install):
                     git.Repo.clone_from(repo_url, clone_path, branch=branch)
                 except git.exc.GitCommandError as e:
                     click.echo(f"Failed to clone repository: {e}")
-                pyproject_toml = os.path.join(clone_path, "pyproject.toml")
-                if os.path.exists(pyproject_toml) and install:
-                    subprocess.run(
-                        [sys.executable, "-m", "pip", "install", "-e", clone_path]
-                    )
             else:
                 click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
+
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
     click.echo("All repositories cloned successfully.")
