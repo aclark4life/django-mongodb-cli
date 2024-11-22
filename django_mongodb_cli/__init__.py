@@ -101,8 +101,9 @@ def createsuperuser():
 @click.command()
 @click.argument("name")
 @click.option("-a", "--app", is_flag=True, help="Install as an app")
-@click.option("-u", "--url", is_flag=True, help="Install as a URL")
-def install(name, app, url):
+@click.option("-u", "--url", is_flag=True, help="Install as a url")
+@click.option("-m", "--middleware", is_flag=True, help="Install as middleware")
+def install(name, app, url, middleware):
     """
     Add `name` to the INSTALLED_APPS list in the Django settings file located at `settings_path`,
     if it is not already present.
@@ -186,50 +187,43 @@ def install(name, app, url):
 
         except Exception as e:
             click.echo(f"Error: {e}")
+    elif middleware:
+        try:
+            with open(settings_path, "r") as file:
+                lines = file.readlines()
+
+            installed_middleware_started = False
+            modified = False
+
+            for i, line in enumerate(lines):
+                # Detect the INSTALLED_APPS list
+                if "MIDDLEWARE" in line and "=" in line:
+                    installed_middleware_started = True
+
+                # Check if the app is already listed
+                if installed_middleware_started and name in line:
+                    click.echo(f"{name} is already installed.")
+                    return
+
+                # Add the app at the end of the INSTALLED_APPS list
+                if installed_middleware_started and "]" in line:  # End of the list
+                    lines.insert(i, f'    "{name}",\n')
+                    modified = True
+                    break
+
+            if modified:
+                with open(settings_path, "w") as file:
+                    file.writelines(lines)
+                click.echo(f"Added {name} to MIDDLEWARE in {settings_path}.")
+            else:
+                click.echo(f"Could not find MIDDLEWARE in {settings_path}.")
+
+        except Exception as e:
+            click.echo(f"Error: {e}")
+
     else:
-        click.echo("Please specify either --app or --url.")
+        click.echo("Please specify either --app or --url or --middleware.")
         exit(1)
-
-
-# @click.command()
-# @click.argument("middleware_name")
-# def installmiddleware(middleware_name):
-#     """
-#     Add `middleware_name` to the MIDDLEWARE list in the Django settings file located at settings_path,
-#     """
-#     settings_path = os.path.join("backend", "settings.py")
-#     try:
-#         with open(settings_path, "r") as file:
-#             lines = file.readlines()
-#
-#         installed_middleware_started = False
-#         modified = False
-#
-#         for i, line in enumerate(lines):
-#             # Detect the INSTALLED_APPS list
-#             if "MIDDLEWARE" in line and "=" in line:
-#                 installed_middleware_started = True
-#
-#             # Check if the app is already listed
-#             if installed_middleware_started and middleware_name in line:
-#                 click.echo(f"{middleware_name} is already installed.")
-#                 return
-#
-#             # Add the app at the end of the INSTALLED_APPS list
-#             if installed_middleware_started and "]" in line:  # End of the list
-#                 lines.insert(i, f'    "{middleware_name}",\n')
-#                 modified = True
-#                 break
-#
-#         if modified:
-#             with open(settings_path, "w") as file:
-#                 file.writelines(lines)
-#             click.echo(f"Added {middleware_name} to MIDDLEWARE in {settings_path}.")
-#         else:
-#             click.echo(f"Could not find MIDDLEWARE in {settings_path}.")
-#
-#     except Exception as e:
-#         click.echo(f"Error: {e}")
 
 
 @click.command()
