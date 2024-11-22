@@ -227,11 +227,19 @@ def install(name, app, url, middleware):
 
 
 @click.command()
-def runserver():
+@click.option(
+    "-l", "--launch-single", is_flag=True, help="Launch a single MongoDB instance"
+)
+def runserver(launch_single):
     """Start MongoDB and run the Django development server."""
-    mongodb = subprocess.Popen(["mongo-launch", "single"])
+
+    if launch_single:
+        mongodb = subprocess.Popen(["mongo-launch", "single"])
+
     subprocess.run([sys.executable, "manage.py", "runserver"])
-    mongodb.terminate()
+
+    if launch_single:
+        mongodb.terminate()
 
 
 @click.command()
