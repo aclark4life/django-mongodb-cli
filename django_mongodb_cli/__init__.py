@@ -228,17 +228,17 @@ def install(name, app, url, middleware):
 
 @click.command()
 @click.option(
-    "-l", "--launch-single", is_flag=True, help="Launch a single MongoDB instance"
+    "-m", "--mongo-single", is_flag=True, help="Launch a single MongoDB instance"
 )
-def runserver(launch_single):
+def runserver(mongo_single):
     """Start MongoDB and run the Django development server."""
 
-    if launch_single:
+    if mongo_single:
         mongodb = subprocess.Popen(["mongo-launch", "single"])
 
     subprocess.run([sys.executable, "manage.py", "runserver"])
 
-    if launch_single:
+    if mongo_single:
         mongodb.terminate()
 
 
@@ -318,9 +318,12 @@ def startproject(delete):
     "-l", "--list-tests", default=False, is_flag=True, help="List available tests"
 )
 @click.option(
+    "-m", "--mongo-single", is_flag=True, help="Launch a single MongoDB instance"
+)
+@click.option(
     "--dry-run", is_flag=True, help="Perform a dry run without executing tests"
 )
-def test(modules, keyword, list_tests, dry_run):
+def test(modules, keyword, list_tests, dry_run, mongo_single):
     """
     Run tests for specified modules with an optional keyword filter.
     """
@@ -354,14 +357,16 @@ def test(modules, keyword, list_tests, dry_run):
     if dry_run:
         exit()
 
-    # Start MongoDB
-    mongodb = subprocess.Popen(["mongo-launch", "single"])
+    if mongo_single:
+        # Start MongoDB
+        mongodb = subprocess.Popen(["mongo-launch", "single"])
 
     # Execute the test command
     subprocess.run(command, stdin=None, stdout=None, stderr=None)
 
-    # Terminate MongoDB
-    mongodb.terminate()
+    if mongo_single:
+        # Terminate MongoDB
+        mongodb.terminate()
 
 
 @click.group()
