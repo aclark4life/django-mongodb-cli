@@ -23,7 +23,6 @@ dev = [
     "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.0.x",
     "home @ git+ssh://git@github.com/aclark4life/home@main",
     "polls @ git+ssh://git@github.com/aclark4life/polls@main",
-    "dj-database-url @ git+ssh://git@github.com/jazzband/dj-database-url@django-mongodb",
     "django-debug-toolbar @ git+ssh://git@github.com/django-commons/django-debug-toolbar@main",
 ]
 
