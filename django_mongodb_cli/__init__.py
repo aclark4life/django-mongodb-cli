@@ -76,7 +76,7 @@ def clone(pyproject_path, clone_dir, delete, pull, install, upstream, fetch):
             else:
                 click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
 
-            if upstream_match:
+            if upstream and upstream_match:
                 remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
                 subprocess.run(
                     ["git", "remote", "add", "upstream", remote], cwd=clone_path
