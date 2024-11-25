@@ -40,7 +40,9 @@ def clone(pyproject_path, clone_dir, delete, pull, install, upstream, fetch):
 
     # Regex to extract the URL from the string
     url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
-    branch_pattern = re.compile(r"@([^@]+)$")
+    branch_pattern = re.compile(
+        r"git\+ssh://git@github\.com/[^/]+/[^@]+@([a-zA-Z0-9_\-\.]+)\b"
+    )
     upstream_pattern = re.compile(r"#\s*upstream:\s*([\w-]+)")
 
     # Clone each repository
