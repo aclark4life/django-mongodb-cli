@@ -14,9 +14,10 @@ import toml
 )
 @click.argument("clone_dir", type=click.Path(), default="src")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
-@click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 @click.option("-i", "--install", is_flag=True, help="Install checkouts")
-def clone(pyproject_path, clone_dir, delete, update, install):
+@click.option("-p", "--pull", is_flag=True, help="Update existing checkouts")
+@click.option("-u", "--upstream", is_flag=True, help="Add upstream remotes")
+def clone(pyproject_path, clone_dir, delete, pull, install, upstream):
     """Clone repositories listed under [tool.django_mongodb_cli] dev in pyproject.toml."""
     if delete:
         if os.path.isdir("src"):
@@ -39,11 +40,13 @@ def clone(pyproject_path, clone_dir, delete, update, install):
     # Regex to extract the URL from the string
     url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
     branch_pattern = re.compile(r"@([^@]+)$")
+    upstream_pattern = re.compile(r"#\s*upstream:\s*([\w-]+)")
 
     # Clone each repository
     for repo_entry in repos:
         url_match = url_pattern.search(repo_entry)
         branch_match = branch_pattern.search(repo_entry)
+        upstream_match = upstream_pattern.search(repo_entry)
 
         if url_match:
             repo_url = url_match.group(0)
@@ -52,7 +55,7 @@ def clone(pyproject_path, clone_dir, delete, update, install):
             clone_path = os.path.join(clone_dir, repo_name)
             pyproject_toml = os.path.join(clone_path, "pyproject.toml")
 
-            if update:
+            if pull:
                 click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
                 subprocess.run(["git", "pull"], cwd=clone_path)
 
@@ -69,6 +72,12 @@ def clone(pyproject_path, clone_dir, delete, update, install):
                     click.echo(f"Failed to clone repository: {e}")
             else:
                 click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
+
+            if upstream_match:
+                remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
+                subprocess.run(
+                    ["git", "remote", "add", "upstream", remote], cwd=clone_path
+                )
 
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
