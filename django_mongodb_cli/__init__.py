@@ -14,10 +14,11 @@ import toml
 )
 @click.argument("clone_dir", type=click.Path(), default="src")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
+@click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
 @click.option("-i", "--install", is_flag=True, help="Install checkouts")
 @click.option("-p", "--pull", is_flag=True, help="Update existing checkouts")
 @click.option("-u", "--upstream", is_flag=True, help="Add upstream remotes")
-def clone(pyproject_path, clone_dir, delete, pull, install, upstream):
+def clone(pyproject_path, clone_dir, delete, pull, install, upstream, fetch):
     """Clone repositories listed under [tool.django_mongodb_cli] dev in pyproject.toml."""
     if delete:
         if os.path.isdir("src"):
@@ -78,6 +79,9 @@ def clone(pyproject_path, clone_dir, delete, pull, install, upstream):
                 subprocess.run(
                     ["git", "remote", "add", "upstream", remote], cwd=clone_path
                 )
+
+            if fetch:
+                subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
 
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
