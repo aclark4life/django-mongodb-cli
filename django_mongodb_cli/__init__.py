@@ -19,7 +19,7 @@ import toml
 @click.option("-p", "--pull", is_flag=True, help="Update existing checkouts")
 @click.option("-u", "--upstream", is_flag=True, help="Add upstream remotes")
 def clone(pyproject_path, clone_dir, delete, pull, install, upstream, fetch):
-    """Clone repositories listed under [tool.django_mongodb_cli] dev in pyproject.toml."""
+    """Clone repositories in `dev` in [tool.django_mongodb_cli] in pyproject.toml."""
     if delete:
         if os.path.isdir("src"):
             shutil.rmtree("src")
@@ -116,11 +116,11 @@ def createsuperuser():
 @click.command()
 @click.argument("name")
 @click.option("-a", "--app", is_flag=True, help="Install as an app")
-@click.option("-u", "--url", is_flag=True, help="Install as a url")
 @click.option("-m", "--middleware", is_flag=True, help="Install as middleware")
+@click.option("-u", "--url", is_flag=True, help="Install as a url")
 def install(name, app, url, middleware):
     """
-    Add `name` to the INSTALLED_APPS list in the Django settings file located at `settings_path`,
+    Add `name` to INSTALLED_APPS or MIDDLEWARE or urlpatterns `,
     if it is not already present.
     """
     settings_path = os.path.join("backend", "settings.py")
