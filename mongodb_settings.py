@@ -5,7 +5,10 @@ import os
 DATABASES = {
     "default": {
         "ENGINE": "django_mongodb",
+        "HOST": "mongodb+srv://cluster0.avf4i.mongodb.net",
         "NAME": "djangotests",
+        "USER": "alexclark",
+        "PASSWORD": "gJ3YJ1WU2cQzDnoh",
     },
     "other": {
         "ENGINE": "django_mongodb",
