@@ -16,9 +16,9 @@ import toml
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
 @click.option("-i", "--install", is_flag=True, help="Install checkouts")
-@click.option("-p", "--pull", is_flag=True, help="Update existing checkouts")
-@click.option("-u", "--upstream", is_flag=True, help="Add upstream remotes")
-def clone(pyproject_path, clone_dir, delete, pull, install, upstream, fetch):
+@click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
+@click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
+def clone(pyproject_path, clone_dir, delete, update, install, remote, fetch):
     """Clone repositories in `dev` in [tool.django_mongodb_cli] in pyproject.toml."""
     if delete:
         if os.path.isdir("src"):
@@ -58,7 +58,7 @@ def clone(pyproject_path, clone_dir, delete, pull, install, upstream, fetch):
             clone_path = os.path.join(clone_dir, repo_name)
             pyproject_toml = os.path.join(clone_path, "pyproject.toml")
 
-            if pull:
+            if update:
                 click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
                 subprocess.run(["git", "pull"], cwd=clone_path)
 
@@ -76,7 +76,7 @@ def clone(pyproject_path, clone_dir, delete, pull, install, upstream, fetch):
             else:
                 click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
 
-            if upstream and upstream_match:
+            if remote and upstream_match:
                 remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
                 subprocess.run(
                     ["git", "remote", "add", "upstream", remote], cwd=clone_path
