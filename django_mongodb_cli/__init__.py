@@ -370,6 +370,7 @@ def startproject(delete):
             ]
         )
     )
+    click.echo(subprocess.run([sys.executable, "manage.py", "webpack_init"]))
 
 
 @click.command()
