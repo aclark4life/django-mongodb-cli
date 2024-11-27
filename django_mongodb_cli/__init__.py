@@ -16,6 +16,7 @@ import toml
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
 @click.option("-i", "--install", is_flag=True, help="Install checkouts")
+@click.option("-l", "--list-checkouts", is_flag=True, help="List checkouts")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 @click.option("-b", "--sphinx-build", is_flag=True, help="Build Sphinx documentation")
@@ -26,6 +27,7 @@ def clone(
     delete,
     update,
     install,
+    list_checkouts,
     remote,
     fetch,
     sphinx_build,
@@ -49,6 +51,10 @@ def clone(
     if not repos:
         click.echo("No repositories found under [tool.django_mongodb_cli] dev")
         return
+
+    if list_checkouts:
+        print("\n".join(repos))
+        exit()
 
     # Regex to extract the URL from the string
     url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
