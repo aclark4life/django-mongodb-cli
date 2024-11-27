@@ -3,6 +3,7 @@ name = "django-mongodb-cli"
 version = "0.1.0"
 dependencies = [
     "GitPython",
+    "Sphinx",
     "click",
     "django-debug-toolbar",
     "django-extensions",

@@ -259,6 +259,17 @@ def runserver(mongo_single):
 
 
 @click.command()
+@click.option("-b", "--build", is_flag=True, help="Build the documentation")
+@click.option("-s", "--serve", is_flag=True, help="Serve the documentation")
+def sphinx(build, serve):
+    """Build and serve the Sphinx documentation."""
+    if build:
+        subprocess.run(["sphinx-build", "-b", "html", "docs", "docs/_build"])
+    if serve:
+        subprocess.run(["sphinx-autobuild", "docs", "docs/_build"])
+
+
+@click.command()
 @click.argument("name")
 def startapp(name):
     """Run startapp command with the template from src/django-mongodb-app."""
@@ -394,6 +405,7 @@ cli.add_command(clone)
 cli.add_command(createsuperuser)
 cli.add_command(install)
 cli.add_command(runserver)
+cli.add_command(sphinx)
 cli.add_command(startapp)
 cli.add_command(startproject)
 cli.add_command(test)
