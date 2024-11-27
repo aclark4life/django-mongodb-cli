@@ -18,7 +18,8 @@ import toml
 @click.option("-i", "--install", is_flag=True, help="Install checkouts")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
-def clone(pyproject_path, clone_dir, delete, update, install, remote, fetch):
+@click.option("-s", "--sphinx", is_flag=True, help="Build Sphinx documentation")
+def clone(pyproject_path, clone_dir, delete, update, install, remote, fetch, sphinx):
     """Clone repositories in `dev` in [tool.django_mongodb_cli] in pyproject.toml."""
     if delete:
         if os.path.isdir("src"):
@@ -86,6 +87,17 @@ def clone(pyproject_path, clone_dir, delete, update, install, remote, fetch):
             if fetch:
                 subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
 
+            if sphinx:
+                try:
+                    sphinx_path = os.path.join(clone_path, "docs", "source")
+                    subprocess.run(
+                        [
+                            "sphinx-build",
+                        ],
+                        cwd=sphinx_path,
+                    )
+                except FileNotFoundError:
+                    click.echo(f"Invalid sphinx path: {sphinx_path}")
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
     click.echo("All repositories cloned successfully.")
@@ -259,17 +271,6 @@ def runserver(mongo_single):
 
 
 @click.command()
-@click.option("-b", "--build", is_flag=True, help="Build the documentation")
-@click.option("-s", "--serve", is_flag=True, help="Serve the documentation")
-def sphinx(build, serve):
-    """Build and serve the Sphinx documentation."""
-    if build:
-        subprocess.run(["sphinx-build", "-b", "html", "docs", "docs/_build"])
-    if serve:
-        subprocess.run(["sphinx-autobuild", "docs", "docs/_build"])
-
-
-@click.command()
 @click.argument("name")
 def startapp(name):
     """Run startapp command with the template from src/django-mongodb-app."""
@@ -405,7 +406,6 @@ cli.add_command(clone)
 cli.add_command(createsuperuser)
 cli.add_command(install)
 cli.add_command(runserver)
-cli.add_command(sphinx)
 cli.add_command(startapp)
 cli.add_command(startproject)
 cli.add_command(test)
