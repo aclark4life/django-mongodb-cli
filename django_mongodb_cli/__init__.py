@@ -71,6 +71,7 @@ def clone(pyproject_path, clone_dir, delete, update, install, remote, fetch):
                 click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
                 try:
                     git.Repo.clone_from(repo_url, clone_path, branch=branch)
+                    subprocess.run(["pre-commit", "install"], cwd=clone_path)
                 except git.exc.GitCommandError as e:
                     click.echo(f"Failed to clone repository: {e}")
             else:
