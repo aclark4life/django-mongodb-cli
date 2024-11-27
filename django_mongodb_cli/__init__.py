@@ -189,16 +189,13 @@ def install(name, app, url, middleware):
             app_modified = False
 
             for i, line in enumerate(lines):
-                # Detect the INSTALLED_APPS list
                 if "INSTALLED_APPS" in line and "=" in line:
                     installed_apps_started = True
 
-                # Check if the app is already listed
                 if installed_apps_started and name in line:
                     click.echo(f"{name} is already installed.")
                     return
 
-                # Add the app at the end of the INSTALLED_APPS list
                 if installed_apps_started and "]" in line:  # End of the list
                     lines.insert(i, f'    "{name}",\n')
                     app_modified = True
@@ -264,16 +261,13 @@ def install(name, app, url, middleware):
             modified = False
 
             for i, line in enumerate(lines):
-                # Detect the INSTALLED_APPS list
                 if "MIDDLEWARE" in line and "=" in line:
                     installed_middleware_started = True
 
-                # Check if the app is already listed
                 if installed_middleware_started and name in line:
                     click.echo(f"{name} is already installed.")
                     return
 
-                # Add the app at the end of the INSTALLED_APPS list
                 if installed_middleware_started and "]" in line:  # End of the list
                     lines.insert(i, f'    "{name}",\n')
                     modified = True
