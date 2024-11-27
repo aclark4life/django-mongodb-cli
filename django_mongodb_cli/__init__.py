@@ -93,6 +93,8 @@ def clone(pyproject_path, clone_dir, delete, update, install, remote, fetch, sph
                     subprocess.run(
                         [
                             "sphinx-build",
+                            ".",
+                            "_build",
                         ],
                         cwd=sphinx_path,
                     )
