@@ -83,6 +83,7 @@ def clone(pyproject_path, clone_dir, delete, update, install, remote, fetch, sph
                 subprocess.run(
                     ["git", "remote", "add", "upstream", remote], cwd=clone_path
                 )
+                subprocess.run(["git", "remote", "-v", "show"], cwd=clone_path)
 
             if fetch:
                 subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
