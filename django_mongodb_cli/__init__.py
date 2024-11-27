@@ -13,12 +13,12 @@ import toml
     "pyproject_path", type=click.Path(exists=True), default="pyproject.toml"
 )
 @click.argument("clone_dir", type=click.Path(), default="src")
-@click.option("-b", "--sphinx-build", is_flag=True, help="Build Sphinx documentation")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
 @click.option("-i", "--install", is_flag=True, help="Install checkouts")
-@click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
+@click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
+@click.option("-b", "--sphinx-build", is_flag=True, help="Build Sphinx documentation")
 @click.option("-s", "--sphinx-serve", is_flag=True, help="Serve Sphinx documentation")
 def clone(
     pyproject_path,
