@@ -137,7 +137,10 @@ def clone(
 
 
 @click.command()
-def createsuperuser():
+@click.option(
+    "-m", "--mongo-single", is_flag=True, help="Launch a single MongoDB instance"
+)
+def createsuperuser(mongo_single):
     """Create a superuser with the username 'admin' and the email from git config."""
     try:
         user_email = subprocess.check_output(
@@ -147,6 +150,8 @@ def createsuperuser():
     except subprocess.CalledProcessError:
         print("Error: Unable to retrieve the user email from git config.")
     os.environ["DJANGO_SUPERUSER_PASSWORD"] = "admin"
+    if mongo_single:
+        mongodb = subprocess.Popen(["mongo-launch", "single"])
     subprocess.run(
         [
             sys.executable,
@@ -157,6 +162,8 @@ def createsuperuser():
             f"--email={user_email}",
         ]
     )
+    if mongo_single:
+        mongodb.terminate()
 
 
 @click.command()

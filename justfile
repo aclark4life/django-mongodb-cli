@@ -12,9 +12,12 @@ django-startproject:
     django-mongodb-cli startproject
     django-mongodb-cli install home -a
     django-mongodb-cli install polls -a
+    django-mongodb-cli install django_extensions -a
     django-mongodb-cli install webpack_boilerplate -a
     django-mongodb-cli startproject -f
     django-mongodb-cli install home.urls -u
+    django-mongodb-cli migrate -m
+    django-mongodb-cli createsuperuser -m
 alias startproject := django-startproject
 
 # ---------------------------------------- python ----------------------------------------
