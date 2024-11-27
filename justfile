@@ -14,6 +14,7 @@ django-startproject:
     django-mongodb-cli install polls -a
     django-mongodb-cli install webpack_boilerplate -a
     django-mongodb-cli install home.urls -u
+alias startproject := django-startproject
 
 # ---------------------------------------- python ----------------------------------------
 

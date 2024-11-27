@@ -346,7 +346,8 @@ def startapp(name):
 
 @click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
-def startproject(delete):
+@click.option("-f", "--frontend", is_flag=True, help="Initialize frontend")
+def startproject(delete, frontend):
     """Run startproject command with the template from src/django-mongodb-project."""
     if delete:
         if os.path.isdir("backend"):
@@ -374,6 +375,13 @@ def startproject(delete):
             print("Skipping: frontend does not exist")
 
         exit()
+
+    if frontend:
+        click.echo(
+            subprocess.run([sys.executable, "manage.py", "webpack_init", "--no-input"])
+        )
+        exit()
+
     click.echo(
         subprocess.run(
             [
@@ -386,7 +394,6 @@ def startproject(delete):
             ]
         )
     )
-    click.echo(subprocess.run([sys.executable, "manage.py", "webpack_init"]))
 
 
 @click.command()
