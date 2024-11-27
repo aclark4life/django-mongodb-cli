@@ -363,6 +363,12 @@ def startproject(delete):
         else:
             print("Skipping: manage.py does not exist")
 
+        if os.path.isdir("frontend"):
+            shutil.rmtree("frontend")
+            print("Removed directory: frontend")
+        else:
+            print("Skipping: frontend does not exist")
+
         exit()
     click.echo(
         subprocess.run(
