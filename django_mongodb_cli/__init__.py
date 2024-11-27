@@ -288,9 +288,16 @@ def install(name, app, url, middleware):
 
 
 @click.command()
-def migrate():
+@click.option(
+    "-m", "--mongo-single", is_flag=True, help="Launch a single MongoDB instance"
+)
+def migrate(mongo_single):
     """Run Django migrations."""
+    if mongo_single:
+        mongodb = subprocess.Popen(["mongo-launch", "single"])
     subprocess.run([sys.executable, "manage.py", "migrate"])
+    if mongo_single:
+        mongodb.terminate()
 
 
 @click.command()
@@ -299,12 +306,9 @@ def migrate():
 )
 def runserver(mongo_single):
     """Start MongoDB and run the Django development server."""
-
     if mongo_single:
         mongodb = subprocess.Popen(["mongo-launch", "single"])
-
     subprocess.run([sys.executable, "manage.py", "runserver"])
-
     if mongo_single:
         mongodb.terminate()
 
