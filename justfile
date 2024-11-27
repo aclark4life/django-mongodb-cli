@@ -8,6 +8,13 @@ django-open:
     open http://localhost:8000
 alias o := django-open
 
+django-startproject:
+    django-mongodb-cli startproject
+    django-mongodb-cli install home -a
+    django-mongodb-cli install polls -a
+    django-mongodb-cli install webpack_boilerplate -a
+    django-mongodb-cli install home.urls -u
+
 # ---------------------------------------- python ----------------------------------------
 
 # install python dependencies and activate pre-commit hooks
