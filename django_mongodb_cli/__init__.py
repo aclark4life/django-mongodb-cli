@@ -161,9 +161,9 @@ def createsuperuser():
 
 @click.command()
 @click.argument("name")
-@click.option("-a", "--app", is_flag=True, help="Install as an app")
-@click.option("-m", "--middleware", is_flag=True, help="Install as middleware")
-@click.option("-u", "--url", is_flag=True, help="Install as a url")
+@click.option("-a", "--app", is_flag=True, help="Install app")
+@click.option("-m", "--middleware", is_flag=True, help="Install middleware")
+@click.option("-u", "--url", is_flag=True, help="Install url")
 def install(name, app, url, middleware):
     """
     Add `name` to INSTALLED_APPS or MIDDLEWARE or urlpatterns `,
