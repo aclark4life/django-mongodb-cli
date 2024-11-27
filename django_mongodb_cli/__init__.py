@@ -13,13 +13,24 @@ import toml
     "pyproject_path", type=click.Path(exists=True), default="pyproject.toml"
 )
 @click.argument("clone_dir", type=click.Path(), default="src")
+@click.option("-b", "--sphinx-build", is_flag=True, help="Build Sphinx documentation")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
 @click.option("-i", "--install", is_flag=True, help="Install checkouts")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
-@click.option("-s", "--sphinx", is_flag=True, help="Build Sphinx documentation")
-def clone(pyproject_path, clone_dir, delete, update, install, remote, fetch, sphinx):
+@click.option("-s", "--sphinx-serve", is_flag=True, help="Serve Sphinx documentation")
+def clone(
+    pyproject_path,
+    clone_dir,
+    delete,
+    update,
+    install,
+    remote,
+    fetch,
+    sphinx_build,
+    sphinx_serve,
+):
     """Clone repositories in `dev` in [tool.django_mongodb_cli] in pyproject.toml."""
     if delete:
         if os.path.isdir("src"):
@@ -88,7 +99,7 @@ def clone(pyproject_path, clone_dir, delete, update, install, remote, fetch, sph
             if fetch:
                 subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
 
-            if sphinx:
+            if sphinx_build:
                 try:
                     sphinx_path = os.path.join(clone_path, "docs", "source")
                     subprocess.run(
@@ -96,6 +107,19 @@ def clone(pyproject_path, clone_dir, delete, update, install, remote, fetch, sph
                             "sphinx-build",
                             ".",
                             "_build",
+                        ],
+                        cwd=sphinx_path,
+                    )
+                except FileNotFoundError:
+                    click.echo(f"Invalid sphinx path: {sphinx_path}")
+            if sphinx_serve:
+                try:
+                    sphinx_path = os.path.join(clone_path, "docs", "source", "_build")
+                    subprocess.run(
+                        [
+                            "python",
+                            "-m",
+                            "http.server",
                         ],
                         cwd=sphinx_path,
                     )
