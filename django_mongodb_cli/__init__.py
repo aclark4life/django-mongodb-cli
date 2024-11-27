@@ -288,6 +288,12 @@ def install(name, app, url, middleware):
 
 
 @click.command()
+def migrate():
+    """Run Django migrations."""
+    subprocess.run([sys.executable, "manage.py", "migrate"])
+
+
+@click.command()
 @click.option(
     "-m", "--mongo-single", is_flag=True, help="Launch a single MongoDB instance"
 )
@@ -439,6 +445,7 @@ def cli():
 cli.add_command(clone)
 cli.add_command(createsuperuser)
 cli.add_command(install)
+cli.add_command(migrate)
 cli.add_command(runserver)
 cli.add_command(startapp)
 cli.add_command(startproject)
