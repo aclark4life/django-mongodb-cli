@@ -9,7 +9,7 @@ django-open:
 alias o := django-open
 
 django-startproject:
-    django-mongodb-cli startproject
+    django-mongodb-cli startproject --ye-olde-django-project
     django-mongodb-cli install home -a
     django-mongodb-cli install polls -a
     django-mongodb-cli install django_extensions -a

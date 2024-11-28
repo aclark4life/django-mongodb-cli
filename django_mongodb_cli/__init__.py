@@ -348,7 +348,10 @@ def startapp(name):
 @click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
 @click.option("-f", "--frontend", is_flag=True, help="Initialize frontend")
-def startproject(delete, frontend):
+@click.option(
+    "-y", "--ye-olde-django-project", is_flag=True, help="Use the ye olde template"
+)
+def startproject(delete, frontend, ye_olde_django_project):
     """Run startproject command with the template from src/django-mongodb-project."""
     if delete:
         if os.path.isdir("backend"):
@@ -383,6 +386,11 @@ def startproject(delete, frontend):
         )
         exit()
 
+    if ye_olde_django_project:
+        template = os.path.join(os.path.join("src", "ye-olde-django-project"))
+    else:
+        template = os.path.join(os.path.join("src", "django-mongodb-project"))
+
     click.echo(
         subprocess.run(
             [
@@ -391,7 +399,7 @@ def startproject(delete, frontend):
                 "backend",
                 ".",
                 "--template",
-                os.path.join(os.path.join("src", "django-mongodb-project")),
+                template,
             ]
         )
     )
