@@ -379,6 +379,12 @@ def startproject(delete, frontend, ye_olde_django_project, wagtail_project):
         else:
             print("Skipping: frontend does not exist")
 
+        if os.path.isdir("apps"):
+            shutil.rmtree("apps")
+            print("Removed directory: apps")
+        else:
+            print("Skipping: apps does not exist")
+
         exit()
 
     if frontend:
