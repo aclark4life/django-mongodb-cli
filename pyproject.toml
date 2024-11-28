@@ -25,6 +25,7 @@ dev = [
     "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.0.x # upstream: mongodb-forks",
     "home @ git+ssh://git@github.com/aclark4life/home@main",
     "polls @ git+ssh://git@github.com/aclark4life/polls@main",
+    "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
     "ye-olde-django-project @ git+ssh://git@github.com/aclark4life/ye-olde-django-project@main",
 ]
 
