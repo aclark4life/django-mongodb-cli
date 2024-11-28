@@ -10,6 +10,7 @@ dependencies = [
     "django-filter",
     "python-webpack-boilerplate",
     "toml",
+    "wagtail",
 ]
 
 [tool.setuptools]
