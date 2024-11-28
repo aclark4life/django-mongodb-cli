@@ -8,6 +8,12 @@ django-open:
     open http://localhost:8000
 alias o := django-open
 
+[group('django')]
+django-serve:
+    django-mongodb-cli runserver -m
+alias s := django-serve
+
+[group('django')]
 django-startproject:
     django-mongodb-cli startproject --delete
     django-mongodb-cli startproject --ye-olde-django-project
