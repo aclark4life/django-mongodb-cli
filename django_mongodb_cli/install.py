@@ -14,7 +14,8 @@ def install(name, app, url, middleware):
     """
 
     if os.environ.get("DJANGO_SETTINGS_MODULE") is None:
-        settings_path = os.path.join("backend", "settings.py")
+        settings_path = os.path.join("backend", "settings.py").replace("/", os.sep)
+        settings_path = f"{settings_path}.py"
     else:
         settings_path = os.environ.get("DJANGO_SETTINGS_MODULE")
     urls_path = os.path.join("backend", "urls.py")
