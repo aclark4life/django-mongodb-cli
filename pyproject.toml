@@ -8,6 +8,7 @@ dependencies = [
     "django-debug-toolbar",
     "django-extensions",
     "django-filter",
+    "dj-database-url",
     "python-webpack-boilerplate",
     "toml",
     "wagtail",
