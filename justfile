@@ -23,6 +23,7 @@ django-startproject:
     django-mongodb-cli install --app django_extensions
     django-mongodb-cli install --app webpack_boilerplate
     django-mongodb-cli install --middleware debug_toolbar.middleware.DebugToolbarMiddleware
+    django-mongodb-cli startui -d
     django-mongodb-cli startui
     django-mongodb-cli migrate -m
     django-mongodb-cli createsuperuser -m
