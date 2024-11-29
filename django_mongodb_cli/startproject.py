@@ -36,28 +36,18 @@ def startproject(delete, wagtail_mongodb, django_mongodb):
         template = os.path.join(os.path.join("src", "wagtail-mongodb-project"))
     elif django_mongodb:
         template = os.path.join(os.path.join("src", "django-mongodb-project"))
-
-    if wagtail_mongodb or django_mongodb:
-        click.echo(
-            subprocess.run(
-                [
-                    "django-admin",
-                    "startproject",
-                    "backend",
-                    ".",
-                    "--template",
-                    template,
-                ]
-            )
-        )
     else:
-        click.echo(
-            subprocess.run(
-                [
-                    "django-admin",
-                    "startproject",
-                    "backend",
-                    ".",
-                ]
-            )
+        template = os.path.join(os.path.join("src", "django-postgresql-project"))
+
+    click.echo(
+        subprocess.run(
+            [
+                "django-admin",
+                "startproject",
+                "backend",
+                ".",
+                "--template",
+                template,
+            ]
         )
+    )

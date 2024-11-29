@@ -9,7 +9,7 @@ from .runtests import runtests
 from .startapp import startapp
 from .startproject import startproject
 from .startui import startui
-from .utils import mongo_launch
+from .utils import mongo_launch, postgres_launch
 
 
 @click.command()
@@ -29,13 +29,27 @@ def migrate(mongo_single):
 @click.option(
     "-m", "--mongo-single", is_flag=True, help="Launch a single MongoDB instance"
 )
-def runserver(mongo_single):
+@click.option(
+    "-p",
+    "--postgresql",
+    is_flag=True,
+    help="Launch a PostgreSQL instance",
+)
+def runserver(mongo_single, postgresql):
     """Start MongoDB and run the Django development server."""
     if mongo_single:
         mongodb = subprocess.Popen(mongo_launch())
+
+    if postgresql:
+        postgres = subprocess.run(postgres_launch())
+
     subprocess.run([sys.executable, "manage.py", "runserver"])
+
     if mongo_single:
         mongodb.terminate()
+
+    if postgresql:
+        postgres.terminate()
 
 
 @click.group()
