@@ -13,11 +13,8 @@ def install(name, app, url, middleware):
     if it is not already present.
     """
 
-    if os.environ.get("DJANGO_SETTINGS_MODULE") is None:
-        settings_path = os.path.join("backend", "settings.py").replace("/", os.sep)
-        settings_path = f"{settings_path}.py"
-    else:
-        settings_path = os.environ.get("DJANGO_SETTINGS_MODULE")
+    settings_path = os.environ.get("DJANGO_SETTINGS_MODULE", "backend.settings")
+    settings_path = settings_path.replace(".", "/") + ".py"
     urls_path = os.path.join("backend", "urls.py")
     import_statement = "from django.urls import include\n"
 
