@@ -347,9 +347,8 @@ def startapp(name):
 
 @click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
-@click.option("-f", "--frontend", is_flag=True, help="Initialize frontend")
 @click.option("-w", "--wagtail-project", is_flag=True, help="Use wagtail template")
-def startproject(delete, frontend, wagtail_project):
+def startproject(delete, wagtail_project):
     """Run startproject command with the template from src/django-mongodb-project."""
     if delete:
         if os.path.isdir("backend"):
@@ -370,24 +369,6 @@ def startproject(delete, frontend, wagtail_project):
         else:
             print("Skipping: manage.py does not exist")
 
-        if os.path.isdir("frontend"):
-            shutil.rmtree("frontend")
-            print("Removed directory: frontend")
-        else:
-            print("Skipping: frontend does not exist")
-
-        if os.path.isdir("apps"):
-            shutil.rmtree("apps")
-            print("Removed directory: apps")
-        else:
-            print("Skipping: apps does not exist")
-
-        exit()
-
-    if frontend:
-        click.echo(
-            subprocess.run([sys.executable, "manage.py", "webpack_init", "--no-input"])
-        )
         exit()
 
     if wagtail_project:
@@ -406,6 +387,23 @@ def startproject(delete, frontend, wagtail_project):
                 template,
             ]
         )
+    )
+
+
+@click.command()
+@click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
+def startui(delete):
+    """Run webpack_init command to create frontend directory."""
+    if delete:
+        if os.path.isdir("frontend"):
+            shutil.rmtree("frontend")
+            print("Removed directory: frontend")
+        else:
+            print("Skipping: frontend does not exist")
+        exit()
+
+    click.echo(
+        subprocess.run([sys.executable, "manage.py", "webpack_init", "--no-input"])
     )
 
 
@@ -479,4 +477,5 @@ cli.add_command(migrate)
 cli.add_command(runserver)
 cli.add_command(startapp)
 cli.add_command(startproject)
+cli.add_command(startui)
 cli.add_command(test)
