@@ -11,6 +11,12 @@ import subprocess
 def startproject(delete, wagtail_mongodb, django_mongodb):
     """Run startproject command with the template from src/django-mongodb-project."""
     if delete:
+        if os.path.isdir("apps"):
+            shutil.rmtree("apps")
+            print("Removed directory: apps")
+        else:
+            print("Skipping: apps does not exist")
+
         if os.path.isdir("backend"):
             shutil.rmtree("backend")
             print("Removed directory: backend")
