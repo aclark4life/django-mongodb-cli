@@ -7,6 +7,7 @@ import subprocess
 from .clone import clone
 from .createsuperuser import createsuperuser
 from .install import install
+from .runtests import runtests
 
 
 @click.command()
@@ -212,7 +213,7 @@ cli.add_command(createsuperuser)
 cli.add_command(install)
 cli.add_command(migrate)
 cli.add_command(runserver)
+cli.add_command(runtests)
 cli.add_command(startapp)
 cli.add_command(startproject)
 cli.add_command(startui)
-cli.add_command(test)
