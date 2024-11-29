@@ -12,7 +12,11 @@ def install(name, app, url, middleware):
     Add `name` to INSTALLED_APPS or MIDDLEWARE or urlpatterns `,
     if it is not already present.
     """
-    settings_path = os.path.join("backend", "settings.py")
+
+    if os.environ.get("DJANGO_SETTINGS_MODULE") is None:
+        settings_path = os.path.join("backend", "settings.py")
+    else:
+        settings_path = os.environ.get("DJANGO_SETTINGS_MODULE")
     urls_path = os.path.join("backend", "urls.py")
     import_statement = "from django.urls import include\n"
 
