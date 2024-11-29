@@ -16,14 +16,14 @@ alias s := django-serve
 [group('django')]
 django-startproject:
     django-mongodb-cli startproject --delete
-    django-mongodb-cli startproject --ye-olde-django-project
+    django-mongodb-cli startproject
     django-mongodb-cli install --app debug_toolbar
     django-mongodb-cli install --app home
     django-mongodb-cli install --app polls
     django-mongodb-cli install --app django_extensions
     django-mongodb-cli install --app webpack_boilerplate
     django-mongodb-cli install --middleware debug_toolbar.middleware.DebugToolbarMiddleware
-    django-mongodb-cli startproject --frontend
+    django-mongodb-cli startui
     django-mongodb-cli migrate -m
     django-mongodb-cli createsuperuser -m
 alias startproject := django-startproject
