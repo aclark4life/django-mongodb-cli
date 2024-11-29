@@ -8,6 +8,7 @@ from .clone import clone
 from .createsuperuser import createsuperuser
 from .install import install
 from .runtests import runtests
+from .startapp import startapp
 
 
 @click.command()
@@ -34,37 +35,6 @@ def runserver(mongo_single):
     subprocess.run([sys.executable, "manage.py", "runserver"])
     if mongo_single:
         mongodb.terminate()
-
-
-@click.command()
-@click.argument("name")
-def startapp(name):
-    """Run startapp command with the template from src/django-mongodb-app."""
-    if os.path.exists("manage.py"):
-        click.echo(
-            subprocess.run(
-                [
-                    sys.executable,
-                    "manage.py",
-                    "startapp",
-                    name,
-                    "--template",
-                    os.path.join(os.path.join("src", "django-mongodb-app")),
-                ]
-            )
-        )
-    else:
-        click.echo(
-            subprocess.run(
-                [
-                    "django-admin",
-                    "startapp",
-                    name,
-                    "--template",
-                    os.path.join(os.path.join("src", "django-mongodb-app")),
-                ]
-            )
-        )
 
 
 @click.command()
