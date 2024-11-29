@@ -2,6 +2,7 @@ import click
 import os
 import shutil
 import subprocess
+from .utils import mongo_launch
 
 
 @click.command()
@@ -52,7 +53,7 @@ def runtests(modules, keyword, list_tests, dry_run, mongo_single):
 
     if mongo_single:
         # Start MongoDB
-        mongodb = subprocess.Popen(["mongo-launch", "single"])
+        mongodb = subprocess.Popen(mongo_launch())
 
     # Execute the test command
     subprocess.run(command, stdin=None, stdout=None, stderr=None)

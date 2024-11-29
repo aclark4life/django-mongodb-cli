@@ -2,6 +2,7 @@ import click
 import os
 import sys
 import subprocess
+from .utils import mongo_launch
 
 
 @click.command()
@@ -19,7 +20,7 @@ def createsuperuser(mongo_single):
         print("Error: Unable to retrieve the user email from git config.")
     os.environ["DJANGO_SUPERUSER_PASSWORD"] = "admin"
     if mongo_single:
-        mongodb = subprocess.Popen(["mongo-launch", "single"])
+        mongodb = subprocess.Popen(mongo_launch())
     subprocess.run(
         [
             sys.executable,

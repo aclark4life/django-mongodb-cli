@@ -9,6 +9,7 @@ from .runtests import runtests
 from .startapp import startapp
 from .startproject import startproject
 from .startui import startui
+from .utils import mongo_launch
 
 
 @click.command()
@@ -18,7 +19,7 @@ from .startui import startui
 def migrate(mongo_single):
     """Run Django migrations."""
     if mongo_single:
-        mongodb = subprocess.Popen(["mongo-launch", "single"])
+        mongodb = subprocess.Popen(mongo_launch())
     subprocess.run([sys.executable, "manage.py", "migrate"])
     if mongo_single:
         mongodb.terminate()
@@ -31,7 +32,7 @@ def migrate(mongo_single):
 def runserver(mongo_single):
     """Start MongoDB and run the Django development server."""
     if mongo_single:
-        mongodb = subprocess.Popen(["mongo-launch", "single"])
+        mongodb = subprocess.Popen(mongo_launch())
     subprocess.run([sys.executable, "manage.py", "runserver"])
     if mongo_single:
         mongodb.terminate()
