@@ -352,7 +352,7 @@ def startapp(name):
 @click.option(
     "-y", "--ye-olde-django-project", is_flag=True, help="Use the ye olde template"
 )
-def startproject(delete, frontend, ye_olde_django_project, wagtail_project):
+def startproject(delete, frontend, wagtail_project):
     """Run startproject command with the template from src/django-mongodb-project."""
     if delete:
         if os.path.isdir("backend"):
@@ -393,9 +393,7 @@ def startproject(delete, frontend, ye_olde_django_project, wagtail_project):
         )
         exit()
 
-    if ye_olde_django_project:
-        template = os.path.join(os.path.join("src", "ye-olde-django-project"))
-    elif wagtail_project:
+    if wagtail_project:
         template = os.path.join(os.path.join("src", "wagtail-mongodb-project"))
     else:
         template = os.path.join(os.path.join("src", "django-mongodb-project"))

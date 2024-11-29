@@ -27,7 +27,6 @@ dev = [
     "home @ git+ssh://git@github.com/aclark4life/home@main",
     "polls @ git+ssh://git@github.com/aclark4life/polls@main",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
-    "ye-olde-django-project @ git+ssh://git@github.com/aclark4life/ye-olde-django-project@main",
 ]
 
 [project.scripts]
