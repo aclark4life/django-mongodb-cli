@@ -400,6 +400,22 @@ def startui(delete):
             print("Removed directory: frontend")
         else:
             print("Skipping: frontend does not exist")
+
+        for frontend_file in [
+            ".babelrc",
+            ".browserslistrc",
+            ".eslintrc",
+            ".nvmrc",
+            ".stylelintrc.json",
+            "package-lock.json",
+            "package.json",
+            "postcss.config.js",
+        ]:
+            if os.path.isfile(frontend_file):
+                os.remove(frontend_file)
+                print(f"Removed file: {frontend_file}")
+            else:
+                print(f"Skipping: {frontend_file} does not exist")
         exit()
 
     click.echo(
