@@ -349,9 +349,6 @@ def startapp(name):
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
 @click.option("-f", "--frontend", is_flag=True, help="Initialize frontend")
 @click.option("-w", "--wagtail-project", is_flag=True, help="Use wagtail template")
-@click.option(
-    "-y", "--ye-olde-django-project", is_flag=True, help="Use the ye olde template"
-)
 def startproject(delete, frontend, wagtail_project):
     """Run startproject command with the template from src/django-mongodb-project."""
     if delete:
