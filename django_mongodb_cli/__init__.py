@@ -69,8 +69,9 @@ def startapp(name):
 
 @click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
-@click.option("-w", "--wagtail-project", is_flag=True, help="Use wagtail template")
-def startproject(delete, wagtail_project):
+@click.option("-wm", "--wagtail-mongodb", is_flag=True, help="Use wagtail template")
+@click.option("-dm", "--django-mongodb", is_flag=True, help="Use wagtail template")
+def startproject(delete, wagtail_mongodb, django_mongodb):
     """Run startproject command with the template from src/django-mongodb-project."""
     if delete:
         if os.path.isdir("backend"):
@@ -93,23 +94,35 @@ def startproject(delete, wagtail_project):
 
         exit()
 
-    if wagtail_project:
+    if wagtail_mongodb:
         template = os.path.join(os.path.join("src", "wagtail-mongodb-project"))
-    else:
+    elif django_mongodb:
         template = os.path.join(os.path.join("src", "django-mongodb-project"))
 
-    click.echo(
-        subprocess.run(
-            [
-                "django-admin",
-                "startproject",
-                "backend",
-                ".",
-                "--template",
-                template,
-            ]
+    if wagtail_mongodb or django_mongodb:
+        click.echo(
+            subprocess.run(
+                [
+                    "django-admin",
+                    "startproject",
+                    "backend",
+                    ".",
+                    "--template",
+                    template,
+                ]
+            )
         )
-    )
+    else:
+        click.echo(
+            subprocess.run(
+                [
+                    "django-admin",
+                    "startproject",
+                    "backend",
+                    ".",
+                ]
+            )
+        )
 
 
 @click.command()
