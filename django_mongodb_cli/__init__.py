@@ -41,7 +41,7 @@ def runserver(mongo_single, postgresql):
         mongodb = subprocess.Popen(mongo_launch())
 
     if postgresql:
-        postgres = subprocess.run(postgres_launch())
+        postgres = subprocess.Popen(postgres_launch())
 
     subprocess.run([sys.executable, "manage.py", "runserver"])
 
