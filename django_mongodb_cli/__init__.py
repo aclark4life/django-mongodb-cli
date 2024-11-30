@@ -16,13 +16,21 @@ from .utils import mongo_launch, postgres_launch
 @click.option(
     "-m", "--mongo-single", is_flag=True, help="Launch a single MongoDB instance"
 )
-def migrate(mongo_single):
+def migrate(mongo_single, postgresql):
     """Run Django migrations."""
     if mongo_single:
         mongodb = subprocess.Popen(mongo_launch())
+
+    if postgresql:
+        postgres = subprocess.Popen(postgres_launch())
+
     subprocess.run([sys.executable, "manage.py", "migrate"])
+
     if mongo_single:
         mongodb.terminate()
+
+    if postgresql:
+        postgres.terminate()
 
 
 @click.command()
