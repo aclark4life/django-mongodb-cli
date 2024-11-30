@@ -27,6 +27,7 @@ def startproject(
         items = {
             "apps": os.path.isdir,
             "backend": os.path.isdir,
+            "db.sqlite3": os.path.isfile,
             "mongo_migrations": os.path.isdir,
             "manage.py": os.path.isfile,
         }
