@@ -44,6 +44,7 @@ def startproject(
 
         exit()
 
+    template = None
     if wagtail_mongodb:
         template = os.path.join(os.path.join("src", "wagtail-mongodb-project"))
     elif wagtail_postgres:
