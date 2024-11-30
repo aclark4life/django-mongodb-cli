@@ -6,9 +6,21 @@ import subprocess
 
 @click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
-@click.option("-wm", "--wagtail-mongodb", is_flag=True, help="Use wagtail template")
-@click.option("-dm", "--django-mongodb", is_flag=True, help="Use wagtail template")
-def startproject(delete, wagtail_mongodb, django_mongodb):
+@click.option(
+    "-wm", "--wagtail-mongodb", is_flag=True, help="Use wagtail mongodb template"
+)
+@click.option(
+    "-wp", "--wagtail-postgres", is_flag=True, help="Use wagtail postgres template"
+)
+@click.option(
+    "-dm", "--django-mongodb", is_flag=True, help="Use django mongodb template"
+)
+@click.option(
+    "-dp", "--django-postgres", is_flag=True, help="Use django postgres template"
+)
+def startproject(
+    delete, wagtail_mongodb, wagtail_postgres, django_mongodb, django_postgres
+):
     """Run startproject command with the template from src/django-mongodb-project."""
 
     if delete:
@@ -34,20 +46,34 @@ def startproject(delete, wagtail_mongodb, django_mongodb):
 
     if wagtail_mongodb:
         template = os.path.join(os.path.join("src", "wagtail-mongodb-project"))
+    elif wagtail_postgres:
+        template = os.path.join(os.path.join("src", "wagtail-postgresql-project"))
     elif django_mongodb:
         template = os.path.join(os.path.join("src", "django-mongodb-project"))
-    else:
+    elif django_postgres:
         template = os.path.join(os.path.join("src", "django-postgresql-project"))
 
-    click.echo(
-        subprocess.run(
-            [
-                "django-admin",
-                "startproject",
-                "backend",
-                ".",
-                "--template",
-                template,
-            ]
+    if template:
+        click.echo(
+            subprocess.run(
+                [
+                    "django-admin",
+                    "startproject",
+                    "backend",
+                    ".",
+                    "--template",
+                    template,
+                ]
+            )
         )
-    )
+    else:
+        click.echo(
+            subprocess.run(
+                [
+                    "django-admin",
+                    "startproject",
+                    "backend",
+                    ".",
+                ]
+            )
+        )
