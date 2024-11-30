@@ -16,6 +16,12 @@ from .utils import mongo_launch, postgres_launch
 @click.option(
     "-m", "--mongo-single", is_flag=True, help="Launch a single MongoDB instance"
 )
+@click.option(
+    "-p",
+    "--postgresql",
+    is_flag=True,
+    help="Launch a PostgreSQL instance",
+)
 def migrate(mongo_single, postgresql):
     """Run Django migrations."""
     if mongo_single:
