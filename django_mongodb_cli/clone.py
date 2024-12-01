@@ -18,6 +18,7 @@ import toml
 @click.option("-i", "--install", is_flag=True, help="Install checkouts")
 @click.option("-l", "--list-checkouts", is_flag=True, help="List checkouts")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
+@click.option("-p", "--pre-commit", is_flag=True, help="Install pre-commit hooks")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 @click.option("-b", "--sphinx-build", is_flag=True, help="Build Sphinx documentation")
 @click.option("-s", "--sphinx-serve", is_flag=True, help="Serve Sphinx documentation")
@@ -30,8 +31,7 @@ def clone(
     list_checkouts,
     remote,
     fetch,
-    sphinx_build,
-    sphinx_serve,
+    pre_commit,
 ):
     """Clone repositories in `dev` in [tool.django_mongodb_cli] in pyproject.toml."""
     if delete:
@@ -89,11 +89,9 @@ def clone(
                 click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
                 try:
                     git.Repo.clone_from(repo_url, clone_path, branch=branch)
-                    subprocess.run(["pre-commit", "install"], cwd=clone_path)
                 except git.exc.GitCommandError:
                     try:
                         git.Repo.clone_from(repo_url, clone_path)
-                        subprocess.run(["pre-commit", "install"], cwd=clone_path)
                     except git.exc.GitCommandError as e:
                         click.echo(f"Failed to clone repository: {e}")
             else:
@@ -109,32 +107,8 @@ def clone(
             if fetch:
                 subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
 
-            if sphinx_build:
-                try:
-                    sphinx_path = os.path.join(clone_path, "docs", "source")
-                    subprocess.run(
-                        [
-                            "sphinx-build",
-                            ".",
-                            "_build",
-                        ],
-                        cwd=sphinx_path,
-                    )
-                except FileNotFoundError:
-                    click.echo(f"Invalid sphinx path: {sphinx_path}")
-            if sphinx_serve:
-                try:
-                    sphinx_path = os.path.join(clone_path, "docs", "source", "_build")
-                    subprocess.run(
-                        [
-                            "python",
-                            "-m",
-                            "http.server",
-                        ],
-                        cwd=sphinx_path,
-                    )
-                except FileNotFoundError:
-                    click.echo(f"Invalid sphinx path: {sphinx_path}")
+            if pre_commit:
+                subprocess.run(["pre-commit", "install"], cwd=clone_path)
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
     click.echo("All repositories cloned successfully.")
