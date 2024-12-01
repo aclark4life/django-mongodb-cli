@@ -90,8 +90,12 @@ def clone(
                 try:
                     git.Repo.clone_from(repo_url, clone_path, branch=branch)
                     subprocess.run(["pre-commit", "install"], cwd=clone_path)
-                except git.exc.GitCommandError as e:
-                    click.echo(f"Failed to clone repository: {e}")
+                except git.exc.GitCommandError:
+                    try:
+                        git.Repo.clone_from(repo_url, clone_path)
+                        subprocess.run(["pre-commit", "install"], cwd=clone_path)
+                    except git.exc.GitCommandError as e:
+                        click.echo(f"Failed to clone repository: {e}")
             else:
                 click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
 
