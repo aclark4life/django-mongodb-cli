@@ -4,7 +4,7 @@ import os
 
 @click.command()
 @click.argument("name")
-@click.option("-a", "--app", is_flag=True, help="Install app")
+@click.option("-a", "--app", is_flag=True, help="Install app", default=True)
 @click.option("-m", "--middleware", is_flag=True, help="Install middleware")
 @click.option("-u", "--url", is_flag=True, help="Install url")
 def install(name, app, url, middleware):
