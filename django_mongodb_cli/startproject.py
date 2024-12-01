@@ -47,10 +47,16 @@ def startproject(
         exit()
 
     template = None
+    django_admin = "django-admin"
+    startproject = "startproject"
     if wagtail_mongodb:
         template = os.path.join(os.path.join("src", "wagtail-mongodb-project"))
+        django_admin = "wagtail"
+        startproject = "start"
     elif wagtail_postgres:
         template = os.path.join(os.path.join("src", "wagtail-postgresql-project"))
+        django_admin = "wagtail"
+        startproject = "start"
     elif django_mongodb:
         template = os.path.join(os.path.join("src", "django-mongodb-project"))
     elif django_postgres:
@@ -60,8 +66,8 @@ def startproject(
         click.echo(
             subprocess.run(
                 [
-                    "django-admin",
-                    "startproject",
+                    django_admin,
+                    startproject,
                     "backend",
                     ".",
                     "--template",
@@ -73,8 +79,8 @@ def startproject(
         click.echo(
             subprocess.run(
                 [
-                    "django-admin",
-                    "startproject",
+                    django_admin,
+                    startproject,
                     "backend",
                     ".",
                 ]
