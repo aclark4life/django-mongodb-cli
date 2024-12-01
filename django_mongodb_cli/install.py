@@ -7,14 +7,16 @@ import os
 @click.option("-a", "--app", is_flag=True, help="Install app", default=True)
 @click.option("-m", "--middleware", is_flag=True, help="Install middleware")
 @click.option("-u", "--url", is_flag=True, help="Install url")
-def install(name, app, url, middleware):
+@click.option("-s", "--settings-path", help="Path to settings file")
+def install(name, app, url, middleware, settings_path):
     """
     Add `name` to INSTALLED_APPS or MIDDLEWARE or urlpatterns `,
     if it is not already present.
     """
 
-    settings_path = os.environ.get("DJANGO_SETTINGS_MODULE", "backend.settings")
-    settings_path = settings_path.replace(".", "/") + ".py"
+    if not settings_path:
+        settings_path = os.path.join("backend", "settings.py")
+
     urls_path = os.path.join("backend", "urls.py")
     import_statement = "from django.urls import include\n"
 
