@@ -25,12 +25,11 @@ def startproject(
 
     if delete:
         items = {
+            "apps": os.path.isdir,
             "backend": os.path.isdir,
             "db.sqlite3": os.path.isfile,
-            "home": os.path.isdir,
             "mongo_migrations": os.path.isdir,
             "manage.py": os.path.isfile,
-            "search": os.path.isdir,
         }
 
         for item, check_function in items.items():
