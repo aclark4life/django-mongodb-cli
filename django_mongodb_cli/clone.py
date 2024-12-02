@@ -20,8 +20,6 @@ import toml
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
 @click.option("-p", "--pre-commit", is_flag=True, help="Install pre-commit hooks")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
-@click.option("-b", "--sphinx-build", is_flag=True, help="Build Sphinx documentation")
-@click.option("-s", "--sphinx-serve", is_flag=True, help="Serve Sphinx documentation")
 def clone(
     pyproject_path,
     clone_dir,
