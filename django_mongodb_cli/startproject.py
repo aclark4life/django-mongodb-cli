@@ -64,12 +64,14 @@ def startproject(
         template = os.path.join(os.path.join("src", "wagtail-postgresql-project"))
         django_admin = "wagtail"
         startproject = "start"
+    elif python_webpack:
+        template = os.path.join(os.path.join("src", "python-webpack-project"))
+        django_admin = "wagtail"
+        startproject = "start"
     elif django_mongodb:
         template = os.path.join(os.path.join("src", "django-mongodb-project"))
     elif django_postgres:
         template = os.path.join(os.path.join("src", "django-postgresql-project"))
-    elif python_webpack:
-        template = os.path.join(os.path.join("src", "python-webpack-project"))
 
     if template:
         click.echo(
