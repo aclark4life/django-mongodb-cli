@@ -33,11 +33,16 @@ def startproject(
 
     if delete:
         items = {
+            ".dockerignore": os.path.isfile,
+            "Dockerfile": os.path.isfile,
             "apps": os.path.isdir,
+            "home": os.path.isdir,
             "backend": os.path.isdir,
             "db.sqlite3": os.path.isfile,
             "mongo_migrations": os.path.isdir,
             "manage.py": os.path.isfile,
+            "requirements.txt": os.path.isfile,
+            "search": os.path.isdir,
         }
 
         for item, check_function in items.items():
