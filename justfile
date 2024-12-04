@@ -15,10 +15,13 @@ alias s := django-serve
 
 [group('django')]
 django-startproject:
+    mongo-orchestration stop
+    mongo-orchestration start
     django-mongodb-cli startproject --delete
     django-mongodb-cli startproject --django-mongodb
     django-mongodb-cli install --app debug_toolbar
     django-mongodb-cli install --app home
+    django-mongodb-cli install --url home.urls
     django-mongodb-cli install --app polls
     django-mongodb-cli install --app django_extensions
     django-mongodb-cli install --middleware debug_toolbar.middleware.DebugToolbarMiddleware
