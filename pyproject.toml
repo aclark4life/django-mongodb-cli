@@ -27,7 +27,7 @@ dev = [
     "django-postgresql-project @ git+ssh://git@github.com/aclark4life/django-postgresql-project@main",
     "pymongo @ git+ssh://git@github.com/aclark4life/mongo-python-driver@master # upstream: mongodb",
     "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.0.x # upstream: mongodb-forks",
-    "home @ git+ssh://git@github.com/aclark4life/home@main",
+    "django-home @ git+ssh://git@github.com/aclark4life/django-home@main",
     "polls @ git+ssh://git@github.com/aclark4life/polls@main",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
     "wagtail-postgresql-project @ git+ssh://git@github.com/aclark4life/wagtail-postgresql-project@main",
