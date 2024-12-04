@@ -8,3 +8,4 @@ mongo_project/
 server.log
 server.pid
 src/
+!django_mongodb_cli/manage.py
