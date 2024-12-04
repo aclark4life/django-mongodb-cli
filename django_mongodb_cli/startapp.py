@@ -22,14 +22,4 @@ def startapp(name):
             )
         )
     else:
-        click.echo(
-            subprocess.run(
-                [
-                    "django-admin",
-                    "startapp",
-                    name,
-                    "--template",
-                    os.path.join(os.path.join("src", "django-mongodb-app")),
-                ]
-            )
-        )
+        exit("Please run this command in the root of your Django project.")
