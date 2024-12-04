@@ -7,12 +7,9 @@ dependencies = [
     "click",
     "django-debug-toolbar",
     "django-extensions",
-    "django-filter",
-    "dj-database-url",
     "psycopg2",
     "python-webpack-boilerplate",
     "toml",
-    "wagtail",
 ]
 
 [tool.setuptools]
