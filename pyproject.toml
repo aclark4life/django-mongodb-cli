@@ -31,6 +31,7 @@ dev = [
     "polls @ git+ssh://git@github.com/aclark4life/polls@main",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
     "wagtail-postgresql-project @ git+ssh://git@github.com/aclark4life/wagtail-postgresql-project@main",
+    "wagtail @ git+ssh://git@github.com/aclark4life/wagtail@main",
 ]
 
 [project.scripts]
