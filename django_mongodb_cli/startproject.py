@@ -70,27 +70,18 @@ def startproject(
     elif django_postgres:
         template = os.path.join(os.path.join("src", "django-postgresql-project"))
 
-    if template:
-        click.echo(
-            subprocess.run(
-                [
-                    django_admin,
-                    startproject,
-                    "backend",
-                    ".",
-                    "--template",
-                    template,
-                ]
-            )
+    if not template:
+        template = os.path.join(os.path.join("project_template"))
+
+    click.echo(
+        subprocess.run(
+            [
+                django_admin,
+                startproject,
+                "backend",
+                ".",
+                "--template",
+                template,
+            ]
         )
-    else:
-        click.echo(
-            subprocess.run(
-                [
-                    django_admin,
-                    startproject,
-                    "backend",
-                    ".",
-                ]
-            )
-        )
+    )
