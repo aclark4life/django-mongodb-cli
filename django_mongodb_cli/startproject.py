@@ -13,9 +13,6 @@ import subprocess
     "-wp", "--wagtail-postgres", is_flag=True, help="Use wagtail postgres template"
 )
 @click.option(
-    "-pw", "--python-webpack", is_flag=True, help="Use python webpack template"
-)
-@click.option(
     "-dm", "--django-mongodb", is_flag=True, help="Use django mongodb template"
 )
 @click.option(
@@ -27,7 +24,6 @@ def startproject(
     wagtail_postgres,
     django_mongodb,
     django_postgres,
-    python_webpack,
 ):
     """Run startproject command with the template from src/django-mongodb-project."""
 
@@ -67,10 +63,6 @@ def startproject(
         startproject = "start"
     elif wagtail_postgres:
         template = os.path.join(os.path.join("src", "wagtail-postgresql-project"))
-        django_admin = "wagtail"
-        startproject = "start"
-    elif python_webpack:
-        template = os.path.join(os.path.join("src", "python-webpack-project"))
         django_admin = "wagtail"
         startproject = "start"
     elif django_mongodb:
