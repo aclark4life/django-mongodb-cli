@@ -21,7 +21,6 @@ django-startproject:
     django-mongodb-cli install --app home
     django-mongodb-cli install --app polls
     django-mongodb-cli install --app django_extensions
-    django-mongodb-cli install --app webpack_boilerplate
     django-mongodb-cli install --middleware debug_toolbar.middleware.DebugToolbarMiddleware
     django-mongodb-cli startui -d
     django-mongodb-cli startui
