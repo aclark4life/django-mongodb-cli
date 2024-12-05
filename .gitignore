@@ -1,6 +1,6 @@
 .idea/
 django_mongodb_cli.egg-info/
-django_mongodb_cli/__pycache__/
+__pycache__
 manage.py
 mongo_app/
 mongo_migrations/
