@@ -18,14 +18,18 @@ import subprocess
 @click.option(
     "-dp", "--django-postgres", is_flag=True, help="Use django postgres template"
 )
+@click.argument("project_name", required=False, default="backend")
 def startproject(
     delete,
     wagtail_mongodb,
     wagtail_postgres,
     django_mongodb,
     django_postgres,
+    project_name,
 ):
     """Run startproject command with the template from src/django-mongodb-project."""
+
+    print(project_name)
 
     if delete:
         items = {
@@ -78,7 +82,7 @@ def startproject(
             [
                 django_admin,
                 startproject,
-                "backend",
+                project_name,
                 ".",
                 "--template",
                 template,
