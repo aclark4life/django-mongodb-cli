@@ -27,10 +27,30 @@ python -m pip install .
 
 ## Usage
 
+### Clone development repositories in pyproject.toml
+
 ```bash
 django-mongodb-cli clone
-django-mongodb-cli clone -i
-django-mongodb-cli startproject --wagtail-mongodb
+```
+
+### Install development dependencies
+
+```bash
+django-mongodb-cli clone --install
+```
+
+### Start a new project
+
+```bash
+django-mongodb-cli startproject --wagtail-mongodb mysite
+```
+
+> [!NOTE]
+> Start MongoDB before running the following commands.
+
+### Run migrations, create superuser, and start server
+
+```bash
 django-mongodb-cli migrate
 django-mongodb-cli createsuperuser
 django-mongodb-cli runserver
