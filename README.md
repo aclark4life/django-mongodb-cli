@@ -27,13 +27,7 @@ python -m pip install .
 
 ## Usage
 
-### Clone development repositories in pyproject.toml
-
-```bash
-django-mongodb-cli clone
-```
-
-### Install development dependencies
+### Clone and install development repositories
 
 ```bash
 django-mongodb-cli clone --install
