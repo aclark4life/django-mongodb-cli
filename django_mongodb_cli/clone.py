@@ -73,6 +73,7 @@ def clone(
             branch = branch_match.group(1) if branch_match else "main"
             clone_path = os.path.join(clone_dir, repo_name)
             pyproject_toml = os.path.join(clone_path, "pyproject.toml")
+            setup_py = os.path.join(clone_path, "setup.py")
 
             if update:
                 click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
@@ -82,6 +83,9 @@ def clone(
                 subprocess.run(
                     [sys.executable, "-m", "pip", "install", "-e", clone_path]
                 )
+
+            if install and os.path.exists(setup_py):
+                subprocess.run([sys.executable, "setup.py", "develop"], cwd=clone_path)
 
             if not os.path.exists(clone_path):
                 click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")

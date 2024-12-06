@@ -9,6 +9,7 @@ dependencies = [
     "django-extensions",
     "psycopg2",
     "python-webpack-boilerplate",
+    "setuptools",
     "toml",
 ]
 
