@@ -58,9 +58,9 @@ wagtail-startproject:
     mongo-orchestration start
     django-mongodb-cli startproject --delete
     django-mongodb-cli startproject --wagtail-mongodb
-    django-mongodb-cli install --app debug_toolbar
-    django-mongodb-cli install --app polls
-    django-mongodb-cli install --app django_extensions
+    django-mongodb-cli install --app debug_toolbar --settings-path backend/settings/base.py
+    django-mongodb-cli install --app polls --settings-path backend/settings/base.py
+    django-mongodb-cli install --app django_extensions --settings-path backend/settings/base.py
     django-mongodb-cli install --middleware debug_toolbar.middleware.DebugToolbarMiddleware
     django-mongodb-cli startui -d
     django-mongodb-cli startui
