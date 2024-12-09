@@ -33,10 +33,10 @@ python -m pip install .
 django-mongodb-cli clone
 ```
 
+### Run tests
+
 > [!NOTE]
 > Requires `MONGODB_URI` environment variable to be set.
-
-### Run tests
 
 ```bash
 django-mongodb-cli runtests
@@ -48,10 +48,10 @@ django-mongodb-cli runtests
 django-mongodb-cli startproject mysite
 ```
 
+### Run migrations, create superuser, and start server
+
 > [!NOTE]
 > Requires `MONGODB_URI` environment variable to be set.
-
-### Run migrations, create superuser, and start server
 
 ```bash
 django-mongodb-cli migrate
