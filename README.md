@@ -33,6 +33,12 @@ python -m pip install .
 django-mongodb-cli clone
 ```
 
+### Run tests
+
+```bash
+django-mongodb-cli runtests
+```
+
 ### Start a new project
 
 ```bash
