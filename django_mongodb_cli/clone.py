@@ -15,7 +15,6 @@ import toml
 @click.argument("clone_dir", type=click.Path(), default="src")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
-@click.option("-i", "--install", is_flag=True, help="Install checkouts")
 @click.option("-l", "--list-checkouts", is_flag=True, help="List checkouts")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
@@ -24,7 +23,6 @@ def clone(
     clone_dir,
     delete,
     update,
-    install,
     list_checkouts,
     remote,
     fetch,
@@ -77,12 +75,12 @@ def clone(
                 click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
                 subprocess.run(["git", "pull"], cwd=clone_path)
 
-            if install and os.path.exists(pyproject_toml):
+            if os.path.exists(pyproject_toml):
                 subprocess.run(
                     [sys.executable, "-m", "pip", "install", "-e", clone_path]
                 )
 
-            if install and os.path.exists(setup_py):
+            if os.path.exists(setup_py):
                 subprocess.run([sys.executable, "setup.py", "develop"], cwd=clone_path)
 
             if not os.path.exists(clone_path):
