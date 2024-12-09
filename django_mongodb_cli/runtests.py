@@ -52,7 +52,7 @@ def runtests(modules, keyword, show_tests, show_command):
         )
         return
 
-    if os.environ.get("DATABASE_URL"):
+    if os.environ.get("MONGODB_URI"):
         subprocess.run(command, stdin=None, stdout=None, stderr=None)
     else:
-        click.echo("Please set the DATABASE_URL environment variable!")
+        click.echo("Please set the MONGODB_URI environment variable!")
