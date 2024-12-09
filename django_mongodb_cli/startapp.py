@@ -1,6 +1,5 @@
 import click
 import os
-import sys
 import subprocess
 
 
@@ -15,7 +14,7 @@ def startapp(name, delete):
             click.echo(subprocess.run(["rm", "-rf", "apps"]))
         else:
             click.echo("No apps directory found.")
-        sys.exit(0)
+        return
 
     if not os.path.exists("apps"):
         os.makedirs("apps")

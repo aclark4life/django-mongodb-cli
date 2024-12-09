@@ -56,7 +56,7 @@ def startproject(
             else:
                 click.echo(f"Skipping: {item} does not exist")
 
-        exit()
+        return
 
     template = None
     django_admin = "django-admin"

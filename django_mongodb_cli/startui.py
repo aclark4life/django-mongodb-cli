@@ -31,7 +31,7 @@ def startui(delete):
                 click.echo(f"Removed file: {frontend_file}")
             else:
                 click.echo(f"Skipping: {frontend_file} does not exist")
-        exit()
+        return
 
     click.echo(
         subprocess.run([sys.executable, "manage.py", "webpack_init", "--no-input"])

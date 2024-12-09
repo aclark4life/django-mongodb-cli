@@ -38,7 +38,7 @@ def clone(
             click.echo("Removed directory: src")
         else:
             click.echo("Skipping: src does not exist")
-        exit()
+        return
     # Read and parse the pyproject.toml file
     with open(pyproject_path, "r") as f:
         pyproject_data = toml.load(f)
@@ -52,7 +52,7 @@ def clone(
 
     if list_checkouts:
         click.echo("\n".join(repos))
-        exit()
+        return
 
     # Regex to extract the URL from the string
     url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")

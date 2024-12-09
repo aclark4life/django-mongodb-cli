@@ -23,7 +23,7 @@ def runtests(modules, keyword, show_tests, show_command):
 
     if not os.path.isdir(os.path.join("src", "django")):
         click.echo("Please run `django-mongodb-cli clone` first!")
-        exit()
+        return
 
     shutil.copyfile(
         "mongodb_settings.py",
@@ -43,14 +43,14 @@ def runtests(modules, keyword, show_tests, show_command):
 
     if show_command:
         click.echo(f"Running command: {' '.join(command)}")
-        exit()
+        return
 
     if show_tests:
         click.echo(subprocess.run(["ls", os.path.join("src", "django", "tests")]))
         click.echo(
             subprocess.run(["ls", os.path.join("src", "django-mongodb", "tests")])
         )
-        exit()
+        return
 
     if os.environ.get("DATABASE_URL"):
         subprocess.run(command, stdin=None, stdout=None, stderr=None)

@@ -125,4 +125,3 @@ def install(name, app, url, middleware, settings_path):
 
     else:
         click.echo("Please specify either --app or --url or --middleware.")
-        exit(1)
