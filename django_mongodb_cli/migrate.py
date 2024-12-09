@@ -1,4 +1,5 @@
 import click
+import os
 import sys
 import subprocess
 
@@ -7,8 +8,12 @@ import subprocess
 @click.option(
     "-mm", "--make-migrations", is_flag=True, help="Run Django makemigrations"
 )
-def migrate(mongo_single, postgresql, make_migrations):
+def migrate(make_migrations):
     """Run Django migrations."""
+
+    if not os.path.exists("manage.py"):
+        click.echo("manage.py not found. Run `django-mongodb-cli startproject`!")
+        return
 
     if make_migrations:
         subprocess.run([sys.executable, "manage.py", "makemigrations"])
