@@ -6,25 +6,13 @@ import subprocess
 
 @click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
-@click.option(
-    "-wm", "--wagtail-mongodb", is_flag=True, help="Use wagtail mongodb template"
-)
-@click.option(
-    "-wp", "--wagtail-postgres", is_flag=True, help="Use wagtail postgres template"
-)
-@click.option(
-    "-dm", "--django-mongodb", is_flag=True, help="Use django mongodb template"
-)
-@click.option(
-    "-dp", "--django-postgres", is_flag=True, help="Use django postgres template"
-)
+@click.option("-w", "--wagtail", is_flag=True, help="Use wagtail mongodb template")
+@click.option("-d", "--django", is_flag=True, help="Use django mongodb template")
 @click.argument("project_name", required=False, default="backend")
 def startproject(
     delete,
-    wagtail_mongodb,
-    wagtail_postgres,
-    django_mongodb,
-    django_postgres,
+    django,
+    wagtail,
     project_name,
 ):
     """Run startproject command with the template from src/django-mongodb-project."""
@@ -61,18 +49,12 @@ def startproject(
     template = None
     django_admin = "django-admin"
     startproject = "startproject"
-    if wagtail_mongodb:
+    if wagtail:
         template = os.path.join(os.path.join("src", "wagtail-mongodb-project"))
         django_admin = "wagtail"
         startproject = "start"
-    elif wagtail_postgres:
-        template = os.path.join(os.path.join("src", "wagtail-postgresql-project"))
-        django_admin = "wagtail"
-        startproject = "start"
-    elif django_mongodb:
+    elif django:
         template = os.path.join(os.path.join("src", "django-mongodb-project"))
-    elif django_postgres:
-        template = os.path.join(os.path.join("src", "django-postgresql-project"))
 
     if not template:
         template = os.path.join(os.path.join("project_template"))
