@@ -18,7 +18,6 @@ import toml
 @click.option("-i", "--install", is_flag=True, help="Install checkouts")
 @click.option("-l", "--list-checkouts", is_flag=True, help="List checkouts")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
-@click.option("-p", "--pre-commit", is_flag=True, help="Install pre-commit hooks")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 def clone(
     pyproject_path,
@@ -29,7 +28,6 @@ def clone(
     list_checkouts,
     remote,
     fetch,
-    pre_commit,
 ):
     """Clone `dev` repositories in `tool.django_mongodb_cli` section of `pyproject.toml`."""
     if delete:
@@ -109,7 +107,7 @@ def clone(
             if fetch:
                 subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
 
-            if pre_commit:
+            if os.path.isfile(os.path.join(clone_path, ".pre-commit-config.yaml")):
                 subprocess.run(["pre-commit", "install"], cwd=clone_path)
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
