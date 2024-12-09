@@ -30,13 +30,13 @@ python -m pip install .
 ### Clone and install development repositories
 
 ```bash
-django-mongodb-cli clone --install
+django-mongodb-cli clone
 ```
 
 ### Start a new project
 
 ```bash
-django-mongodb-cli startproject --wagtail-mongodb mysite
+django-mongodb-cli startproject mysite
 ```
 
 > [!NOTE]
