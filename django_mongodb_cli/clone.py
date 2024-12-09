@@ -25,6 +25,9 @@ def clone(
     remote,
     fetch,
 ):
+    """Clone repositories listed in pyproject.toml."""
+
+    # Delete existing checkouts
     if delete:
         if os.path.isdir("src"):
             shutil.rmtree("src")
@@ -32,17 +35,23 @@ def clone(
         else:
             click.echo("Skipping: src does not exist")
         return
+
+    # Get repositories from pyproject.toml
     with open(pyproject_path, "r") as f:
         pyproject_data = toml.load(f)
     repos = pyproject_data.get("tool", {}).get("django_mongodb_cli", {}).get("dev", [])
     if not repos:
         click.echo("No repositories found under [tool.django_mongodb_cli] dev")
         return
+
+    # Regular expressions to extract repository URL, branch, and upstream
     url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
     branch_pattern = re.compile(
         r"git\+ssh://git@github\.com/[^/]+/[^@]+@([a-zA-Z0-9_\-\.]+)\b"
     )
     upstream_pattern = re.compile(r"#\s*upstream:\s*([\w-]+)")
+
+    # Clone repositories
     for repo_entry in repos:
         url_match = url_pattern.search(repo_entry)
         branch_match = branch_pattern.search(repo_entry)
