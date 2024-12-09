@@ -29,7 +29,7 @@ def startproject(
 ):
     """Run startproject command with the template from src/django-mongodb-project."""
 
-    print(project_name)
+    click.echo(project_name)
 
     if delete:
         items = {
@@ -49,12 +49,12 @@ def startproject(
             if check_function(item):
                 if os.path.isdir(item):
                     shutil.rmtree(item)
-                    print(f"Removed directory: {item}")
+                    click.echo(f"Removed directory: {item}")
                 elif os.path.isfile(item):
                     os.remove(item)
-                    print(f"Removed file: {item}")
+                    click.echo(f"Removed file: {item}")
             else:
-                print(f"Skipping: {item} does not exist")
+                click.echo(f"Skipping: {item} does not exist")
 
         exit()
 

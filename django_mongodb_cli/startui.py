@@ -12,9 +12,9 @@ def startui(delete):
     if delete:
         if os.path.isdir("frontend"):
             shutil.rmtree("frontend")
-            print("Removed directory: frontend")
+            click.echo("Removed directory: frontend")
         else:
-            print("Skipping: frontend does not exist")
+            click.echo("Skipping: frontend does not exist")
 
         for frontend_file in [
             ".babelrc",
@@ -28,9 +28,9 @@ def startui(delete):
         ]:
             if os.path.isfile(frontend_file):
                 os.remove(frontend_file)
-                print(f"Removed file: {frontend_file}")
+                click.echo(f"Removed file: {frontend_file}")
             else:
-                print(f"Skipping: {frontend_file} does not exist")
+                click.echo(f"Skipping: {frontend_file} does not exist")
         exit()
 
     click.echo(

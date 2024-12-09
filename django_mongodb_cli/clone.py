@@ -31,13 +31,13 @@ def clone(
     fetch,
     pre_commit,
 ):
-    """Clone repositories in `dev` in [tool.django_mongodb_cli] in pyproject.toml."""
+    """Clone `dev` repositories in `tool.django_mongodb_cli` section of `pyproject.toml`."""
     if delete:
         if os.path.isdir("src"):
             shutil.rmtree("src")
-            print("Removed directory: src")
+            click.echo("Removed directory: src")
         else:
-            print("Skipping: src does not exist")
+            click.echo("Skipping: src does not exist")
         exit()
     # Read and parse the pyproject.toml file
     with open(pyproject_path, "r") as f:
@@ -51,7 +51,7 @@ def clone(
         return
 
     if list_checkouts:
-        print("\n".join(repos))
+        click.echo("\n".join(repos))
         exit()
 
     # Regex to extract the URL from the string
