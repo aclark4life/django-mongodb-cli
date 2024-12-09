@@ -21,6 +21,10 @@ def runtests(modules, keyword, show_tests, show_command):
     Run tests for specified modules with an optional keyword filter.
     """
 
+    if not os.path.isdir(os.path.join("src", "django")):
+        click.echo("Please run `django-mongodb-cli clone` first!")
+        exit()
+
     shutil.copyfile(
         "mongodb_settings.py",
         os.path.join("src", "django", "tests", "mongodb_settings.py"),
