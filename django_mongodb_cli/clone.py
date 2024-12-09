@@ -75,14 +75,6 @@ def clone(
                 click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
                 subprocess.run(["git", "pull"], cwd=clone_path)
 
-            if os.path.exists(pyproject_toml):
-                subprocess.run(
-                    [sys.executable, "-m", "pip", "install", "-e", clone_path]
-                )
-
-            if os.path.exists(setup_py):
-                subprocess.run([sys.executable, "setup.py", "develop"], cwd=clone_path)
-
             if not os.path.exists(clone_path):
                 click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
                 try:
@@ -94,6 +86,13 @@ def clone(
                         click.echo(f"Failed to clone repository: {e}")
             else:
                 click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
+
+            if os.path.exists(pyproject_toml):
+                subprocess.run(
+                    [sys.executable, "-m", "pip", "install", "-e", clone_path]
+                )
+            if os.path.exists(setup_py):
+                subprocess.run([sys.executable, "setup.py", "develop"], cwd=clone_path)
 
             if remote and upstream_match:
                 remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
