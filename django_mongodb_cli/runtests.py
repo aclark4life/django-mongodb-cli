@@ -32,15 +32,13 @@ def runtests(modules, keyword, show_tests, show_command):
     command.extend(["--verbosity", "3"])
     command.extend(["--debug-sql"])
     command.extend(["--noinput"])
-
     command.extend(modules)
 
     if keyword:
         command.extend(["-k", keyword])
 
-    click.echo(f"Running command: {' '.join(command)}")
-
     if show_command:
+        click.echo(f"Running command: {' '.join(command)}")
         exit()
 
     if show_tests:
@@ -50,4 +48,7 @@ def runtests(modules, keyword, show_tests, show_command):
         )
         exit()
 
-    subprocess.run(command, stdin=None, stdout=None, stderr=None)
+    if os.environ.get("DATABASE_URL"):
+        subprocess.run(command, stdin=None, stdout=None, stderr=None)
+    else:
+        click.echo("Please set the DATABASE_URL environment variable!")
