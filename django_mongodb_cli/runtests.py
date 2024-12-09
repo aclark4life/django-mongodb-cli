@@ -30,7 +30,7 @@ def runtests(modules, keyword, list_tests, dry_run, mongo_single):
 
     shutil.copyfile(
         "mongodb_settings.py",
-        "src/django/tests/mongodb_settings.py",
+        os.path.join("src", "django", "tests", "mongodb_settings.py"),
     )
 
     command = ["src/django/tests/runtests.py"]
