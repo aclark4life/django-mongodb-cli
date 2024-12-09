@@ -15,7 +15,6 @@ import toml
 @click.argument("clone_dir", type=click.Path(), default="src")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
-@click.option("-l", "--list-checkouts", is_flag=True, help="List checkouts")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 def clone(
@@ -23,7 +22,6 @@ def clone(
     clone_dir,
     delete,
     update,
-    list_checkouts,
     remote,
     fetch,
 ):
@@ -44,10 +42,6 @@ def clone(
 
     if not repos:
         click.echo("No repositories found under [tool.django_mongodb_cli] dev")
-        return
-
-    if list_checkouts:
-        click.echo("\n".join(repos))
         return
 
     # Regex to extract the URL from the string
