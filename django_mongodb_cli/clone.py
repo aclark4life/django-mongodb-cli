@@ -64,6 +64,9 @@ def clone(
     remote,
     update,
 ):
+    """
+    Clone repositories in pyproject.toml
+    """
     if delete:
         _delete_repos()
         return
