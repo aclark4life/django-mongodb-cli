@@ -17,13 +17,15 @@ def runtests(modules, keyword, wagtail):
         runtests_py = os.path.join("src", "wagtail", "runtests.py")
         test_settings = [
             "settings.py",
-            os.path.join("src", "wagtail", "wagtail", "test", "settings.py"),
+            os.path.join("src", "wagtail", "wagtail", "test", "mongodb_settings.py"),
+            "wagtail.test.mongodb_settings",
         ]
     else:
         runtests_py = os.path.join("src", "django", "tests", "runtests.py")
         test_settings = [
             "mongodb_settings.py",
             os.path.join("src", "django", "tests", "mongodb_settings.py"),
+            "mongodb_settings",
         ]
 
     shutil.copyfile(
@@ -32,12 +34,13 @@ def runtests(modules, keyword, wagtail):
     )
 
     command = [runtests_py]
-    command.extend(["--settings", "mongodb_settings"])
+    command.extend(["--settings", test_settings[2]])
     command.extend(["--parallel", "1"])
     command.extend(["--verbosity", "3"])
     command.extend(["--debug-sql"])
     command.extend(["--noinput"])
     command.extend(modules)
+    click.echo(f"Running {' '.join(command)}")
 
     if keyword:
         command.extend(["-k", keyword])
