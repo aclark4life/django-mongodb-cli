@@ -42,6 +42,13 @@ def _get_remotes(upstream_match, clone_path, repo_name):
     subprocess.run(["git", "remote", "-v", "show"], cwd=clone_path)
 
 
+def _install_packages(clone_path, pyproject_toml, setup_py):
+    if os.path.exists(pyproject_toml):
+        subprocess.run([sys.executable, "-m", "pip", "install", "-e", clone_path])
+    if os.path.exists(setup_py):
+        subprocess.run([sys.executable, "setup.py", "develop"], cwd=clone_path)
+
+
 @click.command()
 @click.argument(
     "pyproject_path", type=click.Path(exists=True), default="pyproject.toml"
@@ -122,14 +129,7 @@ def clone(
                 subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
 
             if install:
-                if os.path.exists(pyproject_toml):
-                    subprocess.run(
-                        [sys.executable, "-m", "pip", "install", "-e", clone_path]
-                    )
-                if os.path.exists(setup_py):
-                    subprocess.run(
-                        [sys.executable, "setup.py", "develop"], cwd=clone_path
-                    )
+                _install_packages(clone_path, pyproject_toml, setup_py)
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
     click.echo("All repositories cloned successfully.")
