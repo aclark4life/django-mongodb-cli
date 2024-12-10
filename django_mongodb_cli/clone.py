@@ -43,15 +43,19 @@ def _delete_repos():
 @click.argument("clone_dir", type=click.Path(), default="src")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
+@click.option("-h", "--hooks", is_flag=True, help="Install pre-commit hooks")
+@click.option("-i", "--install", is_flag=True, help="Install python packages")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 def clone(
     pyproject_path,
     clone_dir,
     delete,
-    update,
-    remote,
     fetch,
+    hooks,
+    install,
+    remote,
+    update,
 ):
     """Clone repositories listed in pyproject.toml."""
 
@@ -80,7 +84,12 @@ def clone(
             setup_py = os.path.join(clone_path, "setup.py")
 
             # Clone repository
-            if not os.path.exists(clone_path):
+            if (
+                not os.path.exists(clone_path)
+                and not fetch
+                and not install
+                and not hooks
+            ):
                 click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
                 try:
                     git.Repo.clone_from(repo_url, clone_path, branch=branch)
@@ -106,16 +115,20 @@ def clone(
                 subprocess.run(["git", "remote", "-v", "show"], cwd=clone_path)
 
             # Install pre-commit hooks
-            if os.path.isfile(os.path.join(clone_path, ".pre-commit-config.yaml")):
-                subprocess.run(["pre-commit", "install"], cwd=clone_path)
+            if hooks:
+                if os.path.isfile(os.path.join(clone_path, ".pre-commit-config.yaml")):
+                    subprocess.run(["pre-commit", "install"], cwd=clone_path)
 
             # Install package in development mode
-            if os.path.exists(pyproject_toml):
-                subprocess.run(
-                    [sys.executable, "-m", "pip", "install", "-e", clone_path]
-                )
-            if os.path.exists(setup_py):
-                subprocess.run([sys.executable, "setup.py", "develop"], cwd=clone_path)
+            if install:
+                if os.path.exists(pyproject_toml):
+                    subprocess.run(
+                        [sys.executable, "-m", "pip", "install", "-e", clone_path]
+                    )
+                if os.path.exists(setup_py):
+                    subprocess.run(
+                        [sys.executable, "setup.py", "develop"], cwd=clone_path
+                    )
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
     click.echo("All repositories cloned successfully.")
