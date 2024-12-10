@@ -8,3 +8,4 @@ INSTALLED_APPS = [
     "django_extensions",
     "webpack_boilerplate",
 ]
+ROOT_URLCONF = "{{ project_name }}.urls"
