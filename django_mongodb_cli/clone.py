@@ -15,7 +15,14 @@ def _get_repos(pyproject_path):
     with open(pyproject_path, "r") as f:
         pyproject_data = toml.load(f)
     repos = pyproject_data.get("tool", {}).get("django_mongodb_cli", {}).get("dev", [])
-    return repos
+
+    url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
+    branch_pattern = re.compile(
+        r"git\+ssh://git@github\.com/[^/]+/[^@]+@([a-zA-Z0-9_\-\.]+)\b"
+    )
+    upstream_pattern = re.compile(r"#\s*upstream:\s*([\w-]+)")
+
+    return repos, url_pattern, branch_pattern, upstream_pattern
 
 
 def _delete_repos():
@@ -54,17 +61,10 @@ def clone(
         return
 
     # Clone repositories
-    repos = _get_repos(pyproject_path)
+    repos, url_pattern, branch_pattern, upstream_pattern = _get_repos(pyproject_path)
     if not repos:
         click.echo("No repositories found under [tool.django_mongodb_cli] dev")
         return
-
-    # Regular expressions to extract repository URL, branch, and upstream
-    url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
-    branch_pattern = re.compile(
-        r"git\+ssh://git@github\.com/[^/]+/[^@]+@([a-zA-Z0-9_\-\.]+)\b"
-    )
-    upstream_pattern = re.compile(r"#\s*upstream:\s*([\w-]+)")
 
     # Clone repositories
     for repo_entry in repos:
