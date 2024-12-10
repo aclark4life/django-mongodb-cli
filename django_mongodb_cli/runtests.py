@@ -7,21 +7,31 @@ import subprocess
 @click.command()
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
-def runtests(modules, keyword, show_tests, show_command):
+@click.option("-w", "--wagtail", help="Run Wagtail tests", is_flag=True)
+def runtests(modules, keyword, wagtail):
     """
-    Run tests for specified modules with an optional keyword filter.
+    Run `runtests.py`
     """
 
-    if not os.path.isdir(os.path.join("src", "django")):
-        click.echo("Please run `django-mongodb-cli clone` first!")
-        return
+    if wagtail:
+        runtests_py = os.path.join("src", "wagtail", "runtests.py")
+        test_settings = [
+            "settings.py",
+            os.path.join("src", "wagtail", "wagtail", "test", "settings.py"),
+        ]
+    else:
+        runtests_py = os.path.join("src", "django", "tests", "runtests.py")
+        test_settings = [
+            "mongodb_settings.py",
+            os.path.join("src", "django", "tests", "mongodb_settings.py"),
+        ]
 
     shutil.copyfile(
-        "mongodb_settings.py",
-        os.path.join("src", "django", "tests", "mongodb_settings.py"),
+        test_settings[0],
+        test_settings[1],
     )
 
-    command = ["src/django/tests/runtests.py"]
+    command = [runtests_py]
     command.extend(["--settings", "mongodb_settings"])
     command.extend(["--parallel", "1"])
     command.extend(["--verbosity", "3"])
