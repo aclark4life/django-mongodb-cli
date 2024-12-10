@@ -5,6 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 DATABASES = {"default": django_mongodb.parse_uri(os.environ.get("MONGODB_URI"))}
 DEBUG = True
 INSTALLED_APPS = [
+    "{{ project_name }}.apps.MongoAuthConfig",
     "django_extensions",
     "webpack_boilerplate",
 ]
