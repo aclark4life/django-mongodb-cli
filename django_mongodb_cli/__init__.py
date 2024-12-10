@@ -3,7 +3,7 @@ import click
 from .clone import clone
 from .createsuperuser import createsuperuser
 from .install import install
-
+from .manage import manage
 from .migrate import migrate
 from .runserver import runserver
 from .runtests import runtests
@@ -20,6 +20,7 @@ def cli():
 cli.add_command(clone)
 cli.add_command(createsuperuser)
 cli.add_command(install)
+cli.add_command(manage)
 cli.add_command(migrate)
 cli.add_command(runserver)
 cli.add_command(runtests)
