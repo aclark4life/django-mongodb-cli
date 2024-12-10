@@ -2,7 +2,8 @@ import click
 import subprocess
 
 
-@click.command()
-def manage():
+@click.command(context_settings={"ignore_unknown_options": True})
+@click.argument("args", nargs=-1)
+def manage(args):
     """Run management commands."""
-    subprocess.run(["python", "manage.py"])
+    subprocess.run(["python", "manage.py", *args])
