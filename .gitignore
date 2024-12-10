@@ -11,3 +11,4 @@ server.pid
 src/
 !django_mongodb_cli/manage.py
 !project_template/manage.py
+!project_template/mongo_migrations/
