@@ -1,5 +1,7 @@
 import os
 
+import django_mongodb
+
 from django.contrib.messages import constants as message_constants
 from django.utils.translation import gettext_lazy as _
 
@@ -33,6 +35,10 @@ DATABASES = {
         "TEST": {"NAME": os.environ.get("DATABASE_NAME", "")},
     }
 }
+
+DATABASES["default"] = django_mongodb.parse_uri(
+    os.environ.get("MONGODB_URI", "mongodb://localhost:27017/wagtail")
+)
 
 # Set regular database name when a non-SQLite db is used
 if DATABASES["default"]["ENGINE"] != "django.db.backends.sqlite3":
