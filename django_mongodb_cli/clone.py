@@ -36,6 +36,12 @@ def _delete_repos():
         click.echo("Skipping: src does not exist")
 
 
+def _get_remotes(upstream_match, clone_path, repo_name):
+    remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
+    subprocess.run(["git", "remote", "add", "upstream", remote], cwd=clone_path)
+    subprocess.run(["git", "remote", "-v", "show"], cwd=clone_path)
+
+
 @click.command()
 @click.argument(
     "pyproject_path", type=click.Path(exists=True), default="pyproject.toml"
@@ -106,11 +112,7 @@ def clone(
                     subprocess.run(["pre-commit", "install"], cwd=clone_path)
 
             if remote and upstream_match:
-                remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
-                subprocess.run(
-                    ["git", "remote", "add", "upstream", remote], cwd=clone_path
-                )
-                subprocess.run(["git", "remote", "-v", "show"], cwd=clone_path)
+                _get_remotes(upstream_match, clone_path, repo_name)
 
             if update:
                 click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
