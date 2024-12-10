@@ -9,9 +9,6 @@ import toml
 
 
 def _get_repos(pyproject_path):
-    """
-    Get repositories listed under [tool.django_mongodb_cli] dev in pyproject.toml.
-    """
     with open(pyproject_path, "r") as f:
         pyproject_data = toml.load(f)
     repos = pyproject_data.get("tool", {}).get("django_mongodb_cli", {}).get("dev", [])
@@ -26,9 +23,6 @@ def _get_repos(pyproject_path):
 
 
 def _delete_repos():
-    """
-    Delete existing checkouts.
-    """
     if os.path.isdir("src"):
         shutil.rmtree("src")
         click.echo("Removed directory: src")
@@ -70,20 +64,15 @@ def clone(
     remote,
     update,
 ):
-    """Clone repositories listed in pyproject.toml."""
-
-    # Delete repositories
     if delete:
         _delete_repos()
         return
 
-    # Get repositories
     repos, url_pattern, branch_pattern, upstream_pattern = _get_repos(pyproject_path)
     if not repos:
         click.echo("No repositories found under [tool.django_mongodb_cli] dev")
         return
 
-    # Clone repositories
     for repo_entry in repos:
         url_match = url_pattern.search(repo_entry)
         branch_match = branch_pattern.search(repo_entry)
