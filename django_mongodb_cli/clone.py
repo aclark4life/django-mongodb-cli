@@ -44,7 +44,7 @@ def _delete_repos():
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
 @click.option("-i", "--install", is_flag=True, help="Install python packages")
-@click.option("-p", "--pre-commit", is_flag=True, help="Install pre-commit hooks")
+@click.option("-p", "--pre", is_flag=True, help="Install pre-commit hooks")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 def clone(
@@ -52,8 +52,8 @@ def clone(
     clone_dir,
     delete,
     fetch,
-    pre_commit,
     install,
+    pre,
     remote,
     update,
 ):
@@ -86,7 +86,7 @@ def clone(
                 not os.path.exists(clone_path)
                 and not fetch
                 and not install
-                and not pre_commit
+                and not pre
                 and not remote
                 and not update
             ):
@@ -101,7 +101,7 @@ def clone(
             else:
                 click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
 
-            if pre_commit:
+            if pre:
                 if os.path.isfile(os.path.join(clone_path, ".pre-commit-config.yaml")):
                     subprocess.run(["pre-commit", "install"], cwd=clone_path)
 
