@@ -8,6 +8,13 @@ import subprocess
 import toml
 
 
+def _get_repos(pyproject_path):
+    with open(pyproject_path, "r") as f:
+        pyproject_data = toml.load(f)
+    repos = pyproject_data.get("tool", {}).get("django_mongodb_cli", {}).get("dev", [])
+    return repos
+
+
 @click.command()
 @click.argument(
     "pyproject_path", type=click.Path(exists=True), default="pyproject.toml"
@@ -37,9 +44,7 @@ def clone(
         return
 
     # Get repositories from pyproject.toml
-    with open(pyproject_path, "r") as f:
-        pyproject_data = toml.load(f)
-    repos = pyproject_data.get("tool", {}).get("django_mongodb_cli", {}).get("dev", [])
+    repos = _get_repos(pyproject_path)
     if not repos:
         click.echo("No repositories found under [tool.django_mongodb_cli] dev")
         return
