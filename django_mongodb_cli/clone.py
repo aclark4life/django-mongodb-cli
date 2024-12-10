@@ -95,24 +95,22 @@ def clone(
             clone_path = os.path.join(clone_dir, repo_name)
             pyproject_toml = os.path.join(clone_path, "pyproject.toml")
             setup_py = os.path.join(clone_path, "setup.py")
-            if (
-                not os.path.exists(clone_path)
-                and not fetch
-                and not install
-                and not pre
-                and not remote
-                and not update
-            ):
-                click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
-                try:
-                    git.Repo.clone_from(repo_url, clone_path, branch=branch)
-                except git.exc.GitCommandError:
+            if not fetch and not install and not pre and not remote and not update:
+                if not os.path.exists(clone_path):
+                    click.echo(
+                        f"Cloning {repo_url} into {clone_path} (branch: {branch})"
+                    )
                     try:
-                        git.Repo.clone_from(repo_url, clone_path)
-                    except git.exc.GitCommandError as e:
-                        click.echo(f"Failed to clone repository: {e}")
-            else:
-                click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
+                        git.Repo.clone_from(repo_url, clone_path, branch=branch)
+                    except git.exc.GitCommandError:
+                        try:
+                            git.Repo.clone_from(repo_url, clone_path)
+                        except git.exc.GitCommandError as e:
+                            click.echo(f"Failed to clone repository: {e}")
+                else:
+                    click.echo(
+                        f"Skipping {repo_url} in {clone_path} (branch: {branch})"
+                    )
 
             if pre:
                 if os.path.isfile(os.path.join(clone_path, ".pre-commit-config.yaml")):
