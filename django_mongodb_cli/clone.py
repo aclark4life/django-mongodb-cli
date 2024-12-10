@@ -77,18 +77,6 @@ def clone(
             else:
                 click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
 
-            # Install package in development mode
-            if os.path.exists(pyproject_toml):
-                subprocess.run(
-                    [sys.executable, "-m", "pip", "install", "-e", clone_path]
-                )
-            if os.path.exists(setup_py):
-                subprocess.run([sys.executable, "setup.py", "develop"], cwd=clone_path)
-
-            # Install pre-commit hooks
-            if os.path.isfile(os.path.join(clone_path, ".pre-commit-config.yaml")):
-                subprocess.run(["pre-commit", "install"], cwd=clone_path)
-
             # Conditionally fetch from remotes, update checkouts, and add upstream remotes
             if fetch:
                 subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
@@ -101,6 +89,18 @@ def clone(
                     ["git", "remote", "add", "upstream", remote], cwd=clone_path
                 )
                 subprocess.run(["git", "remote", "-v", "show"], cwd=clone_path)
+
+            # Install pre-commit hooks
+            if os.path.isfile(os.path.join(clone_path, ".pre-commit-config.yaml")):
+                subprocess.run(["pre-commit", "install"], cwd=clone_path)
+
+            # Install package in development mode
+            if os.path.exists(pyproject_toml):
+                subprocess.run(
+                    [sys.executable, "-m", "pip", "install", "-e", clone_path]
+                )
+            if os.path.exists(setup_py):
+                subprocess.run([sys.executable, "setup.py", "develop"], cwd=clone_path)
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
     click.echo("All repositories cloned successfully.")
