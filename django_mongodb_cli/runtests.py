@@ -7,15 +7,6 @@ import subprocess
 @click.command()
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
-@click.option(
-    "-l", "--show-tests", default=False, is_flag=True, help="List available tests"
-)
-@click.option(
-    "-d",
-    "--show-command",
-    is_flag=True,
-    help="Perform a dry run without executing tests",
-)
 def runtests(modules, keyword, show_tests, show_command):
     """
     Run tests for specified modules with an optional keyword filter.
@@ -41,18 +32,4 @@ def runtests(modules, keyword, show_tests, show_command):
     if keyword:
         command.extend(["-k", keyword])
 
-    if show_command:
-        click.echo(f"Running command: {' '.join(command)}")
-        return
-
-    if show_tests:
-        click.echo(subprocess.run(["ls", os.path.join("src", "django", "tests")]))
-        click.echo(
-            subprocess.run(["ls", os.path.join("src", "django-mongodb", "tests")])
-        )
-        return
-
-    if os.environ.get("MONGODB_URI"):
-        subprocess.run(command, stdin=None, stdout=None, stderr=None)
-    else:
-        click.echo("Please set the MONGODB_URI environment variable!")
+    subprocess.run(command, stdin=None, stdout=None, stderr=None)
