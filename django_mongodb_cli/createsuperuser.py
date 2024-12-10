@@ -5,7 +5,7 @@ import subprocess
 
 
 @click.command()
-def createsuperuser(mongo_single):
+def createsuperuser():
     """Create a superuser with the username 'admin' and the email from git config."""
     try:
         user_email = subprocess.check_output(
