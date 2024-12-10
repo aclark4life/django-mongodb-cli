@@ -60,7 +60,7 @@ def clone(
         _delete_repos()
         return
 
-    # Clone repositories
+    # Get repositories
     repos, url_pattern, branch_pattern, upstream_pattern = _get_repos(pyproject_path)
     if not repos:
         click.echo("No repositories found under [tool.django_mongodb_cli] dev")
