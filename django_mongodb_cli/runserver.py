@@ -4,7 +4,7 @@ import subprocess
 
 
 @click.command()
-def runserver(mongo_single, postgresql):
+def runserver():
     """Start MongoDB and run the Django development server."""
 
     subprocess.run([sys.executable, "manage.py", "runserver"])
