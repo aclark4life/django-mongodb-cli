@@ -43,8 +43,8 @@ def _delete_repos():
 @click.argument("clone_dir", type=click.Path(), default="src")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
-@click.option("-h", "--hooks", is_flag=True, help="Install pre-commit hooks")
 @click.option("-i", "--install", is_flag=True, help="Install python packages")
+@click.option("-p", "--pre-commit", is_flag=True, help="Install pre-commit hooks")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 def clone(
@@ -52,7 +52,7 @@ def clone(
     clone_dir,
     delete,
     fetch,
-    hooks,
+    pre_commit,
     install,
     remote,
     update,
@@ -82,13 +82,13 @@ def clone(
             clone_path = os.path.join(clone_dir, repo_name)
             pyproject_toml = os.path.join(clone_path, "pyproject.toml")
             setup_py = os.path.join(clone_path, "setup.py")
-
-            # Clone repository
             if (
                 not os.path.exists(clone_path)
                 and not fetch
                 and not install
-                and not hooks
+                and not pre_commit
+                and not remote
+                and not update
             ):
                 click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
                 try:
@@ -101,12 +101,10 @@ def clone(
             else:
                 click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
 
-            # Conditionally fetch from remotes, update checkouts, and add upstream remotes
-            if fetch:
-                subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
-            if update:
-                click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
-                subprocess.run(["git", "pull"], cwd=clone_path)
+            if pre_commit:
+                if os.path.isfile(os.path.join(clone_path, ".pre-commit-config.yaml")):
+                    subprocess.run(["pre-commit", "install"], cwd=clone_path)
+
             if remote and upstream_match:
                 remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
                 subprocess.run(
@@ -114,12 +112,13 @@ def clone(
                 )
                 subprocess.run(["git", "remote", "-v", "show"], cwd=clone_path)
 
-            # Install pre-commit hooks
-            if hooks:
-                if os.path.isfile(os.path.join(clone_path, ".pre-commit-config.yaml")):
-                    subprocess.run(["pre-commit", "install"], cwd=clone_path)
+            if update:
+                click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
+                subprocess.run(["git", "pull"], cwd=clone_path)
 
-            # Install package in development mode
+            if fetch:
+                subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
+
             if install:
                 if os.path.exists(pyproject_toml):
                     subprocess.run(
