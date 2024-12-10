@@ -5,5 +5,5 @@ DATABASES = {"default": django_mongodb.parse_uri(os.environ.get("MONGODB_URI"))}
 DEBUG = True
 INSTALLED_APPS = [
     "django_extensions",
-    "python_webpack_boilerplate",
+    "webpack_boilerplate",
 ]
