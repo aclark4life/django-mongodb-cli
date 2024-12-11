@@ -14,11 +14,12 @@ def runtests(modules, keyword, wagtail):
     """
 
     if wagtail:
-        runtests_py = os.path.join("src", "wagtail", "runtests.py")
+        runtests_py = "./runtests.py"
         test_settings = [
             "settings.py",
             os.path.join("src", "wagtail", "wagtail", "test", "mongodb_settings.py"),
             "wagtail.test.mongodb_settings",
+            os.path.join("src", "wagtail"),
         ]
     else:
         runtests_py = os.path.join("src", "django", "tests", "runtests.py")
@@ -26,6 +27,7 @@ def runtests(modules, keyword, wagtail):
             "mongodb_settings.py",
             os.path.join("src", "django", "tests", "mongodb_settings.py"),
             "mongodb_settings",
+            ".",
         ]
 
     shutil.copyfile(
@@ -42,7 +44,9 @@ def runtests(modules, keyword, wagtail):
     command.extend(modules)
     click.echo(f"Running {' '.join(command)}")
 
+    cwd = test_settings[3]
+    click.echo(f"Working directory: {cwd}")
     if keyword:
         command.extend(["-k", keyword])
 
-    subprocess.run(command, stdin=None, stdout=None, stderr=None)
+    subprocess.run(command, stdin=None, stdout=None, stderr=None, cwd=cwd)
