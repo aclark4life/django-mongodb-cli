@@ -292,7 +292,9 @@ MIGRATION_MODULES = {
     "admin": "wagtail.test.mongo_migrations.admin",
     "auth": "wagtail.test.mongo_migrations.auth",
     "contenttypes": "wagtail.test.mongo_migrations.contenttypes",
+    "demosite": "wagtail.test.mongo_migrations.demosite",
     "i18n": "wagtail.test.mongo_migrations.i18n",
+    "streamfield_migration_tests": "wagtail.test.mongo_migrations.streamfield_migration_tests",
     "taggit": "wagtail.test.mongo_migrations.taggit",
     "wagtaildocs": "wagtail.test.mongo_migrations.wagtaildocs",
     "wagtailredirects": "wagtail.test.mongo_migrations.wagtailredirects",
@@ -303,5 +305,4 @@ MIGRATION_MODULES = {
     "wagtailforms": "wagtail.test.mongo_migrations.wagtailforms",
     "wagtailembeds": "wagtail.test.mongo_migrations.wagtailembeds",
     "wagtailusers": "wagtail.test.mongo_migrations.wagtailusers",
-    "streamfield_migration_tests": "wagtail.test.mongo_migrations.streamfield_migration_tests",
 }
