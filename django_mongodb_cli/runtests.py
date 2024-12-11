@@ -27,7 +27,7 @@ def runtests(modules, keyword, wagtail):
         )
         runtests_py = "./runtests.py"
         test_settings = [
-            "wagtail_settings.py",
+            "settings_wagtail.py",
             os.path.join("src", "wagtail", "wagtail", "test", "mongo_settings.py"),
             "wagtail.test.mongo_settings",
             os.path.join("src", "wagtail"),
@@ -35,7 +35,7 @@ def runtests(modules, keyword, wagtail):
     else:
         runtests_py = os.path.join("src", "django", "tests", "runtests.py")
         test_settings = [
-            "django_settings.py",
+            "settings_django.py",
             os.path.join("src", "django", "tests", "mongo_settings.py"),
             "mongo_settings",
             ".",
