@@ -174,7 +174,7 @@ INSTALLED_APPS = [
     "wagtail",
     "taggit",
     "rest_framework",
-    "django.contrib.admin",
+    "wagtail.test.mongo_apps.MongoAdminConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -285,4 +285,20 @@ MESSAGE_TAGS = {
     message_constants.SUCCESS: "my-custom-tag",
     message_constants.WARNING: "my-custom-tag",
     message_constants.ERROR: "my-custom-tag",
+}
+DEFAULT_AUTO_FIELD = "django_mongodb.fields.ObjectIdAutoField"
+MIGRATION_MODULES = {
+    "admin": "mongo_migrations.admin",
+    "auth": "mongo_migrations.auth",
+    "contenttypes": "mongo_migrations.contenttypes",
+    "taggit": "mongo_migrations.taggit",
+    "wagtaildocs": "mongo_migrations.wagtaildocs",
+    "wagtailredirects": "mongo_migrations.wagtailredirects",
+    "wagtailimages": "mongo_migrations.wagtailimages",
+    "wagtailsearch": "mongo_migrations.wagtailsearch",
+    "wagtailadmin": "mongo_migrations.wagtailadmin",
+    "wagtailcore": "mongo_migrations.wagtailcore",
+    "wagtailforms": "mongo_migrations.wagtailforms",
+    "wagtailembeds": "mongo_migrations.wagtailembeds",
+    "wagtailusers": "mongo_migrations.wagtailusers",
 }
