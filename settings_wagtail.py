@@ -298,7 +298,6 @@ MIGRATION_MODULES = {
     "wagtailredirects": "wagtail.test.mongo_migrations.wagtailredirects",
     "wagtailimages": "wagtail.test.mongo_migrations.wagtailimages",
     "wagtailsearch": "wagtail.test.mongo_migrations.wagtailsearch",
-    "wagtailsnippets": "wagtail.test.mongo_migrations.wagtailsnippets",
     "wagtailadmin": "wagtail.test.mongo_migrations.wagtailadmin",
     "wagtailcore": "wagtail.test.mongo_migrations.wagtailcore",
     "wagtailforms": "wagtail.test.mongo_migrations.wagtailforms",
