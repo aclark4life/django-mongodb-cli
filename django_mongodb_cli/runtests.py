@@ -14,10 +14,13 @@ def runtests(modules, keyword, wagtail):
     """
 
     if wagtail:
-        shutil.copytree(
-            os.path.join("project_template", "mongo_migrations"),
-            os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations"),
-        )
+        if not os.path.exists(
+            os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations")
+        ):
+            shutil.copytree(
+                os.path.join("project_template", "mongo_migrations"),
+                os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations"),
+            )
         shutil.copyfile(
             "mongo_apps.py",
             os.path.join("src", "wagtail", "wagtail", "test", "mongo_apps.py"),
@@ -25,16 +28,16 @@ def runtests(modules, keyword, wagtail):
         runtests_py = "./runtests.py"
         test_settings = [
             "settings.py",
-            os.path.join("src", "wagtail", "wagtail", "test", "mongodb_settings.py"),
-            "wagtail.test.mongodb_settings",
+            os.path.join("src", "wagtail", "wagtail", "test", "mongo_settings.py"),
+            "wagtail.test.mongo_settings",
             os.path.join("src", "wagtail"),
         ]
     else:
         runtests_py = os.path.join("src", "django", "tests", "runtests.py")
         test_settings = [
-            "mongodb_settings.py",
-            os.path.join("src", "django", "tests", "mongodb_settings.py"),
-            "mongodb_settings",
+            "mongo_settings.py",
+            os.path.join("src", "django", "tests", "mongo_settings.py"),
+            "mongo_settings",
             ".",
         ]
 
