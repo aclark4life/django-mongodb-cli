@@ -14,6 +14,10 @@ def runtests(modules, keyword, wagtail):
     """
 
     if wagtail:
+        shutil.copytree(
+            os.path.join("project_template", "mongo_migrations"),
+            os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations"),
+        )
         shutil.copyfile(
             "mongo_apps.py",
             os.path.join("src", "wagtail", "wagtail", "test", "mongo_apps.py"),
