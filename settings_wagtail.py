@@ -303,4 +303,5 @@ MIGRATION_MODULES = {
     "wagtailforms": "wagtail.test.mongo_migrations.wagtailforms",
     "wagtailembeds": "wagtail.test.mongo_migrations.wagtailembeds",
     "wagtailusers": "wagtail.test.mongo_migrations.wagtailusers",
+    "streamfield_migration_tests": "wagtail.test.mongo_migrations.streamfield_migration_tests",
 }
