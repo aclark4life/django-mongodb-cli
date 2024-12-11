@@ -294,6 +294,7 @@ MIGRATION_MODULES = {
     "contenttypes": "wagtail.test.mongo_migrations.contenttypes",
     "demosite": "wagtail.test.mongo_migrations.demosite",
     "i18n": "wagtail.test.mongo_migrations.i18n",
+    "routablepagetests": "wagtail.test.mongo_migrations.routablepagetests",
     "streamfield_migration_tests": "wagtail.test.mongo_migrations.streamfield_migration_tests",
     "taggit": "wagtail.test.mongo_migrations.taggit",
     "wagtaildocs": "wagtail.test.mongo_migrations.wagtaildocs",
