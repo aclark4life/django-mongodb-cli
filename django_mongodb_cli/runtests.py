@@ -22,7 +22,7 @@ def runtests(modules, keyword, wagtail):
                 os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations"),
             )
         shutil.copyfile(
-            "mongo_apps.py",
+            "apps.py",
             os.path.join("src", "wagtail", "wagtail", "test", "mongo_apps.py"),
         )
         runtests_py = "./runtests.py"
