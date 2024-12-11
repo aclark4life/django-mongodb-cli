@@ -24,40 +24,41 @@ MEDIA_URL = "/media/"
 
 TIME_ZONE = "Asia/Tokyo"
 
-DATABASES = {
-    "default": {
-        "ENGINE": os.environ.get("DATABASE_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("DATABASE_NAME", ":memory:"),
-        "USER": os.environ.get("DATABASE_USER", ""),
-        "PASSWORD": os.environ.get("DATABASE_PASSWORD", ""),
-        "HOST": os.environ.get("DATABASE_HOST", ""),
-        "PORT": os.environ.get("DATABASE_PORT", ""),
-        "TEST": {"NAME": os.environ.get("DATABASE_NAME", "")},
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": os.environ.get("DATABASE_ENGINE", "django.db.backends.sqlite3"),
+#         "NAME": os.environ.get("DATABASE_NAME", ":memory:"),
+#         "USER": os.environ.get("DATABASE_USER", ""),
+#         "PASSWORD": os.environ.get("DATABASE_PASSWORD", ""),
+#         "HOST": os.environ.get("DATABASE_HOST", ""),
+#         "PORT": os.environ.get("DATABASE_PORT", ""),
+#         "TEST": {"NAME": os.environ.get("DATABASE_NAME", "")},
+#     }
+# }
+#
+#
+# # Set regular database name when a non-SQLite db is used
+# if DATABASES["default"]["ENGINE"] != "django.db.backends.sqlite3":
+#     DATABASES["default"]["NAME"] = os.environ.get("DATABASE_NAME", "wagtail")
+#
+# # Add extra options when mssql is used (on for example appveyor)
+# if DATABASES["default"]["ENGINE"] == "sql_server.pyodbc":
+#     DATABASES["default"]["OPTIONS"] = {
+#         "driver": os.environ.get("DATABASE_DRIVER", "SQL Server Native Client 11.0"),
+#         "MARS_Connection": "True",
+#         "host_is_server": True,  # Applies to FreeTDS driver only
+#     }
+#
+#
+# # explicitly set charset / collation to utf8 on mysql
+# if DATABASES["default"]["ENGINE"] == "django.db.backends.mysql":
+#     DATABASES["default"]["TEST"]["CHARSET"] = "utf8"
+#     DATABASES["default"]["TEST"]["COLLATION"] = "utf8_general_ci"
 
+DATABASES = {}
 DATABASES["default"] = django_mongodb.parse_uri(
     os.environ.get("MONGODB_URI", "mongodb://localhost:27017/wagtail")
 )
-
-# Set regular database name when a non-SQLite db is used
-if DATABASES["default"]["ENGINE"] != "django.db.backends.sqlite3":
-    DATABASES["default"]["NAME"] = os.environ.get("DATABASE_NAME", "wagtail")
-
-# Add extra options when mssql is used (on for example appveyor)
-if DATABASES["default"]["ENGINE"] == "sql_server.pyodbc":
-    DATABASES["default"]["OPTIONS"] = {
-        "driver": os.environ.get("DATABASE_DRIVER", "SQL Server Native Client 11.0"),
-        "MARS_Connection": "True",
-        "host_is_server": True,  # Applies to FreeTDS driver only
-    }
-
-
-# explicitly set charset / collation to utf8 on mysql
-if DATABASES["default"]["ENGINE"] == "django.db.backends.mysql":
-    DATABASES["default"]["TEST"]["CHARSET"] = "utf8"
-    DATABASES["default"]["TEST"]["COLLATION"] = "utf8_general_ci"
-
 
 SECRET_KEY = "not needed"
 
