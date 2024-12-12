@@ -7,6 +7,7 @@ dependencies = [
     "click",
     "django-debug-toolbar",
     "django-extensions",
+    "freezegun",
     "psycopg2",
     "python-webpack-boilerplate",
     "setuptools",
