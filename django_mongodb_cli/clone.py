@@ -36,6 +36,10 @@ def _get_remotes(upstream_match, clone_path, repo_name):
     subprocess.run(["git", "remote", "-v", "show"], cwd=clone_path)
 
 
+def _get_status(clone_path):
+    subprocess.run(["git", "status"], cwd=clone_path)
+
+
 def _install_packages(clone_path, pyproject_toml, setup_py):
     if os.path.exists(pyproject_toml):
         subprocess.run([sys.executable, "-m", "pip", "install", "-e", clone_path])
@@ -62,6 +66,7 @@ def clone(
     install,
     pre,
     remote,
+    status,
     update,
 ):
     """
@@ -103,6 +108,11 @@ def clone(
                     click.echo(
                         f"Skipping {repo_url} in {clone_path} (branch: {branch})"
                     )
+            if fetch:
+                subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
+
+            if install:
+                _install_packages(clone_path, pyproject_toml, setup_py)
 
             if pre:
                 if os.path.isfile(os.path.join(clone_path, ".pre-commit-config.yaml")):
@@ -111,15 +121,12 @@ def clone(
             if remote and upstream_match:
                 _get_remotes(upstream_match, clone_path, repo_name)
 
+            if status:
+                _get_status(clone_path)
+
             if update:
                 click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
                 subprocess.run(["git", "pull"], cwd=clone_path)
-
-            if fetch:
-                subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
-
-            if install:
-                _install_packages(clone_path, pyproject_toml, setup_py)
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
     click.echo("All repositories cloned successfully.")
