@@ -37,11 +37,7 @@ django-mongodb-cli clone
 
 ### Run tests
 
-> [!NOTE]
-> Requires `MONGODB_URI` environment variable to be set.
-
 Run the Django test suite in `src/django`.
-
 
 ```bash
 django-mongodb-cli runtests
@@ -60,9 +56,6 @@ django-mongodb-cli startproject mysite
 ```
 
 ### Run migrations, create superuser, and start server
-
-> [!NOTE]
-> Requires `MONGODB_URI` environment variable to be set.
 
 ```bash
 django-mongodb-cli migrate
