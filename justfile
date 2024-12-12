@@ -15,8 +15,6 @@ alias s := django-serve
 
 [group('django')]
 django-startproject:
-    mongo-orchestration stop
-    mongo-orchestration start
     django-mongodb-cli startproject --delete
     django-mongodb-cli startproject --django-mongodb
     django-mongodb-cli install --app debug_toolbar
@@ -54,10 +52,8 @@ check-venv:
 
 [group('wagtail')]
 wagtail-startproject:
-    mongo-orchestration stop
-    mongo-orchestration start
     django-mongodb-cli startproject --delete
-    django-mongodb-cli startproject --wagtail-mongodb
+    django-mongodb-cli startproject --wagtail
     django-mongodb-cli install --app debug_toolbar --settings-path backend/settings/base.py
     django-mongodb-cli install --app polls --settings-path backend/settings/base.py
     django-mongodb-cli install --app django_extensions --settings-path backend/settings/base.py
