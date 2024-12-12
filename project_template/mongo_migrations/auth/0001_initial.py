@@ -21,9 +21,8 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.auto.ObjectIdAutoField(
+                    django_mongodb.fields.ObjectIdAutoField(
                         auto_created=True,
-                        db_column="_id",
                         primary_key=True,
                         serialize=False,
                         verbose_name="ID",
@@ -59,9 +58,8 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.auto.ObjectIdAutoField(
+                    django_mongodb.fields.ObjectIdAutoField(
                         auto_created=True,
-                        db_column="_id",
                         primary_key=True,
                         serialize=False,
                         verbose_name="ID",
@@ -91,9 +89,8 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.auto.ObjectIdAutoField(
+                    django_mongodb.fields.ObjectIdAutoField(
                         auto_created=True,
-                        db_column="_id",
                         primary_key=True,
                         serialize=False,
                         verbose_name="ID",
