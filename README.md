@@ -55,7 +55,7 @@ django-mongodb-cli runtests -w
 django-mongodb-cli startproject mysite
 ```
 
-### Run migrations, create superuser, and start server
+#### Run migrations, create superuser, and start server
 
 ```bash
 django-mongodb-cli migrate
