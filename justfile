@@ -23,8 +23,6 @@ django-startproject:
     django-mongodb-cli install --app polls
     django-mongodb-cli install --app django_extensions
     django-mongodb-cli install --middleware debug_toolbar.middleware.DebugToolbarMiddleware
-    django-mongodb-cli startui -d
-    django-mongodb-cli startui
     django-mongodb-cli migrate -m
     django-mongodb-cli createsuperuser -m
 
@@ -58,7 +56,5 @@ wagtail-startproject:
     django-mongodb-cli install --app polls --settings-path backend/settings/base.py
     django-mongodb-cli install --app django_extensions --settings-path backend/settings/base.py
     django-mongodb-cli install --middleware debug_toolbar.middleware.DebugToolbarMiddleware
-    django-mongodb-cli startui -d
-    django-mongodb-cli startui
     django-mongodb-cli migrate -m
     django-mongodb-cli createsuperuser -m
