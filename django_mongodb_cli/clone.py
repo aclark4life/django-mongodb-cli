@@ -57,6 +57,7 @@ def _install_packages(clone_path, pyproject_toml, setup_py):
 @click.option("-i", "--install", is_flag=True, help="Install python packages")
 @click.option("-p", "--pre", is_flag=True, help="Install pre-commit hooks")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
+@click.option("-s", "--status", is_flag=True, help="Show git status")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
 def clone(
     pyproject_path,
