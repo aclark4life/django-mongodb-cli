@@ -37,11 +37,19 @@ django-mongodb-cli clone
 
 ### Run tests
 
+Run the Django test suite in `src/django`.
+
 > [!NOTE]
 > Requires `MONGODB_URI` environment variable to be set.
 
 ```bash
 django-mongodb-cli runtests
+```
+
+Or run the Wagtail test suite in `src/wagtail`.
+
+```bash
+django-mongodb-cli runtests -w
 ```
 
 ### Start a new project
