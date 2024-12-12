@@ -10,7 +10,7 @@ alias o := django-open
 
 [group('django')]
 django-serve:
-    django-mongodb-cli runserver -m
+    django-mongodb-cli runserver
 alias s := django-serve
 
 [group('django')]
@@ -23,8 +23,8 @@ django-startproject:
     django-mongodb-cli install --app polls
     django-mongodb-cli install --app django_extensions
     django-mongodb-cli install --middleware debug_toolbar.middleware.DebugToolbarMiddleware
-    django-mongodb-cli migrate -m
-    django-mongodb-cli createsuperuser -m
+    django-mongodb-cli migrate
+    django-mongodb-cli createsuperuser
 
 # ---------------------------------------- python ----------------------------------------
 
@@ -56,5 +56,5 @@ wagtail-startproject:
     django-mongodb-cli install --app polls --settings-path backend/settings/base.py
     django-mongodb-cli install --app django_extensions --settings-path backend/settings/base.py
     django-mongodb-cli install --middleware debug_toolbar.middleware.DebugToolbarMiddleware
-    django-mongodb-cli migrate -m
-    django-mongodb-cli createsuperuser -m
+    django-mongodb-cli migrate
+    django-mongodb-cli createsuperuser
