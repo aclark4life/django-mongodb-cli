@@ -16,7 +16,7 @@ alias s := django-serve
 [group('django')]
 django-startproject:
     django-mongodb-cli startproject --delete
-    django-mongodb-cli startproject --django-mongodb
+    django-mongodb-cli startproject --django
     django-mongodb-cli install --app debug_toolbar
     django-mongodb-cli install --app home
     django-mongodb-cli install --url home.urls
