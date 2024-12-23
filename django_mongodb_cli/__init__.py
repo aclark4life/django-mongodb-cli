@@ -1,6 +1,6 @@
 import click
 
-from .clone import clone
+from .clone import repo
 from .createsuperuser import createsuperuser
 from .install import install
 from .manage import manage
@@ -17,7 +17,7 @@ def cli():
     pass
 
 
-cli.add_command(clone)
+cli.add_command(repo)
 cli.add_command(createsuperuser)
 cli.add_command(install)
 cli.add_command(manage)

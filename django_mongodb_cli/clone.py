@@ -48,10 +48,7 @@ def _install_packages(clone_path, pyproject_toml, setup_py):
 
 
 @click.command()
-@click.argument(
-    "pyproject_path", type=click.Path(exists=True), default="pyproject.toml"
-)
-@click.argument("clone_dir", type=click.Path(), default="src")
+@click.option("-c", "--clone", is_flag=True, help="Clone repositories")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
 @click.option("-i", "--install", is_flag=True, help="Install python packages")
@@ -59,9 +56,8 @@ def _install_packages(clone_path, pyproject_toml, setup_py):
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
 @click.option("-s", "--status", is_flag=True, help="Show git status")
 @click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
-def clone(
-    pyproject_path,
-    clone_dir,
+def repo(
+    clone,
     delete,
     fetch,
     install,
@@ -73,6 +69,9 @@ def clone(
     """
     Clone repositories in pyproject.toml
     """
+    clone_dir = "src"
+    pyproject_path = "pyproject.toml"
+
     if delete:
         _delete_repos()
         return
@@ -93,7 +92,8 @@ def clone(
             clone_path = os.path.join(clone_dir, repo_name)
             pyproject_toml = os.path.join(clone_path, "pyproject.toml")
             setup_py = os.path.join(clone_path, "setup.py")
-            if not fetch and not install and not pre and not remote and not update:
+
+            if clone:
                 if not os.path.exists(clone_path):
                     click.echo(
                         f"Cloning {repo_url} into {clone_path} (branch: {branch})"
