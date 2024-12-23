@@ -130,3 +130,6 @@ def repo(
                 subprocess.run(["git", "pull"], cwd=clone_path)
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
+
+    if not any([clone, delete, fetch, install, pre, remote, status, update]):
+        raise click.UsageError("Please pick an option!")
