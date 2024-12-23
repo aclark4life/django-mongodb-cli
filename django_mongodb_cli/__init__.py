@@ -1,10 +1,10 @@
 import click
 
-from .clone import repo
 from .createsuperuser import createsuperuser
 from .install import install
 from .manage import manage
 from .migrate import migrate
+from .repo import repo
 from .runserver import runserver
 from .runtests import runtests
 from .startapp import startapp
@@ -17,11 +17,11 @@ def cli():
     pass
 
 
-cli.add_command(repo)
 cli.add_command(createsuperuser)
 cli.add_command(install)
 cli.add_command(manage)
 cli.add_command(migrate)
+cli.add_command(repo)
 cli.add_command(runserver)
 cli.add_command(runtests)
 cli.add_command(startapp)
