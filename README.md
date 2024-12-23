@@ -32,7 +32,7 @@ python -m pip install .
 Defined in `pyproject.toml`.
 
 ```bash
-django-mongodb-cli clone
+django-mongodb-cli repo -c
 ```
 
 ### Run tests
