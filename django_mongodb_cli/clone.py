@@ -130,4 +130,3 @@ def repo(
                 subprocess.run(["git", "pull"], cwd=clone_path)
         else:
             click.echo(f"Invalid repository entry: {repo_entry}")
-    click.echo("All repositories cloned successfully.")
