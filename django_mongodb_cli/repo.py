@@ -37,6 +37,7 @@ def _get_remotes(upstream_match, clone_path, repo_name):
 
 
 def _get_status(clone_path):
+    click.echo(click.style(f"Status for {clone_path}", fg="blue"))
     subprocess.run(["git", "status"], cwd=clone_path)
 
 
