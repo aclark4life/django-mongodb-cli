@@ -47,11 +47,18 @@ def _install_packages(clone_path, pyproject_toml, setup_py):
         subprocess.run([sys.executable, "setup.py", "develop"], cwd=clone_path)
 
 
+def _list_repos():
+    if os.path.isdir("src"):
+        for repo in sorted(os.listdir("src")):
+            click.echo(repo)
+
+
 @click.command()
 @click.option("-c", "--clone", is_flag=True, help="Clone repositories")
 @click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
 @click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
 @click.option("-i", "--install", is_flag=True, help="Install python packages")
+@click.option("-l", "--list-repos", is_flag=True, help="List repositories")
 @click.option("-p", "--pre", is_flag=True, help="Install pre-commit hooks")
 @click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
 @click.option("-s", "--status", is_flag=True, help="Show git status")
@@ -61,6 +68,7 @@ def repo(
     delete,
     fetch,
     install,
+    list_repos,
     pre,
     remote,
     status,
@@ -79,6 +87,10 @@ def repo(
     repos, url_pattern, branch_pattern, upstream_pattern = _get_repos(pyproject_path)
     if not repos:
         click.echo("No repositories found under [tool.django_mongodb_cli] dev")
+        return
+
+    if list_repos:
+        _list_repos()
         return
 
     for repo_entry in repos:
