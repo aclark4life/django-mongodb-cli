@@ -31,6 +31,7 @@ def startproject(
             "home": os.path.isdir,
             "backend": os.path.isdir,
             "db.sqlite3": os.path.isfile,
+            "frontend": os.path.isdir,
             "mongo_migrations": os.path.isdir,
             "manage.py": os.path.isfile,
             "requirements.txt": os.path.isfile,
@@ -76,13 +77,10 @@ def startproject(
         ]
     )
 
-    # subprocess.run(
-    #     [
-    #         sys.executable,
-    #         "manage.py",
-    #         "webpack_boilerplate"
-    #         ".",
-    #         "--template",
-    #         os.path.join(os.path.join("project", "webpack_boilerplate")),
-    #     ]
-    # )
+    subprocess.run(
+        [
+            "cookiecutter",
+            "frontend_template",
+            "--no-input",
+        ]
+    )
