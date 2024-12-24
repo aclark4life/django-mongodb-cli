@@ -1,8 +1,6 @@
 import django_mongodb
 import os
 
-from pathlib import Path  # noqa
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 DATABASES = {"default": django_mongodb.parse_uri(os.environ.get("MONGODB_URI"))}
 DEBUG = True
@@ -30,10 +28,8 @@ MIGRATION_MODULES = {
 }
 ROOT_URLCONF = "{{ project_name }}.urls"
 
-STATICFILES_DIRS = [
-    BASE_DIR / "frontend/build",
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "frontend", "build")]
 
 WEBPACK_LOADER = {
-    "MANIFEST_FILE": BASE_DIR / "frontend/build/manifest.json",
+    "MANIFEST_FILE": os.path.join(BASE_DIR, "frontend", "build", "manifest.json")
 }
