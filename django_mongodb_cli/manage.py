@@ -13,4 +13,5 @@ def manage(args):
         command = [sys.executable, "manage.py"]
     else:
         command = ["django-admin"]  # Use a list for consistency
+
     subprocess.run(command + [*args])

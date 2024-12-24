@@ -12,11 +12,11 @@ def migrate(make_migrations):
     """Run Django migrations."""
 
     if os.path.exists("manage.py"):
-        command = os.path.join(sys.executable, "manage.py")
+        command = [sys.executable, "manage.py"]
     else:
-        command = "django-admin"
+        command = ["django-admin"]  # Use a list for consistency
 
     if make_migrations:
-        subprocess.run([command, "makemigrations"])
+        subprocess.run(command + ["makemigrations"])
     else:
-        subprocess.run([command, "migrate"])
+        subprocess.run(command + ["migrate"])
