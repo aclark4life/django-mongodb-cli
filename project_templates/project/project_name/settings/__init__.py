@@ -10,7 +10,7 @@ INSTALLED_APPS = [
     "{{ project_name }}.mongo_apps.MongoContentTypesConfig",
     "django_extensions",
     "webpack_boilerplate",
-    "home",
+    "apps.home",
 ]
 MIGRATION_MODULES = {
     "admin": "mongo_migrations.admin",
