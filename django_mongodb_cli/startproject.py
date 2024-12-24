@@ -17,8 +17,6 @@ def startproject(
 ):
     """Run startproject command with the template from src/django-mongodb-project."""
 
-    click.echo(project_name)
-
     if os.path.exists("manage.py"):
         click.echo("manage.py already exists")
         if not delete:
@@ -64,6 +62,8 @@ def startproject(
 
     if not template:
         template = os.path.join(os.path.join("project_template"))
+
+    click.echo(f"Using template: {template}")
 
     click.echo(
         subprocess.run(
