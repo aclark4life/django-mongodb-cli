@@ -4,7 +4,7 @@ import shutil
 import subprocess
 
 
-def _copy_mongo_migrations():
+def _copy_mongo_migrations(test_dir):
     click.echo(click.style("Copying mongo_migrations", fg="blue"))
     if not os.path.exists(
         os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations")
@@ -15,7 +15,7 @@ def _copy_mongo_migrations():
         )
 
 
-def _copy_mongo_apps():
+def _copy_mongo_apps(test_dir):
     click.echo(click.style("Copying mongo_apps", fg="blue"))
     shutil.copyfile(
         "apps_wagtail.py",
@@ -23,7 +23,7 @@ def _copy_mongo_apps():
     )
 
 
-def _get_test_settings(wagtail=False):
+def _get_test_settings(test_dir, wagtail=False):
     if wagtail:
         return [
             "settings_wagtail.py",
@@ -54,10 +54,12 @@ def test(modules, keyword, wagtail):
         _copy_mongo_migrations()
         _copy_mongo_apps()
         runtests_py = "./runtests.py"
-        test_settings = _get_test_settings(wagtail=True)
+        test_dir = os.path.join("src", "wagtail", "wagtail", "test")
+        test_settings = _get_test_settings(test_dir, wagtail=True)
     else:
-        runtests_py = os.path.join("src", "django", "tests", "runtests.py")
-        test_settings = _get_test_settings()
+        test_dir = os.path.join("src", "django", "tests")
+        runtests_py = os.path.join(test_dir, "runtests.py")
+        test_settings = _get_test_settings(test_dir)
 
     shutil.copyfile(
         test_settings[0],
