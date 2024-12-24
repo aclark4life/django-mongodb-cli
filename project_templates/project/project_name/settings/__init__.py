@@ -7,9 +7,10 @@ DEBUG = True
 DEFAULT_AUTO_FIELD = "django_mongodb.fields.ObjectIdAutoField"
 INSTALLED_APPS = [
     "{{ project_name }}.mongo_apps.MongoAuthConfig",
-    "django.contrib.contenttypes",
+    "{{ project_name }}.mongo_apps.MongoContentTypesConfig",
     "django_extensions",
     "webpack_boilerplate",
+    "home",
 ]
 MIGRATION_MODULES = {
     "admin": "mongo_migrations.admin",
