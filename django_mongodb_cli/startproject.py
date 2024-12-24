@@ -92,3 +92,15 @@ def startproject(
             "--no-input",
         ]
     )
+
+    if not os.path.exists("apps"):
+        os.makedirs("apps")
+
+    subprocess.run(
+        [
+            "django-admin",
+            "startapp",
+            "home",
+        ],
+        cwd="apps",
+    )
