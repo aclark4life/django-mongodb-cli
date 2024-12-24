@@ -11,10 +11,15 @@ def createsuperuser():
         user_email = subprocess.check_output(
             ["git", "config", "user.email"], text=True
         ).strip()
-        click.echo(f"User email: {user_email}")
     except subprocess.CalledProcessError:
         click.echo("Error: Unable to retrieve the user email from git config.")
+        return
+
     os.environ["DJANGO_SUPERUSER_PASSWORD"] = "admin"
+
+    click.echo(os.environ["MONGODB_URI"])
+    click.echo(f"User email: {user_email}")
+
     subprocess.run(
         [
             sys.executable,
