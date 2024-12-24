@@ -23,6 +23,23 @@ def _copy_mongo_apps():
     )
 
 
+def _get_test_settings(wagtail=False):
+    if wagtail:
+        return [
+            "settings_wagtail.py",
+            os.path.join("src", "wagtail", "wagtail", "test", "mongo_settings.py"),
+            "wagtail.test.mongo_settings",
+            os.path.join("src", "wagtail"),
+        ]
+    else:
+        return [
+            "settings_django.py",
+            os.path.join("src", "django", "tests", "mongo_settings.py"),
+            "mongo_settings",
+            ".",
+        ]
+
+
 @click.command()
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
@@ -37,20 +54,10 @@ def test(modules, keyword, wagtail):
         _copy_mongo_migrations()
         _copy_mongo_apps()
         runtests_py = "./runtests.py"
-        test_settings = [
-            "settings_wagtail.py",
-            os.path.join("src", "wagtail", "wagtail", "test", "mongo_settings.py"),
-            "wagtail.test.mongo_settings",
-            os.path.join("src", "wagtail"),
-        ]
+        test_settings = _get_test_settings(wagtail=True)
     else:
         runtests_py = os.path.join("src", "django", "tests", "runtests.py")
-        test_settings = [
-            "settings_django.py",
-            os.path.join("src", "django", "tests", "mongo_settings.py"),
-            "mongo_settings",
-            ".",
-        ]
+        test_settings = _get_test_settings()
 
     shutil.copyfile(
         test_settings[0],
