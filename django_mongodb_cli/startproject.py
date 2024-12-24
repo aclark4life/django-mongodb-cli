@@ -65,15 +65,24 @@ def startproject(
 
     click.echo(f"Using template: {template}")
 
-    click.echo(
-        subprocess.run(
-            [
-                django_admin,
-                startproject,
-                project_name,
-                ".",
-                "--template",
-                template,
-            ]
-        )
+    subprocess.run(
+        [
+            django_admin,
+            startproject,
+            project_name,
+            ".",
+            "--template",
+            template,
+        ]
     )
+
+    # subprocess.run(
+    #     [
+    #         sys.executable,
+    #         "manage.py",
+    #         "webpack_boilerplate"
+    #         ".",
+    #         "--template",
+    #         os.path.join(os.path.join("project", "webpack_boilerplate")),
+    #     ]
+    # )
