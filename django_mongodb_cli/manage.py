@@ -1,5 +1,6 @@
 import click
 import os
+import sys
 import subprocess
 
 
@@ -9,6 +10,7 @@ def manage(args):
     """Run management commands."""
 
     if os.path.exists("manage.py"):
-        subprocess.run(["python", "manage.py", *args])
+        command = [sys.executable, "manage.py"]
     else:
-        subprocess.run(["django-admin", *args])
+        command = ["django-admin"]  # Use a list for consistency
+    subprocess.run(command + [*args])
