@@ -8,7 +8,7 @@ import subprocess
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
 @click.option("-w", "--wagtail", help="Run Wagtail tests", is_flag=True)
-def runtests(modules, keyword, wagtail):
+def test(modules, keyword, wagtail):
     """
     Run `runtests.py`
     """
