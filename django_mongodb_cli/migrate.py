@@ -11,11 +11,12 @@ import subprocess
 def migrate(make_migrations):
     """Run Django migrations."""
 
-    if not os.path.exists("manage.py"):
-        click.echo("manage.py not found. Run `django-mongodb-cli startproject`!")
-        return
+    if os.path.exists("manage.py"):
+        command = os.path.join(sys.executable, "manage.py")
+    else:
+        command = "django-admin"
 
     if make_migrations:
-        subprocess.run([sys.executable, "manage.py", "makemigrations"])
+        subprocess.run([command, "makemigrations"])
     else:
-        subprocess.run([sys.executable, "manage.py", "migrate"])
+        subprocess.run([command, "migrate"])
