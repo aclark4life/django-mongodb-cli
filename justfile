@@ -26,6 +26,12 @@ django-startproject:
     django-mongodb-cli migrate
     django-mongodb-cli createsuperuser
 
+# ---------------------------------------- mongodb ----------------------------------------
+
+[group('mongodb')]
+db-init:
+    mongosh `echo ${MONGODB_URI}` --eval 'db.dropDatabase()'
+
 # ---------------------------------------- python ----------------------------------------
 
 # install python dependencies and activate pre-commit hooks
