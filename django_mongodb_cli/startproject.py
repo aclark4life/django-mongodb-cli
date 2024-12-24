@@ -103,9 +103,9 @@ def startproject(
             sys.executable,
             os.path.join("..", "manage.py"),
             "startapp",
+            "home",
             "--template",
             os.path.join("..", "project_templates", "app"),
-            "home",
         ],
         cwd="apps",
     )
