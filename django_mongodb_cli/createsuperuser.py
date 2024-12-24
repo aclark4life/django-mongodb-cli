@@ -20,10 +20,14 @@ def createsuperuser():
     click.echo(os.environ["MONGODB_URI"])
     click.echo(f"User email: {user_email}")
 
+    if os.path.exists("manage.py"):
+        command = os.path.join(sys.executable, "manage.py")
+    else:
+        command = "django-admin"
+
     subprocess.run(
         [
-            sys.executable,
-            "manage.py",
+            command,
             "createsuperuser",
             "--noinput",
             "--username=admin",
