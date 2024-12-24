@@ -45,7 +45,7 @@ def _get_test_settings(test_dir, wagtail=False):
 @click.option("-w", "--wagtail", help="Run Wagtail tests", is_flag=True)
 def test(modules, keyword, list_tests, wagtail):
     """
-    Run `runtests.py`
+    Run `runtests.py` for Django or Wagtail
     """
     click.echo(click.style("Running tests", fg="blue"))
 
