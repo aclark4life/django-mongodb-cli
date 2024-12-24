@@ -1,7 +1,9 @@
 import django_mongodb
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(PROJECT_DIR)
+
 DATABASES = {"default": django_mongodb.parse_uri(os.environ.get("MONGODB_URI"))}
 DEBUG = True
 DEFAULT_AUTO_FIELD = "django_mongodb.fields.ObjectIdAutoField"

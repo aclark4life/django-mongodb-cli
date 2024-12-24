@@ -1,6 +1,7 @@
 import click
 import os
 import shutil
+import sys
 import subprocess
 
 
@@ -95,10 +96,12 @@ def startproject(
 
     if not os.path.exists("apps"):
         os.makedirs("apps")
+        os.open(os.path.join("apps", "__init__.py"), os.O_CREAT)
 
     subprocess.run(
         [
-            "django-admin",
+            sys.executable,
+            os.path.join("..", "manage.py"),
             "startapp",
             "--template",
             os.path.join("..", "project_templates", "app"),
