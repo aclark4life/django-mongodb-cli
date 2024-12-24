@@ -5,6 +5,7 @@ import subprocess
 
 
 def _copy_mongo_migrations():
+    click.echo(click.style("Copying mongo_migrations", fg="blue"))
     if not os.path.exists(
         os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations")
     ):
@@ -15,6 +16,7 @@ def _copy_mongo_migrations():
 
 
 def _copy_mongo_apps():
+    click.echo(click.style("Copying mongo_apps", fg="blue"))
     shutil.copyfile(
         "apps_wagtail.py",
         os.path.join("src", "wagtail", "wagtail", "test", "mongo_apps.py"),
@@ -29,6 +31,7 @@ def test(modules, keyword, wagtail):
     """
     Run `runtests.py`
     """
+    click.echo(click.style("Running tests", fg="blue"))
 
     if wagtail:
         _copy_mongo_migrations()
