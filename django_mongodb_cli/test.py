@@ -41,8 +41,9 @@ def _get_test_settings(test_dir, wagtail=False):
 @click.command()
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
+@click.option("-l", "--list-tests", help="List tests", is_flag=True)
 @click.option("-w", "--wagtail", help="Run Wagtail tests", is_flag=True)
-def test(modules, keyword, wagtail):
+def test(modules, keyword, list_tests, wagtail):
     """
     Run `runtests.py`
     """
@@ -71,8 +72,13 @@ def test(modules, keyword, wagtail):
     command.extend(["--debug-sql"])
     command.extend(["--noinput"])
     command.extend(modules)
-    click.echo(f"Running {' '.join(command)}")
 
+    if list_tests:
+        for module in sorted(os.listdir(test_dir)):
+            click.echo(module)
+        return
+
+    click.echo(f"Running {' '.join(command)}")
     cwd = test_settings[3]
     click.echo(f"Working directory: {cwd}")
     if keyword:
