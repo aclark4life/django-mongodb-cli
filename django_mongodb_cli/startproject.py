@@ -70,7 +70,7 @@ def startproject(
         template = os.path.join(os.path.join("src", "django-mongodb-project"))
 
     if not template:
-        template = os.path.join(os.path.join("project_templates", "backend"))
+        template = os.path.join(os.path.join("project_templates", "project"))
 
     click.echo(f"Using template: {template}")
 
