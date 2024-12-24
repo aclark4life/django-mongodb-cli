@@ -4,6 +4,23 @@ import shutil
 import subprocess
 
 
+def _copy_mongo_migrations():
+    if not os.path.exists(
+        os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations")
+    ):
+        shutil.copytree(
+            os.path.join("project_template", "mongo_migrations"),
+            os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations"),
+        )
+
+
+def _copy_mongo_apps():
+    shutil.copyfile(
+        "apps_wagtail.py",
+        os.path.join("src", "wagtail", "wagtail", "test", "mongo_apps.py"),
+    )
+
+
 @click.command()
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
@@ -14,17 +31,8 @@ def test(modules, keyword, wagtail):
     """
 
     if wagtail:
-        if not os.path.exists(
-            os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations")
-        ):
-            shutil.copytree(
-                os.path.join("project_template", "mongo_migrations"),
-                os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations"),
-            )
-        shutil.copyfile(
-            "apps_wagtail.py",
-            os.path.join("src", "wagtail", "wagtail", "test", "mongo_apps.py"),
-        )
+        _copy_mongo_migrations()
+        _copy_mongo_apps()
         runtests_py = "./runtests.py"
         test_settings = [
             "settings_wagtail.py",
