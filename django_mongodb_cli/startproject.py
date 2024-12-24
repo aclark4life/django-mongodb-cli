@@ -19,6 +19,12 @@ def startproject(
 
     click.echo(project_name)
 
+    if os.path.exists("manage.py"):
+        click.echo("manage.py already exists")
+        if not delete:
+            click.echo("Use -d to delete existing project files")
+            return
+
     if delete:
         items = {
             ".dockerignore": os.path.isfile,
