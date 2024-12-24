@@ -25,7 +25,12 @@ def startproject(
 
     if delete:
         items = {
+            ".babelrc": os.path.isfile,
             ".dockerignore": os.path.isfile,
+            ".browserslistrc": os.path.isfile,
+            ".eslintrc": os.path.isfile,
+            ".nvmrc": os.path.isfile,
+            ".stylelintrc.json": os.path.isfile,
             "Dockerfile": os.path.isfile,
             "apps": os.path.isdir,
             "home": os.path.isdir,
@@ -34,6 +39,9 @@ def startproject(
             "frontend": os.path.isdir,
             "mongo_migrations": os.path.isdir,
             "manage.py": os.path.isfile,
+            "package-lock.json": os.path.isfile,
+            "package.json": os.path.isfile,
+            "postcss.config.js": os.path.isfile,
             "requirements.txt": os.path.isfile,
             "search": os.path.isdir,
         }
