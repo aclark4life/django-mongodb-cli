@@ -100,6 +100,8 @@ def startproject(
         [
             "django-admin",
             "startapp",
+            "--template",
+            os.path.join("project_templates", "app"),
             "home",
         ],
         cwd="apps",
