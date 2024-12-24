@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class {{ camel_case_app_name }}Config(AppConfig):
     default_auto_field = 'django_mongodb.fields.ObjectIdAutoField'
-    name = '{{ app_name }}'
+    name = 'apps.{{ app_name }}'
