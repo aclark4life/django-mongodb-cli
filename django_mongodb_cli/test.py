@@ -25,14 +25,14 @@ def _get_test_settings(test_dir, wagtail=False):
     if wagtail:
         return [
             "settings_wagtail.py",
-            os.path.join("src", "wagtail", "wagtail", "test", "mongo_settings.py"),
+            os.path.join(test_dir, "mongo_settings.py"),
             "wagtail.test.mongo_settings",
             os.path.join("src", "wagtail"),
         ]
     else:
         return [
             "settings_django.py",
-            os.path.join("src", "django", "tests", "mongo_settings.py"),
+            os.path.join(test_dir, "mongo_settings.py"),
             "mongo_settings",
             ".",
         ]
