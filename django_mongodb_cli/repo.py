@@ -76,7 +76,7 @@ def repo(
     update,
 ):
     """
-    Clone repositories in pyproject.toml
+    Manage repositories in pyproject.toml.
     """
     clone_dir = "src"
     pyproject_path = "pyproject.toml"
