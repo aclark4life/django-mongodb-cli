@@ -6,12 +6,10 @@ import subprocess
 
 def _copy_mongo_migrations(test_dir):
     click.echo(click.style("Copying mongo_migrations", fg="blue"))
-    if not os.path.exists(
-        os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations")
-    ):
+    if not os.path.exists(os.path.join(test_dir, "mongo_migrations")):
         shutil.copytree(
             os.path.join("project_template", "mongo_migrations"),
-            os.path.join("src", "wagtail", "wagtail", "test", "mongo_migrations"),
+            os.path.join(test_dir, "mongo_migrations"),
         )
 
 
@@ -19,7 +17,7 @@ def _copy_mongo_apps(test_dir):
     click.echo(click.style("Copying mongo_apps", fg="blue"))
     shutil.copyfile(
         "apps_wagtail.py",
-        os.path.join("src", "wagtail", "wagtail", "test", "mongo_apps.py"),
+        os.path.join(test_dir, "mongo_apps.py"),
     )
 
 
@@ -51,10 +49,10 @@ def test(modules, keyword, wagtail):
     click.echo(click.style("Running tests", fg="blue"))
 
     if wagtail:
-        _copy_mongo_migrations()
-        _copy_mongo_apps()
-        runtests_py = "./runtests.py"
         test_dir = os.path.join("src", "wagtail", "wagtail", "test")
+        runtests_py = "./runtests.py"
+        _copy_mongo_migrations(test_dir)
+        _copy_mongo_apps(test_dir)
         test_settings = _get_test_settings(test_dir, wagtail=True)
     else:
         test_dir = os.path.join("src", "django", "tests")
