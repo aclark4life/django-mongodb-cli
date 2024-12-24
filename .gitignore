@@ -1,5 +1,7 @@
 .idea/
 backend/
+!project_templates/backend/
+!project_templates/frontend/
 frontend/
 django_mongodb_cli.egg-info/
 __pycache__
