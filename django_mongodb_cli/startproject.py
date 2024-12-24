@@ -1,7 +1,6 @@
 import click
 import os
 import shutil
-import sys
 import subprocess
 
 
@@ -100,8 +99,7 @@ def startproject(
 
     subprocess.run(
         [
-            sys.executable,
-            os.path.join("..", "manage.py"),
+            "django-admin",
             "startapp",
             "home",
             "--template",
