@@ -1,5 +1,6 @@
 .idea/
 backend/
+frontend/
 django_mongodb_cli.egg-info/
 __pycache__
 manage.py
@@ -12,3 +13,12 @@ src/
 !django_mongodb_cli/manage.py
 !project_template/manage.py
 !project_template/mongo_migrations/
+.babelrc
+.browserslistrc
+.eslintrc
+.nvmrc
+.stylelintrc.json
+frontend/
+package-lock.json
+package.json
+postcss.config.js
