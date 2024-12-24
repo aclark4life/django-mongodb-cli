@@ -16,6 +16,9 @@ def migrate(make_migrations):
     else:
         command = ["django-admin"]  # Use a list for consistency
 
+    if os.environ.get("MONGODB_URI"):
+        click.echo(os.environ["MONGODB_URI"])
+
     if make_migrations:
         subprocess.run(command + ["makemigrations"])
     else:
