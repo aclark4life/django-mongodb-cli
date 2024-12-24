@@ -17,17 +17,18 @@ def createsuperuser():
 
     os.environ["DJANGO_SUPERUSER_PASSWORD"] = "admin"
 
-    click.echo(os.environ["MONGODB_URI"])
+    if os.environ.get("MONGODB_URI"):
+        click.echo(os.environ["MONGODB_URI"])
     click.echo(f"User email: {user_email}")
 
     if os.path.exists("manage.py"):
-        command = os.path.join(sys.executable, "manage.py")
+        command = [sys.executable, "manage.py"]
     else:
-        command = "django-admin"
+        command = ["django-admin"]  # Use a list for consistency
 
     subprocess.run(
-        [
-            command,
+        command
+        + [
             "createsuperuser",
             "--noinput",
             "--username=admin",
