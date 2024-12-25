@@ -1,6 +1,13 @@
 import django_mongodb
 import os
 
+from secrets import choice
+from string import ascii_letters, digits, punctuation
+
+chars = ascii_letters + digits + punctuation
+
+SECRET_KEY = "".join(choice(chars) for _ in range(50))
+
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
