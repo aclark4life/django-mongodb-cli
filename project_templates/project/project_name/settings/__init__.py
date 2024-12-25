@@ -36,3 +36,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "frontend", "build")]
 WEBPACK_LOADER = {
     "MANIFEST_FILE": os.path.join(BASE_DIR, "frontend", "build", "manifest.json")
 }
+
+SECRET_KEY = "{{ secret_key }}"
