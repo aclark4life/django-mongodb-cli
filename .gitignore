@@ -9,6 +9,7 @@ manage.py
 mongo_app/
 mongo_migrations/
 mongo_project/
+node_modules/
 server.log
 server.pid
 src/
