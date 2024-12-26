@@ -10,6 +10,7 @@ DEFAULT_AUTO_FIELD = "django_mongodb.fields.ObjectIdAutoField"
 INSTALLED_APPS = [
     "{{ project_name }}.mongo_apps.MongoAuthConfig",
     "{{ project_name }}.mongo_apps.MongoContentTypesConfig",
+    "django.contrib.staticfiles",
     "django_extensions",
     "webpack_boilerplate",
 ]
