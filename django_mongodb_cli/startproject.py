@@ -70,7 +70,7 @@ def startproject(
         template = os.path.join(os.path.join("src", "django-mongodb-project"))
 
     if not template:
-        template = os.path.join(os.path.join("project_templates", "project"))
+        template = os.path.join(os.path.join("project_templates", "project_template"))
 
     click.echo(f"Using template: {template}")
 
@@ -88,7 +88,7 @@ def startproject(
     subprocess.run(
         [
             "cookiecutter",
-            os.path.join("project_templates", "frontend"),
+            os.path.join("project_templates", "frontend_template"),
             "--no-input",
         ]
     )
@@ -103,7 +103,7 @@ def startproject(
             "startapp",
             "home",
             "--template",
-            os.path.join("..", "project_templates", "app"),
+            os.path.join("..", "project_templates", "app_template"),
         ],
         cwd="apps",
     )
