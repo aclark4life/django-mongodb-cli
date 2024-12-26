@@ -1,7 +1,7 @@
 {
-  "name": "python-webpack-boilerplate",
-  "version": "1.0.3",
-  "description": "Webpack boilerplate for Django & Flask",
+  "name": "django-mongodb-cli",
+  "version": "0.1.0",
+  "description": "For django-mongodb development.",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.prod.js",
     "start": "webpack serve --config webpack/webpack.config.dev.js",
@@ -9,17 +9,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AccordBox/python-webpack-boilerplate"
+    "url": "https://github.com/aclark4life/django-mongodb-cli"
   },
   "keywords": [
     "webpack",
     "startkit",
     "frontend"
   ],
-  "author": "Michael Yin",
+  "author": "Jeffrey A. Clark",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/AccordBox/python-webpack-boilerplate/issues"
+    "url": "https://github.com/aclark4life/django-mongodb-cli/issues"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
@@ -51,6 +51,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "core-js": "^3.37.0"
   }
 }
