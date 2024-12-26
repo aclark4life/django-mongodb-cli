@@ -16,13 +16,11 @@ def startproject(
     project_name,
 ):
     """Run startproject command with the template from src/django-mongodb-project."""
-
     if os.path.exists("manage.py"):
         click.echo("manage.py already exists")
         if not delete:
             click.echo("Use -d to delete existing project files")
             return
-
     if delete:
         items = {
             ".babelrc": os.path.isfile,
@@ -45,7 +43,6 @@ def startproject(
             "requirements.txt": os.path.isfile,
             "search": os.path.isdir,
         }
-
         for item, check_function in items.items():
             if check_function(item):
                 if os.path.isdir(item):
@@ -56,9 +53,7 @@ def startproject(
                     click.echo(f"Removed file: {item}")
             else:
                 click.echo(f"Skipping: {item} does not exist")
-
         return
-
     template = None
     django_admin = "django-admin"
     startproject = "startproject"
@@ -68,12 +63,9 @@ def startproject(
         startproject = "start"
     elif django:
         template = os.path.join(os.path.join("src", "django-mongodb-project"))
-
     if not template:
         template = os.path.join(os.path.join("project_templates", "project_template"))
-
     click.echo(f"Using template: {template}")
-
     subprocess.run(
         [
             django_admin,
@@ -84,26 +76,10 @@ def startproject(
             template,
         ]
     )
-
     subprocess.run(
         [
             "cookiecutter",
             os.path.join("project_templates", "frontend_template"),
             "--no-input",
         ]
-    )
-
-    if not os.path.exists("apps"):
-        os.makedirs("apps")
-        os.open(os.path.join("apps", "__init__.py"), os.O_CREAT)
-
-    subprocess.run(
-        [
-            "django-admin",
-            "startapp",
-            "home",
-            "--template",
-            os.path.join("..", "project_templates", "app_template"),
-        ],
-        cwd="apps",
     )
