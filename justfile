@@ -13,19 +13,6 @@ django-serve:
     django-mongodb-cli runserver
 alias s := django-serve
 
-[group('django')]
-django-startproject:
-    django-mongodb-cli startproject --delete
-    django-mongodb-cli startproject --django
-    django-mongodb-cli install --app debug_toolbar
-    django-mongodb-cli install --app home
-    django-mongodb-cli install --url home.urls
-    django-mongodb-cli install --app polls
-    django-mongodb-cli install --app django_extensions
-    django-mongodb-cli install --middleware debug_toolbar.middleware.DebugToolbarMiddleware
-    django-mongodb-cli migrate
-    django-mongodb-cli createsuperuser
-
 # ---------------------------------------- mongodb ----------------------------------------
 
 [group('mongodb')]
@@ -54,13 +41,6 @@ check-venv:
       exit 1
     fi
 
-[group('wagtail')]
-wagtail-startproject:
-    django-mongodb-cli startproject --delete
-    django-mongodb-cli startproject --wagtail
-    django-mongodb-cli install --app debug_toolbar --settings-path backend/settings/base.py
-    django-mongodb-cli install --app polls --settings-path backend/settings/base.py
-    django-mongodb-cli install --app django_extensions --settings-path backend/settings/base.py
-    django-mongodb-cli install --middleware debug_toolbar.middleware.DebugToolbarMiddleware
-    django-mongodb-cli migrate
-    django-mongodb-cli createsuperuser
+[group('npm')]
+npm-install:
+    npm install
