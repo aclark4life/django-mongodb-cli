@@ -16,4 +16,12 @@ def runserver():
     else:
         command = ["django-admin"]  # Use a list for consistency
 
-    subprocess.run(command + ["runserver"])
+    # Start npm run watch
+    npm_process = subprocess.Popen(["npm", "run", "watch"])
+
+    # Start django-admin runserver
+    django_process = subprocess.Popen(command + ["runserver"])
+
+    # Wait for both processes to complete
+    npm_process.wait()
+    django_process.wait()
