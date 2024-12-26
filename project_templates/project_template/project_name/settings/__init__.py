@@ -45,3 +45,5 @@ TEMPLATES = [
         "APP_DIRS": True,
     },
 ]
+
+ALLOWED_HOSTS = ["*"]
