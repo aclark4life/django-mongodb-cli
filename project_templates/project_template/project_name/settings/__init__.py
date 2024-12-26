@@ -40,8 +40,9 @@ SECRET_KEY = "{{ secret_key }}"
 
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
         "APP_DIRS": True,
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join("{{ project_name }}", "templates")],
     },
 ]
 
