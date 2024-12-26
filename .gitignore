@@ -26,3 +26,4 @@ package-lock.json
 package.json
 postcss.config.js
 apps/
+!project_templates/project_template/package.json
