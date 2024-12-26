@@ -1,4 +1,5 @@
-from django.urls import include, path
+from django.urls import path
+from .views import BaseView
 
 
-urlpatterns = [path("", include("apps.home.urls"))]
+urlpatterns = [path("", BaseView.as_view(), name="base")]
