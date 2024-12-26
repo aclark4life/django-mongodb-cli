@@ -38,3 +38,10 @@ WEBPACK_LOADER = {
 }
 
 SECRET_KEY = "{{ secret_key }}"
+
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "APP_DIRS": True,
+    },
+]
