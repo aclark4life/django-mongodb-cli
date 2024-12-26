@@ -19,5 +19,4 @@ repos:
     rev: v1.36.3
     hooks:
       - id: djlint-reformat-django
-        files: .
       - id: djlint-django
