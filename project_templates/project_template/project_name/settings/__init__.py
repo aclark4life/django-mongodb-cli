@@ -47,3 +47,5 @@ TEMPLATES = [
 ]
 
 ALLOWED_HOSTS = ["*"]
+
+STATIC_URL = "static/"
