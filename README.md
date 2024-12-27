@@ -27,7 +27,7 @@ python -m pip install .
 
 ## Usage
 
-### Clone and install development repositories
+### Clone development repositories
 
 Defined in `pyproject.toml`.
 
