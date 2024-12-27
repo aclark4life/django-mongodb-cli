@@ -1,7 +1,5 @@
 .idea/
 backend/
-!project_templates/backend/
-!project_templates/frontend/
 frontend/
 django_mongodb_cli.egg-info/
 __pycache__
@@ -12,10 +10,6 @@ mongo_project/
 node_modules/
 server.log
 server.pid
-src/
-!django_mongodb_cli/manage.py
-!project_template/manage.py
-!project_template/mongo_migrations/
 .babelrc
 .browserslistrc
 .eslintrc
@@ -26,4 +20,3 @@ package-lock.json
 package.json
 postcss.config.js
 apps/
-!project_templates/project_template/package.json
