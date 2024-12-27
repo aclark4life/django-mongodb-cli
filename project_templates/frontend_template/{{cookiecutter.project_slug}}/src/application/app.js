@@ -1,6 +1,5 @@
 // This is the scss entry file
 import "../styles/index.scss";
-import "bootstrap";
 
 // We can import other JS file as we like
 import Jumbotron from "../components/jumbotron";
