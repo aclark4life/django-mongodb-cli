@@ -1,12 +1,19 @@
 # ensure package/conf is importable
 from django_filters.conf import DEFAULTS
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
-    },
-}
+import django_mongodb
+import os
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": ":memory:",
+#     },
+# }
+
+DATABASES = {}
+DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/djangotests")
+DATABASES["default"] = django_mongodb.parse_uri(DATABASE_URL)
 
 INSTALLED_APPS = (
     "django.contrib.contenttypes",

@@ -21,13 +21,20 @@ def _copy_mongo_apps(test_dir):
     )
 
 
-def _get_test_settings(test_dir, wagtail=False):
+def _get_test_settings(test_dir, wagtail=False, django_filter=False):
     if wagtail:
         return [
             "settings_wagtail.py",
             os.path.join(test_dir, "mongo_settings.py"),
             "wagtail.test.mongo_settings",
             os.path.join("src", "wagtail"),
+        ]
+    elif django_filter:
+        return [
+            "settings_filter.py",
+            os.path.join(test_dir, "mongo_settings.py"),
+            "django_filters.tests.mongo_settings",
+            os.path.join("src", "django-filter"),
         ]
     else:
         return [
@@ -41,9 +48,10 @@ def _get_test_settings(test_dir, wagtail=False):
 @click.command()
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
+@click.option("-f", "--django-filter", help="Run Django Filter tests", is_flag=True)
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
 @click.option("-w", "--wagtail", help="Run Wagtail tests", is_flag=True)
-def test(modules, keyword, list_tests, wagtail):
+def test(modules, keyword, list_tests, wagtail, django_filter):
     """
     Run `runtests.py` for Django or Wagtail.
     """
@@ -55,6 +63,10 @@ def test(modules, keyword, list_tests, wagtail):
         _copy_mongo_migrations(test_dir)
         _copy_mongo_apps(test_dir)
         test_settings = _get_test_settings(test_dir, wagtail=True)
+    elif django_filter:
+        test_dir = os.path.join("src", "django-filter", "tests")
+        runtests_py = os.path.join("src", "django-filter", "runtests.py")
+        test_settings = _get_test_settings(test_dir, django_filter=True)
     else:
         test_dir = os.path.join("src", "django", "tests")
         runtests_py = os.path.join(test_dir, "runtests.py")
