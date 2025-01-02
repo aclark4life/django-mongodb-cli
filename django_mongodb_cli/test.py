@@ -71,7 +71,11 @@ def test(modules, keyword, list_tests, wagtail):
     command.extend(["--verbosity", "3"])
     command.extend(["--debug-sql"])
     command.extend(["--noinput"])
-    command.extend(modules)
+
+    if wagtail:
+        command.extend(["wagtail.test." + module for module in modules])
+    else:
+        command.extend(modules)
 
     if list_tests:
         for module in sorted(os.listdir(test_dir)):
