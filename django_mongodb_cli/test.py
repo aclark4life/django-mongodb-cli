@@ -8,7 +8,7 @@ def _copy_mongo_migrations(test_dir):
     click.echo(click.style("Copying mongo_migrations", fg="blue"))
     if not os.path.exists(os.path.join(test_dir, "mongo_migrations")):
         shutil.copytree(
-            os.path.join("project_template", "mongo_migrations"),
+            os.path.join("project_templates", "project_template", "mongo_migrations"),
             os.path.join(test_dir, "mongo_migrations"),
         )
 
