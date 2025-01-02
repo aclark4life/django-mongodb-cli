@@ -177,7 +177,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "wagtail.test.mongo_apps.MongoAdminConfig",
     "django.contrib.auth",
-    "django.contrib.contenttypes",
+    "wagtail.test.mongo_apps.MongoContentTypesConfig",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.sitemaps",
