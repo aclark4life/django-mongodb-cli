@@ -27,6 +27,7 @@ dev = [
     "django-mongodb-debug @ git+ssh://git@github.com/aclark4life/django-mongodb-debug@main # upstream: mongodb-labs",
     "django-mongodb-project @ git+ssh://git@github.com/aclark4life/django-mongodb-project@main # upstream: mongodb-labs",
     "django-postgresql-project @ git+ssh://git@github.com/aclark4life/django-postgresql-project@main",
+    "django-rest-framework @ git+ssh://git@github.com/encode/django-rest-framework@main",
     "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.0.x # upstream: mongodb-forks",
     "django-home @ git+ssh://git@github.com/aclark4life/django-home@main",
     "django-polls @ git+ssh://git@github.com/aclark4life/django-polls@main",
