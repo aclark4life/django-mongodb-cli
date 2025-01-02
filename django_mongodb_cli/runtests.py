@@ -65,7 +65,7 @@ def runtests(modules, keyword, list_tests, wagtail, django_filter):
         test_settings = _get_test_settings(test_dir, wagtail=True)
     elif django_filter:
         test_dir = os.path.join("src", "django-filter", "tests")
-        runtests_py = os.path.join("src", "django-filter", "runtests.py")
+        runtests_py = "./runtests.py"
         test_settings = _get_test_settings(test_dir, django_filter=True)
     else:
         test_dir = os.path.join("src", "django", "tests")
