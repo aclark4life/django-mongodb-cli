@@ -40,13 +40,19 @@ django-mongodb-cli repo -c
 Run the Django test suite in `src/django`.
 
 ```bash
-django-mongodb-cli test
+django-mongodb-cli runtests
 ```
 
 Run the Wagtail test suite in `src/wagtail`.
 
 ```bash
-django-mongodb-cli test -w
+django-mongodb-cli runtests -w
+```
+
+Run the Django Filter test suite in `src/django-filter`.
+
+```bash
+django-mongodb-cli runtests -f
 ```
 
 ### Start a new project
