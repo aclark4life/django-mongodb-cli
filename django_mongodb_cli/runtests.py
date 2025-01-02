@@ -51,7 +51,7 @@ def _get_test_settings(test_dir, wagtail=False, django_filter=False):
 @click.option("-f", "--django-filter", help="Run Django Filter tests", is_flag=True)
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
 @click.option("-w", "--wagtail", help="Run Wagtail tests", is_flag=True)
-def test(modules, keyword, list_tests, wagtail, django_filter):
+def runtests(modules, keyword, list_tests, wagtail, django_filter):
     """
     Run `runtests.py` for Django or Wagtail.
     """
