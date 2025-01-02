@@ -33,7 +33,7 @@ def _get_test_settings(test_dir, wagtail=False, django_filter=False):
         return [
             "settings_filter.py",
             os.path.join(test_dir, "mongo_settings.py"),
-            "django_filters.tests.mongo_settings",
+            "tests.mongo_settings",
             os.path.join("src", "django-filter"),
         ]
     else:
