@@ -58,7 +58,7 @@ def runtests(modules, keyword, list_tests, wagtail, django_filter):
     click.echo(click.style("Running tests", fg="blue"))
 
     if wagtail:
-        test_dir = os.path.join("src", "wagtail", "wagtail", "tests")
+        test_dir = os.path.join("src", "wagtail", "wagtail", "test")
         runtests_py = "./runtests.py"
         _copy_mongo_migrations(os.path.join("src", "wagtail", "wagtail", "test"))
         _copy_mongo_apps(os.path.join("src", "wagtail", "wagtail", "test"))
