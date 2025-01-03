@@ -18,7 +18,7 @@ DATABASES["default"] = django_mongodb.parse_uri(DATABASE_URL)
 INSTALLED_APPS = (
     "tests.mongo_apps.MongoContentTypesConfig",
     "django.contrib.staticfiles",
-    "django.contrib.auth",
+    "tests.mongo_apps.MongoAuthConfig",
     "rest_framework",
     "django_filters",
     "tests.rest_framework",
