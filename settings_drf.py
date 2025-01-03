@@ -70,6 +70,7 @@ def pytest_configure(config):
             "tests",
         ),
         PASSWORD_HASHERS=("django.contrib.auth.hashers.MD5PasswordHasher",),
+        DEFAULT_AUTO_FIELD="django_mongodb.fields.ObjectIdAutoField",
     )
 
     # guardian is optional
