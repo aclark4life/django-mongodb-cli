@@ -13,12 +13,19 @@ def _copy_mongo_migrations(test_dir):
         )
 
 
-def _copy_mongo_apps(test_dir):
-    click.echo(click.style("Copying mongo_apps", fg="blue"))
-    shutil.copyfile(
-        "apps_wagtail.py",
-        os.path.join(test_dir, "mongo_apps.py"),
-    )
+def _copy_mongo_apps(test_dir, wagtail=False, django_filter=False):
+    if wagtail:
+        click.echo(click.style("Copying mongo_apps to wagtail", fg="blue"))
+        shutil.copyfile(
+            "apps_wagtail.py",
+            os.path.join(test_dir, "mongo_apps.py"),
+        )
+    elif django_filter:
+        click.echo(click.style("Copying mongo_apps to django-filter", fg="blue"))
+        shutil.copyfile(
+            "apps_filter.py",
+            os.path.join(test_dir, "mongo_apps.py"),
+        )
 
 
 def _get_test_settings(test_dir, wagtail=False, django_filter=False):
@@ -64,10 +71,15 @@ def runtests(modules, keyword, list_tests, wagtail, django_filter):
         test_dirs.append(os.path.join("src", "wagtail", "wagtail", "tests"))
         runtests_py = "./runtests.py"
         _copy_mongo_migrations(os.path.join("src", "wagtail", "wagtail", "test"))
-        _copy_mongo_apps(os.path.join("src", "wagtail", "wagtail", "test"))
+        _copy_mongo_apps(
+            os.path.join("src", "wagtail", "wagtail", "test"), wagtail=True
+        )
         test_settings = _get_test_settings(test_dirs[0], wagtail=True)
     elif django_filter:
         test_dirs.append(os.path.join("src", "django-filter", "tests"))
+        _copy_mongo_apps(
+            os.path.join("src", "django-filter", "tests"), django_filter=True
+        )
         runtests_py = "./runtests.py"
         test_settings = _get_test_settings(test_dirs[0], django_filter=True)
     else:

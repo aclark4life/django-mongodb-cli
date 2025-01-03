@@ -16,7 +16,7 @@ DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/djangote
 DATABASES["default"] = django_mongodb.parse_uri(DATABASE_URL)
 
 INSTALLED_APPS = (
-    "django.contrib.contenttypes",
+    "tests.mongo_apps.MongoContentTypesConfig",
     "django.contrib.staticfiles",
     "django.contrib.auth",
     "rest_framework",
