@@ -43,28 +43,28 @@ def _get_test_settings(
 ):
     if wagtail:
         return [
-            "settings_wagtail.py",
+            os.path.join("test_settings", "settings_wagtail.py"),
             os.path.join(test_dir, "mongo_settings.py"),
             "wagtail.test.mongo_settings",
             os.path.join("src", "wagtail"),
         ]
     elif django_filter:
         return [
-            "settings_filter.py",
+            os.path.join("test_settings", "settings_filter.py"),
             os.path.join(test_dir, "mongo_settings.py"),
             "tests.mongo_settings",
             os.path.join("src", "django-filter"),
         ]
     elif django_rest_framework:
         return [
-            "settings_drf.py",
+            os.path.join("test_settings", "settings_drf.py"),
             os.path.join(test_dir, "conftest.py"),
             "tests.conftest",
             os.path.join("src", "django-rest-framework"),
         ]
     else:
         return [
-            "settings_django.py",
+            os.path.join("test_settings", "settings_django.py"),
             os.path.join(test_dir, "mongo_settings.py"),
             "mongo_settings",
             ".",
