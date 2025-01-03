@@ -57,20 +57,23 @@ def runtests(modules, keyword, list_tests, wagtail, django_filter):
     """
     click.echo(click.style("Running tests", fg="blue"))
 
+    test_dirs = []
+
     if wagtail:
-        test_dir = os.path.join("src", "wagtail", "wagtail", "test")
+        test_dirs.append(os.path.join("src", "wagtail", "wagtail", "test"))
+        test_dirs.append(os.path.join("src", "wagtail", "wagtail", "tests"))
         runtests_py = "./runtests.py"
         _copy_mongo_migrations(os.path.join("src", "wagtail", "wagtail", "test"))
         _copy_mongo_apps(os.path.join("src", "wagtail", "wagtail", "test"))
-        test_settings = _get_test_settings(test_dir, wagtail=True)
+        test_settings = _get_test_settings(test_dirs[0], wagtail=True)
     elif django_filter:
-        test_dir = os.path.join("src", "django-filter", "tests")
+        test_dirs.append(os.path.join("src", "django-filter", "tests"))
         runtests_py = "./runtests.py"
-        test_settings = _get_test_settings(test_dir, django_filter=True)
+        test_settings = _get_test_settings(test_dirs[0], django_filter=True)
     else:
-        test_dir = os.path.join("src", "django", "tests")
-        runtests_py = os.path.join(test_dir, "runtests.py")
-        test_settings = _get_test_settings(test_dir)
+        test_dirs.append(os.path.join("src", "django", "tests"))
+        runtests_py = os.path.join(test_dirs[0], "runtests.py")
+        test_settings = _get_test_settings(test_dirs[0])
 
     shutil.copyfile(
         test_settings[0],
@@ -84,14 +87,12 @@ def runtests(modules, keyword, list_tests, wagtail, django_filter):
     command.extend(["--debug-sql"])
     command.extend(["--noinput"])
 
-    if wagtail:
-        command.extend(["wagtail.tests." + module for module in modules])
-    else:
-        command.extend(modules)
+    command.extend(modules)
 
     if list_tests:
-        for module in sorted(os.listdir(test_dir)):
-            click.echo(module)
+        for test_dir in test_dirs:
+            for module in sorted(os.listdir(test_dir)):
+                click.echo(module)
         return
 
     click.echo(f"Running {' '.join(command)}")
