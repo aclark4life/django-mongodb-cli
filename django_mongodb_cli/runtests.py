@@ -85,7 +85,7 @@ def runtests(modules, keyword, list_tests, wagtail, django_filter):
     command.extend(["--noinput"])
 
     if wagtail:
-        command.extend(["wagtail.test." + module for module in modules])
+        command.extend(["wagtail.tests." + module for module in modules])
     else:
         command.extend(modules)
 
