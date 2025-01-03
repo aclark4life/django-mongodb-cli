@@ -4,15 +4,6 @@ import shutil
 import subprocess
 
 
-def _copy_mongo_migrations(test_dir):
-    click.echo(click.style("Copying mongo_migrations", fg="blue"))
-    if not os.path.exists(os.path.join(test_dir, "mongo_migrations")):
-        shutil.copytree(
-            os.path.join("project_templates", "project_template", "mongo_migrations"),
-            os.path.join(test_dir, "mongo_migrations"),
-        )
-
-
 def _copy_mongo_apps(test_dir, wagtail=False, django_filter=False):
     if wagtail:
         click.echo(click.style("Copying mongo_apps to wagtail", fg="blue"))
@@ -25,6 +16,15 @@ def _copy_mongo_apps(test_dir, wagtail=False, django_filter=False):
         shutil.copyfile(
             "apps_filter.py",
             os.path.join(test_dir, "mongo_apps.py"),
+        )
+
+
+def _copy_mongo_migrations(test_dir):
+    click.echo(click.style("Copying mongo_migrations", fg="blue"))
+    if not os.path.exists(os.path.join(test_dir, "mongo_migrations")):
+        shutil.copytree(
+            os.path.join("project_templates", "project_template", "mongo_migrations"),
+            os.path.join(test_dir, "mongo_migrations"),
         )
 
 
@@ -56,9 +56,15 @@ def _get_test_settings(test_dir, wagtail=False, django_filter=False):
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
 @click.option("-f", "--django-filter", help="Run Django Filter tests", is_flag=True)
+@click.option(
+    "-r",
+    "--django-rest-framework",
+    help="Run Django Rest Framework tests",
+    is_flag=True,
+)
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
 @click.option("-w", "--wagtail", help="Run Wagtail tests", is_flag=True)
-def runtests(modules, keyword, list_tests, wagtail, django_filter):
+def runtests(modules, keyword, list_tests, wagtail, django_filter, drf):
     """
     Run `runtests.py` for Django or Wagtail.
     """
