@@ -10,6 +10,7 @@ dependencies = [
     "django-admin-tui",
     "freezegun",
     "psycopg2",
+    "pytest",
     "python-webpack-boilerplate",
     "requests",
     "setuptools",

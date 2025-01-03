@@ -4,7 +4,9 @@ import shutil
 import subprocess
 
 
-def _copy_mongo_apps(test_dir, wagtail=False, django_filter=False):
+def _copy_mongo_apps(
+    test_dir, wagtail=False, django_filter=False, django_rest_framework=False
+):
     if wagtail:
         click.echo(click.style("Copying mongo_apps to wagtail", fg="blue"))
         shutil.copyfile(
@@ -15,6 +17,14 @@ def _copy_mongo_apps(test_dir, wagtail=False, django_filter=False):
         click.echo(click.style("Copying mongo_apps to django-filter", fg="blue"))
         shutil.copyfile(
             "apps_filter.py",
+            os.path.join(test_dir, "mongo_apps.py"),
+        )
+    elif django_rest_framework:
+        click.echo(
+            click.style("Copying mongo_apps to django-rest-framework", fg="blue")
+        )
+        shutil.copyfile(
+            "apps_drf.py",
             os.path.join(test_dir, "mongo_apps.py"),
         )
 
@@ -28,7 +38,9 @@ def _copy_mongo_migrations(test_dir):
         )
 
 
-def _get_test_settings(test_dir, wagtail=False, django_filter=False):
+def _get_test_settings(
+    test_dir, wagtail=False, django_filter=False, django_rest_framework=False
+):
     if wagtail:
         return [
             "settings_wagtail.py",
@@ -42,6 +54,13 @@ def _get_test_settings(test_dir, wagtail=False, django_filter=False):
             os.path.join(test_dir, "mongo_settings.py"),
             "tests.mongo_settings",
             os.path.join("src", "django-filter"),
+        ]
+    elif django_rest_framework:
+        return [
+            "settings_drf.py",
+            os.path.join(test_dir, "mongo_settings.py"),
+            "tests.mongo_settings",
+            os.path.join("src", "django-rest-framework"),
         ]
     else:
         return [
@@ -64,7 +83,9 @@ def _get_test_settings(test_dir, wagtail=False, django_filter=False):
 )
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
 @click.option("-w", "--wagtail", help="Run Wagtail tests", is_flag=True)
-def runtests(modules, keyword, list_tests, wagtail, django_filter, drf):
+def runtests(
+    modules, keyword, list_tests, wagtail, django_filter, django_rest_framework
+):
     """
     Run `runtests.py` for Django or Wagtail.
     """
@@ -89,6 +110,15 @@ def runtests(modules, keyword, list_tests, wagtail, django_filter, drf):
         )
         runtests_py = "./runtests.py"
         test_settings = _get_test_settings(test_dirs[0], django_filter=True)
+    elif django_rest_framework:
+        test_dirs.append(os.path.join("src", "django-rest-framework", "tests"))
+        _copy_mongo_migrations(os.path.join("src", "django-rest-framework", "tests"))
+        _copy_mongo_apps(
+            os.path.join("src", "django-rest-framework", "tests"),
+            django_rest_framework=True,
+        )
+        runtests_py = os.path.join("src", "django-rest-framework", "runtests.py")
+        test_settings = _get_test_settings(test_dirs[0], django_rest_framework=True)
     else:
         test_dirs.append(os.path.join("src", "django", "tests"))
         runtests_py = os.path.join(test_dirs[0], "runtests.py")
