@@ -77,6 +77,7 @@ def runtests(modules, keyword, list_tests, wagtail, django_filter):
         test_settings = _get_test_settings(test_dirs[0], wagtail=True)
     elif django_filter:
         test_dirs.append(os.path.join("src", "django-filter", "tests"))
+        _copy_mongo_migrations(os.path.join("src", "django-filter", "tests"))
         _copy_mongo_apps(
             os.path.join("src", "django-filter", "tests"), django_filter=True
         )

@@ -57,3 +57,8 @@ def FILTERS_VERBOSE_LOOKUPS():
 
 # DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 DEFAULT_AUTO_FIELD = "django_mongodb.fields.ObjectIdAutoField"
+MIGRATION_MODULES = {
+    "admin": "tests.mongo_migrations.admin",
+    "auth": "tests.mongo_migrations.auth",
+    "contenttypes": "tests.mongo_migrations.contenttypes",
+}
