@@ -58,8 +58,8 @@ def _get_test_settings(
     elif django_rest_framework:
         return [
             "settings_drf.py",
-            os.path.join(test_dir, "mongo_settings.py"),
-            "tests.mongo_settings",
+            os.path.join(test_dir, "conftest.py"),
+            "tests.conftest",
             os.path.join("src", "django-rest-framework"),
         ]
     else:
