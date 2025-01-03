@@ -56,9 +56,9 @@ def pytest_configure(config):
             "django.contrib.messages.middleware.MessageMiddleware",
         ),
         INSTALLED_APPS=(
-            "django.contrib.admin",
+            "tests.mongo_apps.MongoAdminConfig",
             "django.contrib.auth",
-            "django.contrib.contenttypes",
+            "tests.mongo_apps.MongoContentTypesConfig",
             "django.contrib.sessions",
             "django.contrib.sites",
             "django.contrib.staticfiles",

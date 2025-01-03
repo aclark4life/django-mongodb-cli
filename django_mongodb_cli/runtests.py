@@ -117,7 +117,8 @@ def runtests(
             os.path.join("src", "django-rest-framework", "tests"),
             django_rest_framework=True,
         )
-        runtests_py = os.path.join("src", "django-rest-framework", "runtests.py")
+        # runtests_py = os.path.join("src", "django-rest-framework", "runtests.py")
+        runtests_py = "./runtests.py"
         test_settings = _get_test_settings(test_dirs[0], django_rest_framework=True)
     else:
         test_dirs.append(os.path.join("src", "django", "tests"))
@@ -130,11 +131,13 @@ def runtests(
     )
 
     command = [runtests_py]
-    command.extend(["--settings", test_settings[2]])
-    command.extend(["--parallel", "1"])
-    command.extend(["--verbosity", "3"])
-    command.extend(["--debug-sql"])
-    command.extend(["--noinput"])
+
+    if not django_rest_framework:
+        command.extend(["--settings", test_settings[2]])
+        command.extend(["--parallel", "1"])
+        command.extend(["--verbosity", "3"])
+        command.extend(["--debug-sql"])
+        command.extend(["--noinput"])
 
     command.extend(modules)
 
