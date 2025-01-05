@@ -35,7 +35,6 @@ dev = [
     "django-polls @ git+ssh://git@github.com/aclark4life/django-polls@main",
     "django-taggit @ git+ssh://git@github.com/aclark4life/django-taggit@main",
     "pymongo @ git+ssh://git@github.com/aclark4life/mongo-python-driver@master # upstream: mongodb",
-    "pymongoexplain @ git+ssh://git@github.com/mongodb-labs/pymongoexplain@master",
     "python-webpack-boilerplate @ git+ssh://git@github.com/aclark4life/python-webpack-boilerplate@main",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
     "wagtail-postgresql-project @ git+ssh://git@github.com/aclark4life/wagtail-postgresql-project@main",
