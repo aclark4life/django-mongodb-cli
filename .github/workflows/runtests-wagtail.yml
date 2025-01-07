@@ -29,3 +29,5 @@ jobs:
       run: |
         django-mongodb-cli repo --clone
         django-mongodb-cli runtests -w
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
