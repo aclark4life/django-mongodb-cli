@@ -122,6 +122,7 @@ def runtests(
         test_settings = _get_test_settings(test_dirs[0], django_rest_framework=True)
     else:
         test_dirs.append(os.path.join("src", "django", "tests"))
+        test_dirs.append(os.path.join("src", "django-mongodb-backend", "tests"))
         runtests_py = os.path.join(test_dirs[0], "runtests.py")
         test_settings = _get_test_settings(test_dirs[0])
 
