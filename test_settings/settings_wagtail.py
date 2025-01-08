@@ -158,7 +158,6 @@ INSTALLED_APPS = [
     "wagtail.contrib.table_block",
     "wagtail.test.mongo_apps.MongoWagtailFormsAppConfig",
     "wagtail.contrib.typed_table_block",
-    "wagtail.test.mongo_apps.MongoWagtailSearchAppConfig",
     "wagtail.test.mongo_apps.MongoWagtailEmbedsAppConfig",
     "wagtail.test.mongo_apps.MongoWagtailImagesAppConfig",
     "wagtail.sites",
