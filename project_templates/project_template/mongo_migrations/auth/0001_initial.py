@@ -4,7 +4,7 @@ import django.contrib.auth.models
 import django.contrib.auth.validators
 import django.db.models.deletion
 import django.utils.timezone
-import django_mongodb.fields
+import django_mongodb_backend.fields
 from django.db import migrations, models
 
 
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -89,7 +89,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,

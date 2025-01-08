@@ -2,7 +2,7 @@
 
 import django.core.serializers.json
 import django.db.models.deletion
-import django_mongodb.fields
+import django_mongodb_backend.fields
 import modelcluster.fields
 import uuid
 import wagtail.models
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -86,7 +86,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -104,7 +104,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -313,7 +313,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -341,7 +341,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -398,7 +398,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -448,7 +448,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -485,7 +485,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -529,7 +529,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -560,7 +560,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -617,7 +617,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -666,7 +666,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -736,7 +736,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -848,7 +848,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -937,7 +937,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -995,7 +995,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -1078,7 +1078,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -1139,7 +1139,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -1235,7 +1235,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
@@ -1308,7 +1308,7 @@ class Migration(migrations.Migration):
             fields=[
                 (
                     "id",
-                    django_mongodb.fields.ObjectIdAutoField(
+                    django_mongodb_backend.fields.ObjectIdAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
