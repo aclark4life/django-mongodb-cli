@@ -23,21 +23,16 @@ packages = ["django_mongodb_cli"]
 
 [tool.django_mongodb_cli]
 dev = [
+    "django-allauth @ git+ssh://git@github.com/pennersr/django-allauth@main",
     "django-filter @ git+ssh://git@github.com/carltongibson/django-filter@main",
-    "django-mongodb-backend @ git+ssh://git@github.com/aclark4life/django-mongodb-backend@main # upstream: mongodb-labs",
-    "django-mongodb-app @ git+ssh://git@github.com/aclark4life/django-mongodb-app@main # upstream: mongodb-labs",
-    "django-mongodb-debug @ git+ssh://git@github.com/aclark4life/django-mongodb-debug@main # upstream: mongodb-labs",
-    "django-mongodb-project @ git+ssh://git@github.com/aclark4life/django-mongodb-project@main # upstream: mongodb-labs",
-    "django-postgresql-project @ git+ssh://git@github.com/aclark4life/django-postgresql-project@main",
+    "django-mongodb-app @ git+ssh://git@github.com/aclark4life/django-mongodb-app@main", 
+    "django-mongodb-backend @ git+ssh://git@github.com/mongodb-labs/django-mongodb-backend@main", 
+    "django-mongodb-project @ git+ssh://git@github.com/aclark4life/django-mongodb-project@main", 
     "django-rest-framework @ git+ssh://git@github.com/encode/django-rest-framework@main",
     "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.0.x # upstream: mongodb-forks",
-    "django-home @ git+ssh://git@github.com/aclark4life/django-home@main",
-    "django-polls @ git+ssh://git@github.com/aclark4life/django-polls@main",
-    "django-taggit @ git+ssh://git@github.com/aclark4life/django-taggit@main",
-    "pymongo @ git+ssh://git@github.com/aclark4life/mongo-python-driver@master # upstream: mongodb",
+    "pymongo @ git+ssh://git@github.com/mongodb/mongo-python-driver@master # upstream: mongodb",
+    "wagtail @ git+ssh://git@github.com/wagtail/wagtail@main",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
-    "wagtail-postgresql-project @ git+ssh://git@github.com/aclark4life/wagtail-postgresql-project@main",
-    "wagtail @ git+ssh://git@github.com/aclark4life/wagtail@main",
 ]
 
 [project.scripts]
