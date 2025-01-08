@@ -32,7 +32,7 @@ def copy_mongo_apps(test_dir, app_type):
         "django_rest_framework": "apps_drf.py",
     }
     if app_type in app_files:
-        click.echo(click.style(f"Copying mongo_apps to {app_type}", fg="blue"))
+        click.echo(click.style(f"Copying mongo apps to {test_dir}", fg="blue"))
         shutil.copyfile(
             os.path.join("test_apps", app_files[app_type]),
             os.path.join(test_dir, "mongo_apps.py"),
@@ -41,7 +41,7 @@ def copy_mongo_apps(test_dir, app_type):
 
 def copy_mongo_migrations(test_dir):
     """Copy mongo_migrations to the specified test directory."""
-    click.echo(click.style("Copying mongo_migrations", fg="blue"))
+    click.echo(click.style("Copying mongo migrations to {test_dir}", fg="blue"))
     target_dir = os.path.join(test_dir, "mongo_migrations")
     if not os.path.exists(target_dir):
         shutil.copytree(
@@ -84,6 +84,7 @@ def copy_test_settings(test_dir, app_type):
         settings_map[app_type][2],
         settings_map[app_type][3],
     ]
+    click.echo(click.style(f"Copying test settings to {test_dir}", fg="blue"))
     shutil.copyfile(test_settings[0], test_settings[1])
     return test_settings
 
