@@ -1,6 +1,6 @@
 # django-mongodb-cli
 
-For [django-mongodb](https://github.com/mongodb-labs/django-mongodb) development.
+For [django-mongodb-backend](https://github.com/mongodb-labs/django-mongodb-backend) development.
 
 ## Installation
 
