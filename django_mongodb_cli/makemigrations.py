@@ -11,8 +11,9 @@ from .utils import (
 
 @click.command(context_settings={"ignore_unknown_options": True})
 @click.option("-w", "--wagtail", is_flag=True, help="Run makemigrations for Wagtail.")
+@click.option("-d", "--delete", is_flag=True, help="Delete migrations directory.")
 @click.argument("args", nargs=-1)
-def makemigrations(args, wagtail):
+def makemigrations(args, wagtail, delete):
     """Run makemigrations."""
 
     if os.path.exists("manage.py"):
@@ -32,6 +33,11 @@ def makemigrations(args, wagtail):
 
     test_dirs = test_dirs_map[app_type]
     test_dir = test_dirs[0]
+
+    # if delete:
+    #     delete_mongo_migrations(test_dir)
+    #     return
+
     copy_test_settings(test_dir, app_type)
 
     if app_type == "wagtail":
