@@ -86,3 +86,7 @@ def copy_test_settings(test_dir, app_type):
     ]
     shutil.copyfile(test_settings[0], test_settings[1])
     return test_settings
+
+
+def delete_mongo_migrations(test_dir):
+    shutil.rmtree(test_dir)
