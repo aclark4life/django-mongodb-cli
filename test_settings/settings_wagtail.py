@@ -1,7 +1,5 @@
 import os
 
-import django_mongodb_backend
-
 from django.contrib.messages import constants as message_constants
 from django.utils.translation import gettext_lazy as _
 
@@ -24,41 +22,36 @@ MEDIA_URL = "/media/"
 
 TIME_ZONE = "Asia/Tokyo"
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": os.environ.get("DATABASE_ENGINE", "django.db.backends.sqlite3"),
-#         "NAME": os.environ.get("DATABASE_NAME", ":memory:"),
-#         "USER": os.environ.get("DATABASE_USER", ""),
-#         "PASSWORD": os.environ.get("DATABASE_PASSWORD", ""),
-#         "HOST": os.environ.get("DATABASE_HOST", ""),
-#         "PORT": os.environ.get("DATABASE_PORT", ""),
-#         "TEST": {"NAME": os.environ.get("DATABASE_NAME", "")},
-#     }
-# }
-#
-#
-# # Set regular database name when a non-SQLite db is used
-# if DATABASES["default"]["ENGINE"] != "django.db.backends.sqlite3":
-#     DATABASES["default"]["NAME"] = os.environ.get("DATABASE_NAME", "wagtail")
-#
-# # Add extra options when mssql is used (on for example appveyor)
-# if DATABASES["default"]["ENGINE"] == "sql_server.pyodbc":
-#     DATABASES["default"]["OPTIONS"] = {
-#         "driver": os.environ.get("DATABASE_DRIVER", "SQL Server Native Client 11.0"),
-#         "MARS_Connection": "True",
-#         "host_is_server": True,  # Applies to FreeTDS driver only
-#     }
-#
-#
-# # explicitly set charset / collation to utf8 on mysql
-# if DATABASES["default"]["ENGINE"] == "django.db.backends.mysql":
-#     DATABASES["default"]["TEST"]["CHARSET"] = "utf8"
-#     DATABASES["default"]["TEST"]["COLLATION"] = "utf8_general_ci"
+DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("DATABASE_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("DATABASE_NAME", ":memory:"),
+        "USER": os.environ.get("DATABASE_USER", ""),
+        "PASSWORD": os.environ.get("DATABASE_PASSWORD", ""),
+        "HOST": os.environ.get("DATABASE_HOST", ""),
+        "PORT": os.environ.get("DATABASE_PORT", ""),
+        "TEST": {"NAME": os.environ.get("DATABASE_NAME", "")},
+    }
+}
 
-DATABASES = {}
-DATABASES["default"] = django_mongodb_backend.parse_uri(
-    os.environ.get("MONGODB_URI", "mongodb://localhost:27017/wagtail")
-)
+# Set regular database name when a non-SQLite db is used
+if DATABASES["default"]["ENGINE"] != "django.db.backends.sqlite3":
+    DATABASES["default"]["NAME"] = os.environ.get("DATABASE_NAME", "wagtail")
+
+# Add extra options when mssql is used (on for example appveyor)
+if DATABASES["default"]["ENGINE"] == "sql_server.pyodbc":
+    DATABASES["default"]["OPTIONS"] = {
+        "driver": os.environ.get("DATABASE_DRIVER", "SQL Server Native Client 11.0"),
+        "MARS_Connection": "True",
+        "host_is_server": True,  # Applies to FreeTDS driver only
+    }
+
+
+# explicitly set charset / collation to utf8 on mysql
+if DATABASES["default"]["ENGINE"] == "django.db.backends.mysql":
+    DATABASES["default"]["TEST"]["CHARSET"] = "utf8"
+    DATABASES["default"]["TEST"]["COLLATION"] = "utf8_general_ci"
+
 
 SECRET_KEY = "not needed"
 
@@ -82,10 +75,10 @@ STORAGES = {
     },
 }
 
-# if os.environ.get("STATICFILES_STORAGE", "") == "manifest":
-#     STORAGES["staticfiles"]["BACKEND"] = (
-#         "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
-#     )
+if os.environ.get("STATICFILES_STORAGE", "") == "manifest":
+    STORAGES["staticfiles"]["BACKEND"] = (
+        "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+    )
 
 
 USE_TZ = not os.environ.get("DISABLE_TIMEZONE")
@@ -142,6 +135,9 @@ MIDDLEWARE = (
 )
 
 INSTALLED_APPS = [
+    # Place wagtail.test.earlypage first, to test the behaviour of page models
+    # that are defined before wagtail.admin is loaded
+    "wagtail.test.earlypage",
     # Install wagtailredirects with its appconfig
     # There's nothing special about wagtailredirects, we just need to have one
     # app which uses AppConfigs to test that hooks load properly
@@ -173,11 +169,11 @@ INSTALLED_APPS = [
     "wagtail.admin",
     "wagtail.api.v2",
     "wagtail",
-    "wagtail.test.mongo_apps.MongoTaggitAppConfig",
+    "taggit",
     "rest_framework",
-    "wagtail.test.mongo_apps.MongoAdminConfig",
+    "django.contrib.admin",
     "django.contrib.auth",
-    "wagtail.test.mongo_apps.MongoContentTypesConfig",
+    "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.sitemaps",
@@ -188,12 +184,12 @@ INSTALLED_APPS = [
 # Using DatabaseCache to make sure that the cache is cleared between tests.
 # This prevents false-positives in some wagtail core tests where we are
 # changing the 'wagtail_root_paths' key which may cause future tests to fail.
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_mongodb_backend.cache.DatabaseCache",
-#         "LOCATION": "cache",
-#     }
-# }
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "cache",
+    }
+}
 
 PASSWORD_HASHERS = (
     "django.contrib.auth.hashers.MD5PasswordHasher",  # don't use the intentionally slow default password hasher
@@ -286,25 +282,4 @@ MESSAGE_TAGS = {
     message_constants.SUCCESS: "my-custom-tag",
     message_constants.WARNING: "my-custom-tag",
     message_constants.ERROR: "my-custom-tag",
-}
-DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
-MIGRATION_MODULES = {
-    "admin": "wagtail.test.mongo_migrations.admin",
-    "auth": "wagtail.test.mongo_migrations.auth",
-    "contenttypes": "wagtail.test.mongo_migrations.contenttypes",
-    "demosite": "wagtail.test.mongo_migrations.demosite",
-    "i18n": "wagtail.test.mongo_migrations.i18n",
-    "routablepagetests": "wagtail.test.mongo_migrations.routablepagetests",
-    "streamfield_migration_tests": "wagtail.test.mongo_migrations.streamfield_migration_tests",
-    "taggit": "wagtail.test.mongo_migrations.taggit",
-    "wagtaildocs": "wagtail.test.mongo_migrations.wagtaildocs",
-    "wagtailredirects": "wagtail.test.mongo_migrations.wagtailredirects",
-    "wagtailimages": "wagtail.test.mongo_migrations.wagtailimages",
-    "wagtailsearch": "wagtail.test.mongo_migrations.wagtailsearch",
-    "wagtailadmin": "wagtail.test.mongo_migrations.wagtailadmin",
-    "wagtailcore": "wagtail.test.mongo_migrations.wagtailcore",
-    "wagtailforms": "wagtail.test.mongo_migrations.wagtailforms",
-    "wagtailembeds": "wagtail.test.mongo_migrations.wagtailembeds",
-    "wagtailusers": "wagtail.test.mongo_migrations.wagtailusers",
-    "tests": "wagtail.test.mongo_migrations.tests",
 }
