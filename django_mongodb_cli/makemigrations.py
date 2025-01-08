@@ -3,6 +3,11 @@ import os
 import sys
 import subprocess
 
+from .utils import (
+    copy_test_settings,
+    test_dirs_map,
+)
+
 
 @click.command(context_settings={"ignore_unknown_options": True})
 @click.option("-w", "--wagtail", is_flag=True, help="Run makemigrations for Wagtail.")
@@ -15,7 +20,21 @@ def makemigrations(args, wagtail):
     else:
         command = ["django-admin", "makemigrations"]  # Use a list for consistency
 
-    if wagtail:
-        os.environ["DJANGO_SETTINGS_MODULE"] = "wagtail.test.settings"
+    app_type = (
+        "wagtail"
+        if wagtail
+        # else "django_filter"
+        # if django_filter
+        # else "django_rest_framework"
+        # if django_rest_framework
+        else "default"
+    )
+
+    test_dirs = test_dirs_map[app_type]
+    test_dir = test_dirs[0]
+    copy_test_settings(test_dir, app_type)
+
+    if app_type == "wagtail":
+        os.environ["DJANGO_SETTINGS_MODULE"] = "wagtail.test.mongo_settings"
 
     subprocess.run(command + [*args])
