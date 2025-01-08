@@ -1,6 +1,6 @@
 import os
 
-import django_mongodb
+import django_mongodb_backend
 
 from django.contrib.messages import constants as message_constants
 from django.utils.translation import gettext_lazy as _
@@ -56,7 +56,7 @@ TIME_ZONE = "Asia/Tokyo"
 #     DATABASES["default"]["TEST"]["COLLATION"] = "utf8_general_ci"
 
 DATABASES = {}
-DATABASES["default"] = django_mongodb.parse_uri(
+DATABASES["default"] = django_mongodb_backend.parse_uri(
     os.environ.get("MONGODB_URI", "mongodb://localhost:27017/wagtail")
 )
 
@@ -190,7 +190,7 @@ INSTALLED_APPS = [
 # changing the 'wagtail_root_paths' key which may cause future tests to fail.
 # CACHES = {
 #     "default": {
-#         "BACKEND": "django_mongodb.cache.DatabaseCache",
+#         "BACKEND": "django_mongodb_backend.cache.DatabaseCache",
 #         "LOCATION": "cache",
 #     }
 # }
@@ -287,7 +287,7 @@ MESSAGE_TAGS = {
     message_constants.WARNING: "my-custom-tag",
     message_constants.ERROR: "my-custom-tag",
 }
-DEFAULT_AUTO_FIELD = "django_mongodb.fields.ObjectIdAutoField"
+DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
 MIGRATION_MODULES = {
     "admin": "wagtail.test.mongo_migrations.admin",
     "auth": "wagtail.test.mongo_migrations.auth",

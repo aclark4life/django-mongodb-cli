@@ -1,7 +1,7 @@
 import os
 
 import django
-import django_mongodb
+import django_mongodb_backend
 from django.core import management
 
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/djangotests")
@@ -33,7 +33,7 @@ def pytest_configure(config):
         #     }
         # },
         DATABASES={
-            "default": django_mongodb.parse_uri(DATABASE_URL),
+            "default": django_mongodb_backend.parse_uri(DATABASE_URL),
         },
         SITE_ID=1,
         SECRET_KEY="not very secret in tests",
@@ -70,7 +70,7 @@ def pytest_configure(config):
             "tests",
         ),
         PASSWORD_HASHERS=("django.contrib.auth.hashers.MD5PasswordHasher",),
-        DEFAULT_AUTO_FIELD="django_mongodb.fields.ObjectIdAutoField",
+        DEFAULT_AUTO_FIELD="django_mongodb_backend.fields.ObjectIdAutoField",
         MIGRATION_MODULES={
             "admin": "tests.mongo_migrations.admin",
             "auth": "tests.mongo_migrations.auth",

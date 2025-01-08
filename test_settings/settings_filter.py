@@ -1,7 +1,7 @@
 # ensure package/conf is importable
 from django_filters.conf import DEFAULTS
 
-import django_mongodb
+import django_mongodb_backend
 import os
 
 # DATABASES = {
@@ -13,7 +13,7 @@ import os
 
 DATABASES = {}
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/djangotests")
-DATABASES["default"] = django_mongodb.parse_uri(DATABASE_URL)
+DATABASES["default"] = django_mongodb_backend.parse_uri(DATABASE_URL)
 
 INSTALLED_APPS = (
     "tests.mongo_apps.MongoContentTypesConfig",
@@ -56,7 +56,7 @@ def FILTERS_VERBOSE_LOOKUPS():
 
 
 # DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-DEFAULT_AUTO_FIELD = "django_mongodb.fields.ObjectIdAutoField"
+DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
 MIGRATION_MODULES = {
     "admin": "tests.mongo_migrations.admin",
     "auth": "tests.mongo_migrations.auth",
