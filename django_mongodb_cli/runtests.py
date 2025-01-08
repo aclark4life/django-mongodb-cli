@@ -10,13 +10,13 @@ def _copy_mongo_apps(
     if wagtail:
         click.echo(click.style("Copying mongo_apps to wagtail", fg="blue"))
         shutil.copyfile(
-            "apps_wagtail.py",
+            os.path.join("test_apps", "apps_wagtail.py"),
             os.path.join(test_dir, "mongo_apps.py"),
         )
     elif django_filter:
         click.echo(click.style("Copying mongo_apps to django-filter", fg="blue"))
         shutil.copyfile(
-            "apps_filter.py",
+            os.path.join("test_apps", "apps_filter.py"),
             os.path.join(test_dir, "mongo_apps.py"),
         )
     elif django_rest_framework:
@@ -24,7 +24,7 @@ def _copy_mongo_apps(
             click.style("Copying mongo_apps to django-rest-framework", fg="blue")
         )
         shutil.copyfile(
-            "apps_drf.py",
+            os.path.join("test_apps", "apps_drf.py"),
             os.path.join(test_dir, "mongo_apps.py"),
         )
 
