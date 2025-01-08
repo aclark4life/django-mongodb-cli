@@ -4,7 +4,9 @@ import sys
 import subprocess
 
 from .utils import (
+    copy_mongo_apps,
     copy_test_settings,
+    delete_mongo_migrations,
     test_dirs_map,
 )
 
@@ -34,13 +36,15 @@ def makemigrations(args, wagtail, delete):
     test_dirs = test_dirs_map[app_type]
     test_dir = test_dirs[0]
 
-    # if delete:
-    #     delete_mongo_migrations(test_dir)
-    #     return
-
+    copy_mongo_apps(test_dir, app_type)
     copy_test_settings(test_dir, app_type)
 
     if app_type == "wagtail":
+        if delete:
+            delete_mongo_migrations(
+                os.path.join(test_dir, "mongo_migrations"),
+                os.path.join("src", "wagtail"),
+            )
         os.environ["DJANGO_SETTINGS_MODULE"] = "wagtail.test.mongo_settings"
 
     subprocess.run(command + [*args])

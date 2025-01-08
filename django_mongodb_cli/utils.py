@@ -88,5 +88,11 @@ def copy_test_settings(test_dir, app_type):
     return test_settings
 
 
-def delete_mongo_migrations(test_dir):
-    shutil.rmtree(test_dir)
+def delete_mongo_migrations(mongo_migrations, project_dir):
+    shutil.rmtree(mongo_migrations, ignore_errors=True)
+    for root, dirs, files in os.walk(project_dir):
+        for dir_name in dirs:
+            if dir_name == "migrations":
+                dir_path = os.path.join(root, dir_name)
+                click.echo(f"Removing: {dir_path}")
+                shutil.rmtree(dir_path, ignore_errors=True)
