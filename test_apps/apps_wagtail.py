@@ -62,4 +62,4 @@ class MongoWagtailEmbedsAppConfig(WagtailEmbedsAppConfig):
 
 
 class MongoWagtailUsersAppConfig(WagtailUsersAppConfig):
-    default_auto_field = "django_mongodb.fields.ObjectIdAutoField"
+    default_auto_field = "django_mongodb_backend.fields.ObjectIdAutoField"
