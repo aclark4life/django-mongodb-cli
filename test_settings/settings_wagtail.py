@@ -168,7 +168,7 @@ INSTALLED_APPS = [
     "wagtail.test.mongo_apps.MongoWagtailAdminAppConfig",
     "wagtail.api.v2",
     "wagtail.test.mongo_apps.MongoWagtailAppConfig",
-    "taggit",
+    "wagtail.test.mongo_apps.MongoTaggitAppConfig",
     "rest_framework",
     "wagtail.test.mongo_apps.MongoAdminConfig",
     "wagtail.test.mongo_apps.MongoAuthConfig",
