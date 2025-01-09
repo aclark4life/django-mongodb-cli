@@ -1,4 +1,5 @@
 import os
+import django_mongodb_backend
 
 from django.contrib.messages import constants as message_constants
 from django.utils.translation import gettext_lazy as _
@@ -281,3 +282,6 @@ MESSAGE_TAGS = {
     message_constants.WARNING: "my-custom-tag",
     message_constants.ERROR: "my-custom-tag",
 }
+
+MONGODB_URI = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/wagtail")
+DATABASES["default"] = django_mongodb_backend.parse_uri(MONGODB_URI)
