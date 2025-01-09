@@ -285,4 +285,4 @@ MESSAGE_TAGS = {
 
 MONGODB_URI = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/wagtail")
 DATABASES["default"] = django_mongodb_backend.parse_uri(MONGODB_URI)
-CACHES = {}
+CACHES["default"] = None
