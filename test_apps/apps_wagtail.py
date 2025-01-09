@@ -13,6 +13,11 @@ from wagtail.embeds.apps import WagtailEmbedsAppConfig
 from wagtail.users.apps import WagtailUsersAppConfig
 from wagtail.test.demosite.apps import DemositeAppConfig
 from wagtail.test.i18n.apps import I18nAppConfig
+from wagtail.snippets.apps import WagtailSnippetsAppConfig
+
+
+class MongoWagtailSnippetsAppConfig(WagtailSnippetsAppConfig):
+    default_auto_field = "django_mongodb_backend.fields.ObjectIdAutoField"
 
 
 class MongoI18nAppConfig(I18nAppConfig):
