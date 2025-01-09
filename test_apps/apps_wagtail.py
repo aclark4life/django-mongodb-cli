@@ -16,6 +16,11 @@ from wagtail.test.i18n.apps import I18nAppConfig
 from wagtail.snippets.apps import WagtailSnippetsAppConfig
 from wagtail.test.testapp.apps import WagtailTestsAppConfig
 from wagtail.contrib.simple_translation.apps import SimpleTranslationAppConfig
+from wagtail.contrib.search_promotions.apps import WagtailSearchPromotionsAppConfig
+
+
+class MongoWagtailSearchPromotionsAppConfig(WagtailSearchPromotionsAppConfig):
+    default_auto_field = "django_mongodb_backend.fields.ObjectIdAutoField"
 
 
 class MongoSimpleTranslationAppConfig(SimpleTranslationAppConfig):

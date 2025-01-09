@@ -153,7 +153,7 @@ INSTALLED_APPS = [
     "wagtail.contrib.styleguide",
     "wagtail.contrib.routable_page",
     "wagtail.contrib.frontend_cache",
-    "wagtail.contrib.search_promotions",
+    "wagtail.test.mongo_apps.MongoWagtailSearchPromotionsAppConfig",
     "wagtail.contrib.settings",
     "wagtail.contrib.table_block",
     "wagtail.test.mongo_apps.MongoWagtailFormsAppConfig",
