@@ -148,7 +148,7 @@ INSTALLED_APPS = [
     "wagtail.test.snippets",
     "wagtail.test.routablepage",
     "wagtail.test.mongo_apps.MongoWagtailSearchAppConfig",
-    "wagtail.test.i18n",
+    "wagtail.test.mongo_apps.MongoI18nAppConfig",
     "wagtail.test.streamfield_migrations",
     "wagtail.contrib.simple_translation",
     "wagtail.contrib.styleguide",
