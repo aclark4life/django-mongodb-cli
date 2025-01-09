@@ -37,10 +37,6 @@ def makemigrations(args, wagtail, delete):
     test_dirs = test_dirs_map[app_type]
     test_dir = test_dirs[0]
 
-    copy_mongo_apps(test_dir, app_type)
-    copy_mongo_migrations(test_dir)
-    copy_test_settings(test_dir, app_type)
-
     if app_type == "wagtail":
         if delete:
             delete_mongo_migrations(
@@ -50,6 +46,11 @@ def makemigrations(args, wagtail, delete):
             click.echo("Deleted migrations directory.")
             return
 
+    copy_mongo_apps(test_dir, app_type)
+    copy_mongo_migrations(test_dir)
+    copy_test_settings(test_dir, app_type)
+
+    if app_type == "wagtail":
         os.environ["DJANGO_SETTINGS_MODULE"] = "wagtail.test.mongo_settings"
 
     subprocess.run(command + [*args])

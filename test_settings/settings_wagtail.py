@@ -283,3 +283,19 @@ MESSAGE_TAGS = {
 
 MONGODB_URI = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/wagtail")
 DATABASES["default"] = django_mongodb_backend.parse_uri(MONGODB_URI)
+
+MIGRATION_MODULES = {
+    "admin": "wagtail.test.mongo_migrations.admin",
+    "auth": "wagtail.test.mongo_migrations.auth",
+    "contenttypes": "wagtail.test.mongo_migrations.contenttypes",
+    "taggit": "wagtail.test.mongo_migrations.taggit",
+    "wagtaildocs": "wagtail.test.mongo_migrations.wagtaildocs",
+    "wagtailredirects": "wagtail.test.mongo_migrations.wagtailredirects",
+    "wagtailimages": "wagtail.test.mongo_migrations.wagtailimages",
+    "wagtailsearch": "wagtail.test.mongo_migrations.wagtailsearch",
+    "wagtailadmin": "wagtail.test.mongo_migrations.wagtailadmin",
+    "wagtailcore": "wagtail.test.mongo_migrations.wagtailcore",
+    "wagtailforms": "wagtail.test.mongo_migrations.wagtailforms",
+    "wagtailembeds": "wagtail.test.mongo_migrations.wagtailembeds",
+    "wagtailusers": "wagtail.test.mongo_migrations.wagtailusers",
+}
