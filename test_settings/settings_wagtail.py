@@ -144,7 +144,7 @@ INSTALLED_APPS = [
     # app which uses AppConfigs to test that hooks load properly
     "wagtail.test.mongo_apps.MongoWagtailRedirectsAppConfig",
     "wagtail.test.testapp",
-    "wagtail.test.demosite",
+    "wagtail.test.mongo_apps.MongoDemositeAppConfig",
     "wagtail.test.snippets",
     "wagtail.test.routablepage",
     "wagtail.test.mongo_apps.MongoWagtailSearchAppConfig",
