@@ -143,13 +143,13 @@ INSTALLED_APPS = [
     # There's nothing special about wagtailredirects, we just need to have one
     # app which uses AppConfigs to test that hooks load properly
     "wagtail.test.mongo_apps.MongoWagtailRedirectsAppConfig",
-    "wagtail.test.mongo_apps.WagtailTestsAppConfig",
+    "wagtail.test.mongo_apps.MongoWagtailTestsAppConfig",
     "wagtail.test.mongo_apps.MongoDemositeAppConfig",
     "wagtail.test.routablepage",
     "wagtail.test.mongo_apps.MongoWagtailSearchAppConfig",
     "wagtail.test.mongo_apps.MongoI18nAppConfig",
     "wagtail.test.streamfield_migrations",
-    "wagtail.contrib.simple_translation",
+    "wagtail.test.mongo_apps.MongoSimpleTranslationAppConfig",
     "wagtail.contrib.styleguide",
     "wagtail.contrib.routable_page",
     "wagtail.contrib.frontend_cache",
