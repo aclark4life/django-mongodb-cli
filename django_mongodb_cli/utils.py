@@ -26,10 +26,12 @@ test_dirs_map = {
 }
 
 project_dirs_map = {
-    "wagtail": os.path.join("src", "wagtail"),
+    "default": os.path.join("src", "django"),
+    "django_allauth": os.path.join("src", "django-allauth"),
+    "django_debug_toolbar": os.path.join("src", "django-debug-toolbar"),
     "django_filter": os.path.join("src", "django-filter"),
     "django_rest_framework": os.path.join("src", "django-rest-framework"),
-    "default": os.path.join("src", "django"),
+    "wagtail": os.path.join("src", "wagtail"),
 }
 
 

@@ -29,7 +29,14 @@ from .utils import (
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
 @click.option("-w", "--wagtail", help="Run Wagtail tests", is_flag=True)
 def runtests(
-    modules, keyword, list_tests, wagtail, django_filter, django_rest_framework
+    modules,
+    keyword,
+    list_tests,
+    wagtail,
+    django_filter,
+    django_rest_framework,
+    django_allauth,
+    django_debug_toolbar,
 ):
     """
     Run `runtests.py` for Django or Wagtail.
