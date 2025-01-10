@@ -31,11 +31,13 @@ project_dirs_map = {
 }
 
 
-def apply_patch(patch_file, project_dir):
+def apply_patches(app_type):
     """Apply a patch file to the specified project directory."""
-    click.echo(click.style(f"Applying patch {patch_file}", fg="blue"))
-    os.system(f"patch -p1 -d {project_dir} < {patch_file}")
-    click.echo(click.style("Patch applied", fg="green"))
+    project_dir = project_dirs_map[app_type]
+    for patch_file in os.listdir("patches", app_type):
+        click.echo(click.style(f"Applying patch {patch_file}", fg="blue"))
+        os.system(f"patch -p1 -d {project_dir} < {patch_file}")
+        click.echo(click.style("Patch applied", fg="green"))
 
 
 def copy_mongo_apps(test_dir, app_type):
