@@ -2,6 +2,8 @@ import click
 import os
 import shutil
 
+from git import Repo
+
 
 runtests_py_map = {
     "wagtail": "./runtests.py",
@@ -34,9 +36,28 @@ project_dirs_map = {
 def apply_patches(app_type):
     """Apply a patch file to the specified project directory."""
     project_dir = project_dirs_map[app_type]
-    for patch_file in os.listdir(os.path.join("patches", app_type)):
+    patch_dir = os.path.join("patches", app_type)
+    for patch_file in os.listdir(patch_dir):
+        shutil.copyfile(
+            os.path.join(patch_dir, patch_file),
+            os.path.join(project_dir, patch_file),
+        )
         click.echo(click.style(f"Applying patch {patch_file}", fg="blue"))
-        os.system(f"patch -p1 -d {project_dir} < {patch_file}")
+        # Ensure the repository is valid
+        repo = Repo(project_dir)
+        if not repo.bare:
+            try:
+                # Apply the patch
+                repo.git.apply(patch_file)
+                click.echo(
+                    f"Patch {os.path.basename(patch_file)} applied successfully."
+                )
+            except Exception as e:
+                click.echo(f"Failed to apply patch: {e}")
+                return
+        else:
+            click.echo("Not a valid Git repository.")
+            return
         click.echo(click.style("Patch applied", fg="green"))
 
 
