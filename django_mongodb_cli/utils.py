@@ -106,7 +106,7 @@ def copy_test_settings(test_dir, app_type):
             ".",
         ],
         "django_allauth": [
-            "settings_allauth.py",
+            "settings_allauth_regular.py",
             "mongo_settings.py",
             "tests.mongo_settings",
             os.path.join("src", "django-allauth"),
