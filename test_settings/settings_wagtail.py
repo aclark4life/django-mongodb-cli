@@ -305,3 +305,4 @@ MIGRATION_MODULES = {
     "wagtailembeds": "wagtail.test.mongo_migrations.wagtailembeds",
     "wagtailusers": "wagtail.test.mongo_migrations.wagtailusers",
 }
+DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
