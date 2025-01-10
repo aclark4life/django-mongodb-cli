@@ -24,6 +24,13 @@ test_dirs_map = {
 }
 
 
+def apply_patch(patch_file, project_dir):
+    """Apply a patch file to the specified project directory."""
+    click.echo(click.style(f"Applying patch {patch_file}", fg="blue"))
+    os.system(f"patch -p1 -d {project_dir} < {patch_file}")
+    click.echo(click.style("Patch applied", fg="green"))
+
+
 def copy_mongo_apps(test_dir, app_type):
     """Copy the appropriate mongo_apps file based on the app type."""
     app_files = {
