@@ -61,6 +61,12 @@ django-mongodb-cli runtests --django-filter
 django-mongodb-cli runtests --django-rest-framework
 ```
 
+#### Run the Django Debug Toolbar test suite in `src/django-debug-toolbar`.
+
+```bash
+django-mongodb-cli runtests --django-debug-toolbar
+```
+
 ### Start a new project
 
 ```bash
