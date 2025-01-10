@@ -1,5 +1,5 @@
 diff --git a/wagtail/test/testapp/models.py b/wagtail/test/testapp/models.py
-index 5f3c92638a..9cb5682fd7 100644
+index 5f3c92638a..54ae9beab3 100644
 --- a/wagtail/test/testapp/models.py
 +++ b/wagtail/test/testapp/models.py
 @@ -454,7 +454,8 @@ class EventPage(Page):
@@ -8,7 +8,7 @@ index 5f3c92638a..9cb5682fd7 100644
 
 -    custom_id = models.AutoField(primary_key=True)
 +    import django_mongodb_backend
-+    custom_id = django_mongodb_backend.fields.ObjectAutoIdField(primary_key=True)
++    custom_id = django_mongodb_backend.fields.ObjectIdAutoField(primary_key=True)
      event_page = ParentalKey(
          EventPage, on_delete=models.CASCADE, related_name="head_counts"
      )
