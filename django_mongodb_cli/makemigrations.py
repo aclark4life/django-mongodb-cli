@@ -5,7 +5,6 @@ import subprocess
 
 from .utils import (
     copy_mongo_apps,
-    copy_mongo_migrations,
     copy_test_settings,
     delete_mongo_migrations,
     test_dirs_map,
@@ -47,7 +46,6 @@ def makemigrations(args, wagtail, delete):
             return
 
     copy_mongo_apps(test_dir, app_type)
-    copy_mongo_migrations(test_dir)
     copy_test_settings(test_dir, app_type)
 
     if app_type == "wagtail":
