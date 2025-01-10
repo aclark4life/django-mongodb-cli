@@ -292,6 +292,7 @@ MIGRATION_MODULES = {
     "earlypage": "wagtail.test.mongo_migrations.earlypage",
     "routablepagetests": "wagtail.test.mongo_migrations.routablepagetests",
     "taggit": "wagtail.test.mongo_migrations.taggit",
+    "tests": "wagtail.test.mongo_migrations.tests",
     "wagtaildocs": "wagtail.test.mongo_migrations.wagtaildocs",
     "wagtailredirects": "wagtail.test.mongo_migrations.wagtailredirects",
     "wagtailimages": "wagtail.test.mongo_migrations.wagtailimages",
