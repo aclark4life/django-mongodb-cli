@@ -3,23 +3,37 @@ import os
 import sys
 import subprocess
 
+from .utils import copy_test_settings, test_dirs_map, copy_mongo_apps
+
 
 @click.command()
-@click.option(
-    "-mm", "--make-migrations", is_flag=True, help="Run Django makemigrations"
-)
-def migrate(make_migrations):
+@click.option("-w", "--wagtail", is_flag=True, help="Run migrate for Wagtail.")
+@click.argument("args", nargs=-1)
+def migrate(wagtail, args):
     """Run Django migrations."""
 
     if os.path.exists("manage.py"):
-        command = [sys.executable, "manage.py"]
+        command = [sys.executable, "manage.py", "migrate"]
     else:
-        command = ["django-admin"]  # Use a list for consistency
+        command = ["django-admin", "migrate"]  # Use a list for consistency
 
-    if os.environ.get("MONGODB_URI"):
-        click.echo(os.environ["MONGODB_URI"])
+    app_type = (
+        "wagtail"
+        if wagtail
+        # else "django_filter"
+        # if django_filter
+        # else "django_rest_framework"
+        # if django_rest_framework
+        else "default"
+    )
 
-    if make_migrations:
-        subprocess.run(command + ["makemigrations"])
-    else:
-        subprocess.run(command + ["migrate"])
+    test_dirs = test_dirs_map[app_type]
+    test_dir = test_dirs[0]
+
+    copy_mongo_apps(test_dir, app_type)
+    copy_test_settings(test_dir, app_type)
+
+    if app_type == "wagtail":
+        os.environ["DJANGO_SETTINGS_MODULE"] = "wagtail.test.mongo_settings"
+
+    subprocess.run(command + [*args])
