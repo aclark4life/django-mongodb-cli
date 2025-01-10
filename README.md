@@ -27,15 +27,15 @@ python -m pip install .
 
 ## Usage
 
-### Clone development repositories
+### Run tests
+
+#### Clone development repositories
 
 Defined in `pyproject.toml`.
 
 ```bash
 django-mongodb-cli repo --clone
 ```
-
-### Run tests
 
 Run the Django test suite in `src/django`.
 
