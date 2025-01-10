@@ -12,10 +12,39 @@ from .utils import (
 
 
 @click.command(context_settings={"ignore_unknown_options": True})
+@click.option(
+    "-t",
+    "--django-debug-toolbar",
+    is_flag=True,
+    help="Run makemigrations for Django Debug Toolbar.",
+)
+@click.option(
+    "-r",
+    "--django-rest-framework",
+    is_flag=True,
+    help="Run makemigrations for Django Rest Framework.",
+)
+@click.option(
+    "-f", "--django-filter", is_flag=True, help="Run makemigrations for Django Filter."
+)
+@click.option(
+    "-a",
+    "--django-allauth",
+    is_flag=True,
+    help="Run makemigrations for Django Allauth.",
+)
 @click.option("-w", "--wagtail", is_flag=True, help="Run makemigrations for Wagtail.")
 @click.option("-d", "--delete", is_flag=True, help="Delete migrations directory.")
 @click.argument("args", nargs=-1)
-def makemigrations(args, wagtail, delete):
+def makemigrations(
+    args,
+    wagtail,
+    delete,
+    django_filter,
+    django_rest_framework,
+    django_allauth,
+    django_debug_toolbar,
+):
     """Run makemigrations."""
 
     if os.path.exists("manage.py"):
@@ -24,12 +53,16 @@ def makemigrations(args, wagtail, delete):
         command = ["django-admin", "makemigrations"]  # Use a list for consistency
 
     app_type = (
-        "wagtail"
+        "django_allauth"
+        if django_allauth
+        else "django_debug_toolbar"
+        if django_debug_toolbar
+        else "django_filter"
+        if django_filter
+        else "django_rest_framework"
+        if django_rest_framework
+        else "wagtail"
         if wagtail
-        # else "django_filter"
-        # if django_filter
-        # else "django_rest_framework"
-        # if django_rest_framework
         else "default"
     )
 
