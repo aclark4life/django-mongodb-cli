@@ -39,6 +39,8 @@ django-mongodb-cli repo --clone
 
 #### Run the Django test suite in `src/django`.
 
+This is the default behavior. Third party library test suites can be run by passing the appropriate flag.
+
 ```bash
 django-mongodb-cli runtests
 ```
