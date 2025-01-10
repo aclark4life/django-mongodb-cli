@@ -14,6 +14,10 @@ from .utils import (
 
 @click.command()
 @click.argument("modules", nargs=-1)
+@click.option("-a", "--django-allauth", help="Run Django Allauth tests", is_flag=True)
+@click.option(
+    "-d", "--django-debug-toolbar", help="Run Django Debug Toolbar tests", is_flag=True
+)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
 @click.option("-f", "--django-filter", help="Run Django Filter tests", is_flag=True)
 @click.option(
