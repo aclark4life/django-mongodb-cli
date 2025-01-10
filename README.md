@@ -55,6 +55,12 @@ django-mongodb-cli runtests --wagtail
 django-mongodb-cli runtests --django-filter
 ```
 
+#### Run the Django Rest Framework test suite in `src/django-rest-framework`.
+
+```bash
+django-mongodb-cli runtests --django-rest-framework
+```
+
 ### Start a new project
 
 ```bash
