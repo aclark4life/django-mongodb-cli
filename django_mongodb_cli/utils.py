@@ -7,7 +7,7 @@ from git import Repo
 
 runtests_py_map = {
     "default": os.path.join("src", "django", "tests", "runtests.py"),
-    "django_allauth": os.path.join("src", "django-allauth", "tests", "runtests.py"),
+    "django_allauth": "tox",
     "django_debug_toolbar": os.path.join(
         "src", "django-debug-toolbar", "tests", "runtests.py"
     ),
