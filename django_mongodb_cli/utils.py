@@ -41,7 +41,7 @@ def copy_mongo_apps(test_dir, app_type):
 
 def copy_mongo_migrations(test_dir):
     """Copy mongo_migrations to the specified test directory."""
-    click.echo(click.style("Copying mongo migrations to {test_dir}", fg="blue"))
+    click.echo(click.style(f"Copying mongo migrations to {test_dir}", fg="blue"))
     target_dir = os.path.join(test_dir, "mongo_migrations")
     if not os.path.exists(target_dir):
         shutil.copytree(
