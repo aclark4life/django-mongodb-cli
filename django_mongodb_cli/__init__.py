@@ -7,6 +7,7 @@ from .migrate import migrate
 from .repo import repo
 from .runserver import runserver
 from .runtests import runtests
+from .shell import shell
 from .startapp import startapp
 from .startproject import startproject
 
@@ -17,6 +18,7 @@ def cli():
 
 
 cli.add_command(createsuperuser)
+cli.add_command(shell)
 cli.add_command(makemigrations)
 cli.add_command(manage)
 cli.add_command(migrate)
