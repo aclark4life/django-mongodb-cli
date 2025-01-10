@@ -27,7 +27,7 @@ python -m pip install .
 
 ## Usage
 
-### Run tests
+### Run Django and third party library test suites
 
 #### Clone development repositories
 
