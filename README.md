@@ -37,6 +37,12 @@ Defined in `pyproject.toml`.
 django-mongodb-cli repo --clone
 ```
 
+#### Install development repositories
+
+```bash
+django-mongodb-cli repo --install
+```
+
 #### Run the Django test suite in `src/django`.
 
 This is the default behavior.
