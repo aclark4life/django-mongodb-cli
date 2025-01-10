@@ -34,7 +34,7 @@ project_dirs_map = {
 def apply_patches(app_type):
     """Apply a patch file to the specified project directory."""
     project_dir = project_dirs_map[app_type]
-    for patch_file in os.listdir("patches", app_type):
+    for patch_file in os.listdir(os.path.join("patches", app_type)):
         click.echo(click.style(f"Applying patch {patch_file}", fg="blue"))
         os.system(f"patch -p1 -d {project_dir} < {patch_file}")
         click.echo(click.style("Patch applied", fg="green"))
