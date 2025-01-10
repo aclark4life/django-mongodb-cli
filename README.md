@@ -46,13 +46,13 @@ django-mongodb-cli runtests
 Run the Wagtail test suite in `src/wagtail`.
 
 ```bash
-django-mongodb-cli runtests -w
+django-mongodb-cli runtests --wagtail
 ```
 
 Run the Django Filter test suite in `src/django-filter`.
 
 ```bash
-django-mongodb-cli runtests -f
+django-mongodb-cli runtests --django-filter
 ```
 
 ### Start a new project
