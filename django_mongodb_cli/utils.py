@@ -23,6 +23,13 @@ test_dirs_map = {
     ],
 }
 
+project_dirs_map = {
+    "wagtail": os.path.join("src", "wagtail"),
+    "django_filter": os.path.join("src", "django-filter"),
+    "django_rest_framework": os.path.join("src", "django-rest-framework"),
+    "default": os.path.join("src", "django"),
+}
+
 
 def apply_patch(patch_file, project_dir):
     """Apply a patch file to the specified project directory."""

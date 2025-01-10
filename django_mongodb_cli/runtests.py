@@ -3,6 +3,7 @@ import os
 import subprocess
 
 from .utils import (
+    apply_patches,
     copy_mongo_migrations,
     copy_mongo_apps,
     copy_test_settings,
@@ -44,6 +45,7 @@ def runtests(
     test_dirs = test_dirs_map[app_type]
     test_dir = test_dirs[0]
 
+    apply_patches(app_type)
     copy_mongo_migrations(test_dir)
     copy_mongo_apps(test_dir, app_type)
     test_settings = copy_test_settings(test_dir, app_type)
