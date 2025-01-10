@@ -22,3 +22,4 @@ package.json
 postcss.config.js
 apps/
 src/
+!project_templates/project_template/mongo_migrations
