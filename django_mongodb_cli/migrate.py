@@ -3,7 +3,12 @@ import os
 import sys
 import subprocess
 
-from .utils import copy_test_settings, test_dirs_map, copy_mongo_apps
+from .utils import (
+    copy_test_settings,
+    test_dirs_map,
+    copy_mongo_apps,
+    copy_mongo_migrations,
+)
 
 
 @click.command()
@@ -30,6 +35,7 @@ def migrate(wagtail, args):
     test_dirs = test_dirs_map[app_type]
     test_dir = test_dirs[0]
 
+    copy_mongo_migrations(test_dir)
     copy_mongo_apps(test_dir, app_type)
     copy_test_settings(test_dir, app_type)
 
