@@ -44,12 +44,16 @@ def runtests(
     click.echo(click.style("Running tests", fg="blue"))
 
     app_type = (
-        "wagtail"
-        if wagtail
+        "django_allauth"
+        if django_allauth
+        else "django_debug_toolbar"
+        if django_debug_toolbar
         else "django_filter"
         if django_filter
         else "django_rest_framework"
         if django_rest_framework
+        else "wagtail"
+        if wagtail
         else "default"
     )
 
