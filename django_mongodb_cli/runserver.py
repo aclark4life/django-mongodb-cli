@@ -16,6 +16,9 @@ def runserver():
     else:
         command = ["django-admin"]  # Use a list for consistency
 
+    # Start npm install
+    subprocess.Popen(["npm", "install"])
+
     # Start npm run watch
     npm_process = subprocess.Popen(["npm", "run", "watch"])
 
