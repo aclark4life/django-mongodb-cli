@@ -91,7 +91,7 @@ def copy_mongo_migrations(test_dir):
     target_dir = os.path.join(test_dir, "mongo_migrations")
     if not os.path.exists(target_dir):
         shutil.copytree(
-            os.path.join("project_templates", "project_template", "mongo_migrations"),
+            os.path.join("src", "django-mongodb-template", "mongo_migrations"),
             target_dir,
         )
 
