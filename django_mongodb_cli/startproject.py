@@ -7,11 +7,13 @@ import subprocess
 @click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
 @click.option("-dj", "--django", is_flag=True, help="Use django mongodb template")
+@click.option("-l", "--local-template", is_flag=True, help="Use local template")
 @click.option("-w", "--wagtail", is_flag=True, help="Use wagtail mongodb template")
 @click.argument("project_name", required=False, default="backend")
 def startproject(
     delete,
     django,
+    local,
     wagtail,
     project_name,
 ):
@@ -58,11 +60,17 @@ def startproject(
     django_admin = "django-admin"
     startproject = "startproject"
     if wagtail:
-        template = os.path.join(os.path.join("src", "wagtail-mongodb-project"))
+        if local:
+            template = os.path.join(os.path.join("src", "wagtail-mongodb-project"))
+        else:
+            template = "https://github.com/mongodb-labs/wagtail-mongodb-project/archive/refs/heads/main.zip"
         django_admin = "wagtail"
         startproject = "start"
     elif django:
-        template = os.path.join(os.path.join("src", "django-mongodb-project"))
+        if local:
+            template = os.path.join(os.path.join("src", "django-mongodb-project"))
+        else:
+            template = "https://github.com/mongodb-labs/django-mongodb-project/archive/refs/heads/main.zip"
     if not template:
         template = os.path.join(os.path.join("project_templates", "project_template"))
     click.echo(f"Using template: {template}")
