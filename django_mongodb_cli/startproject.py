@@ -13,7 +13,7 @@ import subprocess
 def startproject(
     delete,
     django,
-    local,
+    local_template,
     wagtail,
     project_name,
 ):
@@ -60,14 +60,14 @@ def startproject(
     django_admin = "django-admin"
     startproject = "startproject"
     if wagtail:
-        if local:
+        if local_template:
             template = os.path.join(os.path.join("src", "wagtail-mongodb-project"))
         else:
             template = "https://github.com/mongodb-labs/wagtail-mongodb-project/archive/refs/heads/main.zip"
         django_admin = "wagtail"
         startproject = "start"
     elif django:
-        if local:
+        if local_template:
             template = os.path.join(os.path.join("src", "django-mongodb-project"))
         else:
             template = "https://github.com/mongodb-labs/django-mongodb-project/archive/refs/heads/main.zip"
