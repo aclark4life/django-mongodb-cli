@@ -72,7 +72,7 @@ def startproject(
         else:
             template = "https://github.com/mongodb-labs/django-mongodb-project/archive/refs/heads/main.zip"
     if not template:
-        template = os.path.join(os.path.join("project_templates", "project_template"))
+        template = os.path.join(os.path.join("src", "django-mongodb-template"))
     click.echo(f"Using template: {template}")
     subprocess.run(
         [
