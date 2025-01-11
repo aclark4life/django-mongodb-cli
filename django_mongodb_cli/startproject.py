@@ -7,7 +7,7 @@ import subprocess
 @click.command()
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
 @click.option("-dj", "--django", is_flag=True, help="Use django mongodb template")
-@click.option("-l", "--local-template", is_flag=True, help="Use local template")
+@click.option("-l", "--local-template", is_flag=False, help="Use local template")
 @click.option("-w", "--wagtail", is_flag=True, help="Use wagtail mongodb template")
 @click.argument("project_name", required=False, default="backend")
 def startproject(
