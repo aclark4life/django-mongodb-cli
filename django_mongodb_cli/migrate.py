@@ -6,7 +6,7 @@ import subprocess
 
 @click.command(context_settings={"ignore_unknown_options": True})
 @click.argument("args", nargs=-1)
-def manage(args):
+def migrate(args):
     """Run management commands."""
 
     if os.path.exists("manage.py"):
