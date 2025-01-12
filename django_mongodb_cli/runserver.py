@@ -17,10 +17,10 @@ def runserver():
         command = ["django-admin"]  # Use a list for consistency
 
     # Start npm install
-    subprocess.Popen(["npm", "install"])
+    subprocess.run(["npm", "install"], cwd="frontend")
 
     # Start npm run watch
-    npm_process = subprocess.Popen(["npm", "run", "watch"])
+    npm_process = subprocess.Popen(["npm", "run", "watch"], cwd="frontend")
 
     # Start django-admin runserver
     django_process = subprocess.Popen(command + ["runserver"])
