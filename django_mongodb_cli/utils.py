@@ -8,9 +8,7 @@ from git import Repo
 runtests_py_map = {
     "default": os.path.join("src", "django", "tests", "runtests.py"),
     "django_allauth": "tox",
-    "django_debug_toolbar": os.path.join(
-        "src", "django-debug-toolbar", "tests", "runtests.py"
-    ),
+    "django_debug_toolbar": "pytest",
     "django_filter": "./runtests.py",
     "django_rest_framework": "./runtests.py",
     "wagtail": "./runtests.py",
