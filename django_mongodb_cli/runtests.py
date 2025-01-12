@@ -67,7 +67,11 @@ def runtests(
 
     command = [runtests_py_map[app_type]]
 
-    if app_type != "django_rest_framework" and app_type != "django_allauth":
+    if (
+        app_type != "django_rest_framework"
+        and app_type != "django_allauth"
+        and app_type != "django_debug_toolbar"
+    ):
         command.extend(
             [
                 "--settings",
