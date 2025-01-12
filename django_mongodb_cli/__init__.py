@@ -8,6 +8,7 @@ from .repo import repo
 from .runserver import runserver
 from .runtests import runtests
 from .shell import shell
+from .test import test
 from .startapp import startapp
 from .startproject import startproject
 
@@ -26,4 +27,5 @@ cli.add_command(repo)
 cli.add_command(runserver)
 cli.add_command(startapp)
 cli.add_command(startproject)
+cli.add_command(test)
 cli.add_command(runtests)
