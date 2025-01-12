@@ -1,6 +1,7 @@
 """Django settings for tests."""
 
 import os
+import django_mongodb_backend
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -132,3 +133,5 @@ DEBUG_TOOLBAR_CONFIG = {
     "IS_RUNNING_TESTS": False,
 }
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
+MONGODB_URI = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/wagtail")
+DATABASES["default"] = django_mongodb_backend.parse_uri(MONGODB_URI)
