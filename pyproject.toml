@@ -9,6 +9,7 @@ dependencies = [
     "django-extensions",
     "django-admin-tui",
     "freezegun",
+    "html5lib",
     "psycopg2",
     "pytest",
     "pytest-django",
