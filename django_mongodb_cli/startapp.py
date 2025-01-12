@@ -17,16 +17,17 @@ def startapp(name, delete):
         return
 
     if not os.path.exists("apps"):
+        click.echo("Creating apps directory.")
         os.makedirs("apps")
-    click.echo(
-        subprocess.run(
-            [
-                "django-admin",
-                "startapp",
-                name,
-                "--template",
-                os.path.join(os.path.join("..", "src", "django-mongodb-app")),
-            ],
-            cwd="apps",
-        )
+
+    click.echo("Running startapp.")
+    subprocess.run(
+        [
+            "django-admin",
+            "startapp",
+            name,
+            "--template",
+            os.path.join(os.path.join("..", "src", "django-mongodb-app")),
+        ],
+        cwd="apps",
     )
