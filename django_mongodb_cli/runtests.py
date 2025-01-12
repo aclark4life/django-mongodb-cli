@@ -98,4 +98,7 @@ def runtests(
     if keyword:
         command.extend(["-k", keyword])
 
+    if app_type == "django_debug_toolbar":
+        os.environ["DJANGO_SETTINGS_MODULE"] = test_settings[2]
+
     subprocess.run(command, cwd=cwd)
