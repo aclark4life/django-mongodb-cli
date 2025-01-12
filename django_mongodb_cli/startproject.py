@@ -86,6 +86,8 @@ def startproject(
             template,
         ]
     )
+    frontend_template = os.path.join("src", "project-templates", "frontend_template")
+    click.echo(f"Using template: {frontend_template}")
     subprocess.run(
         [
             django_admin,
@@ -93,6 +95,6 @@ def startproject(
             "frontend",
             ".",
             "--template",
-            os.path.join("src", "project-templates", "frontend_template"),
+            frontend_template,
         ]
     )
