@@ -88,8 +88,11 @@ def startproject(
     )
     subprocess.run(
         [
-            "cookiecutter",
+            django_admin,
+            startproject,
+            "frontend",
+            ".",
+            "--template",
             os.path.join("src", "project-templates", "frontend_template"),
-            "--no-input",
         ]
     )
