@@ -17,6 +17,7 @@ dependencies = [
     "requests",
     "setuptools",
     "toml",
+    "wagtail",
 ]
 
 [tool.setuptools]
@@ -35,7 +36,6 @@ dev = [
     "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.0.x",
     "project-templates @ git+ssh://git@github.com/aclark4life/project-templates@main",
     "pymongo @ git+ssh://git@github.com/mongodb/mongo-python-driver@master",
-    "wagtail @ git+ssh://git@github.com/wagtail/wagtail@main",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
 ]
 
