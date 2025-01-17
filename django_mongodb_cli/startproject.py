@@ -70,7 +70,7 @@ def startproject(
         if local_template:
             template = os.path.join(os.path.join("src", "django-mongodb-project"))
         else:
-            template = "https://github.com/mongodb-labs/django-mongodb-project/archive/refs/heads/main.zip"
+            template = "https://github.com/mongodb-labs/django-mongodb-project/archive/refs/heads/5.0.x.zip"
     if not template:
         template = os.path.join(
             os.path.join("src", "project-templates", "project_template")
