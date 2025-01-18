@@ -35,6 +35,7 @@ dev = [
     "project-templates @ git+ssh://git@github.com/aclark4life/project-templates@main",
     "pymongo @ git+ssh://git@github.com/mongodb/mongo-python-driver@master",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
+    "wagtail @ git+ssh://github.com/wagtail/wagtail@main",
 ]
 
 [project.scripts]
