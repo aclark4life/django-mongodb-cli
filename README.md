@@ -113,7 +113,7 @@ django-mongodb-cli runserver
 
 Django Debug Toolbar is installed in FIVE steps. I always forget the fifth step, hence this note.
 
-- Install the package.
+- Install the `django-debug-toolbar` package.
 - Add `debug_toolbar` to `INSTALLED_APPS`.
 - Add `debug_toolbar.middleware.DebugToolbarMiddleware` to `MIDDLEWARE`.
 - Add `debug_toolbar.urls` to `urlpatterns`.
