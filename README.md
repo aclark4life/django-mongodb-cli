@@ -106,3 +106,15 @@ django-mongodb-cli createsuperuser
 ```bash
 django-mongodb-cli runserver
 ```
+
+## Advanced
+
+### Django Debug Toolbar Installation
+
+Django Debug Toolbar is installed in FIVE steps. I always forget the fifth step, hence this note.
+
+- Install the package.
+- Add `debug_toolbar` to `INSTALLED_APPS`.
+- Add `debug_toolbar.middleware.DebugToolbarMiddleware` to `MIDDLEWARE`.
+- Add `debug_toolbar.urls` to `urlpatterns`.
+- Add `INTERNAL_IPS` setting.
