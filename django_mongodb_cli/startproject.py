@@ -99,14 +99,15 @@ def startproject(
             frontend_template,
         ]
     )
-    if wagtail:
-        home_template = os.path.join("src", "project-templates", "home_template")
-        subprocess.run(
-            [
-                django_admin,
-                startapp,
-                ".",
-                "--template",
-                home_template,
-            ]
-        )
+    home_template = os.path.join("src", "project-templates", "home_template")
+    click.echo(f"Using template: {home_template}")
+    subprocess.run(
+        [
+            django_admin,
+            startapp,
+            "home",
+            ".",
+            "--template",
+            home_template,
+        ]
+    )
