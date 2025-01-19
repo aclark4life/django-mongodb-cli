@@ -32,7 +32,7 @@ dev = [
     "django-mongodb-project @ git+ssh://git@github.com/aclark4life/django-mongodb-project@main # upstream: mongodb-labs",
     "django-rest-framework @ git+ssh://git@github.com/encode/django-rest-framework@main",
     "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.0.x",
-    "project-templates @ git+ssh://git@github.com/aclark4life/project-templates@main",
+    "django-project-templates @ git+ssh://git@github.com/aclark4life/django-project-templates@main",
     "pymongo @ git+ssh://git@github.com/mongodb/mongo-python-driver@master",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
     "wagtail @ git+ssh://git@github.com/wagtail/wagtail@main",
