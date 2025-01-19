@@ -106,7 +106,6 @@ def startproject(
             django_admin,
             startapp,
             "home",
-            ".",
             "--template",
             home_template,
         ]
