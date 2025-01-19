@@ -59,6 +59,7 @@ def startproject(
     template = None
     django_admin = "django-admin"
     startproject = "startproject"
+    startapp = "startapp"
     if wagtail:
         if local_template:
             template = os.path.join(os.path.join("src", "wagtail-mongodb-project"))
@@ -98,3 +99,14 @@ def startproject(
             frontend_template,
         ]
     )
+    if wagtail:
+        home_template = os.path.join("src", "project-templates", "home_template")
+        subprocess.run(
+            [
+                django_admin,
+                startapp,
+                ".",
+                "--template",
+                home_template,
+            ]
+        )
