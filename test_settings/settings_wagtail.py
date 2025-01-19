@@ -176,6 +176,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
+    "django_extensions",
 ]
 
 # Using DatabaseCache to make sure that the cache is cleared between tests.
