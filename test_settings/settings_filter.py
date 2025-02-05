@@ -27,7 +27,11 @@ INSTALLED_APPS = (
     "tests",
 )
 
-MIDDLEWARE = []
+MIDDLEWARE = [
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+]
 
 ROOT_URLCONF = "tests.urls"
 
