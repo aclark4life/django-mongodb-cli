@@ -17,6 +17,7 @@ DATABASES["default"] = django_mongodb_backend.parse_uri(DATABASE_URL)
 
 INSTALLED_APPS = (
     "tests.mongo_apps.MongoContentTypesConfig",
+    "django.contrib.admin",
     "django.contrib.staticfiles",
     "tests.mongo_apps.MongoAuthConfig",
     "rest_framework",
@@ -39,6 +40,12 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.auth.context_processors.messages",
+            ]
+        },
     }
 ]
 
