@@ -28,8 +28,8 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE = [
-    "django.contrib.messages.middleware.MessageMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
 ]
 
