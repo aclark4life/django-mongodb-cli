@@ -50,7 +50,7 @@ def makemigrations(
     if os.path.exists("manage.py"):
         command = [sys.executable, "manage.py", "makemigrations"]
     else:
-        command = ["django-admin", "makemigrations"]  # Use a list for consistency
+        command = ["django-admin", "makemigrations"]
 
     app_type = (
         "django_allauth"
@@ -69,8 +69,8 @@ def makemigrations(
     test_dirs = test_dirs_map[app_type]
     test_dir = test_dirs[0]
 
-    if app_type == "wagtail":
-        if delete:
+    if delete:
+        if app_type == "wagtail":
             delete_mongo_migrations(
                 os.path.join(test_dir, "mongo_migrations"),
                 os.path.join("src", "wagtail"),
@@ -83,5 +83,7 @@ def makemigrations(
 
     if app_type == "wagtail":
         os.environ["DJANGO_SETTINGS_MODULE"] = "wagtail.test.mongo_settings"
+    else:
+        os.environ["DJANGO_SETTINGS_MODULE"] = "tests.mongo_settings"
 
     subprocess.run(command + [*args])
