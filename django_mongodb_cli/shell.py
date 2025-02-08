@@ -6,7 +6,7 @@ import subprocess
 
 @click.command()
 def shell():
-    """Run management commands."""
+    """Run shell."""
 
     if os.path.exists("manage.py"):
         command = [sys.executable, "manage.py", "shell"]
