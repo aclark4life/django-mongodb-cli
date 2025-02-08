@@ -7,11 +7,12 @@ import subprocess
 @click.command(context_settings={"ignore_unknown_options": True})
 @click.argument("args", nargs=-1)
 def migrate(args):
-    """Run management commands."""
+    """Run migrate command."""
 
     if os.path.exists("manage.py"):
         command = [sys.executable, "manage.py", "migrate"]
     else:
-        command = ["django-admin", "migrate"]  # Use a list for consistency
+        command = ["django-admin", "migrate"]
 
+    os.environ["DJANGO_SETTINGS_MODULE"] = "tests.mongo_settings"
     subprocess.run(command + [*args])
