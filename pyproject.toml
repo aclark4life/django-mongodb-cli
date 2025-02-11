@@ -33,7 +33,7 @@ dev = [
     "django-mongodb-polls @ git+ssh://git@github.com/aclark4life/django-mongodb-polls@main",
     "django-mongodb-project @ git+ssh://git@github.com/aclark4life/django-mongodb-project@main # upstream: mongodb-labs",
     "django-mongodb-tutorial @ git+ssh://git@github.com/aclark4life/django-mongodb-tutorial@main",
-    "django-rest-framework @ git+ssh://git@github.com/encode/django-rest-framework@main",
+    "django-rest-framework @ git+ssh://git@github.com/aclark4life/django-rest-framework@main # upstream: encode",
     "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.1.x",
     "django-project-templates @ git+ssh://git@github.com/aclark4life/django-project-templates@main",
     "pymongo @ git+ssh://git@github.com/mongodb/mongo-python-driver@master",
