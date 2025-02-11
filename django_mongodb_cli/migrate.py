@@ -14,5 +14,4 @@ def migrate(args):
     else:
         command = ["django-admin", "migrate"]
 
-    os.environ["DJANGO_SETTINGS_MODULE"] = "tests.mongo_settings"
     subprocess.run(command + [*args])
