@@ -1,7 +1,7 @@
 import click
-import os
-import sys
 import subprocess
+
+from .utils import get_management_command
 
 
 @click.command(context_settings={"ignore_unknown_options": True})
@@ -9,9 +9,5 @@ import subprocess
 def migrate(args):
     """Run migrate command."""
 
-    if os.path.exists("manage.py"):
-        command = [sys.executable, "manage.py", "migrate"]
-    else:
-        command = ["django-admin", "migrate"]
-
+    command = get_management_command()
     subprocess.run(command + [*args])

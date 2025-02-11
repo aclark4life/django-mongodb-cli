@@ -1,6 +1,7 @@
 import click
 import os
 import shutil
+import sys
 import toml
 import re
 
@@ -174,3 +175,11 @@ def get_repos(pyproject_path):
     )
     upstream_pattern = re.compile(r"#\s*upstream:\s*([\w-]+)")
     return repos, url_pattern, branch_pattern, upstream_pattern
+
+
+def get_management_command():
+    if os.path.exists("manage.py"):
+        command = [sys.executable, "manage.py", "migrate"]
+    else:
+        command = ["django-admin", "migrate"]
+    return command
