@@ -2,6 +2,7 @@ import click
 
 from .createsuperuser import createsuperuser
 from .db import db
+from .install import install
 from .makemigrations import makemigrations
 from .manage import manage
 from .migrate import migrate
@@ -21,6 +22,7 @@ def cli():
 
 cli.add_command(createsuperuser)
 cli.add_command(db)
+cli.add_command(install)
 cli.add_command(shell)
 cli.add_command(makemigrations)
 cli.add_command(manage)
