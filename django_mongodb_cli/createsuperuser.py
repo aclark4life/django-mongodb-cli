@@ -23,12 +23,11 @@ def createsuperuser():
         click.echo(os.environ["MONGODB_URI"])
     click.echo(f"User email: {user_email}")
 
-    command = get_management_command()
+    command = get_management_command("createsuperuser")
 
     subprocess.run(
         command
         + [
-            "createsuperuser",
             "--noinput",
             "--username=admin",
             f"--email={user_email}",

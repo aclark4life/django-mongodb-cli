@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 
-from .utils import get_management_command, get_repos
+from .utils import get_repos
 
 
 @click.command()
@@ -18,9 +18,6 @@ def install(all):
     """Install development dependencies"""
 
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
-
-    command = get_management_command()
-    click.echo(f"Installing development dependencies using {' '.join(command)}...")
 
     if all:
         for repo_entry in repos:

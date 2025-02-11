@@ -47,7 +47,7 @@ def makemigrations(
 ):
     """Run makemigrations."""
 
-    command = get_management_command()
+    command = get_management_command("makemigrations")
 
     app_type = (
         "django_allauth"
@@ -77,10 +77,4 @@ def makemigrations(
 
     copy_mongo_apps(test_dir, app_type)
     copy_test_settings(test_dir, app_type)
-
-    if app_type == "wagtail":
-        os.environ["DJANGO_SETTINGS_MODULE"] = "wagtail.test.mongo_settings"
-    else:
-        os.environ["DJANGO_SETTINGS_MODULE"] = "tests.mongo_settings"
-
     subprocess.run(command + [*args])
