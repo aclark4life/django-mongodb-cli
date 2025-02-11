@@ -1,8 +1,9 @@
 import os
-import posixpath
 import sys
 
 import click
+import git
+from .utils import get_repos
 
 
 class Repo:
@@ -58,8 +59,14 @@ def repo(ctx, repo_home, config, verbose):
 
 
 @repo.command()
-@click.argument("src")
+@click.argument("src", required=False)
 @click.argument("dest", required=False)
+@click.option(
+    "-a",
+    "--all-repos",
+    is_flag=True,
+    help="Check out all branches/tracked files instead.",
+)
 @click.option(
     "--shallow/--deep",
     default=False,
@@ -69,7 +76,7 @@ def repo(ctx, repo_home, config, verbose):
     "--rev", "-r", default="HEAD", help="Clone a specific revision instead of HEAD."
 )
 @pass_repo
-def clone(repo, src, dest, shallow, rev):
+def clone(repo, src, dest, shallow, rev, all_repos):
     """Clones a repository.
 
     This will clone the repository at SRC into the folder DEST.  If DEST
@@ -77,11 +84,43 @@ def clone(repo, src, dest, shallow, rev):
     of SRC and create that folder.
     """
     if dest is None:
-        dest = posixpath.split(src)[-1] or "."
+        # dest = posixpath.split(src)[-1] or "."
+        dest = "src"
     click.echo(f"Cloning repo {src} to {os.path.basename(dest)}")
     repo.home = dest
     if shallow:
         click.echo("Making shallow checkout")
+    if all_repos:
+        repos, url_pattern, branch_pattern, upstream_pattern = get_repos(
+            "pyproject.toml"
+        )
+        click.echo(f"Got {len(repos)} repositories")
+        click.echo("Checking out all")
+        for repo_entry in repos:
+            url_match = url_pattern.search(repo_entry)
+            branch_match = branch_pattern.search(repo_entry)
+            if url_match:
+                repo_url = url_match.group(0)
+                repo_name = os.path.basename(repo_url)
+                branch = branch_match.group(1) if branch_match else "main"
+                clone_path = os.path.join(dest, repo_name)
+                if not os.path.exists(clone_path):
+                    click.echo(
+                        f"Cloning {repo_url} into {clone_path} (branch: {branch})"
+                    )
+                    try:
+                        git.Repo.clone_from(repo_url, clone_path, branch=branch)
+                    except git.exc.GitCommandError:
+                        try:
+                            git.Repo.clone_from(repo_url, clone_path)
+                        except git.exc.GitCommandError as e:
+                            click.echo(f"Failed to clone repository: {e}")
+                else:
+                    click.echo(
+                        f"Skipping {repo_url} in {clone_path} (branch: {branch})"
+                    )
+            else:
+                click.echo(f"Invalid repository entry: {repo_entry}")
     click.echo(f"Checking out revision {rev}")
 
 

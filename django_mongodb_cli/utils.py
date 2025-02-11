@@ -1,6 +1,8 @@
 import click
 import os
 import shutil
+import toml
+import re
 
 from git import Repo
 
@@ -159,3 +161,16 @@ def delete_mongo_migrations(mongo_migrations, project_dir):
                 dir_path = os.path.join(root, dir_name)
                 click.echo(f"Removing: {dir_path}")
                 shutil.rmtree(dir_path, ignore_errors=True)
+
+
+def get_repos(pyproject_path):
+    with open(pyproject_path, "r") as f:
+        pyproject_data = toml.load(f)
+    repos = pyproject_data.get("tool", {}).get("django_mongodb_cli", {}).get("dev", [])
+
+    url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
+    branch_pattern = re.compile(
+        r"git\+ssh://git@github\.com/[^/]+/[^@]+@([a-zA-Z0-9_\-\.]+)\b"
+    )
+    upstream_pattern = re.compile(r"#\s*upstream:\s*([\w-]+)")
+    return repos, url_pattern, branch_pattern, upstream_pattern
