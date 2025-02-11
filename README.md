@@ -34,7 +34,7 @@ python -m pip install .
 Defined in `pyproject.toml`.
 
 ```bash
-django-mongodb-cli repo --clone
+django-mongodb-cli repo clone --all-repos
 ```
 
 #### Install development repositories

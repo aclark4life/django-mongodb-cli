@@ -67,16 +67,8 @@ def repo(ctx, repo_home, config, verbose):
     is_flag=True,
     help="Check out all branches/tracked files instead.",
 )
-@click.option(
-    "--shallow/--deep",
-    default=False,
-    help="Makes a checkout shallow or deep.  Deep by default.",
-)
-@click.option(
-    "--rev", "-r", default="HEAD", help="Clone a specific revision instead of HEAD."
-)
 @pass_repo
-def clone(repo, src, dest, shallow, rev, all_repos):
+def clone(repo, src, dest, all_repos):
     """Clones a repository.
 
     This will clone the repository at SRC into the folder DEST.  If DEST
@@ -84,18 +76,13 @@ def clone(repo, src, dest, shallow, rev, all_repos):
     of SRC and create that folder.
     """
     if dest is None:
-        # dest = posixpath.split(src)[-1] or "."
         dest = "src"
-    click.echo(f"Cloning repo {src} to {os.path.basename(dest)}")
     repo.home = dest
-    if shallow:
-        click.echo("Making shallow checkout")
     if all_repos:
         repos, url_pattern, branch_pattern, upstream_pattern = get_repos(
             "pyproject.toml"
         )
-        click.echo(f"Got {len(repos)} repositories")
-        click.echo("Checking out all")
+        click.echo(f"Checking out {len(repos)} repositories")
         for repo_entry in repos:
             url_match = url_pattern.search(repo_entry)
             branch_match = branch_pattern.search(repo_entry)
@@ -121,7 +108,6 @@ def clone(repo, src, dest, shallow, rev, all_repos):
                     )
             else:
                 click.echo(f"Invalid repository entry: {repo_entry}")
-    click.echo(f"Checking out revision {rev}")
 
 
 @repo.command()
