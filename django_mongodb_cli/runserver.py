@@ -1,7 +1,9 @@
 import click
 import os
-import sys
 import subprocess
+
+
+from .utils import get_management_command
 
 
 @click.command()
@@ -11,10 +13,7 @@ def runserver():
     if os.environ.get("MONGODB_URI"):
         click.echo(os.environ["MONGODB_URI"])
 
-    if os.path.exists("manage.py"):
-        command = [sys.executable, "manage.py"]
-    else:
-        command = ["django-admin"]  # Use a list for consistency
+    command = get_management_command()
 
     # Start npm install
     subprocess.run(["npm", "install"], cwd="frontend")

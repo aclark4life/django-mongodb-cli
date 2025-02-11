@@ -1,12 +1,12 @@
 import click
 import os
-import sys
 import subprocess
 
 from .utils import (
     copy_mongo_apps,
     copy_test_settings,
     delete_mongo_migrations,
+    get_management_command,
     test_dirs_map,
 )
 
@@ -47,10 +47,7 @@ def makemigrations(
 ):
     """Run makemigrations."""
 
-    if os.path.exists("manage.py"):
-        command = [sys.executable, "manage.py", "makemigrations"]
-    else:
-        command = ["django-admin", "makemigrations"]
+    command = get_management_command()
 
     app_type = (
         "django_allauth"

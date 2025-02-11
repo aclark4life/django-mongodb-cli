@@ -1,7 +1,8 @@
 import click
-import os
-import sys
 import subprocess
+
+
+from .utils import get_management_command
 
 
 @click.command(context_settings={"ignore_unknown_options": True})
@@ -9,9 +10,6 @@ import subprocess
 def manage(args):
     """Run management commands."""
 
-    if os.path.exists("manage.py"):
-        command = [sys.executable, "manage.py"]
-    else:
-        command = ["django-admin"]  # Use a list for consistency
+    command = get_management_command()
 
     subprocess.run(command + [*args])

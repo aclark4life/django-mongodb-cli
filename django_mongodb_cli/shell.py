@@ -1,17 +1,16 @@
 import click
 import os
-import sys
 import subprocess
+
+
+from .utils import get_management_command
 
 
 @click.command()
 def shell():
     """Run shell."""
 
-    if os.path.exists("manage.py"):
-        command = [sys.executable, "manage.py", "shell"]
-    else:
-        command = ["django-admin", "shell"]  # Use a list for consistency
+    command = get_management_command()
 
     os.environ["DJANGO_SETTINGS_MODULE"] = "tests.mongo_settings"
     subprocess.run(command)
