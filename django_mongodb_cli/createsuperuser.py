@@ -1,7 +1,9 @@
 import click
 import os
-import sys
 import subprocess
+
+
+from .utils import get_management_command
 
 
 @click.command()
@@ -21,10 +23,7 @@ def createsuperuser():
         click.echo(os.environ["MONGODB_URI"])
     click.echo(f"User email: {user_email}")
 
-    if os.path.exists("manage.py"):
-        command = [sys.executable, "manage.py"]
-    else:
-        command = ["django-admin"]  # Use a list for consistency
+    command = get_management_command()
 
     subprocess.run(
         command
