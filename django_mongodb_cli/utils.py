@@ -182,5 +182,9 @@ def get_management_command(command):
         command = [sys.executable, "manage.py", command]
     else:
         command = ["django-admin", command]
-    click.echo(click.style(f"Running command: {' '.join(command)}", fg="red"))
+    click.echo(
+        click.style(
+            f"Running command: {' '.join(command)}", fg="bright_cyan", reverse=True
+        )
+    )
     return command
