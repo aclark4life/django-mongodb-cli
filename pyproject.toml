@@ -29,7 +29,7 @@ dev = [
     "django-debug-toolbar @ git+ssh://git@github.com/django-commons/django-debug-toolbar@main",
     "django-filter @ git+ssh://git@github.com/aclark4life/django-filter@main",
     "django-mongodb-app @ git+ssh://git@github.com/aclark4life/django-mongodb-app@main # upstream: mongodb-labs",
-    "django-mongodb-backend @ git+ssh://git@github.com/mongodb-labs/django-mongodb-backend@main",
+    "django-mongodb-backend @ git+ssh://git@github.com/aclark4life/django-mongodb-backend@main",
     "django-mongodb-polls @ git+ssh://git@github.com/aclark4life/django-mongodb-polls@main",
     "django-mongodb-project @ git+ssh://git@github.com/aclark4life/django-mongodb-project@main # upstream: mongodb-labs",
     "django-mongodb-tutorial @ git+ssh://git@github.com/aclark4life/django-mongodb-tutorial@main",
