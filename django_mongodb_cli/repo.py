@@ -63,12 +63,12 @@ def repo(ctx, repo_home, config, verbose):
 @click.argument("dest", required=False)
 @click.option(
     "-a",
-    "--all-repos",
+    "--all",
     is_flag=True,
     help="Check out all branches/tracked files instead.",
 )
 @pass_repo
-def clone(repo, src, dest, all_repos):
+def clone(repo, src, dest, all):
     """Clones a repository.
 
     This will clone the repository at SRC into the folder DEST.  If DEST
@@ -78,7 +78,7 @@ def clone(repo, src, dest, all_repos):
     if dest is None:
         dest = "src"
     repo.home = dest
-    if all_repos:
+    if all:
         repos, url_pattern, branch_pattern, upstream_pattern = get_repos(
             "pyproject.toml"
         )
