@@ -1,148 +1,166 @@
-import click
-import git
 import os
-import re
-import shutil
+import posixpath
 import sys
-import subprocess
-import toml
+
+import click
 
 
-def _get_repos(pyproject_path):
-    with open(pyproject_path, "r") as f:
-        pyproject_data = toml.load(f)
-    repos = pyproject_data.get("tool", {}).get("django_mongodb_cli", {}).get("dev", [])
+class Repo:
+    def __init__(self, home):
+        self.home = home
+        self.config = {}
+        self.verbose = False
 
-    url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
-    branch_pattern = re.compile(
-        r"git\+ssh://git@github\.com/[^/]+/[^@]+@([a-zA-Z0-9_\-\.]+)\b"
-    )
-    upstream_pattern = re.compile(r"#\s*upstream:\s*([\w-]+)")
+    def set_config(self, key, value):
+        self.config[key] = value
+        if self.verbose:
+            click.echo(f"  config[{key}] = {value}", file=sys.stderr)
 
-    return repos, url_pattern, branch_pattern, upstream_pattern
+    def __repr__(self):
+        return f"<Repo {self.home}>"
 
 
-def _delete_repos():
-    if os.path.isdir("src"):
-        shutil.rmtree("src")
-        click.echo("Removed directory: src")
+pass_repo = click.make_pass_decorator(Repo)
+
+
+@click.group()
+@click.option(
+    "--repo-home",
+    envvar="REPO_HOME",
+    default=".repo",
+    metavar="PATH",
+    help="Changes the repository folder location.",
+)
+@click.option(
+    "--config",
+    nargs=2,
+    multiple=True,
+    metavar="KEY VALUE",
+    help="Overrides a config key/value pair.",
+)
+@click.option("--verbose", "-v", is_flag=True, help="Enables verbose mode.")
+@click.version_option("1.0")
+@click.pass_context
+def repo(ctx, repo_home, config, verbose):
+    """Repo is a command line tool that showcases how to build complex
+    command line interfaces with Click.
+
+    This tool is supposed to look like a distributed version control
+    system to show how something like this can be structured.
+    """
+    # Create a repo object and remember it as as the context object.  From
+    # this point onwards other commands can refer to it by using the
+    # @pass_repo decorator.
+    ctx.obj = Repo(os.path.abspath(repo_home))
+    ctx.obj.verbose = verbose
+    for key, value in config:
+        ctx.obj.set_config(key, value)
+
+
+@repo.command()
+@click.argument("src")
+@click.argument("dest", required=False)
+@click.option(
+    "--shallow/--deep",
+    default=False,
+    help="Makes a checkout shallow or deep.  Deep by default.",
+)
+@click.option(
+    "--rev", "-r", default="HEAD", help="Clone a specific revision instead of HEAD."
+)
+@pass_repo
+def clone(repo, src, dest, shallow, rev):
+    """Clones a repository.
+
+    This will clone the repository at SRC into the folder DEST.  If DEST
+    is not provided this will automatically use the last path component
+    of SRC and create that folder.
+    """
+    if dest is None:
+        dest = posixpath.split(src)[-1] or "."
+    click.echo(f"Cloning repo {src} to {os.path.basename(dest)}")
+    repo.home = dest
+    if shallow:
+        click.echo("Making shallow checkout")
+    click.echo(f"Checking out revision {rev}")
+
+
+@repo.command()
+@click.confirmation_option()
+@pass_repo
+def delete(repo):
+    """Deletes a repository.
+
+    This will throw away the current repository.
+    """
+    click.echo(f"Destroying repo {repo.home}")
+    click.echo("Deleted!")
+
+
+@repo.command()
+@click.option("--username", prompt=True, help="The developer's shown username.")
+@click.option("--email", prompt="E-Mail", help="The developer's email address")
+@click.password_option(help="The login password.")
+@pass_repo
+def setuser(repo, username, email, password):
+    """Sets the user credentials.
+
+    This will override the current user config.
+    """
+    repo.set_config("username", username)
+    repo.set_config("email", email)
+    repo.set_config("password", "*" * len(password))
+    click.echo("Changed credentials.")
+
+
+@repo.command()
+@click.option(
+    "--message",
+    "-m",
+    multiple=True,
+    help="The commit message.  If provided multiple times each"
+    " argument gets converted into a new line.",
+)
+@click.argument("files", nargs=-1, type=click.Path())
+@pass_repo
+def commit(repo, files, message):
+    """Commits outstanding changes.
+
+    Commit changes to the given files into the repository.  You will need to
+    "repo push" to push up your changes to other repositories.
+
+    If a list of files is omitted, all changes reported by "repo status"
+    will be committed.
+    """
+    if not message:
+        marker = "# Files to be committed:"
+        hint = ["", "", marker, "#"]
+        for file in files:
+            hint.append(f"#   U {file}")
+        message = click.edit("\n".join(hint))
+        if message is None:
+            click.echo("Aborted!")
+            return
+        msg = message.split(marker)[0].rstrip()
+        if not msg:
+            click.echo("Aborted! Empty commit message")
+            return
     else:
-        click.echo("Skipping: src does not exist")
+        msg = "\n".join(message)
+    click.echo(f"Files to be committed: {files}")
+    click.echo(f"Commit message:\n{msg}")
 
 
-def _get_remotes(upstream_match, clone_path, repo_name):
-    remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
-    subprocess.run(["git", "remote", "add", "upstream", remote], cwd=clone_path)
-    subprocess.run(["git", "remote", "-v", "show"], cwd=clone_path)
-
-
-def _get_status(clone_path):
-    click.echo(click.style(f"Status for {clone_path}", fg="blue"))
-    subprocess.run(["git", "status"], cwd=clone_path)
-
-
-def _install_packages(clone_path, pyproject_toml, setup_py):
-    if os.path.exists(pyproject_toml):
-        subprocess.run([sys.executable, "-m", "pip", "install", "-e", clone_path])
-    if os.path.exists(setup_py):
-        subprocess.run([sys.executable, "setup.py", "develop"], cwd=clone_path)
-
-
-def _list_repos():
-    if os.path.isdir("src"):
-        for repo in sorted(os.listdir("src")):
-            click.echo(repo)
-
-
-@click.command()
-@click.option("-c", "--clone", is_flag=True, help="Clone repositories")
-@click.option("-d", "--delete", is_flag=True, help="Delete existing checkouts")
-@click.option("-f", "--fetch", is_flag=True, help="Fetch from remotes")
-@click.option("-i", "--install", is_flag=True, help="Install python packages")
-@click.option("-l", "--list-repos", is_flag=True, help="List repositories")
-@click.option("-p", "--pre", is_flag=True, help="Install pre-commit hooks")
-@click.option("-r", "--remote", is_flag=True, help="Add upstream remotes")
-@click.option("-s", "--status", is_flag=True, help="Show git status")
-@click.option("-u", "--update", is_flag=True, help="Update existing checkouts")
-def repo(
-    clone,
-    delete,
-    fetch,
-    install,
-    list_repos,
-    pre,
-    remote,
-    status,
-    update,
-):
+@repo.command(short_help="Copies files.")
+@click.option(
+    "--force", is_flag=True, help="forcibly copy over an existing managed file"
+)
+@click.argument("src", nargs=-1, type=click.Path())
+@click.argument("dst", type=click.Path())
+@pass_repo
+def copy(repo, src, dst, force):
+    """Copies one or multiple files to a new location.  This copies all
+    files from SRC to DST.
     """
-    Manage repositories in pyproject.toml.
-    """
-    clone_dir = "src"
-    pyproject_path = "pyproject.toml"
-
-    if delete:
-        _delete_repos()
-        return
-
-    repos, url_pattern, branch_pattern, upstream_pattern = _get_repos(pyproject_path)
-    if not repos:
-        click.echo("No repositories found under [tool.django_mongodb_cli] dev")
-        return
-
-    if list_repos:
-        _list_repos()
-        return
-
-    for repo_entry in repos:
-        url_match = url_pattern.search(repo_entry)
-        branch_match = branch_pattern.search(repo_entry)
-        upstream_match = upstream_pattern.search(repo_entry)
-        if url_match:
-            repo_url = url_match.group(0)
-            repo_name = os.path.basename(repo_url)
-            branch = branch_match.group(1) if branch_match else "main"
-            clone_path = os.path.join(clone_dir, repo_name)
-            pyproject_toml = os.path.join(clone_path, "pyproject.toml")
-            setup_py = os.path.join(clone_path, "setup.py")
-
-            if clone:
-                if not os.path.exists(clone_path):
-                    click.echo(
-                        f"Cloning {repo_url} into {clone_path} (branch: {branch})"
-                    )
-                    try:
-                        git.Repo.clone_from(repo_url, clone_path, branch=branch)
-                    except git.exc.GitCommandError:
-                        try:
-                            git.Repo.clone_from(repo_url, clone_path)
-                        except git.exc.GitCommandError as e:
-                            click.echo(f"Failed to clone repository: {e}")
-                else:
-                    click.echo(
-                        f"Skipping {repo_url} in {clone_path} (branch: {branch})"
-                    )
-            if fetch:
-                subprocess.run(["git", "fetch", "upstream"], cwd=clone_path)
-
-            if install:
-                _install_packages(clone_path, pyproject_toml, setup_py)
-
-            if pre:
-                if os.path.isfile(os.path.join(clone_path, ".pre-commit-config.yaml")):
-                    subprocess.run(["pre-commit", "install"], cwd=clone_path)
-
-            if remote and upstream_match:
-                _get_remotes(upstream_match, clone_path, repo_name)
-
-            if status:
-                _get_status(clone_path)
-
-            if update:
-                click.echo(f"Updating {repo_url} in {clone_path} (branch: {branch})")
-                subprocess.run(["git", "pull"], cwd=clone_path)
-        else:
-            click.echo(f"Invalid repository entry: {repo_entry}")
-
-    if not any([clone, delete, fetch, install, pre, remote, status, update]):
-        raise click.UsageError("Please pick an option!")
+    for fn in src:
+        click.echo(f"Copy from {fn} -> {dst}")
