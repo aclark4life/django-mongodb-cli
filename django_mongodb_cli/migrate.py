@@ -9,5 +9,5 @@ from .utils import get_management_command
 def migrate(args):
     """Run migrate command."""
 
-    command = get_management_command()
+    command = get_management_command("migrate")
     subprocess.run(command + [*args])

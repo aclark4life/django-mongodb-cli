@@ -177,9 +177,10 @@ def get_repos(pyproject_path):
     return repos, url_pattern, branch_pattern, upstream_pattern
 
 
-def get_management_command():
+def get_management_command(command):
     if os.path.exists("manage.py"):
-        command = [sys.executable, "manage.py", "migrate"]
+        command = [sys.executable, "manage.py", command]
     else:
-        command = ["django-admin", "migrate"]
+        command = ["django-admin", command]
+    click.echo(click.style(f"Running command: {' '.join(command)}", fg="red"))
     return command
