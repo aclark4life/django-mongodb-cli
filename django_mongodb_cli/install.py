@@ -9,4 +9,4 @@ def install():
     """Install development dependencies"""
 
     command = get_management_command()
-    click.echo(f"Installing development dependencies using {command}...")
+    click.echo(f"Installing development dependencies using {' '.join(command)}...")
