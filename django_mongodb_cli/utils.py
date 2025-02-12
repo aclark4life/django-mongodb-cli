@@ -178,19 +178,21 @@ def get_repos(pyproject_path):
 
 
 def get_management_command(command=None):
+    base_command = (
+        [sys.executable, "manage.py"]
+        if os.path.exists("manage.py")
+        else ["django-admin"]
+    )
+
     if command:
-        if os.path.exists("manage.py"):
-            command = [sys.executable, "manage.py", command]
-        else:
-            command = ["django-admin", command]
+        full_command = base_command + [command]
         click.echo(
             click.style(
-                f"Running command: {' '.join(command)}", fg="bright_cyan", reverse=True
+                f"Running command: {' '.join(full_command)}",
+                fg="bright_cyan",
+                reverse=True,
             )
         )
-    else:
-        if os.path.exists("manage.py"):
-            command = [sys.executable, "manage.py"]
-        else:
-            command = ["django-admin"]
-    return command
+        return full_command
+
+    return base_command
