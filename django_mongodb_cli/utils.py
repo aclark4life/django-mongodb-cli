@@ -178,7 +178,13 @@ def get_repos(pyproject_path):
 
 
 def get_management_command(command=None):
-    REQUIRES_MANAGE_PY = {"migrate", "createsuperuser", "shell", "runserver"}
+    REQUIRES_MANAGE_PY = {
+        "makemigrations",
+        "migrate",
+        "createsuperuser",
+        "shell",
+        "runserver",
+    }
     manage_py_exists = os.path.exists("manage.py")
 
     if command in REQUIRES_MANAGE_PY and not manage_py_exists:
