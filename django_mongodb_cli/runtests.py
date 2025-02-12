@@ -56,12 +56,12 @@ def runtests(
         else "default"
     )
     test_dirs = test_dirs_map[app_type]
+    test_dir = test_dirs[0]
     if list_tests:
         for test_dir in test_dirs:
             for module in sorted(os.listdir(test_dir)):
                 click.echo(module)
         return
-    test_dir = test_dirs[0]
     apply_patches(app_type)
     copy_mongo_migrations(test_dir)
     copy_mongo_apps(test_dir, app_type)
