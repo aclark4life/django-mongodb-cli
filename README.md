@@ -40,7 +40,7 @@ django-mongodb-cli repo clone --all
 #### Install development repositories
 
 ```bash
-django-mongodb-cli repo --install
+django-mongodb-cli install
 ```
 
 #### Run the Django test suite in `src/django`.
