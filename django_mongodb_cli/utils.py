@@ -184,6 +184,7 @@ def get_management_command(command=None):
         "migrate",
         "runserver",
         "shell",
+        "startapp",
     }
     manage_py_exists = os.path.exists("manage.py")
 
