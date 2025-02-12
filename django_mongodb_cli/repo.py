@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 import click
 import git
@@ -189,3 +190,33 @@ def copy(repo, src, dst, force):
     """
     for fn in src:
         click.echo(f"Copy from {fn} -> {dst}")
+
+
+@repo.command()
+@click.option(
+    "-a",
+    "--all",
+    is_flag=True,
+    help="Install repos.",
+)
+@pass_repo
+def install(repo, all):
+    """Install development dependencies"""
+
+    repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
+
+    if all:
+        for repo_entry in repos:
+            url_match = url_pattern.search(repo_entry)
+            if url_match:
+                repo_url = url_match.group(0)
+                repo_name = os.path.basename(repo_url)
+                clone_path = os.path.join("src", repo_name)
+                if os.path.exists("pyproject.toml"):
+                    subprocess.run(
+                        [sys.executable, "-m", "pip", "install", "-e", clone_path]
+                    )
+                if os.path.exists("setup.py"):
+                    subprocess.run(
+                        [sys.executable, "setup.py", "develop"], cwd=clone_path
+                    )
