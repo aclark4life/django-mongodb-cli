@@ -187,7 +187,7 @@ def get_management_command(command=None):
     }
     manage_py_exists = os.path.exists("manage.py")
 
-    if command in REQUIRES_MANAGE_PY or command is None and not manage_py_exists:
+    if not manage_py_exists and (command is None or command in REQUIRES_MANAGE_PY):
         exit(
             click.style(
                 "manage.py is required to run this command. Please run this command in the project directory.",
