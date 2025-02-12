@@ -178,10 +178,19 @@ def get_repos(pyproject_path):
 
 
 def get_management_command(command=None):
+    REQUIRES_MANAGE_PY = {"migrate", "createsuperuser", "shell", "runserver"}
+    manage_py_exists = os.path.exists("manage.py")
+
+    if command in REQUIRES_MANAGE_PY and not manage_py_exists:
+        exit(
+            click.style(
+                "manage.py is required to run this command. Please run this command in the project directory.",
+                fg="red",
+            )
+        )
+
     base_command = (
-        [sys.executable, "manage.py"]
-        if os.path.exists("manage.py")
-        else ["django-admin"]
+        [sys.executable, "manage.py"] if manage_py_exists else ["django-admin"]
     )
 
     if command:
