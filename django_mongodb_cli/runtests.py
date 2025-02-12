@@ -42,7 +42,6 @@ def runtests(
     Run `runtests.py` for Django or Wagtail.
     """
     click.echo(click.style("Running tests", fg="blue"))
-
     app_type = (
         "django_allauth"
         if django_allauth
@@ -56,22 +55,18 @@ def runtests(
         if wagtail
         else "default"
     )
-
     test_dirs = test_dirs_map[app_type]
     if list_tests:
         for test_dir in test_dirs:
             for module in sorted(os.listdir(test_dir)):
                 click.echo(module)
         return
-
     test_dir = test_dirs[0]
-
     apply_patches(app_type)
     copy_mongo_migrations(test_dir)
     copy_mongo_apps(test_dir, app_type)
     test_settings = copy_test_settings(test_dir, app_type)
     command = [runtests_py_map[app_type]]
-
     if (
         app_type != "django_rest_framework"
         and app_type != "django_allauth"
@@ -93,12 +88,10 @@ def runtests(
     if keyword:
         command.extend(["-k", keyword])
     click.echo(f"Running {' '.join(command)}")
-
     if app_type == "django_debug_toolbar":
         # Set the DJANGO_SETTINGS_MODULE environment variable
         # for pytest to use the correct settings file.
         os.environ["DJANGO_SETTINGS_MODULE"] = test_settings[2]
-
     cwd = test_settings[3]
     click.echo(f"Working directory: {cwd}")
     subprocess.run(command, cwd=cwd)
