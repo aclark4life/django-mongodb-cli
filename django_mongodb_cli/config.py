@@ -40,7 +40,7 @@ test_settings_map = {
 }
 
 
-runtests_py_map = {
+runtests_map = {
     "default": os.path.join("src", "django", "tests", "runtests.py"),
     "django_allauth": "tox",
     "django_debug_toolbar": "pytest",
