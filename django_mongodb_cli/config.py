@@ -4,7 +4,7 @@ test_settings_map = {
     "default": {
         "src": "settings_django.py",
         "dest": "mongo_settings.py",
-        "module": "mongo_settings",
+        "module": "tests.mongo_settings",
         "path": ".",
     },
     "django_allauth": {
