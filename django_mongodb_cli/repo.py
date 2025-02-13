@@ -199,8 +199,9 @@ def copy(repo, src, dst, force):
     is_flag=True,
     help="Install repos.",
 )
+@click.argument("src", nargs=-1, type=click.Path())
 @pass_repo
-def install(repo, all):
+def install(repo, src, all):
     """Install development dependencies"""
 
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
