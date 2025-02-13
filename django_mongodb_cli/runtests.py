@@ -7,6 +7,7 @@ from .utils import (
     copy_mongo_migrations,
     copy_mongo_apps,
     copy_test_settings,
+    get_app_type,
     test_dirs_map,
     runtests_py_map,
 )
@@ -42,19 +43,14 @@ def runtests(
     Run `runtests.py` for Django or Wagtail.
     """
     click.echo(click.style("Running tests", fg="blue"))
-    app_type = (
-        "django_allauth"
-        if django_allauth
-        else "django_debug_toolbar"
-        if django_debug_toolbar
-        else "django_filter"
-        if django_filter
-        else "django_rest_framework"
-        if django_rest_framework
-        else "wagtail"
-        if wagtail
-        else "default"
+    app_type = get_app_type(
+        django_allauth,
+        django_debug_toolbar,
+        django_filter,
+        django_rest_framework,
+        wagtail,
     )
+
     test_dirs = test_dirs_map[app_type]
     test_dir = test_dirs[0]
     test_settings = copy_test_settings(test_dir, app_type)
