@@ -55,6 +55,12 @@ def makemigrations(
     test_dirs = test_dirs_map[app_type]
     test_dir = test_dirs[0]
     copy_mongo_apps(test_dir, app_type)
-    copy_test_settings(test_dir, app_type)
+    test_settings = copy_test_settings(test_dir, app_type)
     command = get_management_command("makemigrations")
+    command.extend(
+        [
+            "--settings",
+            test_settings[2],
+        ]
+    )
     subprocess.run(command + [*args])
