@@ -74,10 +74,10 @@ def copy_mongo_migrations(test_dir):
 def copy_test_settings(test_dir, app_type):
     """Retrieve settings for the specified app type."""
     test_settings = [
-        os.path.join("test_settings", test_settings_map[app_type][0]),
-        os.path.join(test_dir, test_settings_map[app_type][1]),
-        test_settings_map[app_type][2],
-        test_settings_map[app_type][3],
+        os.path.join("test_settings", test_settings_map[app_type]["src"]),
+        os.path.join(test_dir, test_settings_map[app_type]["dest"]),
+        test_settings_map[app_type]["module"],
+        test_settings_map[app_type]["path"],
     ]
     click.echo(click.style(f"Copying test settings to {test_dir}", fg="blue"))
     shutil.copyfile(test_settings[0], test_settings[1])
