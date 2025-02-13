@@ -8,6 +8,46 @@ import re
 from git import Repo
 
 
+test_settings_map = {
+    "default": [
+        "settings_django.py",
+        "mongo_settings.py",
+        "mongo_settings",
+        ".",
+    ],
+    "django_allauth": [
+        "settings_allauth_regular.py",
+        "mongo_settings.py",
+        "tests.mongo_settings",
+        os.path.join("src", "django-allauth"),
+    ],
+    "django_debug_toolbar": [
+        "settings_debug_toolbar.py",
+        "mongo_settings.py",
+        "tests.mongo_settings",
+        os.path.join("src", "django-debug-toolbar"),
+    ],
+    "django_filter": [
+        "settings_filter.py",
+        "mongo_settings.py",
+        "tests.mongo_settings",
+        os.path.join("src", "django-filter"),
+    ],
+    "django_rest_framework": [
+        "settings_drf.py",
+        "conftest.py",
+        "tests.conftest",
+        os.path.join("src", "django-rest-framework"),
+    ],
+    "wagtail": [
+        "settings_wagtail.py",
+        "mongo_settings.py",
+        "wagtail.test.mongo_settings",
+        os.path.join("src", "wagtail"),
+    ],
+}
+
+
 runtests_py_map = {
     "default": os.path.join("src", "django", "tests", "runtests.py"),
     "django_allauth": "tox",
@@ -104,49 +144,11 @@ def copy_mongo_migrations(test_dir):
 
 def copy_test_settings(test_dir, app_type):
     """Retrieve settings for the specified app type."""
-    settings_map = {
-        "default": [
-            "settings_django.py",
-            "mongo_settings.py",
-            "mongo_settings",
-            ".",
-        ],
-        "django_allauth": [
-            "settings_allauth_regular.py",
-            "mongo_settings.py",
-            "tests.mongo_settings",
-            os.path.join("src", "django-allauth"),
-        ],
-        "django_debug_toolbar": [
-            "settings_debug_toolbar.py",
-            "mongo_settings.py",
-            "tests.mongo_settings",
-            os.path.join("src", "django-debug-toolbar"),
-        ],
-        "django_filter": [
-            "settings_filter.py",
-            "mongo_settings.py",
-            "tests.mongo_settings",
-            os.path.join("src", "django-filter"),
-        ],
-        "django_rest_framework": [
-            "settings_drf.py",
-            "conftest.py",
-            "tests.conftest",
-            os.path.join("src", "django-rest-framework"),
-        ],
-        "wagtail": [
-            "settings_wagtail.py",
-            "mongo_settings.py",
-            "wagtail.test.mongo_settings",
-            os.path.join("src", "wagtail"),
-        ],
-    }
     test_settings = [
-        os.path.join("test_settings", settings_map[app_type][0]),
-        os.path.join(test_dir, settings_map[app_type][1]),
-        settings_map[app_type][2],
-        settings_map[app_type][3],
+        os.path.join("test_settings", test_settings_map[app_type][0]),
+        os.path.join(test_dir, test_settings_map[app_type][1]),
+        test_settings_map[app_type][2],
+        test_settings_map[app_type][3],
     ]
     click.echo(click.style(f"Copying test settings to {test_dir}", fg="blue"))
     shutil.copyfile(test_settings[0], test_settings[1])
