@@ -204,9 +204,14 @@ def copy(repo, src, dst, force):
 def install(repo, src, all):
     """Install development dependencies"""
 
-    repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
+    if src:
+        clone_path = os.path.join("src", src[0])
+        subprocess.run([sys.executable, "-m", "pip", "install", "-e", clone_path])
 
     if all:
+        repos, url_pattern, branch_pattern, upstream_pattern = get_repos(
+            "pyproject.toml"
+        )
         for repo_entry in repos:
             url_match = url_pattern.search(repo_entry)
             if url_match:
