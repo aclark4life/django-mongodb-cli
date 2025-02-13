@@ -2,14 +2,16 @@ import click
 import os
 import subprocess
 
+
+from .config import runtests_py_map, test_dirs_map
+
+
 from .utils import (
     apply_patches,
     copy_mongo_migrations,
     copy_mongo_apps,
     copy_test_settings,
     get_app_type,
-    test_dirs_map,
-    runtests_py_map,
 )
 
 

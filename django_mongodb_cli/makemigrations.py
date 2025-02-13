@@ -1,12 +1,13 @@
 import click
 import subprocess
 
+from .config import test_dirs_map
+
 from .utils import (
     copy_mongo_apps,
     copy_test_settings,
     get_app_type,
     get_management_command,
-    test_dirs_map,
 )
 
 
