@@ -1,43 +1,42 @@
 import os
 
-
 test_settings_map = {
-    "default": [
-        "settings_django.py",
-        "mongo_settings.py",
-        "mongo_settings",
-        ".",
-    ],
-    "django_allauth": [
-        "settings_allauth_regular.py",
-        "mongo_settings.py",
-        "tests.mongo_settings",
-        os.path.join("src", "django-allauth"),
-    ],
-    "django_debug_toolbar": [
-        "settings_debug_toolbar.py",
-        "mongo_settings.py",
-        "tests.mongo_settings",
-        os.path.join("src", "django-debug-toolbar"),
-    ],
-    "django_filter": [
-        "settings_filter.py",
-        "mongo_settings.py",
-        "tests.mongo_settings",
-        os.path.join("src", "django-filter"),
-    ],
-    "django_rest_framework": [
-        "settings_drf.py",
-        "conftest.py",
-        "tests.conftest",
-        os.path.join("src", "django-rest-framework"),
-    ],
-    "wagtail": [
-        "settings_wagtail.py",
-        "mongo_settings.py",
-        "wagtail.test.mongo_settings",
-        os.path.join("src", "wagtail"),
-    ],
+    "default": {
+        "src": "settings_django.py",
+        "dest": "mongo_settings.py",
+        "module": "mongo_settings",
+        "path": ".",
+    },
+    "django_allauth": {
+        "src": "settings_allauth_regular.py",
+        "dest": "mongo_settings.py",
+        "module": "tests.mongo_settings",
+        "path": os.path.join("src", "django-allauth"),
+    },
+    "django_debug_toolbar": {
+        "src": "settings_debug_toolbar.py",
+        "dest": "mongo_settings.py",
+        "module": "tests.mongo_settings",
+        "path": os.path.join("src", "django-debug-toolbar"),
+    },
+    "django_filter": {
+        "src": "settings_filter.py",
+        "dest": "mongo_settings.py",
+        "module": "tests.mongo_settings",
+        "path": os.path.join("src", "django-filter"),
+    },
+    "django_rest_framework": {
+        "src": "settings_drf.py",
+        "dest": "conftest.py",
+        "module": "tests.conftest",
+        "path": os.path.join("src", "django-rest-framework"),
+    },
+    "wagtail": {
+        "src": "settings_wagtail.py",
+        "dest": "mongo_settings.py",
+        "module": "wagtail.test.mongo_settings",
+        "path": os.path.join("src", "wagtail"),
+    },
 }
 
 
