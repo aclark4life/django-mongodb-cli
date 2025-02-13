@@ -50,7 +50,6 @@ def runtests(
         django_rest_framework,
         wagtail,
     )
-
     test_dirs = test_dirs_map[app_type]
     test_dir = test_dirs[0]
     test_settings = copy_test_settings(test_dir, app_type)

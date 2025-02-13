@@ -8,25 +8,6 @@ import re
 from git import Repo
 
 
-def get_app_type(
-    django_allauth, django_debug_toolbar, django_filter, django_rest_framework, wagtail
-):
-    """Determine the app type based on the specified options."""
-    return (
-        "django_allauth"
-        if django_allauth
-        else "django_debug_toolbar"
-        if django_debug_toolbar
-        else "django_filter"
-        if django_filter
-        else "django_rest_framework"
-        if django_rest_framework
-        else "wagtail"
-        if wagtail
-        else "default"
-    )
-
-
 test_settings_map = {
     "default": [
         "settings_django.py",
@@ -183,6 +164,25 @@ def delete_mongo_migrations(mongo_migrations, project_dir):
                 dir_path = os.path.join(root, dir_name)
                 click.echo(f"Removing: {dir_path}")
                 shutil.rmtree(dir_path, ignore_errors=True)
+
+
+def get_app_type(
+    django_allauth, django_debug_toolbar, django_filter, django_rest_framework, wagtail
+):
+    """Determine the app type based on the specified options."""
+    return (
+        "django_allauth"
+        if django_allauth
+        else "django_debug_toolbar"
+        if django_debug_toolbar
+        else "django_filter"
+        if django_filter
+        else "django_rest_framework"
+        if django_rest_framework
+        else "wagtail"
+        if wagtail
+        else "default"
+    )
 
 
 def get_repos(pyproject_path):
