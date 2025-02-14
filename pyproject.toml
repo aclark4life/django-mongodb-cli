@@ -4,9 +4,7 @@ version = "0.1.0"
 dependencies = [
     "GitPython",
     "Sphinx",
-    "click",
     "django-extensions",
-    "dj-database-url",
     "freezegun",
     "html5lib",
     "psycopg2",
@@ -16,7 +14,6 @@ dependencies = [
     "requests",
     "setuptools",
     "toml",
-    "wagtail",
 ]
 
 [tool.setuptools]
