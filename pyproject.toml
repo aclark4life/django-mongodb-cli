@@ -4,6 +4,7 @@ version = "0.1.0"
 dependencies = [
     "GitPython",
     "Sphinx",
+    "click",
     "django-extensions",
     "freezegun",
     "html5lib",
@@ -21,7 +22,6 @@ packages = ["django_mongodb_cli"]
 
 [tool.django_mongodb_cli]
 dev = [
-    "click @ git+ssh://git@github.com/pallets/click@main",
     "django-allauth @ git+ssh://git@github.com/pennersr/django-allauth@main",
     "django-debug-toolbar @ git+ssh://git@github.com/django-commons/django-debug-toolbar@main",
     "django-filter @ git+ssh://git@github.com/aclark4life/django-filter@main",
