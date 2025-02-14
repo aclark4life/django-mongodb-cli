@@ -63,7 +63,7 @@ def makemigrations(
     command.extend(
         [
             "--settings",
-            test_settings[2],
+            test_settings["module"],
         ]
     )
     # Add custom path
