@@ -6,6 +6,7 @@ dependencies = [
     "Sphinx",
     "click",
     "django-extensions",
+    "dj-database-url",
     "freezegun",
     "html5lib",
     "psycopg2",
