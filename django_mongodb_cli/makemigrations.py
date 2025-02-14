@@ -66,7 +66,6 @@ def makemigrations(
             test_settings["module"],
         ]
     )
-    # Add custom path
     sys.path.append(test_dir)
     env = os.environ.copy()
     env["PYTHONPATH"] = test_dir + os.pathsep + env.get("PYTHONPATH", "")
