@@ -72,7 +72,7 @@ def runtests(
         command.extend(
             [
                 "--settings",
-                test_settings[2],
+                test_settings["module"],
                 "--parallel",
                 "1",
                 "--verbosity",
@@ -89,6 +89,6 @@ def runtests(
         # Set the DJANGO_SETTINGS_MODULE environment variable
         # for pytest to use the correct settings file.
         os.environ["DJANGO_SETTINGS_MODULE"] = test_settings[2]
-    cwd = test_settings[3]
+    cwd = test_settings["path"]
     click.echo(f"Working directory: {cwd}")
     subprocess.run(command, cwd=cwd)
