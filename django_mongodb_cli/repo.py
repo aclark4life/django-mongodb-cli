@@ -79,10 +79,10 @@ def clone(repo, src, dest, all):
     if dest is None:
         dest = "src"
     repo.home = dest
+    repos, url_pattern, branch_pattern, upstream_pattern, name_pattern = get_repos(
+        "pyproject.toml"
+    )
     if all:
-        repos, url_pattern, branch_pattern, upstream_pattern = get_repos(
-            "pyproject.toml"
-        )
         click.echo(f"Checking out {len(repos)} repositories")
         for repo_entry in repos:
             url_match = url_pattern.search(repo_entry)
