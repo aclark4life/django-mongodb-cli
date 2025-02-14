@@ -143,6 +143,7 @@ def get_repos(pyproject_path):
 def get_management_command(command=None):
     REQUIRES_MANAGE_PY = {
         "createsuperuser",
+        "migrate",
         "runserver",
         "shell",
         "startapp",
