@@ -1,11 +1,10 @@
 import click
+import git
 import os
 import shutil
 import sys
 import toml
 import re
-
-from git import Repo
 
 
 from .config import project_dirs_map, test_settings_map
@@ -23,7 +22,7 @@ def apply_patches(app_type):
             )
             click.echo(click.style(f"Applying patch {patch_file}", fg="blue"))
             # Ensure the repository is valid
-            repo = Repo(project_dir)
+            repo = git.Repo(project_dir)
             if not repo.bare:
                 try:
                     # Apply the patch
@@ -38,6 +37,20 @@ def apply_patches(app_type):
                 click.echo("Not a valid Git repository.")
                 return
             click.echo(click.style("Patch applied", fg="green"))
+
+
+def clone_from(repo_url, clone_path, branch):
+    if not os.path.exists(clone_path):
+        click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
+        try:
+            git.Repo.clone_from(repo_url, clone_path, branch=branch)
+        except git.exc.GitCommandError:
+            try:
+                git.Repo.clone_from(repo_url, clone_path)
+            except git.exc.GitCommandError as e:
+                click.echo(f"Failed to clone repository: {e}")
+    else:
+        click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
 
 
 def copy_mongo_apps(test_dir, app_type):

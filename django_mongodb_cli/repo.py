@@ -3,8 +3,7 @@ import sys
 import subprocess
 
 import click
-import git
-from .utils import get_repos
+from .utils import get_repos, clone_from
 
 
 class Repo:
@@ -80,6 +79,17 @@ def clone(repo, src, dest, all):
         dest = "src"
     repo.home = dest
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
+    if src:
+        for repo_entry in repos:
+            url_match = url_pattern.search(repo_entry)
+            branch_match = branch_pattern.search(repo_entry)
+            if url_match:
+                repo_url = url_match.group(0)
+                repo_name = os.path.basename(repo_url)
+                if repo_name == src:
+                    branch = branch_match.group(1) if branch_match else "main"
+                    clone_path = os.path.join(dest, repo_name)
+                    clone_from(repo_url, clone_path, branch)
     if all:
         click.echo(f"Checking out {len(repos)} repositories")
         for repo_entry in repos:
@@ -90,21 +100,7 @@ def clone(repo, src, dest, all):
                 repo_name = os.path.basename(repo_url)
                 branch = branch_match.group(1) if branch_match else "main"
                 clone_path = os.path.join(dest, repo_name)
-                if not os.path.exists(clone_path):
-                    click.echo(
-                        f"Cloning {repo_url} into {clone_path} (branch: {branch})"
-                    )
-                    try:
-                        git.Repo.clone_from(repo_url, clone_path, branch=branch)
-                    except git.exc.GitCommandError:
-                        try:
-                            git.Repo.clone_from(repo_url, clone_path)
-                        except git.exc.GitCommandError as e:
-                            click.echo(f"Failed to clone repository: {e}")
-                else:
-                    click.echo(
-                        f"Skipping {repo_url} in {clone_path} (branch: {branch})"
-                    )
+                clone_from(repo_url, clone_path, branch)
             else:
                 click.echo(f"Invalid repository entry: {repo_entry}")
 
