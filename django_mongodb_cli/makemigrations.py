@@ -1,5 +1,7 @@
 import click
+import os
 import subprocess
+import sys
 
 from .config import test_dirs_map
 
@@ -64,4 +66,8 @@ def makemigrations(
             test_settings[2],
         ]
     )
-    subprocess.run(command + [*args])
+    # Add custom path
+    sys.path.append(test_dir)
+    env = os.environ.copy()
+    env["PYTHONPATH"] = test_dir + os.pathsep + env.get("PYTHONPATH", "")
+    subprocess.run(command + [*args], env=env)
