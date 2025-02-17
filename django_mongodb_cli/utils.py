@@ -5,7 +5,6 @@ import shutil
 import sys
 import toml
 import re
-import subprocess
 
 
 from .config import project_dirs_map, test_settings_map
@@ -13,8 +12,13 @@ from .config import project_dirs_map, test_settings_map
 
 def add_remote(upstream_match, clone_path, repo_name):
     remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
-    subprocess.run(["git", "remote", "add", "upstream", remote], cwd=clone_path)
-    subprocess.run(["git", "remote", "-v", "show"], cwd=clone_path)
+    repo = git.Repo(clone_path)
+    try:
+        repo.create_remote("upstream", remote)
+    except git.exc.GitCommandError:
+        click.echo("remote exists!")
+    for remote in repo.remotes:
+        print(f"{remote.name}: {remote.url}")
 
 
 def apply_patches(app_type):
