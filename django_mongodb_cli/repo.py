@@ -3,7 +3,7 @@ import sys
 import subprocess
 
 import click
-from .utils import get_repos, clone_from
+from .utils import get_repos, clone_from, add_remote
 
 
 class Repo:
@@ -231,3 +231,48 @@ def install(repo, src, all):
                     subprocess.run(
                         [sys.executable, "setup.py", "develop"], cwd=clone_path
                     )
+
+
+@repo.command()
+@click.argument("src", required=False)
+@click.argument("dest", required=False)
+@click.option(
+    "-a",
+    "--all",
+    is_flag=True,
+    help="Check out all branches/tracked files.",
+)
+@pass_repo
+def remote(repo, src, dest, all):
+    """Upstream"""
+    if dest is None:
+        dest = "src"
+    repo.home = dest
+    repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
+
+    if src:
+        for repo_entry in repos:
+            url_match = url_pattern.search(repo_entry)
+            branch_match = branch_pattern.search(repo_entry)
+            if url_match:
+                repo_url = url_match.group(0)
+                repo_name = os.path.basename(repo_url)
+                if repo_name == src:
+                    branch = branch_match.group(1) if branch_match else "main"
+                    clone_path = os.path.join(dest, repo_name)
+                    upstream_match = upstream_pattern.search(repo_entry)
+                    if upstream_match:
+                        add_remote(upstream_match, clone_path, repo_name)
+    if all:
+        click.echo(f"Checking out {len(repos)} repositories")
+        for repo_entry in repos:
+            url_match = url_pattern.search(repo_entry)
+            branch_match = branch_pattern.search(repo_entry)
+            if url_match:
+                repo_url = url_match.group(0)
+                repo_name = os.path.basename(repo_url)
+                branch = branch_match.group(1) if branch_match else "main"
+                clone_path = os.path.join(dest, repo_name)
+                clone_from(repo_url, clone_path, branch)
+            else:
+                click.echo(f"Invalid repository entry: {repo_entry}")
