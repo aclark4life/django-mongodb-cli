@@ -18,6 +18,7 @@ def add_remote(upstream_match, clone_path, repo_name):
     except git.exc.GitCommandError:
         click.echo("remote exists!")
     repo.remotes.upstream.fetch()
+    repo.git.rebase("upstream/main")
     for remote in repo.remotes:
         print(f"{remote.name}: {remote.url}")
 
