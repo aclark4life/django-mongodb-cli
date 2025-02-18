@@ -88,7 +88,7 @@ def runtests(
     if app_type == "django_debug_toolbar":
         # Set the DJANGO_SETTINGS_MODULE environment variable
         # for pytest to use the correct settings file.
-        os.environ["DJANGO_SETTINGS_MODULE"] = test_settings[2]
+        os.environ["DJANGO_SETTINGS_MODULE"] = test_settings["module"]
     cwd = test_settings["path"]
     click.echo(f"Working directory: {cwd}")
     subprocess.run(command, cwd=cwd)
