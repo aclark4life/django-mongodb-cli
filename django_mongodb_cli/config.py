@@ -2,12 +2,12 @@ import os
 
 test_settings_map = {
     "django": {
-        "src": "settings_django.py",
+        "src": os.path.join("test_settings", "settings_django.py"),
         "dest": "mongo_settings.py",
         "module": "mongo_settings",
         "project_dir": os.path.join("src", "django"),
         "command": "./runtests.py",
-        "test_dirs": ["tests"],
+        "test_dirs": [os.path.join("src", "django", "tests")],
     },
     "django_allauth": {
         "src": "settings_allauth_regular.py",

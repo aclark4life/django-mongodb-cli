@@ -91,6 +91,5 @@ def runtests(
         # Set the DJANGO_SETTINGS_MODULE environment variable
         # for pytest to use the correct settings file.
         os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[app_type]["module"]
-    cwd = test_settings_map[app_type]["project_dir"]
-    click.echo(f"Working directory: {cwd}")
-    subprocess.run(command, cwd=cwd)
+    click.echo(f"Working directory: {test_dir}")
+    subprocess.run(command, cwd=test_dir)
