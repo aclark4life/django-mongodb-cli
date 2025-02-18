@@ -25,7 +25,7 @@ packages = ["django_mongodb_cli"]
 dev = [
     "django-allauth @ git+ssh://git@github.com/pennersr/django-allauth@main",
     "django-debug-toolbar @ git+ssh://git@github.com/django-commons/django-debug-toolbar@main",
-    "django-filter @ git+ssh://git@github.com/aclark4life/django-filter@main",
+    "django-filter @ git+ssh://git@github.com/aclark4life/django-filter@main # upstream: carltongibson",
     "django-mongodb-app @ git+ssh://git@github.com/aclark4life/django-mongodb-app@main # upstream: mongodb-labs",
     "django-mongodb-backend @ git+ssh://git@github.com/aclark4life/django-mongodb-backend@main # upstream: mongodb",
     "django-mongodb-polls @ git+ssh://git@github.com/aclark4life/django-mongodb-polls@main",
