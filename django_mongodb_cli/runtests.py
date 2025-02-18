@@ -3,7 +3,7 @@ import os
 import subprocess
 
 
-from .config import run_tests_map, test_dirs_map
+from .config import test_settings_map
 
 
 from .utils import (
@@ -52,10 +52,10 @@ def runtests(
         django_rest_framework,
         wagtail,
     )
-    test_dirs = test_dirs_map[app_type]
+    test_dirs = test_settings_map[app_type]["test_dirs"]
     test_dir = test_dirs.pop()
     test_settings = copy_test_settings(test_dir, app_type)
-    command = [run_tests_map[app_type]]
+    command = [test_settings_map[app_type]["command"]]
     if list_tests:
         for test_dir in test_dirs:
             for module in sorted(os.listdir(test_dir)):

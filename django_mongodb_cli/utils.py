@@ -7,7 +7,7 @@ import toml
 import re
 
 
-from .config import project_dirs_map, test_settings_map
+from .config import test_settings_map
 
 
 def add_remote(upstream_match, clone_path, repo_name):
@@ -25,7 +25,7 @@ def add_remote(upstream_match, clone_path, repo_name):
 
 def apply_patches(app_type):
     """Apply a patch file to the specified project directory."""
-    project_dir = project_dirs_map[app_type]
+    project_dir = test_settings_map[app_type]
     patch_dir = os.path.join("patches", app_type)
     if os.path.exists(patch_dir):
         for patch_file in os.listdir(patch_dir):

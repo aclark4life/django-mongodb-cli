@@ -1,7 +1,8 @@
 import click
 import subprocess
 
-from .config import test_dirs_map
+
+from .config import test_settings_map
 
 from .utils import (
     copy_mongo_apps,
@@ -53,7 +54,7 @@ def makemigrations(
         django_rest_framework,
         wagtail,
     )
-    test_dirs = test_dirs_map[app_type]
+    test_dirs = test_settings_map[app_type]["test_dirs"]
     test_dir = test_dirs[0]
     copy_mongo_apps(test_dir, app_type)
     test_settings = copy_test_settings(test_dir, app_type)
