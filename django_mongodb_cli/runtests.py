@@ -53,7 +53,7 @@ def runtests(
         wagtail,
     )
     test_dirs = test_dirs_map[app_type]
-    test_dir = test_dirs[0]
+    test_dir = test_dirs.pop()
     test_settings = copy_test_settings(test_dir, app_type)
     command = [runtests_map[app_type]]
     if list_tests:
