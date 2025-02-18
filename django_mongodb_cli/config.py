@@ -28,7 +28,7 @@ test_settings_map = {
     "django_rest_framework": {
         "src": "settings_drf.py",
         "dest": "conftest.py",
-        "module": "tests.conftest",
+        "module": "conftest",
         "path": os.path.join("src", "django-rest-framework"),
     },
     "wagtail": {
