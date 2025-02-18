@@ -3,7 +3,7 @@ import os
 test_settings_map = {
     "django": {
         "src": os.path.join("test_settings", "settings_django.py"),
-        "dest": "mongo_settings.py",
+        "dest": os.path.join("src", "django", "mongo_settings.py"),
         "module": "mongo_settings",
         "project_dir": os.path.join("src", "django"),
         "command": "./runtests.py",
