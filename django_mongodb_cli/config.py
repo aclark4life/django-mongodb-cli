@@ -1,7 +1,7 @@
 import os
 
 test_settings_map = {
-    "default": {
+    "django": {
         "src": "settings_django.py",
         "dest": "mongo_settings.py",
         "module": "mongo_settings",

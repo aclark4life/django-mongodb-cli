@@ -136,7 +136,7 @@ def get_app_type(
         if django_rest_framework
         else "wagtail"
         if wagtail
-        else "default"
+        else "django"
     )
 
 
