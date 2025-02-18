@@ -5,7 +5,7 @@ test_settings_map = {
         "src": "settings_django.py",
         "dest": "mongo_settings.py",
         "module": "mongo_settings",
-        "path": ".",
+        "path": os.path.join("src", "django", "tests"),
     },
     "django_allauth": {
         "src": "settings_allauth_regular.py",
@@ -41,7 +41,7 @@ test_settings_map = {
 
 
 run_tests_map = {
-    "default": os.path.join("src", "django", "tests", "runtests.py"),
+    "default": "./runtests.py",
     "django_allauth": "tox",
     "django_debug_toolbar": "pytest",
     "django_filter": "./runtests.py",

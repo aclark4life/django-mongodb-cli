@@ -72,7 +72,7 @@ def runtests(
         command.extend(
             [
                 "--settings",
-                test_settings["module"],
+                "mongo_settings",
                 "--parallel",
                 "1",
                 "--verbosity",
