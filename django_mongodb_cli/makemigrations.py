@@ -1,5 +1,4 @@
 import click
-import os
 import subprocess
 
 from .config import test_dirs_map
@@ -63,8 +62,8 @@ def makemigrations(
         [
             "--settings",
             test_settings["module"],
-            "--pythonpath",
-            os.path.join(os.getcwd(), test_dir),
+            # "--pythonpath",
+            # os.path.join(os.getcwd(), test_dir),
         ]
     )
     click.echo(f"Running command {' '.join(command)} {' '.join(args)}")
