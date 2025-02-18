@@ -3,7 +3,7 @@ import sys
 import subprocess
 
 import click
-from .utils import get_repos, clone_from, add_remote
+from .utils import get_repos, clone_from, add_remote, pull
 
 
 class Repo:
@@ -261,3 +261,31 @@ def fetch(repo, src, dest, all):
                     upstream_match = upstream_pattern.search(repo_entry)
                     if upstream_match:
                         add_remote(upstream_match, clone_path, repo_name)
+
+
+@repo.command()
+@click.argument("src", required=False)
+@click.argument("dest", required=False)
+@click.option(
+    "-a",
+    "--all",
+    is_flag=True,
+    help="Check out all branches/tracked files.",
+)
+@pass_repo
+def update(repo, src, dest, all):
+    """Update"""
+    if dest is None:
+        dest = "src"
+    repo.home = dest
+    repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
+    if src:
+        click.echo(f"Updating {src}")
+        for repo_entry in repos:
+            url_match = url_pattern.search(repo_entry)
+            if url_match:
+                repo_url = url_match.group(0)
+                repo_name = os.path.basename(repo_url)
+                if repo_name == src:
+                    clone_path = os.path.join(dest, repo_name)
+                    pull(clone_path)

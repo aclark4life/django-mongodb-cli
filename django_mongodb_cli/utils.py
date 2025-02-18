@@ -187,3 +187,8 @@ def get_management_command(command=None):
         return full_command
 
     return base_command
+
+
+def pull(clone_path):
+    repo = git.Repo(clone_path)
+    repo.git.pull()
