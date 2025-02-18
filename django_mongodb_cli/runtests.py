@@ -3,7 +3,7 @@ import os
 import subprocess
 
 
-from .config import runtests_map, test_dirs_map
+from .config import run_tests_map, test_dirs_map
 
 
 from .utils import (
@@ -55,7 +55,7 @@ def runtests(
     test_dirs = test_dirs_map[app_type]
     test_dir = test_dirs.pop()
     test_settings = copy_test_settings(test_dir, app_type)
-    command = [runtests_map[app_type]]
+    command = [run_tests_map[app_type]]
     if list_tests:
         for test_dir in test_dirs:
             for module in sorted(os.listdir(test_dir)):
