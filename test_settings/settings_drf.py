@@ -57,7 +57,7 @@ def pytest_configure(config):
         ),
         INSTALLED_APPS=(
             "tests.mongo_apps.MongoAdminConfig",
-            "django.contrib.auth",
+            "tests.mongo_apps.MongoAuthConfig",
             "tests.mongo_apps.MongoContentTypesConfig",
             "django.contrib.sessions",
             "django.contrib.sites",
@@ -75,6 +75,7 @@ def pytest_configure(config):
             "admin": "tests.mongo_migrations.admin",
             "auth": "tests.mongo_migrations.auth",
             "contenttypes": "tests.mongo_migrations.contenttypes",
+            "tests": "tests.mongo_migrations.tests",
         },
     )
 
