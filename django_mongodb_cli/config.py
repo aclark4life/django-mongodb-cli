@@ -10,25 +10,25 @@ test_settings_map = {
     "django_allauth": {
         "src": "settings_allauth_regular.py",
         "dest": "mongo_settings.py",
-        "module": "tests.mongo_settings",
+        "module": "allauth.mongo_settings",
         "path": os.path.join("src", "django-allauth"),
     },
     "django_debug_toolbar": {
         "src": "settings_debug_toolbar.py",
         "dest": "mongo_settings.py",
-        "module": "tests.mongo_settings",
+        "module": "debug_toolbar.mongo_settings",
         "path": os.path.join("src", "django-debug-toolbar"),
     },
     "django_filter": {
         "src": "settings_filter.py",
         "dest": "mongo_settings.py",
-        "module": "tests.mongo_settings",
+        "module": "django_filters.mongo_settings",
         "path": os.path.join("src", "django-filter"),
     },
     "django_rest_framework": {
         "src": "settings_drf.py",
         "dest": "conftest.py",
-        "module": "conftest",
+        "module": "rest_framework.mongo_settings",
         "path": os.path.join("src", "django-rest-framework"),
     },
     "wagtail": {
