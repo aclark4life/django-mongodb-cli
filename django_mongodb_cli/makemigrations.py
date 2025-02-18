@@ -67,4 +67,5 @@ def makemigrations(
             os.path.join(os.getcwd(), test_dir),
         ]
     )
+    click.echo(f"Running command {' '.join(command)} {' '.join(args)}")
     subprocess.run(command + [*args])
