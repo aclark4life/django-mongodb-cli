@@ -1,6 +1,7 @@
 import click
 import os
 import subprocess
+import shutil
 
 
 from .config import test_settings_map
@@ -10,7 +11,6 @@ from .utils import (
     apply_patches,
     copy_mongo_migrations,
     copy_mongo_apps,
-    copy_test_settings,
     get_app_type,
 )
 
@@ -54,7 +54,9 @@ def runtests(
     )
     test_dirs = test_settings_map[app_type]["test_dirs"]
     test_dir = test_dirs.pop()
-    test_settings = copy_test_settings(test_dir, app_type)
+    shutil.copyfile(
+        test_settings_map[app_type]["src"], test_settings_map[app_type]["dest"]
+    )
     command = [test_settings_map[app_type]["command"]]
     if list_tests:
         for test_dir in test_dirs:
@@ -88,7 +90,7 @@ def runtests(
     if app_type == "django_debug_toolbar":
         # Set the DJANGO_SETTINGS_MODULE environment variable
         # for pytest to use the correct settings file.
-        os.environ["DJANGO_SETTINGS_MODULE"] = test_settings["module"]
-    cwd = test_settings["path"]
+        os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[app_type]["module"]
+    cwd = test_settings_map[app_type]["project_dir"]
     click.echo(f"Working directory: {cwd}")
     subprocess.run(command, cwd=cwd)

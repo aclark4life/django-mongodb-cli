@@ -1,12 +1,12 @@
 import click
 import subprocess
+import shutil
 
 
 from .config import test_settings_map
 
 from .utils import (
     copy_mongo_apps,
-    copy_test_settings,
     get_app_type,
     get_management_command,
 )
@@ -57,12 +57,14 @@ def makemigrations(
     test_dirs = test_settings_map[app_type]["test_dirs"]
     test_dir = test_dirs[0]
     copy_mongo_apps(test_dir, app_type)
-    test_settings = copy_test_settings(test_dir, app_type)
+    shutil.copyfile(
+        test_settings_map[app_type]["src"], test_settings_map[app_type]["dest"]
+    )
     command = get_management_command("makemigrations")
     command.extend(
         [
             "--settings",
-            test_settings["module"],
+            test_settings_map[app_type]["module"],
             # "--pythonpath",
             # os.path.join(os.getcwd(), test_dir),
         ]

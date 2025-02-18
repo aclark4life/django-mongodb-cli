@@ -97,19 +97,6 @@ def copy_mongo_migrations(test_dir):
         )
 
 
-def copy_test_settings(settings_dir, app_type):
-    """Retrieve settings for the specified app type."""
-    test_settings = {
-        "src": os.path.join("test_settings", test_settings_map[app_type]["src"]),
-        "dest": os.path.join(settings_dir, test_settings_map[app_type]["dest"]),
-        "module": test_settings_map[app_type]["module"],
-        "path": test_settings_map[app_type]["path"],
-    }
-    click.echo(click.style(f"Copying test settings to {settings_dir}", fg="blue"))
-    shutil.copyfile(test_settings["src"], test_settings["dest"])
-    return test_settings
-
-
 def delete_mongo_migrations(mongo_migrations, project_dir):
     click.echo(click.style(f"Deleting mongo migrations {mongo_migrations}", fg="blue"))
     shutil.rmtree(mongo_migrations, ignore_errors=True)
