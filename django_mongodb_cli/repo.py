@@ -243,13 +243,14 @@ def install(repo, src, all):
     help="Check out all branches/tracked files.",
 )
 @pass_repo
-def remote(repo, src, dest, all):
+def fetch(repo, src, dest, all):
     """Upstream"""
     if dest is None:
         dest = "src"
     repo.home = dest
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if src:
+        click.echo(f"Fetching {src}")
         for repo_entry in repos:
             url_match = url_pattern.search(repo_entry)
             if url_match:
