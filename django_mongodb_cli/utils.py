@@ -177,13 +177,6 @@ def get_management_command(command=None):
 
     if command:
         full_command = base_command + [command]
-        click.echo(
-            click.style(
-                f"Running command: {' '.join(full_command)}",
-                fg="bright_cyan",
-                reverse=True,
-            )
-        )
         return full_command
 
     return base_command
