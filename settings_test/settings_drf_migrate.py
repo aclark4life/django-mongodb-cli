@@ -19,6 +19,7 @@ TEMPLATES = (
             "debug": True,  # We want template errors to raise
             "context_processors": [
                 "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.request",
             ],
         },
     },
