@@ -102,6 +102,8 @@ def clone(repo, src, dest, all, list):
                     clone_path = os.path.join(dest, repo_name)
                     if not os.path.exists(clone_path):
                         clone_from(repo_url, clone_path, branch)
+                    else:
+                        click.echo(f"Repository {repo_name} already exists.")
     if all:
         click.echo(f"Checking out {len(repos)} repositories")
         for repo_entry in repos:
