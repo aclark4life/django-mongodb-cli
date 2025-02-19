@@ -4,24 +4,7 @@ import django_mongodb_backend
 
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/djangotests")
 
-MIGRATION_MODULES = {
-    "admin": "tests.mongo_migrations.admin",
-    "auth": "tests.mongo_migrations.auth",
-    "contenttypes": "tests.mongo_migrations.contenttypes",
-}
-
-
 DEBUG_PROPAGATE_EXCEPTIONS = (True,)
-# DATABASES={
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': ':memory:'
-#     },
-#     'secondary': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': ':memory:'
-#     }
-# },
 DATABASES = (
     {
         "default": django_mongodb_backend.parse_uri(DATABASE_URL),
@@ -67,11 +50,8 @@ INSTALLED_APPS = [
 ]
 PASSWORD_HASHERS = (("django.contrib.auth.hashers.MD5PasswordHasher",),)
 DEFAULT_AUTO_FIELD = ("django_mongodb_backend.fields.ObjectIdAutoField",)
-MIGRATION_MODULES = (
-    {
-        "admin": "tests.mongo_migrations.admin",
-        "auth": "tests.mongo_migrations.auth",
-        "contenttypes": "tests.mongo_migrations.contenttypes",
-        "tests": "tests.mongo_migrations.tests",
-    },
-)
+MIGRATION_MODULES = {
+    "admin": "tests.mongo_migrations.admin",
+    "auth": "tests.mongo_migrations.auth",
+    "contenttypes": "tests.mongo_migrations.contenttypes",
+}
