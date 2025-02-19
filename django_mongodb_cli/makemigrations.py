@@ -57,7 +57,7 @@ def makemigrations(
     )
     test_dirs = test_settings_map[app_type]["test_dirs"]
     test_dir = test_dirs[0]
-    copy_mongo_apps(test_dir, app_type)
+    copy_mongo_apps(app_type)
     shutil.copyfile(
         test_settings_map[app_type]["src"], test_settings_map[app_type]["dest"]
     )
