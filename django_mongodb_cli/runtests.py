@@ -58,7 +58,8 @@ def runtests(
                 click.echo(module)
         return
     copy_mongo_settings(
-        test_settings_map[app_type]["src"], test_settings_map[app_type]["target"]
+        test_settings_map[app_type]["settings_file"]["test"]["src"],
+        test_settings_map[app_type]["settings_file"]["test"]["target"],
     )
     command = [test_settings_map[app_type]["command"]]
     apply_patches(app_type)

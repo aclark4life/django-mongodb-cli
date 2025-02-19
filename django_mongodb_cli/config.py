@@ -5,11 +5,16 @@ test_settings_map = {
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django", "tests"),
         "project_dir": os.path.join("src", "django"),
+        "settings_file": {
+            "test": {
+                "src": os.path.join("settings_test", "settings_django.py"),
+                "target": os.path.join("src", "django", "tests", "mongo_settings.py"),
+            },
+        },
         "settings_module": {
             "test": "mongo_settings",
             "migrate": "mongo_settings",
         },
-        "src": os.path.join("settings_test", "settings_django.py"),
         "target": os.path.join("src", "django", "tests", "mongo_settings.py"),
         "test_dirs": [os.path.join("src", "django", "tests")],
     },
@@ -21,12 +26,16 @@ test_settings_map = {
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django-filter"),
         "project_dir": os.path.join("src", "django-filter"),
+        "settings_file": {
+            "test": {
+                "src": os.path.join("settings_test", "settings_filter.py"),
+                "target": os.path.join("src", "django-filter", "tests", "settings.py"),
+            },
+        },
         "settings_module": {
             "test": "tests.settings",
             "migrate": "tests.settings",
         },
-        "src": os.path.join("settings_test", "settings_filter.py"),
-        "target": os.path.join("src", "django-filter", "tests", "settings.py"),
         "test_dirs": [os.path.join("src", "django-filter", "tests")],
     },
     "django_rest_framework": {
