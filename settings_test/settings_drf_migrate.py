@@ -48,3 +48,7 @@ INSTALLED_APPS = [
 ]
 PASSWORD_HASHERS = ["django.contrib.auth.hashers.MD5PasswordHasher"]
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
+
+MIGRATION_MODULES = {
+    "auth": "tests.mongo_apps.auth.migrations",
+}
