@@ -74,7 +74,7 @@ test_settings_map = {
             "test": "tests.conftest",
             "migrate": "tests.conftest",
         },
-        "test_dirs": ["tests"],
+        "test_dirs": [os.path.join("src", "django-rest-framework", "tests")],
     },
     "django_allauth": {
         "command": "tox",
