@@ -17,6 +17,13 @@ def pytest_addoption(parser):
     )
 
 
+MIGRATION_MODULES = {
+    "admin": "tests.mongo_migrations.admin",
+    "auth": "tests.mongo_migrations.auth",
+    "contenttypes": "tests.mongo_migrations.contenttypes",
+}
+
+
 def pytest_configure(config):
     from django.conf import settings
 
