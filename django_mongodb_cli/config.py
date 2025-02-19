@@ -8,6 +8,15 @@ test_settings_map = {
         "command": "./runtests.py",
         "test_dirs": [os.path.join("src", "django", "tests")],
     },
+    "django_filter": {
+        "src": os.path.join("settings", "settings_filter.py"),
+        "dest": os.path.join(
+            "src", "django-filter", "django_filters", "mongo_settings.py"
+        ),
+        "project_dir": os.path.join("src", "django-filter"),
+        "command": "./runtests.py",
+        "test_dirs": [os.path.join("src", "django-filter")],
+    },
     "django_allauth": {
         "src": os.path.join("settings", "settings_allauth_regular.py"),
         "dest": "mongo_settings.py",
@@ -22,15 +31,6 @@ test_settings_map = {
         "project_dir": os.path.join("src", "django-debug-toolbar"),
         "command": "pytest",
         "test_dirs": ["tests"],
-    },
-    "django_filter": {
-        "src": os.path.join("settings", "settings_filter.py"),
-        "dest": os.path.join(
-            "src", "django-filter", "django_filters", "mongo_settings.py"
-        ),
-        "project_dir": os.path.join("src", "django-filter"),
-        "command": "./runtests.py",
-        "test_dirs": [os.path.join("src", "django-filter")],
     },
     "django_rest_framework": {
         "src": os.path.join("settings", "settings_drf.py"),
