@@ -76,7 +76,7 @@ def copy_mongo_apps(test_dir, app_type):
     if app_type in app_files:
         click.echo(click.style(f"Copying mongo apps to {test_dir}", fg="blue"))
         shutil.copyfile(
-            os.path.join("test_apps", app_files[app_type]),
+            os.path.join("apps_test", app_files[app_type]),
             os.path.join(test_dir, "mongo_apps.py"),
         )
 
