@@ -97,6 +97,12 @@ def copy_mongo_migrations(test_dir):
         )
 
 
+def copy_mongo_settings(src, dest):
+    """Copy mongo_settings to the specified test directory."""
+    click.echo(click.style(f"Copying {src} to {dest}", fg="blue"))
+    shutil.copyfile(src, dest)
+
+
 def delete_mongo_migrations(mongo_migrations, project_dir):
     click.echo(click.style(f"Deleting mongo migrations {mongo_migrations}", fg="blue"))
     shutil.rmtree(mongo_migrations, ignore_errors=True)
