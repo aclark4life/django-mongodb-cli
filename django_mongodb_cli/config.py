@@ -6,7 +6,7 @@ test_settings_map = {
         "dest": os.path.join("src", "django", "tests", "mongo_settings.py"),
         "project_dir": os.path.join("src", "django"),
         "command": "./runtests.py",
-        "test_dir": os.path.join("src", "django", "tests"),
+        "cwd": os.path.join("src", "django", "tests"),
         "test_dirs": [os.path.join("src", "django", "tests")],
         "settings_module": "mongo_settings",
     },
@@ -17,7 +17,7 @@ test_settings_map = {
         ),
         "project_dir": os.path.join("src", "django-filter"),
         "command": "./runtests.py",
-        "test_dir": os.path.join("src", "django-filter"),
+        "cwd": os.path.join("src", "django-filter"),
         "test_dirs": [os.path.join("src", "django-filter", "tests")],
         "settings_module": "tests.mongo_settings",
         "apps": {

@@ -68,7 +68,7 @@ def makemigrations(
         command.extend(
             [
                 "--pythonpath",
-                os.path.join(os.getcwd(), test_settings_map[app_type]["test_dir"]),
+                os.path.join(os.getcwd(), test_settings_map[app_type]["cwd"]),
             ]
         )
     click.echo(f"Running command {' '.join(command)} {' '.join(args)}")
