@@ -100,7 +100,8 @@ def clone(repo, src, dest, all, list):
                 if repo_name == src:
                     branch = branch_match.group(1) if branch_match else "main"
                     clone_path = os.path.join(dest, repo_name)
-                    clone_from(repo_url, clone_path, branch)
+                    if not os.path.exists(clone_path):
+                        clone_from(repo_url, clone_path, branch)
     if all:
         click.echo(f"Checking out {len(repos)} repositories")
         for repo_entry in repos:

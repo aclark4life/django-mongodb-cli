@@ -1,6 +1,15 @@
 default:
     echo 'Hello, world!'
 
+install: pip-install git-clone
+alias i := install
+
+# ---------------------------------------- git ----------------------------------------
+[group('git')]
+git-clone:
+    django-mongodb-cli repo clone django-mongodb-backend
+    django-mongodb-cli repo clone django-project-templates
+
 # ---------------------------------------- django ----------------------------------------
 
 [group('django')]
@@ -27,8 +36,6 @@ pip-install: check-venv
     pip install -U pip
     pip install -e .
     pre-commit install
-alias install := pip-install
-alias i := pip-install
 
 # ensure virtual environment is active
 [group('python')]
