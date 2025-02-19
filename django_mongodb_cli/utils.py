@@ -66,18 +66,13 @@ def clone_from(repo_url, clone_path, branch):
         click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
 
 
-def copy_mongo_apps(test_dir, app_type):
+def copy_mongo_apps(app_type):
     """Copy the appropriate mongo_apps file based on the app type."""
-    app_files = {
-        "wagtail": "apps_wagtail.py",
-        "django_filter": "apps_filter.py",
-        "django_rest_framework": "apps_drf.py",
-    }
-    if app_type in app_files:
-        click.echo(click.style(f"Copying mongo apps to {test_dir}", fg="blue"))
+    click.echo(click.style(f"Copying apps for {app_type}", fg="blue"))
+    if "apps" in test_settings_map[app_type]:
         shutil.copyfile(
-            os.path.join("apps_test", app_files[app_type]),
-            os.path.join(test_dir, "mongo_apps.py"),
+            os.path.join(test_settings_map[app_type]["apps"]["src"]),
+            os.path.join(test_settings_map[app_type]["apps"]["dest"]),
         )
 
 

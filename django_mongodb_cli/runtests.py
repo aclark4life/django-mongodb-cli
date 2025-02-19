@@ -44,7 +44,6 @@ def runtests(
     """
     Run `runtests.py` for Django or Wagtail.
     """
-    click.echo(click.style("Running tests", fg="blue"))
     app_type = get_app_type(
         django_allauth,
         django_debug_toolbar,
@@ -53,19 +52,19 @@ def runtests(
         wagtail,
     )
     test_dirs = test_settings_map[app_type]["test_dirs"]
-    test_dir = test_dirs.pop()
+    if list_tests:
+        for test_dir in test_dirs:
+            click.echo(f"Test directory: {test_dir}")
+            for module in sorted(os.listdir(test_dir)):
+                click.echo(module)
+        return
     copy_mongo_settings(
         test_settings_map[app_type]["src"], test_settings_map[app_type]["dest"]
     )
     command = [test_settings_map[app_type]["command"]]
-    if list_tests:
-        for test_dir in test_dirs:
-            for module in sorted(os.listdir(test_dir)):
-                click.echo(module)
-        return
     apply_patches(app_type)
-    copy_mongo_migrations(test_dir)
-    copy_mongo_apps(test_dir, app_type)
+    copy_mongo_migrations(app_type)
+    copy_mongo_apps(app_type)
     if (
         app_type != "django_rest_framework"
         and app_type != "django_allauth"
@@ -91,5 +90,5 @@ def runtests(
         # Set the DJANGO_SETTINGS_MODULE environment variable
         # for pytest to use the correct settings file.
         os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[app_type]["module"]
-    click.echo(f"Working directory: {test_dir}")
-    subprocess.run(command, cwd=test_dir)
+    click.echo(click.style("Running tests", fg="blue"))
+    subprocess.run(command, cwd=test_settings_map[app_type]["test_dir"])

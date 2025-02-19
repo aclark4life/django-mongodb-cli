@@ -18,6 +18,10 @@ test_settings_map = {
         "command": "./runtests.py",
         "test_dirs": [os.path.join("src", "django-filter")],
         "module": "tests.mongo_settings",
+        "apps": {
+            "src": os.path.join("apps_test", "apps_django.py"),
+            "dest": os.path.join("src", "django", "tests", "mongo_apps.py"),
+        },
     },
     "django_allauth": {
         "src": os.path.join("settings_test", "settings_allauth_regular.py"),
