@@ -106,10 +106,3 @@ django-mongodb-cli createsuperuser
 ```bash
 django-mongodb-cli runserver
 ```
-
-## Reference
-
-| Command          | Column 2        | Column 3        |
-|------------------|-----------------|-----------------|
-| `django-admin`   | Value 2         | Value 3         |
-| `runtests.py`    | Value B         | Value C         |
