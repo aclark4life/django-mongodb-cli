@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "tests.mongo_apps.MongoAuthConfig",
     "tests.mongo_apps.MongoContentTypesConfig",
     "django.contrib.sessions",
+    "django.contrib.messages",
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "rest_framework",
