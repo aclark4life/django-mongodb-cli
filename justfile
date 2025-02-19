@@ -7,6 +7,7 @@ alias i := install
 # ---------------------------------------- git ----------------------------------------
 [group('git')]
 git-clone:
+    django-mongodb-cli repo clone django
     django-mongodb-cli repo clone django-mongodb-backend
     django-mongodb-cli repo clone django-project-templates
 
