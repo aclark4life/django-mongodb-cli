@@ -73,7 +73,9 @@ test_settings_map = {
         },
         "migrations_dir": {
             "src": os.path.join("src", "django-mongodb-project", "mongo_migrations"),
-            "target": os.path.join("src", "django-rest-framework", "tests"),
+            "target": os.path.join(
+                "src", "django-rest-framework", "tests", "mongo_migrations"
+            ),
         },
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django-rest-framework"),
