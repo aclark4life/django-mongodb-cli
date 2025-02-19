@@ -6,6 +6,7 @@ test_settings_map = {
         "dest": os.path.join("src", "django", "tests", "mongo_settings.py"),
         "project_dir": os.path.join("src", "django"),
         "command": "./runtests.py",
+        "test_dir": os.path.join("src", "django", "tests"),
         "test_dirs": [os.path.join("src", "django", "tests")],
         "module": "mongo_settings",
     },

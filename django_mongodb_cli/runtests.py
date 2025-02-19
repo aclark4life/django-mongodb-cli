@@ -54,7 +54,6 @@ def runtests(
     test_dirs = test_settings_map[app_type]["test_dirs"]
     if list_tests:
         for test_dir in test_dirs:
-            click.echo(f"Test directory: {test_dir}")
             for module in sorted(os.listdir(test_dir)):
                 click.echo(module)
         return
