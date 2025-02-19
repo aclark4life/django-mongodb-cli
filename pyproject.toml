@@ -13,6 +13,7 @@ dependencies = [
     "pytest",
     "pytest-django",
     "python-webpack-boilerplate",
+    "pytz",
     "requests",
     "setuptools",
     "toml",
