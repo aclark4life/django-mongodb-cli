@@ -4,57 +4,57 @@ test_settings_map = {
     "django": {
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django", "tests"),
-        "dest": os.path.join("src", "django", "tests", "mongo_settings.py"),
         "project_dir": os.path.join("src", "django"),
         "settings_module": "mongo_settings",
         "src": os.path.join("settings_test", "settings_django.py"),
+        "target": os.path.join("src", "django", "tests", "mongo_settings.py"),
         "test_dirs": [os.path.join("src", "django", "tests")],
     },
     "django_allauth": {
         "command": "tox",
-        "dest": "mongo_settings.py",
         "project_dir": os.path.join("src", "django-allauth"),
         "settings_module": "mongo_settings",
         "src": os.path.join("settings_test", "settings_allauth_regular.py"),
+        "target": "mongo_settings.py",
         "test_dirs": ["tests"],
     },
     "django_debug_toolbar": {
         "command": "pytest",
-        "dest": "mongo_settings.py",
         "project_dir": os.path.join("src", "django-debug-toolbar"),
         "settings_module": "mongo_settings",
         "src": os.path.join("settings_test", "settings_debug_toolbar.py"),
+        "target": "mongo_settings.py",
         "test_dirs": ["tests"],
     },
     "django_filter": {
         "apps": {
-            "dest": os.path.join("src", "django", "tests", "mongo_apps.py"),
+            "target": os.path.join("src", "django", "tests", "mongo_apps.py"),
             "src": os.path.join("apps_test", "apps_filter.py"),
         },
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django-filter"),
-        "dest": os.path.join(
-            "src", "django-filter", "django_filters", "mongo_settings.py"
-        ),
         "project_dir": os.path.join("src", "django-filter"),
         "settings_module": "tests.mongo_settings",
         "src": os.path.join("settings_test", "settings_filter.py"),
+        "target": os.path.join(
+            "src", "django-filter", "django_filters", "mongo_settings.py"
+        ),
         "test_dirs": [os.path.join("src", "django-filter", "tests")],
     },
     "django_rest_framework": {
         "command": "./runtests.py",
-        "dest": "conftest.py",
         "project_dir": os.path.join("src", "django-rest-framework"),
         "settings_module": "mongo_settings",
         "src": os.path.join("settings_test", "settings_drf.py"),
+        "target": "conftest.py",
         "test_dirs": ["tests"],
     },
     "wagtail": {
         "command": "./runtests.py",
-        "dest": "mongo_settings.py",
         "project_dir": os.path.join("src", "wagtail"),
         "settings_module": "mongo_settings",
         "src": os.path.join("settings_test", "settings_wagtail.py"),
+        "target": "mongo_settings.py",
         "test_dirs": ["tests"],
     },
 }

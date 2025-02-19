@@ -72,7 +72,7 @@ def copy_mongo_apps(app_type):
     if "apps" in test_settings_map[app_type]:
         shutil.copyfile(
             os.path.join(test_settings_map[app_type]["apps"]["src"]),
-            os.path.join(test_settings_map[app_type]["apps"]["dest"]),
+            os.path.join(test_settings_map[app_type]["apps"]["target"]),
         )
 
 
@@ -99,10 +99,10 @@ def copy_mongo_migrations(app_type):
         )
 
 
-def copy_mongo_settings(src, dest):
+def copy_mongo_settings(src, target):
     """Copy mongo_settings to the specified test directory."""
-    click.echo(click.style(f"Copying {src} to {dest}", fg="blue"))
-    shutil.copyfile(src, dest)
+    click.echo(click.style(f"Copying {src} to {target}", fg="blue"))
+    shutil.copyfile(src, target)
 
 
 def delete_mongo_migrations(mongo_migrations, project_dir):
