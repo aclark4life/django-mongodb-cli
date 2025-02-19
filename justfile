@@ -27,6 +27,7 @@ pip-install: check-venv
     pip install -U pip
     pip install -e .
     pre-commit install
+alias install := pip-install
 alias i := pip-install
 
 # ensure virtual environment is active
