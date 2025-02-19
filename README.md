@@ -109,6 +109,7 @@ django-mongodb-cli runserver
 
 ## Reference
 
-+-----------------------------------------------------------+
-| Command Line Interface for Django MongoDB Development     |
-+-----------------------------------------------------------+
+| Column 1 | Column 2 | Column 3 |
+|----------|----------|----------|
+| Value 1  | Value 2  | Value 3  |
+| Value A  | Value B  | Value C  |
