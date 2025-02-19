@@ -23,6 +23,14 @@ test_settings_map = {
         "target": os.path.join("src", "django-filter", "tests", "settings.py"),
         "test_dirs": [os.path.join("src", "django-filter", "tests")],
     },
+    "django_rest_framework": {
+        "command": "./runtests.py",
+        "project_dir": os.path.join("src", "django-rest-framework"),
+        "settings_module": "mongo_settings",
+        "src": os.path.join("settings_test", "settings_drf.py"),
+        "target": "conftest.py",
+        "test_dirs": ["tests"],
+    },
     "django_allauth": {
         "command": "tox",
         "project_dir": os.path.join("src", "django-allauth"),
@@ -37,14 +45,6 @@ test_settings_map = {
         "settings_module": "mongo_settings",
         "src": os.path.join("settings_test", "settings_debug_toolbar.py"),
         "target": "mongo_settings.py",
-        "test_dirs": ["tests"],
-    },
-    "django_rest_framework": {
-        "command": "./runtests.py",
-        "project_dir": os.path.join("src", "django-rest-framework"),
-        "settings_module": "mongo_settings",
-        "src": os.path.join("settings_test", "settings_drf.py"),
-        "target": "conftest.py",
         "test_dirs": ["tests"],
     },
     "wagtail": {
