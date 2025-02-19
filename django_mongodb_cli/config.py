@@ -10,6 +10,21 @@ test_settings_map = {
         "target": os.path.join("src", "django", "tests", "mongo_settings.py"),
         "test_dirs": [os.path.join("src", "django", "tests")],
     },
+    "django_filter": {
+        "apps": {
+            "target": os.path.join("src", "django", "tests", "mongo_apps.py"),
+            "src": os.path.join("apps_test", "apps_filter.py"),
+        },
+        "command": "./runtests.py",
+        "cwd": os.path.join("src", "django-filter"),
+        "project_dir": os.path.join("src", "django-filter"),
+        "settings_module": "tests.mongo_settings",
+        "src": os.path.join("settings_test", "settings_filter.py"),
+        "target": os.path.join(
+            "src", "django-filter", "django_filters", "mongo_settings.py"
+        ),
+        "test_dirs": [os.path.join("src", "django-filter", "tests")],
+    },
     "django_allauth": {
         "command": "tox",
         "project_dir": os.path.join("src", "django-allauth"),
@@ -25,21 +40,6 @@ test_settings_map = {
         "src": os.path.join("settings_test", "settings_debug_toolbar.py"),
         "target": "mongo_settings.py",
         "test_dirs": ["tests"],
-    },
-    "django_filter": {
-        "apps": {
-            "target": os.path.join("src", "django", "tests", "mongo_apps.py"),
-            "src": os.path.join("apps_test", "apps_filter.py"),
-        },
-        "command": "./runtests.py",
-        "cwd": os.path.join("src", "django-filter"),
-        "project_dir": os.path.join("src", "django-filter"),
-        "settings_module": "tests.mongo_settings",
-        "src": os.path.join("settings_test", "settings_filter.py"),
-        "target": os.path.join(
-            "src", "django-filter", "django_filters", "mongo_settings.py"
-        ),
-        "test_dirs": [os.path.join("src", "django-filter", "tests")],
     },
     "django_rest_framework": {
         "command": "./runtests.py",
