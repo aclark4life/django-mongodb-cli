@@ -106,3 +106,9 @@ django-mongodb-cli createsuperuser
 ```bash
 django-mongodb-cli runserver
 ```
+
+## Reference
+
++-----------------------------------------------------------+
+| Command Line Interface for Django MongoDB Development     |
++-----------------------------------------------------------+
