@@ -5,11 +5,7 @@ import django_mongodb_backend
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/djangotests")
 
 DEBUG_PROPAGATE_EXCEPTIONS = (True,)
-DATABASES = (
-    {
-        "default": django_mongodb_backend.parse_uri(DATABASE_URL),
-    },
-)
+DATABASES = {"default": django_mongodb_backend.parse_uri(DATABASE_URL)}
 SITE_ID = (1,)
 SECRET_KEY = ("not very secret in tests",)
 USE_I18N = (True,)
