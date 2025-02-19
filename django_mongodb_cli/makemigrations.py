@@ -1,6 +1,5 @@
 import click
 import subprocess
-import shutil
 import os
 
 
@@ -8,6 +7,7 @@ from .config import test_settings_map
 
 from .utils import (
     copy_mongo_apps,
+    copy_mongo_settings,
     get_app_type,
     get_management_command,
 )
@@ -56,7 +56,7 @@ def makemigrations(
         wagtail,
     )
     copy_mongo_apps(app_type)
-    shutil.copyfile(
+    copy_mongo_settings(
         test_settings_map[app_type]["src"], test_settings_map[app_type]["dest"]
     )
     command = get_management_command("makemigrations")
