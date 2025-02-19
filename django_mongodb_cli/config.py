@@ -12,8 +12,8 @@ test_settings_map = {
     },
     "django_filter": {
         "apps": {
-            "target": os.path.join("src", "django", "tests", "mongo_apps.py"),
             "src": os.path.join("apps_test", "apps_filter.py"),
+            "target": os.path.join("src", "django-filter", "tests", "mongo_apps.py"),
         },
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django-filter"),
