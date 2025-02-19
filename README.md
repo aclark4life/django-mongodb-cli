@@ -109,7 +109,7 @@ django-mongodb-cli runserver
 
 ## Reference
 
-| Column 1 | Column 2 | Column 3 |
-|----------|----------|----------|
-| Value 1  | Value 2  | Value 3  |
-| Value A  | Value B  | Value C  |
+| Command          | Column 2        | Column 3        |
+|------------------|-----------------|-----------------|
+| `django-admin`   | Value 2         | Value 3         |
+| `runtests.py`    | Value B         | Value C         |
