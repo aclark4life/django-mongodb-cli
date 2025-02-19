@@ -10,6 +10,10 @@ test_settings_map = {
                 "src": os.path.join("settings_test", "settings_django.py"),
                 "target": os.path.join("src", "django", "tests", "mongo_settings.py"),
             },
+            "migrate": {
+                "src": os.path.join("settings_test", "settings_django.py"),
+                "target": os.path.join("src", "django", "tests", "mongo_settings.py"),
+            },
         },
         "settings_module": {
             "test": "mongo_settings",
@@ -31,6 +35,10 @@ test_settings_map = {
                 "src": os.path.join("settings_test", "settings_filter.py"),
                 "target": os.path.join("src", "django-filter", "tests", "settings.py"),
             },
+            "migrate": {
+                "src": os.path.join("settings_test", "settings_filter.py"),
+                "target": os.path.join("src", "django-filter", "tests", "settings.py"),
+            },
         },
         "settings_module": {
             "test": "tests.settings",
@@ -48,12 +56,24 @@ test_settings_map = {
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django-rest-framework"),
         "project_dir": os.path.join("src", "django-rest-framework"),
+        "settings_file": {
+            "test": {
+                "src": os.path.join("settings_test", "settings_drf.py"),
+                "target": os.path.join(
+                    "src", "django-rest-framework", "tests", "conftest.py"
+                ),
+            },
+            "migrate": {
+                "src": os.path.join("settings_test", "settings_drf_migrate.py"),
+                "target": os.path.join(
+                    "src", "django-rest-framework", "tests", "conftest.py"
+                ),
+            },
+        },
         "settings_module": {
             "test": "tests.conftest",
-            "migrate": "tests.mongo_settings",
+            "migrate": "tests.conftest",
         },
-        "src": os.path.join("settings_test", "settings_drf.py"),
-        "target": os.path.join("src", "django-rest-framework", "tests", "conftest.py"),
         "test_dirs": ["tests"],
     },
     "django_allauth": {
