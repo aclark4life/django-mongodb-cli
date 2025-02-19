@@ -61,7 +61,7 @@ def makemigrations(
     command.extend(
         [
             "--settings",
-            test_settings_map[app_type]["settings_module"],
+            test_settings_map[app_type]["settings"]["migrate"],
         ]
     )
     if not app_type == "django_filter":
