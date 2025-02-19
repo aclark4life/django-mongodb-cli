@@ -55,8 +55,6 @@ def makemigrations(
         django_rest_framework,
         wagtail,
     )
-    test_dirs = test_settings_map[app_type]["test_dirs"]
-    test_dir = test_dirs[0]
     copy_mongo_apps(app_type)
     shutil.copyfile(
         test_settings_map[app_type]["src"], test_settings_map[app_type]["dest"]
@@ -65,10 +63,15 @@ def makemigrations(
     command.extend(
         [
             "--settings",
-            "mongo_settings",
-            "--pythonpath",
-            os.path.join(os.getcwd(), test_dir),
+            test_settings_map[app_type]["settings_module"],
         ]
     )
+    if not app_type == "django_filter":
+        command.extend(
+            [
+                "--pythonpath",
+                os.path.join(os.getcwd(), test_settings_map[app_type]["test_dir"]),
+            ]
+        )
     click.echo(f"Running command {' '.join(command)} {' '.join(args)}")
     subprocess.run(command + [*args])
