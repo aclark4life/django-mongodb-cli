@@ -36,12 +36,10 @@ from .utils import (
     help="Run makemigrations for Django Allauth.",
 )
 @click.option("-w", "--wagtail", is_flag=True, help="Run makemigrations for Wagtail.")
-@click.option("-d", "--delete", is_flag=True, help="Delete migrations directory.")
 @click.argument("args", nargs=-1)
 def makemigrations(
     args,
     wagtail,
-    delete,
     django_filter,
     django_rest_framework,
     django_allauth,
