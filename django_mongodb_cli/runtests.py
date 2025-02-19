@@ -86,8 +86,7 @@ def runtests(
         command.extend(["-k", keyword])
     click.echo(f"Running {' '.join(command)}")
     if app_type == "django_debug_toolbar":
-        # Set the DJANGO_SETTINGS_MODULE environment variable
-        # for pytest to use the correct settings file.
+        # For pytest to use correct settings file.
         os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[app_type][
             "settings_module"
         ]
