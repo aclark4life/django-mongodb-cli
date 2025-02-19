@@ -1,8 +1,12 @@
 default:
     echo 'Hello, world!'
 
-install: pip-install git-clone
+install: pip-install git-clone dev-install
 alias i := install
+
+dev-install:
+    django-mongodb-cli repo install django
+    django-mongodb-cli repo install django-mongodb-backend
 
 # ---------------------------------------- git ----------------------------------------
 [group('git')]
