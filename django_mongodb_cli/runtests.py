@@ -84,11 +84,10 @@ def runtests(
     command.extend(modules)
     if keyword:
         command.extend(["-k", keyword])
-    click.echo(f"Running {' '.join(command)}")
+    click.echo(click.style(f"Running {' '.join(command)}", fg="blue"))
     if app_type == "django_debug_toolbar":
         # For pytest to use correct settings file.
         os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[app_type][
             "settings_module"
         ]
-    click.echo(click.style("Running tests", fg="blue"))
     subprocess.run(command, cwd=test_settings_map[app_type]["cwd"])
