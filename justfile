@@ -16,6 +16,7 @@ git-clone:
     django-mongodb-cli repo clone django
     django-mongodb-cli repo clone django-filter
     django-mongodb-cli repo clone django-mongodb-backend
+    django-mongodb-cli repo clone django-mongodb-project
     django-mongodb-cli repo clone django-project-templates
     django-mongodb-cli repo clone django-rest-framework
 
