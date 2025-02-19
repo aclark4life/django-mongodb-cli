@@ -25,6 +25,7 @@ test_settings_map = {
     },
     "django_rest_framework": {
         "command": "./runtests.py",
+        "cwd": os.path.join("src", "django-rest-framework"),
         "project_dir": os.path.join("src", "django-rest-framework"),
         "settings_module": "mongo_settings",
         "src": os.path.join("settings_test", "settings_drf.py"),
