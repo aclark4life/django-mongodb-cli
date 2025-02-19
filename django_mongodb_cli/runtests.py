@@ -72,7 +72,7 @@ def runtests(
         command.extend(
             [
                 "--settings",
-                test_settings_map[app_type]["settings"]["test"],
+                test_settings_map[app_type]["settings_module"]["test"],
                 "--parallel",
                 "1",
                 "--verbosity",
@@ -89,5 +89,5 @@ def runtests(
         # For pytest to use correct settings file.
         os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[app_type][
             "settings_module"
-        ]
+        ]["tests"]
     subprocess.run(command, cwd=test_settings_map[app_type]["cwd"])

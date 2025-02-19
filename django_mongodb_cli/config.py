@@ -5,7 +5,7 @@ test_settings_map = {
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django", "tests"),
         "project_dir": os.path.join("src", "django"),
-        "settings": {
+        "settings_module": {
             "test": "mongo_settings",
             "migrate": "mongo_settings",
         },
@@ -21,7 +21,7 @@ test_settings_map = {
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django-filter"),
         "project_dir": os.path.join("src", "django-filter"),
-        "settings": {
+        "settings_module": {
             "test": "tests.settings",
             "migrate": "tests.settings",
         },
@@ -39,7 +39,10 @@ test_settings_map = {
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django-rest-framework"),
         "project_dir": os.path.join("src", "django-rest-framework"),
-        "settings_module": "tests.conftest",
+        "settings_module": {
+            "test": "tests.conftest",
+            "migrate": "tests.mongo_settings",
+        },
         "src": os.path.join("settings_test", "settings_drf.py"),
         "target": os.path.join("src", "django-rest-framework", "tests", "conftest.py"),
         "test_dirs": ["tests"],

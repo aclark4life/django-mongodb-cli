@@ -55,7 +55,8 @@ def makemigrations(
     )
     copy_mongo_apps(app_type)
     copy_mongo_settings(
-        test_settings_map[app_type]["src"], test_settings_map[app_type]["target"]
+        test_settings_map[app_type]["src"],
+        test_settings_map[app_type]["settings"]["migrate"],
     )
     command = get_management_command("makemigrations")
     command.extend(
