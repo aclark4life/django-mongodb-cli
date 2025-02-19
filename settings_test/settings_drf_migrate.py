@@ -51,22 +51,20 @@ MIDDLEWARE = (
         "django.contrib.messages.middleware.MessageMiddleware",
     ),
 )
-INSTALLED_APPS = (
-    (
-        "tests.mongo_apps.MongoAdminConfig",
-        "tests.mongo_apps.MongoAuthConfig",
-        "tests.mongo_apps.MongoContentTypesConfig",
-        "django.contrib.sessions",
-        "django.contrib.sites",
-        "django.contrib.staticfiles",
-        "rest_framework",
-        "rest_framework.authtoken",
-        "tests.authentication",
-        "tests.generic_relations",
-        "tests.importable",
-        "tests",
-    ),
-)
+INSTALLED_APPS = [
+    "tests.mongo_apps.MongoAdminConfig",
+    "tests.mongo_apps.MongoAuthConfig",
+    "tests.mongo_apps.MongoContentTypesConfig",
+    "django.contrib.sessions",
+    "django.contrib.sites",
+    "django.contrib.staticfiles",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "tests.authentication",
+    "tests.generic_relations",
+    "tests.importable",
+    "tests",
+]
 PASSWORD_HASHERS = (("django.contrib.auth.hashers.MD5PasswordHasher",),)
 DEFAULT_AUTO_FIELD = ("django_mongodb_backend.fields.ObjectIdAutoField",)
 MIGRATION_MODULES = (
