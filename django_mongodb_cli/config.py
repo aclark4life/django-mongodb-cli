@@ -24,6 +24,12 @@ test_settings_map = {
         "test_dirs": [os.path.join("src", "django-filter", "tests")],
     },
     "django_rest_framework": {
+        "apps": {
+            "src": os.path.join("apps_test", "apps_drf.py"),
+            "target": os.path.join(
+                "src", "django-rest-framework", "tests", "mongo_apps.py"
+            ),
+        },
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django-rest-framework"),
         "project_dir": os.path.join("src", "django-rest-framework"),
