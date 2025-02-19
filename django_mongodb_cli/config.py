@@ -2,8 +2,17 @@ import os
 
 test_settings_map = {
     "django": {
-        "command": "./runtests.py",
         "cwd": os.path.join("src", "django", "tests"),
+        "command": "./runtests.py",
+        "migrations_dir": {
+            "src": os.path.join(
+                "src",
+                "django-project-templates",
+                "project_template",
+                "mongo_migrations",
+            ),
+            "target": os.path.join("src", "django", "tests"),
+        },
         "project_dir": os.path.join("src", "django"),
         "settings_file": {
             "test": {
@@ -29,6 +38,15 @@ test_settings_map = {
         },
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django-filter"),
+        "migrations_dir": {
+            "src": os.path.join(
+                "src",
+                "django-project-templates",
+                "project_template",
+                "mongo_migrations",
+            ),
+            "target": os.path.join("src", "django-filter", "tests"),
+        },
         "project_dir": os.path.join("src", "django-filter"),
         "settings_file": {
             "test": {
@@ -52,6 +70,10 @@ test_settings_map = {
             "target": os.path.join(
                 "src", "django-rest-framework", "tests", "mongo_apps.py"
             ),
+        },
+        "migrations_dir": {
+            "src": os.path.join("src", "django-mongodb-project", "mongo_migrations"),
+            "target": os.path.join("src", "django-rest-framework", "tests"),
         },
         "command": "./runtests.py",
         "cwd": os.path.join("src", "django-rest-framework"),

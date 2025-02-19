@@ -78,24 +78,11 @@ def copy_mongo_apps(app_type):
 
 def copy_mongo_migrations(app_type):
     """Copy mongo_migrations to the specified test directory."""
-    click.echo(
-        click.style(
-            f"Copying mongo migrations to {test_settings_map[app_type]['test_dirs'][0]}",
-            fg="blue",
-        )
-    )
-    target_dir = os.path.join(
-        test_settings_map[app_type]["test_dirs"][0], "mongo_migrations"
-    )
-    if not os.path.exists(target_dir):
+    click.echo(click.style(f"Copying migrations for {app_type}", fg="blue"))
+    if not os.path.exists(test_settings_map[app_type]["migrations_dir"]["target"]):
         shutil.copytree(
-            os.path.join(
-                "src",
-                "django-project-templates",
-                "project_template",
-                "mongo_migrations",
-            ),
-            target_dir,
+            test_settings_map[app_type]["migrations_dir"]["src"],
+            test_settings_map[app_type]["migrations_dir"]["target"],
         )
 
 
