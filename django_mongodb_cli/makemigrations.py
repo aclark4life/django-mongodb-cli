@@ -1,6 +1,7 @@
 import click
 import subprocess
 import shutil
+import os
 
 
 from .config import test_settings_map
@@ -64,9 +65,9 @@ def makemigrations(
     command.extend(
         [
             "--settings",
-            test_settings_map[app_type]["module"],
-            # "--pythonpath",
-            # os.path.join(os.getcwd(), test_dir),
+            "mongo_settings",
+            "--pythonpath",
+            os.path.join(os.getcwd(), test_dir),
         ]
     )
     click.echo(f"Running command {' '.join(command)} {' '.join(args)}")
