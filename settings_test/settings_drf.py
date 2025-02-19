@@ -78,12 +78,6 @@ def pytest_configure(config):
         ),
         PASSWORD_HASHERS=("django.contrib.auth.hashers.MD5PasswordHasher",),
         DEFAULT_AUTO_FIELD="django_mongodb_backend.fields.ObjectIdAutoField",
-        MIGRATION_MODULES={
-            "admin": "tests.mongo_migrations.admin",
-            "auth": "tests.mongo_migrations.auth",
-            "contenttypes": "tests.mongo_migrations.contenttypes",
-            "tests": "tests.mongo_migrations.tests",
-        },
     )
 
     # guardian is optional
