@@ -17,10 +17,11 @@ test_settings_map = {
         ),
         "project_dir": os.path.join("src", "django-filter"),
         "command": "./runtests.py",
+        "test_dir": os.path.join("src", "django-filter"),
         "test_dirs": [os.path.join("src", "django-filter")],
         "module": "tests.mongo_settings",
         "apps": {
-            "src": os.path.join("apps_test", "apps_django.py"),
+            "src": os.path.join("apps_test", "apps_filter.py"),
             "dest": os.path.join("src", "django", "tests", "mongo_apps.py"),
         },
     },
