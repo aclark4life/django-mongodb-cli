@@ -72,7 +72,7 @@ def runtests(
         command.extend(
             [
                 "--settings",
-                test_settings_map[app_type]["module"],
+                test_settings_map[app_type]["settings_module"],
                 "--parallel",
                 "1",
                 "--verbosity",
@@ -88,6 +88,8 @@ def runtests(
     if app_type == "django_debug_toolbar":
         # Set the DJANGO_SETTINGS_MODULE environment variable
         # for pytest to use the correct settings file.
-        os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[app_type]["module"]
+        os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[app_type][
+            "settings_module"
+        ]
     click.echo(click.style("Running tests", fg="blue"))
     subprocess.run(command, cwd=test_settings_map[app_type]["test_dir"])
