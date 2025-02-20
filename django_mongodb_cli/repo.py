@@ -292,3 +292,11 @@ def update(repo, src, dest, all):
                 if repo_name == src:
                     clone_path = os.path.join(dest, repo_name)
                     pull(clone_path)
+    if all:
+        for repo_entry in repos:
+            url_match = url_pattern.search(repo_entry)
+            if url_match:
+                repo_url = url_match.group(0)
+                repo_name = os.path.basename(repo_url)
+                clone_path = os.path.join("src", repo_name)
+                pull(clone_path)

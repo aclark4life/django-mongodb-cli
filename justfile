@@ -4,6 +4,8 @@ default:
 install: pip-install git-clone dev-install
 alias i := install
 
+alias u := git-update
+
 dev-install:
     django-mongodb-cli repo install django
     django-mongodb-cli repo install django-filter
@@ -19,6 +21,14 @@ git-clone:
     django-mongodb-cli repo clone django-mongodb-project
     django-mongodb-cli repo clone django-project-templates
     django-mongodb-cli repo clone django-rest-framework
+
+git-update:
+    django-mongodb-cli repo update django
+    django-mongodb-cli repo update django-filter
+    django-mongodb-cli repo update django-mongodb-backend
+    django-mongodb-cli repo update django-mongodb-project
+    django-mongodb-cli repo update django-project-templates
+    django-mongodb-cli repo update django-rest-framework
 
 # ---------------------------------------- django ----------------------------------------
 
