@@ -33,7 +33,7 @@ test_settings_map = {
     },
     "django_filter": {
         "apps": {
-            "src": os.path.join("apps_test", "apps_filter.py"),
+            "src": os.path.join("stage", "apps", "apps_filter.py"),
             "target": os.path.join("src", "django-filter", "tests", "mongo_apps.py"),
         },
         "command": "./runtests.py",
@@ -66,7 +66,7 @@ test_settings_map = {
     },
     "django_rest_framework": {
         "apps": {
-            "src": os.path.join("apps_test", "apps_drf.py"),
+            "src": os.path.join("stage", "apps", "apps_drf.py"),
             "target": os.path.join(
                 "src", "django-rest-framework", "tests", "mongo_apps.py"
             ),
