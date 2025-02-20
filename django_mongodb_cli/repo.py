@@ -1,9 +1,8 @@
 import os
 import sys
-import subprocess
 
 import click
-from .utils import get_repos, clone_from, add_remote, pull
+from .utils import get_repos, clone_from, add_remote, pull, install_dependencies
 
 
 class Repo:
@@ -214,7 +213,7 @@ def install(repo, src, all):
 
     if src:
         clone_path = os.path.join("src", src[0])
-        subprocess.run([sys.executable, "-m", "pip", "install", "-e", clone_path])
+        install_dependencies(clone_path)
 
     if all:
         repos, url_pattern, branch_pattern, upstream_pattern = get_repos(
@@ -226,14 +225,7 @@ def install(repo, src, all):
                 repo_url = url_match.group(0)
                 repo_name = os.path.basename(repo_url)
                 clone_path = os.path.join("src", repo_name)
-                if os.path.exists("pyproject.toml"):
-                    subprocess.run(
-                        [sys.executable, "-m", "pip", "install", "-e", clone_path]
-                    )
-                if os.path.exists("setup.py"):
-                    subprocess.run(
-                        [sys.executable, "setup.py", "develop"], cwd=clone_path
-                    )
+                install_dependencies(clone_path)
 
 
 @repo.command()

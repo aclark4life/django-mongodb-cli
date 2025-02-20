@@ -5,6 +5,7 @@ import shutil
 import sys
 import toml
 import re
+import subprocess
 
 
 from .config import test_settings_map
@@ -162,6 +163,18 @@ def get_management_command(command=None):
         return full_command
 
     return base_command
+
+
+def install_dependencies(clone_path):
+    if os.path.exists(os.path.join(clone_path, "pyproject.toml")):
+        subprocess.run([sys.executable, "-m", "pip", "install", "-e", clone_path])
+    if os.path.exists(os.path.join(clone_path, "setup.py")):
+        subprocess.run([sys.executable, "setup.py", "develop"], cwd=clone_path)
+    if os.path.exists(os.path.join(clone_path, "requirements.txt")):
+        subprocess.run(
+            [sys.executable, "-m", "pip", "install", "-r", "requirements.txt"],
+            cwd=clone_path,
+        )
 
 
 def pull(clone_path):
