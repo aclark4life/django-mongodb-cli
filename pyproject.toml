@@ -40,7 +40,7 @@ dev = [
     "pymongo @ git+ssh://git@github.com/mongodb/mongo-python-driver@master",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
     "wagtail-mongodb-bakery @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-bakery@main",
-    "wagtail-bakery @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-bakery@main # upstream: wagtail-nest",
+    "wagtail-bakery @ git+ssh://git@github.com/aclark4life/wagtail-bakery@main # upstream: wagtail-nest",
     "wagtail @ git+ssh://git@github.com/wagtail/wagtail@main",
 ]
 
