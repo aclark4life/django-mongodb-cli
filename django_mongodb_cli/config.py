@@ -16,11 +16,11 @@ test_settings_map = {
         "project_dir": os.path.join("src", "django"),
         "settings_file": {
             "test": {
-                "src": os.path.join("settings_test", "settings_django.py"),
+                "src": os.path.join("stage", "settings", "settings_django.py"),
                 "target": os.path.join("src", "django", "tests", "mongo_settings.py"),
             },
             "migrate": {
-                "src": os.path.join("settings_test", "settings_django.py"),
+                "src": os.path.join("stage", "settings", "settings_django.py"),
                 "target": os.path.join("src", "django", "tests", "mongo_settings.py"),
             },
         },
@@ -50,11 +50,11 @@ test_settings_map = {
         "project_dir": os.path.join("src", "django-filter"),
         "settings_file": {
             "test": {
-                "src": os.path.join("settings_test", "settings_filter.py"),
+                "src": os.path.join("stage", "settings", "settings_filter.py"),
                 "target": os.path.join("src", "django-filter", "tests", "settings.py"),
             },
             "migrate": {
-                "src": os.path.join("settings_test", "settings_filter.py"),
+                "src": os.path.join("stage", "settings", "settings_filter.py"),
                 "target": os.path.join("src", "django-filter", "tests", "settings.py"),
             },
         },
@@ -82,13 +82,13 @@ test_settings_map = {
         "project_dir": os.path.join("src", "django-rest-framework"),
         "settings_file": {
             "test": {
-                "src": os.path.join("settings_test", "settings_drf.py"),
+                "src": os.path.join("stage", "settings", "settings_drf.py"),
                 "target": os.path.join(
                     "src", "django-rest-framework", "tests", "conftest.py"
                 ),
             },
             "migrate": {
-                "src": os.path.join("settings_test", "settings_drf_migrate.py"),
+                "src": os.path.join("stage", "settings", "settings_drf_migrate.py"),
                 "target": os.path.join(
                     "src", "django-rest-framework", "tests", "conftest.py"
                 ),
@@ -104,7 +104,7 @@ test_settings_map = {
         "command": "tox",
         "project_dir": os.path.join("src", "django-allauth"),
         "settings_module": "mongo_settings",
-        "src": os.path.join("settings_test", "settings_allauth_regular.py"),
+        "src": os.path.join("stage", "settings", "settings_allauth_regular.py"),
         "target": "mongo_settings.py",
         "test_dirs": ["tests"],
     },
@@ -112,7 +112,7 @@ test_settings_map = {
         "command": "pytest",
         "project_dir": os.path.join("src", "django-debug-toolbar"),
         "settings_module": "mongo_settings",
-        "src": os.path.join("settings_test", "settings_debug_toolbar.py"),
+        "src": os.path.join("stage", "settings", "settings_debug_toolbar.py"),
         "target": "mongo_settings.py",
         "test_dirs": ["tests"],
     },
@@ -120,7 +120,7 @@ test_settings_map = {
         "command": "./runtests.py",
         "project_dir": os.path.join("src", "wagtail"),
         "settings_module": "mongo_settings",
-        "src": os.path.join("settings_test", "settings_wagtail.py"),
+        "src": os.path.join("stage", "settings", "settings_wagtail.py"),
         "target": "mongo_settings.py",
         "test_dirs": ["tests"],
     },
