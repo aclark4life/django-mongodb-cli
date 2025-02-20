@@ -26,6 +26,7 @@ packages = ["django_mongodb_cli"]
 
 [tool.django_mongodb_cli]
 dev = [
+    "bakerydemo @ git+ssh://git@github.com/aclark4life/bakerydemo@main # upstream: wagtail",
     "django-allauth @ git+ssh://git@github.com/pennersr/django-allauth@main",
     "django-debug-toolbar @ git+ssh://git@github.com/django-commons/django-debug-toolbar@main",
     "django-filter @ git+ssh://git@github.com/aclark4life/django-filter@main # upstream: carltongibson",
@@ -39,8 +40,6 @@ dev = [
     "django-project-templates @ git+ssh://git@github.com/aclark4life/django-project-templates@main",
     "pymongo @ git+ssh://git@github.com/mongodb/mongo-python-driver@master",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
-    "wagtail-mongodb-bakery @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-bakery@main",
-    "wagtail-bakery @ git+ssh://git@github.com/aclark4life/wagtail-bakery@main # upstream: wagtail-nest",
     "wagtail @ git+ssh://git@github.com/wagtail/wagtail@main",
 ]
 
