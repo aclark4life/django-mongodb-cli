@@ -111,7 +111,7 @@ test_settings_map = {
         },
         "command": "./runtests.py",
         "cwd": os.path.join("src", "wagtail"),
-        "project_dir": os.path.join("src", "django-rest-framework"),
+        "project_dir": os.path.join("src", "wagtail"),
         "settings_file": {
             "test": {
                 "src": os.path.join("stage", "settings", "settings_drf.py"),
