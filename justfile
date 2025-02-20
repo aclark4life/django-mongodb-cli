@@ -11,6 +11,7 @@ dev-install:
     django-mongodb-cli repo install django-filter
     django-mongodb-cli repo install django-mongodb-backend
     django-mongodb-cli repo install django-rest-framework
+    django-mongodb-cli repo install wagtail
 
 # ---------------------------------------- git ----------------------------------------
 [group('git')]
@@ -21,6 +22,7 @@ git-clone:
     django-mongodb-cli repo clone django-mongodb-project
     django-mongodb-cli repo clone django-project-templates
     django-mongodb-cli repo clone django-rest-framework
+    django-mongodb-cli repo clone wagtail
 
 git-update:
     django-mongodb-cli repo update django
@@ -29,6 +31,7 @@ git-update:
     django-mongodb-cli repo update django-mongodb-project
     django-mongodb-cli repo update django-project-templates
     django-mongodb-cli repo update django-rest-framework
+    django-mongodb-cli repo update wagtail
 
 # ---------------------------------------- django ----------------------------------------
 
