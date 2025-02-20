@@ -51,38 +51,6 @@ This is the default behavior.
 django-mongodb-cli runtests
 ```
 
-Third party library test suites can be run by passing the appropriate flag.
-
-##### Run the Wagtail test suite in `src/wagtail`.
-
-```bash
-django-mongodb-cli runtests --wagtail
-```
-
-##### Run the Django Filter test suite in `src/django-filter`.
-
-```bash
-django-mongodb-cli runtests --django-filter
-```
-
-##### Run the Django Rest Framework test suite in `src/django-rest-framework`.
-
-```bash
-django-mongodb-cli runtests --django-rest-framework
-```
-
-##### Run the Django Debug Toolbar test suite in `src/django-debug-toolbar`.
-
-```bash
-django-mongodb-cli runtests --django-debug-toolbar
-```
-
-##### Run the Django Allauth test suite in `src/django-allauth`.
-
-```bash
-django-mongodb-cli runtests --django-allauth
-```
-
 ### Start a new project
 
 ```bash
