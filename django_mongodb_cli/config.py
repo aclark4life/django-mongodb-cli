@@ -104,13 +104,18 @@ test_settings_map = {
         "apps": {
             "src": os.path.join("stage", "apps", "apps_wagtail.py"),
             "target": os.path.join(
-                "src", "wagtail", "wagtail", "tests", "mongo_apps.py"
+                "src", "wagtail", "wagtail", "test", "mongo_apps.py"
             ),
         },
         "migrations_dir": {
-            "src": os.path.join("src", "django-mongodb-project", "mongo_migrations"),
+            "src": os.path.join(
+                "src",
+                "django-project-templates",
+                "project_template",
+                "mongo_migrations",
+            ),
             "target": os.path.join(
-                "src", "wagtail", "wagtail", "tests", "mongo_migrations"
+                "src", "wagtail", "wagtail", "test", "mongo_migrations"
             ),
         },
         "command": "./runtests.py",
