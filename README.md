@@ -19,7 +19,7 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-### Install `django-mongodb-cli` package
+### Install `django-mongodb-cli` package and dependencies
 
 ```bash
 just install
