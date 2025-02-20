@@ -34,13 +34,13 @@ just install
 Defined in `pyproject.toml`.
 
 ```bash
-django-mongodb-cli repo clone --all
+django-mongodb-cli repo clone django-mongodb-backend
 ```
 
 #### Install development repositories
 
 ```bash
-django-mongodb-cli repo install --all
+django-mongodb-cli repo install django-mongodb-backend
 ```
 
 #### Run the Django test suite in `src/django`.
