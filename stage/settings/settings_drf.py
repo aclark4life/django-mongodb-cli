@@ -75,8 +75,8 @@ def pytest_configure(config):
             "admin": "tests.mongo_migrations.admin",
             "auth": "tests.mongo_migrations.auth",
             "contenttypes": "tests.mongo_migrations.contenttypes",
-            "rest_framework": "tests.mongo_migrations.rest_framework",
-            "generic_relations": "tests.mongo_migrations.generic_relations",
+            "rest_framework": None,
+            "generic_relations": None,
         },
     )
 
