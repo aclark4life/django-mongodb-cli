@@ -178,5 +178,9 @@ def install_dependencies(clone_path):
 
 
 def pull(clone_path):
-    repo = git.Repo(clone_path)
-    repo.git.pull()
+    try:
+        repo = git.Repo(clone_path)
+        click.echo("Updating repository...")
+        repo.git.pull()
+    except git.exc.NoSuchPathError:
+        click.echo("Not a valid Git repository.")

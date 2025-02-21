@@ -275,7 +275,6 @@ def update(repo, src, dest, all):
     repo.home = dest
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if src:
-        click.echo(f"Updating {src}")
         for repo_entry in repos:
             url_match = url_pattern.search(repo_entry)
             if url_match:
