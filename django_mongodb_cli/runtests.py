@@ -11,7 +11,7 @@ from .utils import (
     copy_mongo_apps,
     copy_mongo_migrations,
     copy_mongo_settings,
-    get_app_type,
+    get_repo_name,
 )
 
 
@@ -44,36 +44,36 @@ def runtests(
     """
     Run `runtests.py` for Django or Wagtail.
     """
-    app_type = get_app_type(
+    repo_name = get_repo_name(
         django_allauth,
         django_debug_toolbar,
         django_filter,
         django_rest_framework,
         wagtail,
     )
-    test_dirs = test_settings_map[app_type]["test_dirs"]
+    test_dirs = test_settings_map[repo_name]["test_dirs"]
     if list_tests:
         for test_dir in test_dirs:
             for module in sorted(os.listdir(test_dir)):
                 click.echo(module)
         return
     copy_mongo_settings(
-        test_settings_map[app_type]["settings_file"]["test"]["src"],
-        test_settings_map[app_type]["settings_file"]["test"]["target"],
+        test_settings_map[repo_name]["settings_file"]["test"]["src"],
+        test_settings_map[repo_name]["settings_file"]["test"]["target"],
     )
-    command = [test_settings_map[app_type]["command"]]
-    apply_patches(app_type)
-    copy_mongo_migrations(app_type)
-    copy_mongo_apps(app_type)
+    command = [test_settings_map[repo_name]["command"]]
+    apply_patches(repo_name)
+    copy_mongo_migrations(repo_name)
+    copy_mongo_apps(repo_name)
     if (
-        app_type != "django_rest_framework"
-        and app_type != "django_allauth"
-        and app_type != "django_debug_toolbar"
+        repo_name != "django_rest_framework"
+        and repo_name != "django_allauth"
+        and repo_name != "django_debug_toolbar"
     ):
         command.extend(
             [
                 "--settings",
-                test_settings_map[app_type]["settings_module"]["test"],
+                test_settings_map[repo_name]["settings_module"]["test"],
                 "--parallel",
                 "1",
                 "--verbosity",
@@ -86,9 +86,9 @@ def runtests(
     if keyword:
         command.extend(["-k", keyword])
     click.echo(click.style(f"Running {' '.join(command)}", fg="blue"))
-    if app_type == "django_debug_toolbar":
+    if repo_name == "django_debug_toolbar":
         # For pytest to use correct settings file.
-        os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[app_type][
+        os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[repo_name][
             "settings_module"
         ]["tests"]
-    subprocess.run(command, cwd=test_settings_map[app_type]["cwd"])
+    subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
