@@ -292,6 +292,7 @@ def test(
                 repo_url = url_match.group(0)
                 repo_name = os.path.basename(repo_url)
                 if repo_name in test_settings_map.keys():
+                    print(repo_name)
                     test_dirs = test_settings_map[repo_name]["test_dirs"]
                     if repo_name == src:
                         if list_tests:
