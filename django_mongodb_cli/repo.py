@@ -292,7 +292,6 @@ def test(
                 repo_url = url_match.group(0)
                 repo_name = os.path.basename(repo_url)
                 if repo_name in test_settings_map.keys():
-                    print(repo_name)
                     test_dirs = test_settings_map[repo_name]["test_dirs"]
                     if repo_name == src:
                         if list_tests:
@@ -315,9 +314,9 @@ def test(
                         copy_mongo_migrations(repo_name)
                         copy_mongo_apps(repo_name)
                         if (
-                            repo_name != "django_rest_framework"
-                            and repo_name != "django_allauth"
-                            and repo_name != "django_debug_toolbar"
+                            repo_name != "django-rest-framework"
+                            and repo_name != "django-allauth"
+                            and repo_name != "django-debug-toolbar"
                         ):
                             command.extend(
                                 [
@@ -339,7 +338,7 @@ def test(
                         click.echo(
                             click.style(f"Running {' '.join(command)}", fg="blue")
                         )
-                        if repo_name == "django_debug_toolbar":
+                        if repo_name == "django-debug-toolbar":
                             # For pytest to use correct settings file.
                             os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[
                                 repo_name
