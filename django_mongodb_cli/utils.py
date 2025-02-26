@@ -128,7 +128,10 @@ def get_repos(pyproject_path):
         pyproject_data = toml.load(f)
     repos = pyproject_data.get("tool", {}).get("django_mongodb_cli", {}).get("dev", [])
 
-    url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
+    # url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
+
+    url_pattern = re.compile(r"git\+ssh://(?:[^@]+@)?([^/]+)/([^@]+)")
+
     branch_pattern = re.compile(
         r"git\+ssh://git@github\.com/[^/]+/[^@]+@([a-zA-Z0-9_\-\.]+)\b"
     )
