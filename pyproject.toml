@@ -38,7 +38,7 @@ dev = [
     "django-rest-framework @ git+ssh://git@github.com/aclark4life/django-rest-framework@main # upstream: encode",
     "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.1.x",
     "django-project-templates @ git+ssh://git@github.com/aclark4life/django-project-templates@main",
-    "drf-extensions @ git+ssh://github.com/aclark4life/drf-extensions@main # upstream: chibisov",
+    "drf-extensions @ git+ssh://github.com/aclark4life/drf-extensions@master # upstream: chibisov",
     "pymongo @ git+ssh://git@github.com/mongodb/mongo-python-driver@master",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
     "wagtail @ git+ssh://git@github.com/wagtail/wagtail@main",
