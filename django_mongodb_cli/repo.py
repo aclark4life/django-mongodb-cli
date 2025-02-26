@@ -269,13 +269,11 @@ def update(repo, src, dest, all):
 
 @repo.command()
 @click.argument("src", required=False)
-@click.argument("dest", required=False)
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
 def test(
     src,
-    dest,
     modules,
     keyword,
     list_tests,
@@ -283,8 +281,7 @@ def test(
     """
     Run `runtests.py` for Django or Wagtail.
     """
-    if dest is None:
-        dest = "src"
+    dest = "src"
     repo.home = dest
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if src:
