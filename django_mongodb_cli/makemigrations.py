@@ -8,8 +8,8 @@ from .config import test_settings_map
 from .utils import (
     copy_mongo_apps,
     copy_mongo_settings,
-    get_app_type,
     get_management_command,
+    get_repo_name,
 )
 
 
@@ -46,30 +46,30 @@ def makemigrations(
     django_debug_toolbar,
 ):
     """Run makemigrations."""
-    app_type = get_app_type(
+    repo_name = get_repo_name(
         django_allauth,
         django_debug_toolbar,
         django_filter,
         django_rest_framework,
         wagtail,
     )
-    copy_mongo_apps(app_type)
+    copy_mongo_apps(repo_name)
     copy_mongo_settings(
-        test_settings_map[app_type]["settings_file"]["migrate"]["src"],
-        test_settings_map[app_type]["settings_file"]["migrate"]["target"],
+        test_settings_map[repo_name]["settings_file"]["migrate"]["src"],
+        test_settings_map[repo_name]["settings_file"]["migrate"]["target"],
     )
     command = get_management_command("makemigrations")
     command.extend(
         [
             "--settings",
-            test_settings_map[app_type]["settings_module"]["migrate"],
+            test_settings_map[repo_name]["settings_module"]["migrate"],
         ]
     )
-    if not app_type == "django_filter":
+    if not repo_name == "django_filter":
         command.extend(
             [
                 "--pythonpath",
-                os.path.join(os.getcwd(), test_settings_map[app_type]["cwd"]),
+                os.path.join(os.getcwd(), test_settings_map[repo_name]["cwd"]),
             ]
         )
     click.echo(f"Running command {' '.join(command)} {' '.join(args)}")
