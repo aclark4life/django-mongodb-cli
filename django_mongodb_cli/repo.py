@@ -1,8 +1,20 @@
 import os
+import subprocess
 import sys
 
 import click
-from .utils import get_repos, clone_from, add_remote, pull, install_dependencies
+from .config import test_settings_map
+from .utils import (
+    get_repos,
+    clone_from,
+    add_remote,
+    pull,
+    install_dependencies,
+    apply_patches,
+    copy_mongo_apps,
+    copy_mongo_migrations,
+    copy_mongo_settings,
+)
 
 
 class Repo:
@@ -253,3 +265,85 @@ def update(repo, src, dest, all):
                 repo_name = os.path.basename(repo_url)
                 clone_path = os.path.join("src", repo_name)
                 pull(clone_path)
+
+
+@repo.command()
+@click.argument("src", required=False)
+@click.argument("dest", required=False)
+@click.argument("modules", nargs=-1)
+@click.option("-k", "--keyword", help="Filter tests by keyword")
+@click.option("-l", "--list-tests", help="List tests", is_flag=True)
+def test(
+    src,
+    dest,
+    modules,
+    keyword,
+    list_tests,
+):
+    """
+    Run `runtests.py` for Django or Wagtail.
+    """
+    if dest is None:
+        dest = "src"
+    repo.home = dest
+    repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
+    if src:
+        for repo_entry in repos:
+            url_match = url_pattern.search(repo_entry)
+            # branch_match = branch_pattern.search(repo_entry)
+            if url_match:
+                repo_url = url_match.group(0)
+                repo_name = os.path.basename(repo_url)
+                if repo_name in test_settings_map.keys():
+                    test_dirs = test_settings_map[repo_name]["test_dirs"]
+                    if repo_name == src:
+                        if list_tests:
+                            for test_dir in test_dirs:
+                                for module in sorted(os.listdir(test_dir)):
+                                    click.echo(module)
+                            return
+                        # branch = branch_match.group(1) if branch_match else "main"
+                        # clone_path = os.path.join(dest, repo_name)
+                        copy_mongo_settings(
+                            test_settings_map[repo_name]["settings_file"]["test"][
+                                "src"
+                            ],
+                            test_settings_map[repo_name]["settings_file"]["test"][
+                                "target"
+                            ],
+                        )
+                        command = [test_settings_map[repo_name]["command"]]
+                        apply_patches(repo_name)
+                        copy_mongo_migrations(repo_name)
+                        copy_mongo_apps(repo_name)
+                        if (
+                            repo_name != "django_rest_framework"
+                            and repo_name != "django_allauth"
+                            and repo_name != "django_debug_toolbar"
+                        ):
+                            command.extend(
+                                [
+                                    "--settings",
+                                    test_settings_map[repo_name]["settings_module"][
+                                        "test"
+                                    ],
+                                    "--parallel",
+                                    "1",
+                                    "--verbosity",
+                                    "3",
+                                    "--debug-sql",
+                                    "--noinput",
+                                ]
+                            )
+                        command.extend(modules)
+                        if keyword:
+                            command.extend(["-k", keyword])
+                        click.echo(
+                            click.style(f"Running {' '.join(command)}", fg="blue")
+                        )
+                        if repo_name == "django_debug_toolbar":
+                            # For pytest to use correct settings file.
+                            os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[
+                                repo_name
+                            ]["settings_module"]["tests"]
+                        subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
