@@ -31,10 +31,10 @@ just install
 
 #### Run the Django test suite in `src/django`.
 
-This is the default behavior.
-
 ```bash
-django-mongodb-cli runtests
+django-mongodb-cli repo clone django
+django-mongodb-cli repo install django
+django-mongodb-cli repo test django
 ```
 
 ### Start a new project
