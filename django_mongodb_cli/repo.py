@@ -118,44 +118,6 @@ def clone(repo, src, dest, all, list):
                 click.echo(f"Invalid repository entry: {repo_entry}")
 
 
-@repo.command()
-@click.confirmation_option()
-@pass_repo
-def delete(repo):
-    """Deletes a repository.
-
-    This will throw away the current repository.
-    """
-    click.echo(f"Destroying repo {repo.home}")
-    click.echo("Deleted!")
-
-
-@repo.command()
-@click.option("--username", prompt=True, help="The developer's shown username.")
-@click.option("--email", prompt="E-Mail", help="The developer's email address")
-@click.password_option(help="The login password.")
-@pass_repo
-def setuser(repo, username, email, password):
-    """Sets the user credentials.
-
-    This will override the current user config.
-    """
-    repo.set_config("username", username)
-    repo.set_config("email", email)
-    repo.set_config("password", "*" * len(password))
-    click.echo("Changed credentials.")
-
-
-@repo.command()
-@click.option(
-    "--message",
-    "-m",
-    multiple=True,
-    help="The commit message.  If provided multiple times each"
-    " argument gets converted into a new line.",
-)
-@click.argument("files", nargs=-1, type=click.Path())
-@pass_repo
 def commit(repo, files, message):
     """Commits outstanding changes.
 
