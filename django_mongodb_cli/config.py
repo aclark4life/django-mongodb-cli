@@ -48,7 +48,7 @@ test_settings_map = {
                 "project_template",
                 "mongo_migrations",
             ),
-            "target": os.path.join("src", "django-filter", "tests"),
+            "target": os.path.join("src", "django-filter", "tests", "mongo_migrations"),
         },
         "project_dir": os.path.join("src", "django-filter"),
         "settings_file": {
