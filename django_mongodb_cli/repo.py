@@ -299,8 +299,6 @@ def test(
                                 for module in sorted(os.listdir(test_dir)):
                                     click.echo(module)
                             return
-                        # branch = branch_match.group(1) if branch_match else "main"
-                        # clone_path = os.path.join(dest, repo_name)
                         copy_mongo_settings(
                             test_settings_map[repo_name]["settings_file"]["test"][
                                 "src"
