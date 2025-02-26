@@ -24,10 +24,10 @@ def add_remote(upstream_match, clone_path, repo_name):
         click.echo(f"{remote.name}: {remote.url}")
 
 
-def apply_patches(app_type):
+def apply_patches(repo_name):
     """Apply a patch file to the specified project directory."""
-    project_dir = test_settings_map[app_type]["project_dir"]
-    patch_dir = os.path.join("patches", app_type)
+    project_dir = test_settings_map[repo_name]["project_dir"]
+    patch_dir = os.path.join("patches", repo_name)
     if os.path.exists(patch_dir):
         for patch_file in os.listdir(patch_dir):
             shutil.copyfile(
@@ -67,23 +67,23 @@ def clone_from(repo_url, clone_path, branch):
         click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
 
 
-def copy_mongo_apps(app_type):
+def copy_mongo_apps(repo_name):
     """Copy the appropriate mongo_apps file based on the app type."""
-    click.echo(click.style(f"Copying apps for {app_type}", fg="blue"))
-    if "apps" in test_settings_map[app_type]:
+    click.echo(click.style(f"Copying apps for {repo_name}", fg="blue"))
+    if "apps" in test_settings_map[repo_name]:
         shutil.copyfile(
-            os.path.join(test_settings_map[app_type]["apps"]["src"]),
-            os.path.join(test_settings_map[app_type]["apps"]["target"]),
+            os.path.join(test_settings_map[repo_name]["apps"]["src"]),
+            os.path.join(test_settings_map[repo_name]["apps"]["target"]),
         )
 
 
-def copy_mongo_migrations(app_type):
+def copy_mongo_migrations(repo_name):
     """Copy mongo_migrations to the specified test directory."""
-    click.echo(click.style(f"Copying migrations for {app_type}", fg="blue"))
-    if not os.path.exists(test_settings_map[app_type]["migrations_dir"]["target"]):
+    click.echo(click.style(f"Copying migrations for {repo_name}", fg="blue"))
+    if not os.path.exists(test_settings_map[repo_name]["migrations_dir"]["target"]):
         shutil.copytree(
-            test_settings_map[app_type]["migrations_dir"]["src"],
-            test_settings_map[app_type]["migrations_dir"]["target"],
+            test_settings_map[repo_name]["migrations_dir"]["src"],
+            test_settings_map[repo_name]["migrations_dir"]["target"],
         )
 
 
@@ -104,7 +104,7 @@ def delete_mongo_migrations(mongo_migrations, project_dir):
                 shutil.rmtree(dir_path, ignore_errors=True)
 
 
-def get_app_type(
+def get_repo_name(
     django_allauth, django_debug_toolbar, django_filter, django_rest_framework, wagtail
 ):
     """Determine the app type based on the specified options."""
