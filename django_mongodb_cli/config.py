@@ -29,7 +29,10 @@ test_settings_map = {
             "migrate": "mongo_settings",
         },
         "target": os.path.join("src", "django", "tests", "mongo_settings.py"),
-        "test_dirs": [os.path.join("src", "django", "tests")],
+        "test_dirs": [
+            os.path.join("src", "django", "tests"),
+            os.path.join("src", "django-mongodb-backend", "tests"),
+        ],
     },
     "django_filter": {
         "apps": {
