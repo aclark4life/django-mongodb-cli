@@ -21,7 +21,7 @@ def add_remote(upstream_match, clone_path, repo_name):
     repo.remotes.upstream.fetch()
     repo.git.rebase("upstream/main")
     for remote in repo.remotes:
-        print(f"{remote.name}: {remote.url}")
+        click.echo(f"{remote.name}: {remote.url}")
 
 
 def apply_patches(app_type):

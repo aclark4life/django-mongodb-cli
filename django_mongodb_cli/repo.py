@@ -96,7 +96,6 @@ def clone(repo, src, dest, all, list):
             if url_match:
                 repo_url = url_match.group(0)
                 repo_name = os.path.basename(repo_url)
-                print(repo_name)
                 if repo_name == src:
                     branch = branch_match.group(1) if branch_match else "main"
                     clone_path = os.path.join(dest, repo_name)
