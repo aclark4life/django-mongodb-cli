@@ -19,12 +19,14 @@ def add_remote(upstream_match, clone_path, repo_name):
             repo.create_remote("upstream", remote)
             click.echo(f"Added remote {remote}")
         except git.exc.GitCommandError:
-            click.echo("remote exists!")
+            click.echo(
+                f"Remote {repo.remotes.upstream.name} exists! {repo.remotes.upstream.url}"
+            )
         repo.remotes.upstream.fetch()
         try:
             repo.git.rebase("upstream/main")
         except git.exc.GitCommandError:
-            click.echo("Failed to rebase")
+            click.echo(f"Failed to rebase {repo_name}")
     else:
         click.echo(f"Skipping {remote}")
 
