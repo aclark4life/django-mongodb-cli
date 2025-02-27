@@ -104,8 +104,7 @@ def clone(repo, src, dest, all, list):
 
 
 def commit(repo, files, message):
-    """Commits outstanding changes.
-
+    """
     Commit changes to files in the specified repository.
     """
 
