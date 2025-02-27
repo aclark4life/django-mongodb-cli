@@ -42,7 +42,7 @@ pass_repo = click.make_pass_decorator(Repo)
 @click.pass_context
 def repo(ctx, list):
     """
-    Manage repositories.
+    Manage development repositories.
     """
     ctx.obj = Repo(os.path.abspath(".repo"))
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
