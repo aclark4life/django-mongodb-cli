@@ -162,4 +162,4 @@ AUTHENTICATION_BACKENDS = (
     "guardian.backends.ObjectPermissionBackend",
 )
 
-DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdField"
+DEFAULT_AUTO_FIELD = ("django_mongodb_backend.fields.ObjectIdAutoField",)
