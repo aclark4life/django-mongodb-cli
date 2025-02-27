@@ -42,21 +42,3 @@ django-mongodb-cli repo test django
 ```bash
 django-mongodb-cli startproject mysite
 ```
-
-#### Run migrations
-
-```bash
-django-mongodb-cli migrate
-```
-
-#### Create a superuser
-
-```bash
-django-mongodb-cli createsuperuser
-```
-
-#### Start the development server
-
-```bash
-django-mongodb-cli runserver
-```
