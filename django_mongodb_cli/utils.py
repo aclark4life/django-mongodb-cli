@@ -79,7 +79,7 @@ def clone_from(repo_url, clone_path, branch):
 
 
 def copy_mongo_apps(repo_name):
-    """Copy the appropriate mongo_apps file based on the app type."""
+    """Copy the appropriate mongo_apps file based on the repo name."""
     if "apps" in test_settings_map[repo_name]:
         click.echo(
             click.style(
