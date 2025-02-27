@@ -80,8 +80,13 @@ def clone_from(repo_url, clone_path, branch):
 
 def copy_mongo_apps(repo_name):
     """Copy the appropriate mongo_apps file based on the app type."""
-    click.echo(click.style(f"Copying apps for {repo_name}", fg="blue"))
     if "apps" in test_settings_map[repo_name]:
+        click.echo(
+            click.style(
+                f"Copying {os.path.join(test_settings_map[repo_name]['apps']['src'])} to {os.path.join(test_settings_map[repo_name]['apps']['target'])}",
+                fg="blue",
+            )
+        )
         shutil.copyfile(
             os.path.join(test_settings_map[repo_name]["apps"]["src"]),
             os.path.join(test_settings_map[repo_name]["apps"]["target"]),
