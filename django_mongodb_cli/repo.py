@@ -114,12 +114,11 @@ def commit(repo, files, message):
     "-a",
     "--all",
     is_flag=True,
-    help="Install repos.",
 )
 @click.argument("src", nargs=-1, type=click.Path())
 @pass_repo
 def install(repo, src, all):
-    """Install development dependencies"""
+    """`pip install` repository or repositories."""
 
     if src:
         clone_path = os.path.join("src", src[0])
