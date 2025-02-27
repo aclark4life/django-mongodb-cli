@@ -234,6 +234,52 @@ def update(repo, src, dest, all):
                 pull(clone_path)
 
 
+@repo.command(context_settings={"ignore_unknown_options": True})
+@click.argument("src", required=False)
+@click.argument("args", nargs=-1)
+def makemigrations(
+    src,
+    args,
+):
+    """Run makemigrations."""
+
+    dest = "src"
+    repo.home = dest
+    repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
+    if src:
+        for repo_entry in repos:
+            url_match = url_pattern.search(repo_entry)
+            if url_match:
+                repo_url = url_match.group(0)
+                repo_name = os.path.basename(repo_url)
+                if repo_name in test_settings_map.keys() and repo_name == src:
+                    copy_mongo_apps(repo_name)
+                    copy_mongo_settings(
+                        test_settings_map[repo_name]["settings_file"]["migrate"]["src"],
+                        test_settings_map[repo_name]["settings_file"]["migrate"][
+                            "target"
+                        ],
+                    )
+                    command = get_management_command("makemigrations")
+                    command.extend(
+                        [
+                            "--settings",
+                            test_settings_map[repo_name]["settings_module"]["migrate"],
+                        ]
+                    )
+                    if not repo_name == "django-filter":
+                        command.extend(
+                            [
+                                "--pythonpath",
+                                os.path.join(
+                                    os.getcwd(), test_settings_map[repo_name]["cwd"]
+                                ),
+                            ]
+                        )
+                    click.echo(f"Running command {' '.join(command)} {' '.join(args)}")
+                    subprocess.run(command + [*args])
+
+
 @repo.command()
 @click.argument("src", required=False)
 @click.argument("modules", nargs=-1)
@@ -281,6 +327,7 @@ def test(
                             repo_name != "django-rest-framework"
                             and repo_name != "django-allauth"
                             and repo_name != "django-debug-toolbar"
+                            and repo_name != "drf-extensions"
                         ):
                             command.extend(
                                 [
@@ -308,49 +355,3 @@ def test(
                                 repo_name
                             ]["settings_module"]["tests"]
                         subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
-
-
-@repo.command(context_settings={"ignore_unknown_options": True})
-@click.argument("src", required=False)
-@click.argument("args", nargs=-1)
-def makemigrations(
-    src,
-    args,
-):
-    """Run makemigrations."""
-
-    dest = "src"
-    repo.home = dest
-    repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
-    if src:
-        for repo_entry in repos:
-            url_match = url_pattern.search(repo_entry)
-            if url_match:
-                repo_url = url_match.group(0)
-                repo_name = os.path.basename(repo_url)
-                if repo_name in test_settings_map.keys() and repo_name == src:
-                    copy_mongo_apps(repo_name)
-                    copy_mongo_settings(
-                        test_settings_map[repo_name]["settings_file"]["migrate"]["src"],
-                        test_settings_map[repo_name]["settings_file"]["migrate"][
-                            "target"
-                        ],
-                    )
-                    command = get_management_command("makemigrations")
-                    command.extend(
-                        [
-                            "--settings",
-                            test_settings_map[repo_name]["settings_module"]["migrate"],
-                        ]
-                    )
-                    if not repo_name == "django-filter":
-                        command.extend(
-                            [
-                                "--pythonpath",
-                                os.path.join(
-                                    os.getcwd(), test_settings_map[repo_name]["cwd"]
-                                ),
-                            ]
-                        )
-                    click.echo(f"Running command {' '.join(command)} {' '.join(args)}")
-                    subprocess.run(command + [*args])
