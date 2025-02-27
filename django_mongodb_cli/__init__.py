@@ -5,7 +5,6 @@ from .manage import manage
 from .migrate import migrate
 from .repo import repo
 from .runserver import runserver
-from .shell import shell
 from .startapp import startapp
 from .startproject import startproject
 
@@ -16,7 +15,6 @@ def cli():
 
 
 cli.add_command(createsuperuser)
-cli.add_command(shell)
 cli.add_command(manage)
 cli.add_command(migrate)
 cli.add_command(repo)
