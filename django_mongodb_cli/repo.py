@@ -59,7 +59,6 @@ def repo(ctx, list):
     "-a",
     "--all",
     is_flag=True,
-    help="Check out all branches/tracked files.",
 )
 @click.option(
     "-l",
@@ -144,7 +143,6 @@ def install(repo, src, all):
     "-a",
     "--all",
     is_flag=True,
-    help="Check out all branches/tracked files.",
 )
 @pass_repo
 def fetch(repo, src, dest, all):
@@ -184,7 +182,6 @@ def fetch(repo, src, dest, all):
     "-a",
     "--all",
     is_flag=True,
-    help="Check out all branches/tracked files.",
 )
 @pass_repo
 def update(repo, src, dest, all):
