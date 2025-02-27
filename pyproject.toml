@@ -34,7 +34,7 @@ dev = [
     "django-mongodb-app @ git+ssh://git@github.com/aclark4life/django-mongodb-app@main # upstream: mongodb-labs",
     "django-mongodb-backend @ git+ssh://git@github.com/aclark4life/django-mongodb-backend@main # upstream: mongodb",
     "django-mongodb-project @ git+ssh://git@github.com/aclark4life/django-mongodb-project@main # upstream: mongodb-labs",
-    "django-rest-framework @ git+ssh://git@github.com/aclark4life/django-rest-framework@main # upstream: encode",
+    "django-rest-framework @ git+ssh://git@github.com/encode/django-rest-framework@main",
     "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.1.x",
     "django-project-templates @ git+ssh://git@github.com/aclark4life/django-project-templates@main",
     "drf-extensions @ git+ssh://git@github.com/aclark4life/drf-extensions@master # upstream: chibisov",
