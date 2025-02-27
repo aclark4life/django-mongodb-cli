@@ -4,16 +4,16 @@ import subprocess
 import click
 from .config import test_settings_map
 from .utils import (
-    get_management_command,
-    get_repos,
-    clone_from,
     add_remote,
-    pull,
-    install_dependencies,
     apply_patches,
+    clone_from,
     copy_mongo_apps,
     copy_mongo_migrations,
     copy_mongo_settings,
+    get_management_command,
+    get_repos,
+    install_dependencies,
+    pull,
 )
 
 
