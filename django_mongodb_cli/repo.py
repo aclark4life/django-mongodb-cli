@@ -32,13 +32,24 @@ class Repo:
 pass_repo = click.make_pass_decorator(Repo)
 
 
-@click.group()
+@click.group(invoke_without_command=True)
+@click.option(
+    "-l",
+    "--list",
+    is_flag=True,
+    help="List all branches/tracked files.",
+)
 @click.pass_context
-def repo(ctx):
+def repo(ctx, list):
     """
     Manage repositories.
     """
     ctx.obj = Repo(os.path.abspath(".repo"))
+    repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
+    if list:
+        for repo_entry in repos:
+            click.echo(repo_entry)
+        return
 
 
 @repo.command()
@@ -68,11 +79,6 @@ def clone(repo, src, dest, all, list):
         dest = "src"
     repo.home = dest
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
-
-    if list:
-        for repo_entry in repos:
-            click.echo(repo_entry)
-        return
     if src:
         for repo_entry in repos:
             url_match = url_pattern.search(repo_entry)
