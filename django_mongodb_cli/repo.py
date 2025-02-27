@@ -106,29 +106,8 @@ def clone(repo, src, dest, all, list):
 def commit(repo, files, message):
     """Commits outstanding changes.
 
-    Commit changes to the given files into the repository.  You will need to
-    "repo push" to push up your changes to other repositories.
-
-    If a list of files is omitted, all changes reported by "repo status"
-    will be committed.
+    Commit changes to files in the specified repository.
     """
-    if not message:
-        marker = "# Files to be committed:"
-        hint = ["", "", marker, "#"]
-        for file in files:
-            hint.append(f"#   U {file}")
-        message = click.edit("\n".join(hint))
-        if message is None:
-            click.echo("Aborted!")
-            return
-        msg = message.split(marker)[0].rstrip()
-        if not msg:
-            click.echo("Aborted! Empty commit message")
-            return
-    else:
-        msg = "\n".join(message)
-    click.echo(f"Files to be committed: {files}")
-    click.echo(f"Commit message:\n{msg}")
 
 
 @repo.command()
