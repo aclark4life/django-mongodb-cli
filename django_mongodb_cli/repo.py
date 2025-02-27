@@ -69,12 +69,7 @@ def repo(ctx, list):
 )
 @pass_repo
 def clone(repo, src, dest, all, list):
-    """Clones a repository.
-
-    This will clone the repository at SRC into the folder DEST.  If DEST
-    is not provided this will automatically use the last path component
-    of SRC and create that folder.
-    """
+    """Clones a repository or repositories from `pyproject.toml`."""
     if dest is None:
         dest = "src"
     repo.home = dest
