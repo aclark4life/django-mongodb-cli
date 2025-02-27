@@ -25,8 +25,6 @@ def add_remote(upstream_match, clone_path, repo_name):
             repo.git.rebase("upstream/main")
         except git.exc.GitCommandError:
             click.echo("Failed to rebase")
-        for remote in repo.remotes:
-            click.echo(f"{remote.name}: {remote.url}")
     else:
         click.echo(f"Skipping {remote}")
 
