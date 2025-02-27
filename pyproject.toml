@@ -19,6 +19,7 @@ dependencies = [
     "requests",
     "setuptools",
     "toml",
+    "tox",
 ]
 
 [tool.setuptools]
