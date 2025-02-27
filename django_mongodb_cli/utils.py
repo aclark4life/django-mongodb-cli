@@ -13,15 +13,21 @@ from .config import test_settings_map
 
 def add_remote(upstream_match, clone_path, repo_name):
     remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
-    repo = git.Repo(clone_path)
-    try:
-        repo.create_remote("upstream", remote)
-    except git.exc.GitCommandError:
-        click.echo("remote exists!")
-    repo.remotes.upstream.fetch()
-    repo.git.rebase("upstream/main")
-    for remote in repo.remotes:
-        click.echo(f"{remote.name}: {remote.url}")
+    if os.path.exists(clone_path):
+        repo = git.Repo(clone_path)
+        try:
+            repo.create_remote("upstream", remote)
+        except git.exc.GitCommandError:
+            click.echo("remote exists!")
+        repo.remotes.upstream.fetch()
+        try:
+            repo.git.rebase("upstream/main")
+        except git.exc.GitCommandError:
+            click.echo("Failed to rebase")
+        for remote in repo.remotes:
+            click.echo(f"{remote.name}: {remote.url}")
+    else:
+        click.echo(f"Skipping {remote}")
 
 
 def apply_patches(repo_name):

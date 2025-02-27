@@ -209,6 +209,16 @@ def fetch(repo, src, dest, all):
                     upstream_match = upstream_pattern.search(repo_entry)
                     if upstream_match:
                         add_remote(upstream_match, clone_path, repo_name)
+    if all:
+        for repo_entry in repos:
+            url_match = url_pattern.search(repo_entry)
+            if url_match:
+                repo_url = url_match.group(0)
+                repo_name = os.path.basename(repo_url)
+                clone_path = os.path.join("src", repo_name)
+                upstream_match = upstream_pattern.search(repo_entry)
+                if upstream_match:
+                    add_remote(upstream_match, clone_path, repo_name)
 
 
 @repo.command()
