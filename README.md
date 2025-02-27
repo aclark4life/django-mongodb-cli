@@ -27,13 +27,9 @@ just install
 
 ## Usage
 
-### Run Django and third party library test suites
+### Run tests
 
-#### Run the Django test suite in `src/django`.
-
-```bash
-django-mongodb-cli repo clone django
-django-mongodb-cli repo install django
+```
 django-mongodb-cli repo test django
 ```
 
