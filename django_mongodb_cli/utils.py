@@ -28,6 +28,7 @@ def add_remote(upstream_match, clone_path, repo_name):
         repo.remotes.upstream.fetch()
         try:
             repo.git.rebase("upstream/main")
+            click.echo(click.style(f"Rebased {repo_name}", fg="green"))
         except git.exc.GitCommandError:
             click.echo(click.style(f"Failed to rebase {repo_name}", fg="red"))
     else:
