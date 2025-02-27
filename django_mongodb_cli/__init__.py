@@ -1,7 +1,6 @@
 import click
 
 from .createsuperuser import createsuperuser
-from .makemigrations import makemigrations
 from .manage import manage
 from .migrate import migrate
 from .repo import repo
@@ -18,7 +17,6 @@ def cli():
 
 cli.add_command(createsuperuser)
 cli.add_command(shell)
-cli.add_command(makemigrations)
 cli.add_command(manage)
 cli.add_command(migrate)
 cli.add_command(repo)
