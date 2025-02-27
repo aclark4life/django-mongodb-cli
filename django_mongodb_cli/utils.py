@@ -20,7 +20,10 @@ def add_remote(upstream_match, clone_path, repo_name):
             click.echo(f"Added remote {remote}")
         except git.exc.GitCommandError:
             click.echo(
-                f"Remote {repo.remotes.upstream.name} exists! {repo.remotes.upstream.url}"
+                click.style(
+                    f"Remote {repo.remotes.upstream.name} exists! {repo.remotes.upstream.url}",
+                    fg="yellow",
+                )
             )
         repo.remotes.upstream.fetch()
         try:
