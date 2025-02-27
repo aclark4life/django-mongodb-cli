@@ -38,6 +38,7 @@ def repo(ctx):
     """
     Manage repositories.
     """
+    ctx.obj = Repo(os.path.abspath(".repo"))
 
 
 @repo.command()
