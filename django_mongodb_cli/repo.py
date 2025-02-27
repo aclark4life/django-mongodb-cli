@@ -105,7 +105,7 @@ def clone(repo, src, dest, all, list):
 
 def commit(repo, files, message):
     """
-    Commit changes to files in the specified repository.
+    Commit changes made in the specified repository.
     """
 
 
