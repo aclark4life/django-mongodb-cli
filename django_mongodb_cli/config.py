@@ -8,9 +8,9 @@ test_settings_map = {
         "test_dirs": [os.path.join("src", "drf-extensions", "tests_app")],
         "settings_file": {
             "test": {
-                "src": os.path.join("config", "settings", "settings_django.py"),
+                "src": os.path.join("config", "settings", "settings_drf_extensions.py"),
                 "target": os.path.join(
-                    "src", "drf-extensions", "tests_app", "mongo_settings.py"
+                    "src", "drf-extensions", "tests_app", "settings.py"
                 ),
             },
             "migrate": {
