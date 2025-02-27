@@ -32,35 +32,11 @@ pass_repo = click.make_pass_decorator(Repo)
 
 
 @click.group()
-@click.option(
-    "--repo-home",
-    envvar="REPO_HOME",
-    default=".repo",
-    metavar="PATH",
-    help="Changes the repository folder location.",
-)
-@click.option(
-    "--config",
-    nargs=2,
-    multiple=True,
-    metavar="KEY VALUE",
-    help="Overrides a config key/value pair.",
-)
-@click.version_option("1.0")
 @click.pass_context
-def repo(ctx, repo_home, config):
-    """Repo is a command line tool that showcases how to build complex
-    command line interfaces with Click.
-
-    This tool is supposed to look like a distributed version control
-    system to show how something like this can be structured.
+def repo(ctx):
     """
-    # Create a repo object and remember it as as the context object.  From
-    # this point onwards other commands can refer to it by using the
-    # @pass_repo decorator.
-    ctx.obj = Repo(os.path.abspath(repo_home))
-    for key, value in config:
-        ctx.obj.set_config(key, value)
+    Manage repositories.
+    """
 
 
 @repo.command()
