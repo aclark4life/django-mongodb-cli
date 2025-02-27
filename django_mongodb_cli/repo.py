@@ -37,7 +37,7 @@ pass_repo = click.make_pass_decorator(Repo)
     "-l",
     "--list",
     is_flag=True,
-    help="List all branches/tracked files.",
+    help="List all repositories in `pyproject.toml`.",
 )
 @click.pass_context
 def repo(ctx, list):
