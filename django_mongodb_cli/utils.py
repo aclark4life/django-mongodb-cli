@@ -128,25 +128,6 @@ def delete_mongo_migrations(mongo_migrations, project_dir):
                 shutil.rmtree(dir_path, ignore_errors=True)
 
 
-def get_repo_name(
-    django_allauth, django_debug_toolbar, django_filter, django_rest_framework, wagtail
-):
-    """Determine the app type based on the specified options."""
-    return (
-        "django_allauth"
-        if django_allauth
-        else "django_debug_toolbar"
-        if django_debug_toolbar
-        else "django_filter"
-        if django_filter
-        else "django_rest_framework"
-        if django_rest_framework
-        else "wagtail"
-        if wagtail
-        else "django"
-    )
-
-
 def get_repos(pyproject_path):
     with open(pyproject_path, "r") as f:
         pyproject_data = toml.load(f)
