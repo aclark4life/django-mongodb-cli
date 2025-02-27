@@ -1,6 +1,5 @@
 import os
 import subprocess
-import sys
 
 import click
 from .config import test_settings_map
@@ -21,12 +20,9 @@ class Repo:
     def __init__(self, home):
         self.home = home
         self.config = {}
-        self.verbose = False
 
     def set_config(self, key, value):
         self.config[key] = value
-        if self.verbose:
-            click.echo(f"  config[{key}] = {value}", file=sys.stderr)
 
     def __repr__(self):
         return f"<Repo {self.home}>"
@@ -50,10 +46,9 @@ pass_repo = click.make_pass_decorator(Repo)
     metavar="KEY VALUE",
     help="Overrides a config key/value pair.",
 )
-@click.option("--verbose", "-v", is_flag=True, help="Enables verbose mode.")
 @click.version_option("1.0")
 @click.pass_context
-def repo(ctx, repo_home, config, verbose):
+def repo(ctx, repo_home, config):
     """Repo is a command line tool that showcases how to build complex
     command line interfaces with Click.
 
@@ -64,7 +59,6 @@ def repo(ctx, repo_home, config, verbose):
     # this point onwards other commands can refer to it by using the
     # @pass_repo decorator.
     ctx.obj = Repo(os.path.abspath(repo_home))
-    ctx.obj.verbose = verbose
     for key, value in config:
         ctx.obj.set_config(key, value)
 
