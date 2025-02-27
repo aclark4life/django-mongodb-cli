@@ -17,7 +17,7 @@ def add_remote(upstream_match, clone_path, repo_name):
         repo = git.Repo(clone_path)
         try:
             repo.create_remote("upstream", remote)
-            click.echo(f"Added remote {remote}")
+            click.echo(click.style(f"Added remote {remote}", fg="green"))
         except git.exc.GitCommandError:
             click.echo(
                 click.style(
@@ -29,9 +29,9 @@ def add_remote(upstream_match, clone_path, repo_name):
         try:
             repo.git.rebase("upstream/main")
         except git.exc.GitCommandError:
-            click.echo(f"Failed to rebase {repo_name}")
+            click.echo(click.style(f"Failed to rebase {repo_name}", fg="red"))
     else:
-        click.echo(f"Skipping {remote}")
+        click.echo(click.style(f"Skipping {remote}", fg="yellow"))
 
 
 def apply_patches(repo_name):
