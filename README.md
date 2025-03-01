@@ -23,11 +23,15 @@ pip install .
 
 ### Run tests
 
+#### Django
+
 ```
+django-mongodb-cli repo clone django
+django-mongodb-cli repo install django
 django-mongodb-cli repo test django
 ```
 
-### Start a new project
+### Start a project
 
 ```bash
 django-mongodb-cli startproject mysite
