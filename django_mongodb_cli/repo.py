@@ -18,8 +18,8 @@ from .utils import (
 
 
 class Repo:
-    def __init__(self, home):
-        self.home = home
+    def __init__(self):
+        self.home = "src"
         self.config = {}
 
     def set_config(self, key, value):
@@ -44,7 +44,7 @@ def repo(ctx, list):
     """
     Manage development repositories.
     """
-    ctx.obj = Repo(os.path.abspath(".repo"))
+    ctx.obj = Repo()
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if list:
         for repo_entry in repos:
@@ -56,7 +56,6 @@ def repo(ctx, list):
 
 @repo.command()
 @click.argument("src", required=False)
-@click.argument("dest", required=False)
 @click.option(
     "-a",
     "--all",
@@ -70,11 +69,8 @@ def repo(ctx, list):
 )
 @click.pass_context
 @pass_repo
-def clone(repo, ctx, src, dest, all, list):
+def clone(repo, ctx, src, all, list):
     """Clones a repository or repositories from `pyproject.toml`."""
-    if dest is None:
-        dest = "src"
-    repo.home = dest
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if src:
         for repo_entry in repos:
@@ -85,7 +81,7 @@ def clone(repo, ctx, src, dest, all, list):
                 repo_name = os.path.basename(repo_url)
                 if repo_name == src:
                     branch = branch_match.group(1) if branch_match else "main"
-                    clone_path = os.path.join(dest, repo_name)
+                    clone_path = os.path.join(repo.home, repo_name)
                     if not os.path.exists(clone_path):
                         clone_from(repo_url, clone_path, branch)
                     else:
@@ -99,7 +95,7 @@ def clone(repo, ctx, src, dest, all, list):
                 repo_url = url_match.group(0)
                 repo_name = os.path.basename(repo_url)
                 branch = branch_match.group(1) if branch_match else "main"
-                clone_path = os.path.join(dest, repo_name)
+                clone_path = os.path.join(repo.home, repo_name)
                 clone_from(repo_url, clone_path, branch)
             else:
                 click.echo(f"Invalid repository entry: {repo_entry}")
@@ -151,7 +147,6 @@ def install(repo, ctx, src, all):
 
 @repo.command()
 @click.argument("src", required=False)
-@click.argument("dest", required=False)
 @click.option(
     "-a",
     "--all",
@@ -159,11 +154,8 @@ def install(repo, ctx, src, all):
 )
 @click.pass_context
 @pass_repo
-def fetch(repo, ctx, src, dest, all):
+def fetch(repo, ctx, src, all):
     """Upstream"""
-    if dest is None:
-        dest = "src"
-    repo.home = dest
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if src:
         click.echo(f"Fetching {src}")
@@ -173,7 +165,7 @@ def fetch(repo, ctx, src, dest, all):
                 repo_url = url_match.group(0)
                 repo_name = os.path.basename(repo_url)
                 if repo_name == src:
-                    clone_path = os.path.join(dest, repo_name)
+                    clone_path = os.path.join(repo.home, repo_name)
                     upstream_match = upstream_pattern.search(repo_entry)
                     if upstream_match:
                         add_remote(upstream_match, clone_path, repo_name)
@@ -193,7 +185,6 @@ def fetch(repo, ctx, src, dest, all):
 
 @repo.command()
 @click.argument("src", required=False)
-@click.argument("dest", required=False)
 @click.option(
     "-a",
     "--all",
@@ -201,11 +192,8 @@ def fetch(repo, ctx, src, dest, all):
 )
 @click.pass_context
 @pass_repo
-def update(repo, ctx, src, dest, all):
+def update(repo, ctx, src, all):
     """Update"""
-    if dest is None:
-        dest = "src"
-    repo.home = dest
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if src:
         for repo_entry in repos:
@@ -214,7 +202,7 @@ def update(repo, ctx, src, dest, all):
                 repo_url = url_match.group(0)
                 repo_name = os.path.basename(repo_url)
                 if repo_name == src:
-                    clone_path = os.path.join(dest, repo_name)
+                    clone_path = os.path.join(repo.home, repo_name)
                     pull(clone_path)
     if all:
         for repo_entry in repos:
@@ -237,8 +225,6 @@ def makemigrations(
 ):
     """Run makemigrations."""
 
-    dest = "src"
-    repo.home = dest
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if src:
         for repo_entry in repos:
@@ -288,8 +274,6 @@ def test(
     """
     Run `runtests.py` for Django or Wagtail.
     """
-    dest = "src"
-    repo.home = dest
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if src:
         for repo_entry in repos:
