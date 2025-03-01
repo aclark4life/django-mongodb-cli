@@ -11,24 +11,12 @@ with Django and third party libraries.
 
 ## Installation
 
-### Clone repository
-
 ```bash
 git clone https://github.com/aclark4life/django-mongodb-cli
 cd django-mongodb-cli
-```
-
-### Setup virtual environment
-
-```bash
 python -m venv .venv
 source .venv/bin/activate
-```
-
-### Install `django-mongodb-cli` package and dependencies
-
-```bash
-just install
+pip install .
 ```
 
 ## Usage
