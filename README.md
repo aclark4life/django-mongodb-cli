@@ -47,7 +47,7 @@ django-mongodb-cli repo test django -l
 django-mongodb-cli repo test django queries_
 ```
 
-#### 3rd Party
+#### 3rd Party Libraries
 
 Same as above with `django` replaced by the 3rd party library name.
 
