@@ -6,7 +6,8 @@ For [django-mongodb-backend](https://github.com/mongodb-labs/django-mongodb-back
 
 This library automates most of the setup for testing
 [django-mongodb-backend](https://github.com/mongodb-labs/django-mongodb-backend)
-with Django and third party libraries.
+with [MongoDB's Django testing fork](https://github.com/mongodb-forks/django)
+and third party libraries.
 
 ## Installation
 
