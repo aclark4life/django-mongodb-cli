@@ -189,7 +189,7 @@ def get_management_command(command=None):
     return base_command
 
 
-def install_dependencies(clone_path):
+def install_repo(clone_path):
     if os.path.exists(os.path.join(clone_path, "pyproject.toml")):
         subprocess.run([sys.executable, "-m", "pip", "install", "-e", clone_path])
     if os.path.exists(os.path.join(clone_path, "setup.py")):

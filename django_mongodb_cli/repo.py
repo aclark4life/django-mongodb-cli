@@ -12,7 +12,7 @@ from .utils import (
     copy_mongo_settings,
     get_management_command,
     get_repos,
-    install_dependencies,
+    install_repo,
     update_repo,
 )
 
@@ -116,7 +116,7 @@ def install(repo, ctx, src, all):
 
     if src:
         clone_path = os.path.join("src", src[0])
-        install_dependencies(clone_path)
+        install_repo(clone_path)
 
     if all:
         repos, url_pattern, branch_pattern, upstream_pattern = get_repos(
@@ -128,7 +128,7 @@ def install(repo, ctx, src, all):
                 repo_url = url_match.group(0)
                 repo_name = os.path.basename(repo_url)
                 clone_path = os.path.join("src", repo_name)
-                install_dependencies(clone_path)
+                install_repo(clone_path)
     if ctx.invoked_subcommand is None:
         click.echo(ctx.get_help())
 
