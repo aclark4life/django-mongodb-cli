@@ -7,8 +7,7 @@ dependencies = [
     "click",
 #     "django-extensions",
 #     "django-modelcluster",
-#     "django-taggit",
-#     "dj-database-url",
+     "dj-database-url",  # For startproject and testing with postgres
 #     "freezegun",
      "html5lib",  # Required by django-debug-toolbar
 #     "psycopg2",
