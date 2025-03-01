@@ -29,6 +29,7 @@ dev = [
     "django-allauth @ git+ssh://git@github.com/pennersr/django-allauth@main",
     "django-debug-toolbar @ git+ssh://git@github.com/django-commons/django-debug-toolbar@main",
     "django-filter @ git+ssh://git@github.com/aclark4life/django-filter@main # upstream: carltongibson",
+    "django-import-export @ git+ssh://git@github.com/django-import-export/django-import-export@main",
     "django-mongodb-app @ git+ssh://git@github.com/aclark4life/django-mongodb-app@main # upstream: mongodb-labs",
     "django-mongodb-backend @ git+ssh://git@github.com/aclark4life/django-mongodb-backend@main # upstream: mongodb",
     "django-mongodb-project @ git+ssh://git@github.com/aclark4life/django-mongodb-project@main # upstream: mongodb-labs",
