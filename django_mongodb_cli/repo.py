@@ -50,6 +50,8 @@ def repo(ctx, list):
         for repo_entry in repos:
             click.echo(repo_entry)
         return
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
 
 
 @repo.command()
