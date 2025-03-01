@@ -219,7 +219,9 @@ def update(repo, ctx, src, all):
 @repo.command(context_settings={"ignore_unknown_options": True})
 @click.argument("src", required=False)
 @click.argument("args", nargs=-1)
+@click.pass_context
 def makemigrations(
+    ctx,
     src,
     args,
 ):
@@ -258,6 +260,8 @@ def makemigrations(
                         )
                     click.echo(f"Running command {' '.join(command)} {' '.join(args)}")
                     subprocess.run(command + [*args])
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
 
 
 @repo.command()
