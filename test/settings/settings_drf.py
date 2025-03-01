@@ -2,6 +2,7 @@ import os
 
 import django
 import django_mongodb_backend
+from bson import ObjectId
 from django.core import management
 
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/djangotests")
@@ -35,7 +36,7 @@ def pytest_configure(config):
         DATABASES={
             "default": django_mongodb_backend.parse_uri(DATABASE_URL),
         },
-        SITE_ID=1,
+        SITE_ID=ObjectId(),
         SECRET_KEY="not very secret in tests",
         USE_I18N=True,
         STATIC_URL="/static/",
