@@ -149,8 +149,20 @@ test_settings_map = {
     "django-debug-toolbar": {
         "command": "pytest",
         "project_dir": os.path.join("src", "django-debug-toolbar"),
-        "settings_module": "mongo_settings",
+        "settings_file": {
+            "test": {
+                "src": os.path.join("test", "settings", "settings_debug_toolbar.py"),
+                "target": os.path.join(
+                    "src", "django-debug-toolbar", "debug_toolbar", "mongo_settings.py"
+                ),
+            },
+        },
+        "settings_module": {
+            "test": "debug_toolbar.mongo_settings",
+            "migrate": "mongo_settings",
+        },
         "src": os.path.join("test", "settings", "settings_debug_toolbar.py"),
+        "cwd": os.path.join("src", "django-debug-toolbar"),
         "target": "mongo_settings.py",
         "test_dirs": ["tests"],
     },

@@ -10,7 +10,7 @@ dependencies = [
 #     "django-taggit",
 #     "dj-database-url",
 #     "freezegun",
-#     "html5lib",
+     "html5lib",  # Required by django-debug-toolbar
 #     "psycopg2",
      "pytest",
 #     "pytest-django",
