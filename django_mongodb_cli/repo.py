@@ -107,10 +107,15 @@ def clone(repo, ctx, src, dest, all, list):
         click.echo(ctx.get_help())
 
 
-def commit(repo, files, message):
+@repo.command()
+@click.pass_context
+@pass_repo
+def commit(repo, ctx):
     """
     Commit changes made in the specified repository.
     """
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
 
 
 @repo.command()
