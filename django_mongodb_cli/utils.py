@@ -11,28 +11,43 @@ import subprocess
 from .config import test_settings_map
 
 
-def add_remote(upstream_match, clone_path, repo_name):
-    remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
+def fetch_repo(repo_entry, upstream_pattern, url_pattern, repo):
+    """Helper function to fetch upstream remotes for a repository."""
+    url_match = url_pattern.search(repo_entry)
+    upstream_match = upstream_pattern.search(repo_entry)
+
+    if not url_match or not upstream_match:
+        return
+
+    repo_url = url_match.group(0)
+    repo_name = os.path.basename(repo_url)
+    clone_path = os.path.join(repo.home, repo_name)
+
     if os.path.exists(clone_path):
-        repo = git.Repo(clone_path)
-        try:
-            repo.create_remote("upstream", remote)
-            click.echo(click.style(f"Added remote {remote}", fg="green"))
-        except git.exc.GitCommandError:
-            click.echo(
-                click.style(
-                    f"Remote {repo.remotes.upstream.name} exists! {repo.remotes.upstream.url}",
-                    fg="yellow",
+        click.echo(f"Adding upstream remote for {repo_name}...")
+        remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
+        if os.path.exists(clone_path):
+            repo = git.Repo(clone_path)
+            try:
+                repo.create_remote("upstream", remote)
+                click.echo(click.style(f"Added remote {remote}", fg="green"))
+            except git.exc.GitCommandError:
+                click.echo(
+                    click.style(
+                        f"Remote {repo.remotes.upstream.name} exists! {repo.remotes.upstream.url}",
+                        fg="yellow",
+                    )
                 )
-            )
-        repo.remotes.upstream.fetch()
-        try:
-            repo.git.rebase("upstream/main")
-            click.echo(click.style(f"Rebased {repo_name}", fg="green"))
-        except git.exc.GitCommandError:
-            click.echo(click.style(f"Failed to rebase {repo_name}", fg="red"))
+            repo.remotes.upstream.fetch()
+            try:
+                repo.git.rebase("upstream/main")
+                click.echo(click.style(f"Rebased {repo_name}", fg="green"))
+            except git.exc.GitCommandError:
+                click.echo(click.style(f"Failed to rebase {repo_name}", fg="red"))
+        else:
+            click.echo(click.style(f"Skipping {remote}", fg="yellow"))
     else:
-        click.echo(click.style(f"Skipping {remote}", fg="yellow"))
+        click.echo(f"Skipping {repo_name}: Repository not found at {clone_path}")
 
 
 def apply_patches(repo_name):

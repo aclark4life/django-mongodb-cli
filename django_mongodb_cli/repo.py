@@ -4,12 +4,12 @@ import subprocess
 import click
 from .config import test_settings_map
 from .utils import (
-    add_remote,
     apply_patches,
     clone_repo,
     copy_mongo_apps,
     copy_mongo_migrations,
     copy_mongo_settings,
+    fetch_repo,
     get_management_command,
     get_repos,
     install_repo,
@@ -143,30 +143,23 @@ def install(repo, ctx, src, all):
 @click.pass_context
 @pass_repo
 def fetch(repo, ctx, src, all):
-    """Upstream"""
-    repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
+    """Fetch upstream remotes for repositories."""
+    repos, url_pattern, _, upstream_pattern = get_repos("pyproject.toml")
     if src:
-        click.echo(f"Fetching {src}")
+        click.echo(f"Fetching upstream for {src}...")
         for repo_entry in repos:
-            url_match = url_pattern.search(repo_entry)
-            if url_match:
-                repo_url = url_match.group(0)
-                repo_name = os.path.basename(repo_url)
-                if repo_name == src:
-                    clone_path = os.path.join(repo.home, repo_name)
-                    upstream_match = upstream_pattern.search(repo_entry)
-                    if upstream_match:
-                        add_remote(upstream_match, clone_path, repo_name)
+            if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
+                fetch_repo(repo_entry, upstream_pattern, url_pattern, repo)
+                return  # Stop after finding the requested repo
+        click.echo(f"Repository '{src}' not found.")
+        return
+
     if all:
+        click.echo(f"Fetching upstream remotes for {len(repos)} repositories...")
         for repo_entry in repos:
-            url_match = url_pattern.search(repo_entry)
-            if url_match:
-                repo_url = url_match.group(0)
-                repo_name = os.path.basename(repo_url)
-                clone_path = os.path.join("src", repo_name)
-                upstream_match = upstream_pattern.search(repo_entry)
-                if upstream_match:
-                    add_remote(upstream_match, clone_path, repo_name)
+            fetch_repo(repo_entry, upstream_pattern, url_pattern, repo)
+        return
+
     if ctx.invoked_subcommand is None:
         click.echo(ctx.get_help())
 
