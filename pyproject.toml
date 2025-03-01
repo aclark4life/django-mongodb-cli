@@ -5,20 +5,20 @@ dependencies = [
     "GitPython",
 #     "Sphinx",
     "click",
-#     "django-extensions",
+    "django-extensions",  # <3 django-extensions
 #     "django-modelcluster",
-     "dj-database-url",  # For startproject and testing with postgres
+    "dj-database-url",  # For startproject and testing with postgres
 #     "freezegun",
-     "html5lib",  # Required by django-debug-toolbar
+    "html5lib",  # Required by django-debug-toolbar
 #     "psycopg2",
-     "pytest",
+    "pytest",
 #     "pytest-django",
 #     "python-webpack-boilerplate",
 #     "pytz",
 #     "requests",
-     "setuptools",
-     "toml",
-     "tox",
+    "setuptools",
+    "toml",
+    "tox",
 ]
 
 [tool.setuptools]
