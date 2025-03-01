@@ -2,8 +2,11 @@
 
 For [django-mongodb-backend](https://github.com/mongodb-labs/django-mongodb-backend) development.
 
-## Installation
+## About
 
+This library automates most of the setup for testing django-mongodb-backend with Django and third party packages.
+
+## Installation
 
 ### Clone repository
 
