@@ -35,6 +35,12 @@ django-mongodb-cli repo install django
 django-mongodb-cli repo test django
 ```
 
+##### List tests
+
+```
+django-mongodb-cli repo test django -l
+```
+
 ### Start project
 
 ```bash
