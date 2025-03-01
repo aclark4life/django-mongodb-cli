@@ -20,7 +20,7 @@ git clone https://github.com/aclark4life/django-mongodb-cli
 cd django-mongodb-cli
 python -m venv .venv
 source .venv/bin/activate
-pip install .
+just install
 ```
 
 ## Usage
