@@ -125,8 +125,9 @@ def commit(repo, ctx):
     is_flag=True,
 )
 @click.argument("src", nargs=-1, type=click.Path())
+@click.pass_context
 @pass_repo
-def install(repo, src, all):
+def install(repo, ctx, src, all):
     """`pip install` repository or repositories."""
 
     if src:
@@ -144,6 +145,8 @@ def install(repo, src, all):
                 repo_name = os.path.basename(repo_url)
                 clone_path = os.path.join("src", repo_name)
                 install_dependencies(clone_path)
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
 
 
 @repo.command()
