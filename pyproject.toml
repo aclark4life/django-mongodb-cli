@@ -13,7 +13,7 @@ dependencies = [
 #     "psycopg2",
     "pytest",
 #     "pytest-django",
-#     "python-webpack-boilerplate",
+    "python-webpack-boilerplate",  # For startproject frontend
 #     "pytz",
 #     "requests",
     "setuptools",
