@@ -157,8 +157,9 @@ def install(repo, ctx, src, all):
     "--all",
     is_flag=True,
 )
+@click.pass_context
 @pass_repo
-def fetch(repo, src, dest, all):
+def fetch(repo, ctx, src, dest, all):
     """Upstream"""
     if dest is None:
         dest = "src"
@@ -186,6 +187,8 @@ def fetch(repo, src, dest, all):
                 upstream_match = upstream_pattern.search(repo_entry)
                 if upstream_match:
                     add_remote(upstream_match, clone_path, repo_name)
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
 
 
 @repo.command()
