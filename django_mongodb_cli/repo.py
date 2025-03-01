@@ -199,8 +199,9 @@ def fetch(repo, ctx, src, dest, all):
     "--all",
     is_flag=True,
 )
+@click.pass_context
 @pass_repo
-def update(repo, src, dest, all):
+def update(repo, ctx, src, dest, all):
     """Update"""
     if dest is None:
         dest = "src"
@@ -223,6 +224,8 @@ def update(repo, src, dest, all):
                 repo_name = os.path.basename(repo_url)
                 clone_path = os.path.join("src", repo_name)
                 pull(clone_path)
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
 
 
 @repo.command(context_settings={"ignore_unknown_options": True})
