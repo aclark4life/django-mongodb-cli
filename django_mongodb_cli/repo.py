@@ -72,33 +72,42 @@ def repo(ctx, list):
 def clone(repo, ctx, src, all, list):
     """Clones a repository or repositories from `pyproject.toml`."""
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
+
+    def _clone_repo(repo_entry):
+        """Helper function to clone a single repo entry."""
+        url_match = url_pattern.search(repo_entry)
+        branch_match = branch_pattern.search(repo_entry)
+        if not url_match:
+            click.echo(f"Invalid repository entry: {repo_entry}")
+            return
+
+        repo_url = url_match.group(0)
+        repo_name = os.path.basename(repo_url)
+        branch = branch_match.group(1) if branch_match else "main"
+        clone_path = os.path.join(repo.home, repo_name)
+
+        if os.path.exists(clone_path):
+            click.echo(f"Skipping: {repo_name} already exists.")
+        else:
+            click.echo(
+                f"Cloning {repo_name} from {repo_url} into {clone_path} (branch: {branch})"
+            )
+            clone_from(repo_url, clone_path, branch)
+
     if src:
         for repo_entry in repos:
-            url_match = url_pattern.search(repo_entry)
-            branch_match = branch_pattern.search(repo_entry)
-            if url_match:
-                repo_url = url_match.group(0)
-                repo_name = os.path.basename(repo_url)
-                if repo_name == src:
-                    branch = branch_match.group(1) if branch_match else "main"
-                    clone_path = os.path.join(repo.home, repo_name)
-                    if not os.path.exists(clone_path):
-                        clone_from(repo_url, clone_path, branch)
-                    else:
-                        click.echo(f"Repository {repo_name} already exists.")
+            if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
+                _clone_repo(repo_entry)
+                return  # Stop after finding the requested repo
+        click.echo(f"Repository '{src}' not found.")
+        return
+
     if all:
-        click.echo(f"Checking out {len(repos)} repositories")
+        click.echo(f"Cloning {len(repos)} repositories...")
         for repo_entry in repos:
-            url_match = url_pattern.search(repo_entry)
-            branch_match = branch_pattern.search(repo_entry)
-            if url_match:
-                repo_url = url_match.group(0)
-                repo_name = os.path.basename(repo_url)
-                branch = branch_match.group(1) if branch_match else "main"
-                clone_path = os.path.join(repo.home, repo_name)
-                clone_from(repo_url, clone_path, branch)
-            else:
-                click.echo(f"Invalid repository entry: {repo_entry}")
+            _clone_repo(repo_entry)
+        return
+
     if ctx.invoked_subcommand is None:
         click.echo(ctx.get_help())
 
