@@ -15,7 +15,7 @@ def startproject(
     wagtail,
     project_name,
 ):
-    """Run startproject command with the template from src/django-mongodb-project."""
+    """Run startproject command with custom template."""
     if os.path.exists("manage.py"):
         click.echo("manage.py already exists")
         if not delete:
