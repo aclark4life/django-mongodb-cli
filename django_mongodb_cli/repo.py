@@ -306,5 +306,5 @@ def test(
                                 repo_name
                             ]["settings_module"]["tests"]
                         subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
-    if ctx.invoked_subcommand is None:
+    if ctx.args == ():
         click.echo(ctx.get_help())
