@@ -41,6 +41,12 @@ django-mongodb-cli repo test django
 django-mongodb-cli repo test django -l
 ```
 
+##### Run specific tests
+
+```
+django-mongodb-cli repo test django queries_
+```
+
 ### Start project
 
 ```bash
