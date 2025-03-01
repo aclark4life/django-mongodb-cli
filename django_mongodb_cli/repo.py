@@ -265,7 +265,9 @@ def makemigrations(
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
+@click.pass_context
 def test(
+    ctx,
     src,
     modules,
     keyword,
@@ -333,3 +335,5 @@ def test(
                                 repo_name
                             ]["settings_module"]["tests"]
                         subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
