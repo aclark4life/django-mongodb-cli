@@ -29,6 +29,8 @@ just install
 
 #### Django
 
+##### Clone, install, and test
+
 ```
 django-mongodb-cli repo clone django
 django-mongodb-cli repo install django
