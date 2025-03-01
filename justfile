@@ -4,8 +4,6 @@ default:
 install: pip-install git-clone dev-install
 alias i := install
 
-alias u := git-update
-
 dev-install:
     django-mongodb-cli repo install django-mongodb-backend
 
