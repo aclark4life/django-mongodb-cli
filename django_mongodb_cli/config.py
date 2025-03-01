@@ -1,30 +1,6 @@
 import os
 
 test_settings_map = {
-    "drf-extensions": {
-        "cwd": os.path.join("src", "drf-extensions", "tests_app"),
-        "command": "tox",
-        "project_dir": os.path.join("src", "drf-extensions"),
-        "test_dirs": [os.path.join("src", "drf-extensions", "tests_app")],
-        "settings_file": {
-            "test": {
-                "src": os.path.join("test", "settings", "settings_drf_extensions.py"),
-                "target": os.path.join(
-                    "src", "drf-extensions", "tests_app", "settings.py"
-                ),
-            },
-            "migrate": {
-                "src": os.path.join("test", "settings", "settings_django.py"),
-                "target": os.path.join(
-                    "src", "drf-extensions", "tests_app", "mongo_settings.py"
-                ),
-            },
-        },
-        "settings_module": {
-            "test": "mongo_settings",
-            "migrate": "mongo_settings",
-        },
-    },
     "django": {
         "cwd": os.path.join("src", "django", "tests"),
         "command": "./runtests.py",
