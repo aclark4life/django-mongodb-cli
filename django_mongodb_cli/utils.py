@@ -208,3 +208,20 @@ def pull(clone_path):
         repo.git.pull()
     except git.exc.NoSuchPathError:
         click.echo("Not a valid Git repository.")
+
+
+def update_repo(repo_entry, url_pattern, repo):
+    """Helper function to update a single repository."""
+    url_match = url_pattern.search(repo_entry)
+    if not url_match:
+        return
+
+    repo_url = url_match.group(0)
+    repo_name = os.path.basename(repo_url)
+    clone_path = os.path.join(repo.home, repo_name)
+
+    if os.path.exists(clone_path):
+        click.echo(f"Updating {repo_name}...")
+        pull(clone_path)
+    else:
+        click.echo(f"Skipping {repo_name}: Repository not found at {clone_path}")

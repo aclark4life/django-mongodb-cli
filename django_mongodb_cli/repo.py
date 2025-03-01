@@ -13,7 +13,7 @@ from .utils import (
     get_management_command,
     get_repos,
     install_dependencies,
-    pull,
+    update_repo,
 )
 
 
@@ -182,24 +182,21 @@ def fetch(repo, ctx, src, all):
 @pass_repo
 def update(repo, ctx, src, all):
     """Update"""
-    repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
+    repos, url_pattern, _, _ = get_repos("pyproject.toml")
     if src:
         for repo_entry in repos:
-            url_match = url_pattern.search(repo_entry)
-            if url_match:
-                repo_url = url_match.group(0)
-                repo_name = os.path.basename(repo_url)
-                if repo_name == src:
-                    clone_path = os.path.join(repo.home, repo_name)
-                    pull(clone_path)
+            if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
+                update_repo(repo_entry, url_pattern, repo)
+                return  # Stop after updating the requested repo
+        click.echo(f"Repository '{src}' not found.")
+        return
+
     if all:
+        click.echo(f"Updating {len(repos)} repositories...")
         for repo_entry in repos:
-            url_match = url_pattern.search(repo_entry)
-            if url_match:
-                repo_url = url_match.group(0)
-                repo_name = os.path.basename(repo_url)
-                clone_path = os.path.join("src", repo_name)
-                pull(clone_path)
+            update_repo(repo_entry, url_pattern, repo)
+        return
+
     if ctx.invoked_subcommand is None:
         click.echo(ctx.get_help())
 
