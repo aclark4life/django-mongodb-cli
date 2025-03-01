@@ -6,7 +6,6 @@ dependencies = [
 #     "Sphinx",
     "click",
     "django-extensions",  # <3 django-extensions
-#     "django-modelcluster",
     "dj-database-url",  # For startproject and testing with postgres
 #     "freezegun",
     "html5lib",  # Required by django-debug-toolbar
