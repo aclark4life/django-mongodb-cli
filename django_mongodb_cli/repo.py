@@ -68,8 +68,9 @@ def repo(ctx, list):
     is_flag=True,
     help="List all branches/tracked files.",
 )
+@click.pass_context
 @pass_repo
-def clone(repo, src, dest, all, list):
+def clone(repo, ctx, src, dest, all, list):
     """Clones a repository or repositories from `pyproject.toml`."""
     if dest is None:
         dest = "src"
@@ -102,6 +103,8 @@ def clone(repo, src, dest, all, list):
                 clone_from(repo_url, clone_path, branch)
             else:
                 click.echo(f"Invalid repository entry: {repo_entry}")
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help())
 
 
 def commit(repo, files, message):
