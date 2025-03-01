@@ -6,7 +6,7 @@ from .config import test_settings_map
 from .utils import (
     add_remote,
     apply_patches,
-    clone_from,
+    clone_repo,
     copy_mongo_apps,
     copy_mongo_migrations,
     copy_mongo_settings,
@@ -73,31 +73,10 @@ def clone(repo, ctx, src, all, list):
     """Clones a repository or repositories from `pyproject.toml`."""
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
 
-    def _clone_repo(repo_entry):
-        """Helper function to clone a single repo entry."""
-        url_match = url_pattern.search(repo_entry)
-        branch_match = branch_pattern.search(repo_entry)
-        if not url_match:
-            click.echo(f"Invalid repository entry: {repo_entry}")
-            return
-
-        repo_url = url_match.group(0)
-        repo_name = os.path.basename(repo_url)
-        branch = branch_match.group(1) if branch_match else "main"
-        clone_path = os.path.join(repo.home, repo_name)
-
-        if os.path.exists(clone_path):
-            click.echo(f"Skipping: {repo_name} already exists.")
-        else:
-            click.echo(
-                f"Cloning {repo_name} from {repo_url} into {clone_path} (branch: {branch})"
-            )
-            clone_from(repo_url, clone_path, branch)
-
     if src:
         for repo_entry in repos:
             if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
-                _clone_repo(repo_entry)
+                clone_repo(repo_entry, url_pattern, branch_pattern, repo)
                 return  # Stop after finding the requested repo
         click.echo(f"Repository '{src}' not found.")
         return
@@ -105,7 +84,7 @@ def clone(repo, ctx, src, all, list):
     if all:
         click.echo(f"Cloning {len(repos)} repositories...")
         for repo_entry in repos:
-            _clone_repo(repo_entry)
+            clone_repo(repo_entry, url_pattern, branch_pattern, repo)
         return
 
     if ctx.invoked_subcommand is None:

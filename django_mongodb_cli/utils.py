@@ -64,18 +64,36 @@ def apply_patches(repo_name):
             click.echo(click.style("Patch applied", fg="green"))
 
 
-def clone_from(repo_url, clone_path, branch):
-    if not os.path.exists(clone_path):
-        click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
-        try:
-            git.Repo.clone_from(repo_url, clone_path, branch=branch)
-        except git.exc.GitCommandError:
-            try:
-                git.Repo.clone_from(repo_url, clone_path)
-            except git.exc.GitCommandError as e:
-                click.echo(f"Failed to clone repository: {e}")
+def clone_repo(repo_entry, url_pattern, branch_pattern, repo):
+    """Helper function to clone a single repo entry."""
+    url_match = url_pattern.search(repo_entry)
+    branch_match = branch_pattern.search(repo_entry)
+    if not url_match:
+        click.echo(f"Invalid repository entry: {repo_entry}")
+        return
+
+    repo_url = url_match.group(0)
+    repo_name = os.path.basename(repo_url)
+    branch = branch_match.group(1) if branch_match else "main"
+    clone_path = os.path.join(repo.home, repo_name)
+
+    if os.path.exists(clone_path):
+        click.echo(f"Skipping: {repo_name} already exists.")
     else:
-        click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
+        click.echo(
+            f"Cloning {repo_name} from {repo_url} into {clone_path} (branch: {branch})"
+        )
+        if not os.path.exists(clone_path):
+            click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
+            try:
+                git.Repo.clone_from(repo_url, clone_path, branch=branch)
+            except git.exc.GitCommandError:
+                try:
+                    git.Repo.clone_from(repo_url, clone_path)
+                except git.exc.GitCommandError as e:
+                    click.echo(f"Failed to clone repository: {e}")
+        else:
+            click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
 
 
 def copy_mongo_apps(repo_name):
@@ -132,8 +150,6 @@ def get_repos(pyproject_path):
     with open(pyproject_path, "r") as f:
         pyproject_data = toml.load(f)
     repos = pyproject_data.get("tool", {}).get("django_mongodb_cli", {}).get("dev", [])
-
-    # url_pattern = re.compile(r"git\+ssh://[^@]+@([^@]+)")
 
     url_pattern = re.compile(r"git\+ssh://(?:[^@]+@)?([^/]+)/([^@]+)")
 
