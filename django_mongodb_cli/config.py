@@ -140,6 +140,7 @@ test_settings_map = {
     },
     "django-debug-toolbar": {
         "command": "pytest",
+        "cwd": os.path.join("src", "django-debug-toolbar"),
         "project_dir": os.path.join("src", "django-debug-toolbar"),
         "settings_file": {
             "test": {
@@ -157,6 +158,7 @@ test_settings_map = {
     },
     "django-allauth": {
         "command": "tox",
+        "cwd": os.path.join("src", "django-allauth"),
         "project_dir": os.path.join("src", "django-allauth"),
         "settings_file": {
             "test": {
