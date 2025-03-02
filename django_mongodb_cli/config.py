@@ -138,14 +138,6 @@ test_settings_map = {
         },
         "test_dirs": [os.path.join("src", "wagtail", "wagtail", "tests")],
     },
-    "django-allauth": {
-        "command": "tox",
-        "project_dir": os.path.join("src", "django-allauth"),
-        "settings_module": "mongo_settings",
-        "src": os.path.join("test", "settings", "settings_allauth_regular.py"),
-        "target": "mongo_settings.py",
-        "test_dirs": ["tests"],
-    },
     "django-debug-toolbar": {
         "command": "pytest",
         "project_dir": os.path.join("src", "django-debug-toolbar"),
@@ -159,6 +151,23 @@ test_settings_map = {
         },
         "settings_module": {
             "test": "debug_toolbar.mongo_settings",
+            "migrate": "mongo_settings",
+        },
+        "test_dirs": ["tests"],
+    },
+    "django-allauth": {
+        "command": "tox",
+        "project_dir": os.path.join("src", "django-allauth"),
+        "settings_file": {
+            "test": {
+                "src": os.path.join("test", "settings", "settings_allauth.py"),
+                "target": os.path.join(
+                    "src", "django-allauth", "allauth", "mongo_settings.py"
+                ),
+            },
+        },
+        "settings_module": {
+            "test": "allauth.mongo_settings",
             "migrate": "mongo_settings",
         },
         "test_dirs": ["tests"],
