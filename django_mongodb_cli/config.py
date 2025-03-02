@@ -161,9 +161,6 @@ test_settings_map = {
             "test": "debug_toolbar.mongo_settings",
             "migrate": "mongo_settings",
         },
-        "src": os.path.join("test", "settings", "settings_debug_toolbar.py"),
-        "cwd": os.path.join("src", "django-debug-toolbar"),
-        "target": "mongo_settings.py",
         "test_dirs": ["tests"],
     },
 }
