@@ -70,7 +70,7 @@ def repo(ctx, list):
 @click.pass_context
 @pass_repo
 def clone(repo, ctx, src, all, list):
-    """Clones a repository or repositories from `pyproject.toml`."""
+    """Clone repositories from `pyproject.toml`."""
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
 
     if src:
