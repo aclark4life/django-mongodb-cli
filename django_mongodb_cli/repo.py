@@ -192,7 +192,7 @@ def makemigrations(
     src,
     args,
 ):
-    """Run makemigrations."""
+    """Run makemigrations for test suites."""
 
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if src:
