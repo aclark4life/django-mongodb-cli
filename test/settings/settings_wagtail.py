@@ -1,6 +1,7 @@
 import os
 import django_mongodb_backend
 
+from bson import ObjectId
 from django.contrib.messages import constants as message_constants
 from django.utils.translation import gettext_lazy as _
 
@@ -307,3 +308,5 @@ MIGRATION_MODULES = {
     "wagtailusers": "wagtail.test.mongo_migrations.wagtailusers",
 }
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
+
+SITE_ID = ObjectId()
