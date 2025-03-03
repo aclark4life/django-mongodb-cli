@@ -245,7 +245,7 @@ def test(
     list_tests,
 ):
     """
-    Run `runtests.py` for Django or Wagtail.
+    Run tests for Django and third-party libraries.
     """
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if src:
