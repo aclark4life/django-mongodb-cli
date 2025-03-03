@@ -136,7 +136,10 @@ test_settings_map = {
             "test": "wagtail.tests.mongo_settings",
             "migrate": "wagtail.tests.mongo_settings",
         },
-        "test_dirs": [os.path.join("src", "wagtail", "wagtail", "tests")],
+        "test_dirs": [
+            os.path.join("src", "wagtail", "wagtail", "tests"),
+            os.path.join("src", "wagtail", "wagtail", "test"),
+        ],
     },
     "django-debug-toolbar": {
         "command": "pytest",
