@@ -163,7 +163,7 @@ def fetch(repo, ctx, src, all):
 @click.pass_context
 @pass_repo
 def update(repo, ctx, src, all):
-    """Update"""
+    """Update repositories."""
     repos, url_pattern, _, _ = get_repos("pyproject.toml")
     if src:
         for repo_entry in repos:
