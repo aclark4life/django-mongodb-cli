@@ -101,7 +101,7 @@ def clone(repo, ctx, src, all, list):
 @click.pass_context
 @pass_repo
 def install(repo, ctx, src, all):
-    """`pip install` repository or repositories."""
+    """Install development repositories."""
 
     if src:
         clone_path = os.path.join("src", src[0])
