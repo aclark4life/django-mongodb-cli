@@ -9,13 +9,13 @@ dependencies = [
     "dj-database-url",  # For startproject and testing with postgres
     "html5lib",  # Required by django-debug-toolbar
     "pytest",
+    "pytest-django",  # For django-rest-framework
     "python-webpack-boilerplate",  # For startproject frontend
-    "setuptools",  # For installing django-rest-framework
+    "setuptools",  # For django-rest-framework
     "toml",
     "tox",  # For django-allauth
 #    "freezegun",
 #    "psycopg2",
-#    "pytest-django",
 #    "pytz",
 #    "requests",
 ]
