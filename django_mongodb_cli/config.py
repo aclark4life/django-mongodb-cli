@@ -128,13 +128,19 @@ test_settings_map = {
             "test": {
                 "src": os.path.join("test", "settings", "settings_wagtail.py"),
                 "target": os.path.join(
-                    "src", "wagtail", "wagtail", "tests", "mongo_settings.py"
+                    "src", "wagtail", "wagtail", "test", "mongo_settings.py"
+                ),
+            },
+            "migrate": {
+                "src": os.path.join("test", "settings", "settings_wagtail.py"),
+                "target": os.path.join(
+                    "src", "wagtail", "wagtail", "test", "mongo_settings.py"
                 ),
             },
         },
         "settings_module": {
-            "test": "wagtail.tests.mongo_settings",
-            "migrate": "wagtail.tests.mongo_settings",
+            "test": "wagtail.test.mongo_settings",
+            "migrate": "wagtail.test.mongo_settings",
         },
         "test_dirs": [
             os.path.join("src", "wagtail", "wagtail", "tests"),
