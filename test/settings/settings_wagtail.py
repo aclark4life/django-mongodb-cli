@@ -309,4 +309,4 @@ MIGRATION_MODULES = {
 }
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
 
-SITE_ID = ObjectId()
+SITE_ID = ObjectId("000000000000000000000001")
