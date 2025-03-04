@@ -16,11 +16,11 @@ test_settings_map = {
         "project_dir": os.path.join("src", "django"),
         "settings_file": {
             "test": {
-                "src": os.path.join("settings", "settings_django.py"),
+                "src": os.path.join("settings", "django_settings.py"),
                 "target": os.path.join("src", "django", "tests", "mongo_settings.py"),
             },
             "migrate": {
-                "src": os.path.join("settings", "settings_django.py"),
+                "src": os.path.join("settings", "django_settings.py"),
                 "target": os.path.join("src", "django", "tests", "mongo_settings.py"),
             },
         },
