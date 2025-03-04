@@ -13,13 +13,10 @@ dependencies = [
     "pytest",
     "pytest-django",  # For django-rest-framework and django-debug-toolbar
     "python3-openid",  # For django-allauth
+    "python3-saml",  # For django-allauth
     "python-webpack-boilerplate",  # For startproject
     "setuptools",  # For django-rest-framework
     "toml",
-#    "tox",  # For django-allauth
-#    "freezegun",
-#    "psycopg2",
-#    "pytz",
     "requests-oauthlib",  # For django-allauth
 ]
 

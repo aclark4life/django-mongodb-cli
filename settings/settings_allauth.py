@@ -273,3 +273,7 @@ MIGRATION_MODULES = {
     "auth": "allauth.mongo_migrations.auth",
     "contenttypes": "allauth.mongo_migrations.contenttypes",
 }
+
+SILENCED_SYSTEM_CHECKS = [
+    "sites.E101",  # SITE_ID must be an ObjectId for MongoDB.
+]
