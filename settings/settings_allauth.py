@@ -283,3 +283,8 @@ MIGRATION_MODULES = {
 SILENCED_SYSTEM_CHECKS = [
     "sites.E101",  # SITE_ID must be an ObjectId for MongoDB.
 ]
+
+INSTALLED_APPS = [
+    "allauth.mongo_apps.MongoContentTypesConfig",
+    "allauth.mongo_apps.MongoAuthConfig",
+]
