@@ -197,6 +197,6 @@ test_settings_map = {
                 "src", "django-allauth", "allauth", "mongo_migrations"
             ),
         },
-        "test_dirs": ["tests"],
+        "test_dirs": [os.path.join("src", "django-allauth", "tests")],
     },
 }
