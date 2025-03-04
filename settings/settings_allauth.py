@@ -202,8 +202,8 @@ INSTALLED_APPS = (
     "allauth.socialaccount.providers.zoom",
     "allauth.socialaccount.providers.okta",
     "allauth.socialaccount.providers.feishu",
-    "allauth.usersessions",
-    "allauth.headless",
+    "allauth.mongo_apps.MongoUserSessionsConfig",
+    "allauth.mongo_apps.MongoHeadlessConfig",
 )
 
 AUTHENTICATION_BACKENDS = (

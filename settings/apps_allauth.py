@@ -2,6 +2,11 @@ from allauth.account.apps import AccountConfig
 from allauth.socialaccount.apps import SocialAccountConfig
 from allauth.usersessions.apps import UserSessionsConfig
 from allauth.mfa.apps import MFAConfig
+from allauth.headless.apps import HeadlessConfig
+
+
+class MongoHeadlessConfig(HeadlessConfig):
+    default_auto_field = "django_mongodb_backend.fields.ObjectIdAutoField"
 
 
 class MongoMFAConfig(MFAConfig):
