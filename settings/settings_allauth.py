@@ -1,6 +1,11 @@
+import django_mongodb_backend
+import os
+
 from pathlib import Path
 
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
+
+DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/djangotests")
 
 
 SECRET_KEY = "psst"
@@ -12,15 +17,19 @@ ALLOWED_HOSTS = (
 USE_I18N = False
 USE_TZ = True
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": ":memory:",
+#         "USER": "",
+#         "PASSWORD": "",
+#         "HOST": "",
+#         "PORT": "",
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ":memory:",
-        "USER": "",
-        "PASSWORD": "",
-        "HOST": "",
-        "PORT": "",
-    }
+    "default": django_mongodb_backend.parse_uri(DATABASE_URL),
 }
 
 ROOT_URLCONF = "tests.regular.urls"
