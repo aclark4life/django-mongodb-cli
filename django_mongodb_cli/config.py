@@ -148,7 +148,7 @@ test_settings_map = {
         ],
     },
     "django-debug-toolbar": {
-        "command": "pytest",
+        "command": "python",
         "cwd": os.path.join("src", "django-debug-toolbar"),
         "project_dir": os.path.join("src", "django-debug-toolbar"),
         "settings_file": {

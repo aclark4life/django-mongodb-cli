@@ -301,10 +301,10 @@ def test(
                             click.style(f"Running {' '.join(command)}", fg="blue")
                         )
                         if repo_name == "django-debug-toolbar":
-                            # For pytest to use correct settings file.
                             os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[
                                 repo_name
                             ]["settings_module"]["test"]
+                            command.extend(["-m", "django", "test"])
                         subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
     if ctx.args == ():
         click.echo(ctx.get_help())
