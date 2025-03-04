@@ -186,6 +186,12 @@ test_settings_map = {
                     "src", "django-allauth", "allauth", "mongo_settings.py"
                 ),
             },
+            "migrate": {
+                "src": os.path.join("settings", "settings_allauth.py"),
+                "target": os.path.join(
+                    "src", "django-allauth", "allauth", "mongo_settings.py"
+                ),
+            },
         },
         "settings_module": {
             "test": "allauth.mongo_settings",

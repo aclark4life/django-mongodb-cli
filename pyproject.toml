@@ -7,6 +7,7 @@ dependencies = [
     "click",
     "django-extensions",  # <3 django-extensions
     "dj-database-url",  # For startproject and testing with postgres
+    "fido2",  # For django-allauth
     "html5lib",  # Required by django-debug-toolbar
     "jwt",  # For django-allauth
     "pytest",
