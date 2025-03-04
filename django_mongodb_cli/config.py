@@ -173,7 +173,7 @@ test_settings_map = {
     },
     "django-allauth": {
         "apps": {
-            "src": os.path.join("settings", "apps_allauth.py"),
+            "src": os.path.join("settings", "allauth_apps.py"),
             "target": os.path.join("src", "django-allauth", "allauth", "mongo_apps.py"),
         },
         "command": "python",
@@ -181,13 +181,13 @@ test_settings_map = {
         "project_dir": os.path.join("src", "django-allauth"),
         "settings_file": {
             "test": {
-                "src": os.path.join("settings", "settings_allauth.py"),
+                "src": os.path.join("settings", "allauth_settings.py"),
                 "target": os.path.join(
                     "src", "django-allauth", "allauth", "mongo_settings.py"
                 ),
             },
             "migrate": {
-                "src": os.path.join("settings", "settings_allauth.py"),
+                "src": os.path.join("settings", "allauth_settings.py"),
                 "target": os.path.join(
                     "src", "django-allauth", "allauth", "mongo_settings.py"
                 ),
