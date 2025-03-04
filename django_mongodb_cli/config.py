@@ -172,7 +172,7 @@ test_settings_map = {
         "test_dirs": ["tests"],
     },
     "django-allauth": {
-        "command": "tox",
+        "command": "python",
         "cwd": os.path.join("src", "django-allauth"),
         "project_dir": os.path.join("src", "django-allauth"),
         "settings_file": {
@@ -185,7 +185,7 @@ test_settings_map = {
         },
         "settings_module": {
             "test": "allauth.mongo_settings",
-            "migrate": "mongo_settings",
+            "migrate": "allauth.mongo_settings",
         },
         "test_dirs": ["tests"],
     },

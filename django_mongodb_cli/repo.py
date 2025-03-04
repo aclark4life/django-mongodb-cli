@@ -300,7 +300,10 @@ def test(
                         click.echo(
                             click.style(f"Running {' '.join(command)}", fg="blue")
                         )
-                        if repo_name == "django-debug-toolbar":
+                        if (
+                            repo_name == "django-debug-toolbar"
+                            or repo_name == "django-allauth"
+                        ):
                             os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[
                                 repo_name
                             ]["settings_module"]["test"]
