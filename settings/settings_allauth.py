@@ -79,7 +79,7 @@ INSTALLED_APPS = (
     "allauth.mongo_apps.MongoContentTypesConfig",
     "allauth",
     "allauth.mongo_apps.MongoAccountConfig",
-    "allauth.mfa",
+    "allauth.mongo_apps.MongoMFAConfig",
     "allauth.mongo_apps.MongoSocialAccountConfig",
     "allauth.socialaccount.providers.agave",
     "allauth.socialaccount.providers.amazon",
