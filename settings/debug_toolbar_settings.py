@@ -1,7 +1,6 @@
 """Django settings for tests."""
 
 import os
-import django_mongodb_backend
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -21,9 +20,9 @@ LOGGING = {  # avoids spurious output in tests
 # Application definition
 
 INSTALLED_APPS = [
-    "debug_toolbar.mongo_apps.MongoAdminConfig",
-    "debug_toolbar.mongo_apps.MongoAuthConfig",
-    "debug_toolbar.mongo_apps.MongoContentTypesConfig",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
@@ -122,7 +121,7 @@ DATABASES = {
     },
 }
 
-# DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Debug Toolbar configuration
 
@@ -132,6 +131,3 @@ DEBUG_TOOLBAR_CONFIG = {
     # IS_RUNNING_TESTS must be False even though we're running tests because we're running the toolbar's own tests.
     "IS_RUNNING_TESTS": False,
 }
-DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
-MONGODB_URI = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/wagtail")
-DATABASES["default"] = django_mongodb_backend.parse_uri(MONGODB_URI)
