@@ -1,6 +1,7 @@
 import django_mongodb_backend
 import os
 
+from bson import ObjectId
 from pathlib import Path
 
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
@@ -9,7 +10,7 @@ DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/djangote
 
 
 SECRET_KEY = "psst"
-SITE_ID = 1
+SITE_ID = ObjectId()
 ALLOWED_HOSTS = (
     "testserver",
     "example.com",
@@ -267,3 +268,8 @@ MFA_PASSKEY_SIGNUP_ENABLED = True
 
 HEADLESS_SERVE_SPECIFICATION = True
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
+MIGRATION_MODULES = {
+    "admin": "allauth.mongo_migrations.admin",
+    "auth": "allauth.mongo_migrations.auth",
+    "contenttypes": "allauth.mongo_migrations.contenttypes",
+}
