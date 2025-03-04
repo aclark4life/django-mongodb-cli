@@ -272,6 +272,12 @@ MIGRATION_MODULES = {
     "admin": "allauth.mongo_migrations.admin",
     "auth": "allauth.mongo_migrations.auth",
     "contenttypes": "allauth.mongo_migrations.contenttypes",
+    "usersessions": None,
+    "mfa": None,
+    "socialaccount": None,
+    "openid": None,
+    "account": None,
+    "users": None,
 }
 
 SILENCED_SYSTEM_CHECKS = [
