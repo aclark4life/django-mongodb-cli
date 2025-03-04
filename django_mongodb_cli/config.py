@@ -172,6 +172,10 @@ test_settings_map = {
         "test_dirs": ["tests"],
     },
     "django-allauth": {
+        "apps": {
+            "src": os.path.join("settings", "apps_allauth.py"),
+            "target": os.path.join("src", "django-allauth", "allauth", "mongo_apps.py"),
+        },
         "command": "python",
         "cwd": os.path.join("src", "django-allauth"),
         "project_dir": os.path.join("src", "django-allauth"),
