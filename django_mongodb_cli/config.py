@@ -153,13 +153,13 @@ test_settings_map = {
         "project_dir": os.path.join("src", "django-debug-toolbar"),
         "settings_file": {
             "test": {
-                "src": os.path.join("settings", "settings_debug_toolbar.py"),
+                "src": os.path.join("settings", "debug_toolbar_settings.py"),
                 "target": os.path.join(
                     "src", "django-debug-toolbar", "debug_toolbar", "mongo_settings.py"
                 ),
             },
             "migrate": {
-                "src": os.path.join("settings", "settings_debug_toolbar.py"),
+                "src": os.path.join("settings", "debug_toolbar_settings.py"),
                 "target": os.path.join(
                     "src", "django-debug-toolbar", "debug_toolbar", "mongo_settings.py"
                 ),
