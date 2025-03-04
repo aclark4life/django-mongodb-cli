@@ -69,7 +69,7 @@ test_settings_map = {
     },
     "django-rest-framework": {
         "apps": {
-            "src": os.path.join("settings", "apps_drf.py"),
+            "src": os.path.join("settings", "rest_framework_apps.py"),
             "target": os.path.join(
                 "src", "django-rest-framework", "tests", "mongo_apps.py"
             ),
@@ -85,13 +85,13 @@ test_settings_map = {
         "project_dir": os.path.join("src", "django-rest-framework"),
         "settings_file": {
             "test": {
-                "src": os.path.join("settings", "settings_drf.py"),
+                "src": os.path.join("settings", "rest_framework_settings.py"),
                 "target": os.path.join(
                     "src", "django-rest-framework", "tests", "conftest.py"
                 ),
             },
             "migrate": {
-                "src": os.path.join("settings", "settings_drf_migrate.py"),
+                "src": os.path.join("settings", "rest_framework_settings.py"),
                 "target": os.path.join(
                     "src", "django-rest-framework", "tests", "conftest.py"
                 ),
