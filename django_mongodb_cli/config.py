@@ -148,6 +148,12 @@ test_settings_map = {
         ],
     },
     "django-debug-toolbar": {
+        "apps": {
+            "src": os.path.join("settings", "debug_toolbar_apps.py"),
+            "target": os.path.join(
+                "src", "django-debug-toolbar", "debug_toolbar", "mongo_apps.py"
+            ),
+        },
         "command": "python",
         "cwd": os.path.join("src", "django-debug-toolbar"),
         "project_dir": os.path.join("src", "django-debug-toolbar"),

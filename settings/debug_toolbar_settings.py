@@ -21,9 +21,9 @@ LOGGING = {  # avoids spurious output in tests
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
+    "debug_toolbar.mongo_apps.MongoAdminConfig",
+    "debug_toolbar.mongo_apps.MongoAuthConfig",
+    "debug_toolbar.mongo_apps.MongoContentTypesConfig",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
