@@ -36,7 +36,7 @@ test_settings_map = {
     },
     "django-filter": {
         "apps": {
-            "src": os.path.join("settings", "apps_filter.py"),
+            "src": os.path.join("settings", "filter_apps.py"),
             "target": os.path.join("src", "django-filter", "tests", "mongo_apps.py"),
         },
         "command": "./runtests.py",
@@ -53,11 +53,11 @@ test_settings_map = {
         "project_dir": os.path.join("src", "django-filter"),
         "settings_file": {
             "test": {
-                "src": os.path.join("settings", "settings_filter.py"),
+                "src": os.path.join("settings", "filter_settings.py"),
                 "target": os.path.join("src", "django-filter", "tests", "settings.py"),
             },
             "migrate": {
-                "src": os.path.join("settings", "settings_filter.py"),
+                "src": os.path.join("settings", "filter_settings.py"),
                 "target": os.path.join("src", "django-filter", "tests", "settings.py"),
             },
         },
