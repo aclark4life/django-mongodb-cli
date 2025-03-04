@@ -91,7 +91,7 @@ test_settings_map = {
                 ),
             },
             "migrate": {
-                "src": os.path.join("settings", "rest_framework_settings.py"),
+                "src": os.path.join("settings", "rest_framework_migrate.py"),
                 "target": os.path.join(
                     "src", "django-rest-framework", "tests", "conftest.py"
                 ),
