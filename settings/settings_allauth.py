@@ -69,14 +69,14 @@ MIDDLEWARE = (
 )
 
 INSTALLED_APPS = (
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.admin",
     "django.contrib.humanize",
+    "allauth.mongo_apps.MongoAdminConfig",
+    "allauth.mongo_apps.MongoAuthConfig",
+    "allauth.mongo_apps.MongoContentTypesConfig",
     "allauth",
     "allauth.mongo_apps.MongoAccountConfig",
     "allauth.mfa",
