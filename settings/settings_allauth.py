@@ -262,9 +262,9 @@ SOCIALACCOUNT_PROVIDERS = {
 
 ACCOUNT_LOGIN_BY_CODE_ENABLED = True
 
-MFA_SUPPORTED_TYPES = ["totp", "webauthn", "recovery_codes"]
-MFA_PASSKEY_LOGIN_ENABLED = True
-MFA_PASSKEY_SIGNUP_ENABLED = True
+# MFA_SUPPORTED_TYPES = ["totp", "webauthn", "recovery_codes"]
+# MFA_PASSKEY_LOGIN_ENABLED = True
+# MFA_PASSKEY_SIGNUP_ENABLED = True
 
 HEADLESS_SERVE_SPECIFICATION = True
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
