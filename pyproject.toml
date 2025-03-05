@@ -7,17 +7,12 @@ dependencies = [
     "click",
     "django-extensions",  # <3 django-extensions
     "dj-database-url",  # For startproject and testing with postgres
-    "fido2",  # For django-allauth
     "html5lib",  # Required by django-debug-toolbar
-    "jwt",  # For django-allauth
     "pytest",
     "pytest-django",  # For django-rest-framework and django-debug-toolbar
-    "python3-openid",  # For django-allauth
-    "python3-saml",  # For django-allauth
     "python-webpack-boilerplate",  # For startproject
     "setuptools",  # For django-rest-framework
     "toml",
-    "requests-oauthlib",  # For django-allauth
 ]
 
 [tool.setuptools]
