@@ -27,6 +27,11 @@ django-serve:
     django-mongodb-cli runserver
 alias s := django-serve
 
+[group('django')]
+django-migrate:
+    django-mongodb-cli manage migrate
+alias m := django-migrate
+
 # ---------------------------------------- mongodb ----------------------------------------
 
 [group('mongodb')]
