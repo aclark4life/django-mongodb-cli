@@ -7,7 +7,7 @@ test_settings_map = {
         "migrations_dir": {
             "src": os.path.join(
                 "src",
-                "django-project-templates",
+                "django-mongodb-templates",
                 "project_template",
                 "mongo_migrations",
             ),
@@ -44,7 +44,7 @@ test_settings_map = {
         "migrations_dir": {
             "src": os.path.join(
                 "src",
-                "django-project-templates",
+                "django-mongodb-templates",
                 "project_template",
                 "mongo_migrations",
             ),
@@ -113,7 +113,7 @@ test_settings_map = {
         "migrations_dir": {
             "src": os.path.join(
                 "src",
-                "django-project-templates",
+                "django-mongodb-templates",
                 "project_template",
                 "mongo_migrations",
             ),
