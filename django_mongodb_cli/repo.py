@@ -78,7 +78,6 @@ def clone(repo, ctx, src, all, list):
             for repo_entry in repos:
                 if os.path.basename(url_pattern.search(repo_entry).group(0)) == r:
                     clone_repo(repo_entry, url_pattern, branch_pattern, repo)
-            click.echo(f"Repository '{src}' not found.")
         return
 
     if all:
