@@ -97,15 +97,17 @@ def clone(repo, ctx, src, all, list):
     "--all",
     is_flag=True,
 )
-@click.argument("src", nargs=-1, type=click.Path())
+@click.argument("src", nargs=-1)
 @click.pass_context
 @pass_repo
 def install(repo, ctx, src, all):
     """Install development repositories."""
 
     if src:
-        clone_path = os.path.join("src", src[0])
-        install_repo(clone_path)
+        for r in src:
+            clone_path = os.path.join("src", r)
+            install_repo(clone_path)
+        return
 
     if all:
         repos, url_pattern, branch_pattern, upstream_pattern = get_repos(
@@ -118,6 +120,7 @@ def install(repo, ctx, src, all):
                 repo_name = os.path.basename(repo_url)
                 clone_path = os.path.join("src", repo_name)
                 install_repo(clone_path)
+
     if ctx.args == []:
         click.echo(ctx.get_help())
 
