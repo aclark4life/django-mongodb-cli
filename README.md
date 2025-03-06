@@ -32,21 +32,21 @@ just install
 ##### Clone, install, and test
 
 ```
-django-mongodb-cli repo clone django
-django-mongodb-cli repo install django
-django-mongodb-cli repo test django
+dm repo clone django
+dm repo install django
+dm repo test django
 ```
 
 ##### List tests
 
 ```
-django-mongodb-cli repo test django -l
+dm repo test django -l
 ```
 
 ##### Run specific tests
 
 ```
-django-mongodb-cli repo test django queries_
+dm repo test django queries_
 ```
 
 #### 3rd Party Libraries
@@ -56,11 +56,11 @@ Same as above with `django` replaced by the 3rd party library name.
 ##### List 3rd party libraries
 
 ```
-django-mongodb-cli repo -l
+dm repo -l
 ```
 
 ### Start project
 
 ```bash
-django-mongodb-cli startproject mysite
+dm startproject mysite
 ```
