@@ -13,7 +13,7 @@ git-clone:
     dm repo clone django-mongodb-app
     dm repo clone django-mongodb-backend
     dm repo clone django-mongodb-project
-    dm repo clone django-project-templates
+    dm repo clone django-mongodb-templates
 
 # ---------------------------------------- django ----------------------------------------
 
