@@ -88,7 +88,7 @@ def clone(repo, ctx, src, all, list):
             clone_repo(repo_entry, url_pattern, branch_pattern, repo)
         return
 
-    if ctx.args == ():
+    if ctx.args == []:
         click.echo(ctx.get_help())
 
 
@@ -119,7 +119,7 @@ def install(repo, ctx, src, all):
                 repo_name = os.path.basename(repo_url)
                 clone_path = os.path.join("src", repo_name)
                 install_repo(clone_path)
-    if ctx.args == ():
+    if ctx.args == []:
         click.echo(ctx.get_help())
 
 
@@ -150,7 +150,7 @@ def fetch(repo, ctx, src, all):
             fetch_repo(repo_entry, upstream_pattern, url_pattern, repo)
         return
 
-    if ctx.args == ():
+    if ctx.args == []:
         click.echo(ctx.get_help())
 
 
@@ -180,7 +180,7 @@ def update(repo, ctx, src, all):
             update_repo(repo_entry, url_pattern, repo)
         return
 
-    if ctx.args == ():
+    if ctx.args == []:
         click.echo(ctx.get_help())
 
 
@@ -228,7 +228,7 @@ def makemigrations(
                         )
                     click.echo(f"Running command {' '.join(command)} {' '.join(args)}")
                     subprocess.run(command + [*args])
-    if ctx.args == ():
+    if ctx.args == []:
         click.echo(ctx.get_help())
 
 
@@ -310,5 +310,5 @@ def test(
                             ]["settings_module"]["test"]
                             command.extend(["-m", "django", "test"])
                         subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
-    if ctx.args == ():
+    if ctx.args == []:
         click.echo(ctx.get_help())
