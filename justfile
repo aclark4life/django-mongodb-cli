@@ -5,15 +5,15 @@ install: pip-install git-clone dev-install
 alias i := install
 
 dev-install:
-    django-mongodb-cli repo install django-mongodb-backend
+    dm repo install django-mongodb-backend
 
 # ---------------------------------------- git ----------------------------------------
 [group('git')]
 git-clone:
-    django-mongodb-cli repo clone django-mongodb-app
-    django-mongodb-cli repo clone django-mongodb-backend
-    django-mongodb-cli repo clone django-mongodb-project
-    django-mongodb-cli repo clone django-project-templates
+    dm repo clone django-mongodb-app
+    dm repo clone django-mongodb-backend
+    dm repo clone django-mongodb-project
+    dm repo clone django-project-templates
 
 # ---------------------------------------- django ----------------------------------------
 
@@ -24,12 +24,12 @@ alias o := django-open
 
 [group('django')]
 django-serve:
-    django-mongodb-cli runserver
+    dm runserver
 alias s := django-serve
 
 [group('django')]
 django-migrate:
-    django-mongodb-cli manage migrate
+    dm manage migrate
 alias m := django-migrate
 
 # ---------------------------------------- mongodb ----------------------------------------
