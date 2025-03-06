@@ -55,7 +55,7 @@ def repo(ctx, list):
 
 
 @repo.command()
-@click.argument("src", required=False)
+@click.argument("src", nargs=-1, required=False)
 @click.option(
     "-a",
     "--all",
@@ -74,11 +74,12 @@ def clone(repo, ctx, src, all, list):
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
 
     if src:
-        for repo_entry in repos:
-            if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
-                clone_repo(repo_entry, url_pattern, branch_pattern, repo)
-                return  # Stop after finding the requested repo
-        click.echo(f"Repository '{src}' not found.")
+        for r in src:
+            for repo_entry in repos:
+                if os.path.basename(url_pattern.search(repo_entry).group(0)) == r:
+                    clone_repo(repo_entry, url_pattern, branch_pattern, repo)
+                    return  # Stop after finding the requested repo
+            click.echo(f"Repository '{src}' not found.")
         return
 
     if all:
