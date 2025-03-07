@@ -14,6 +14,7 @@ from .utils import (
     get_repos,
     install_repo,
     update_repo,
+    status_repo,
 )
 
 
@@ -311,5 +312,35 @@ def test(
                             ]["settings_module"]["test"]
                             command.extend(["-m", "django", "test"])
                         subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
+    if ctx.args == []:
+        click.echo(ctx.get_help())
+
+
+@repo.command()
+@click.argument("src", required=False)
+@click.option(
+    "-a",
+    "--all",
+    is_flag=True,
+)
+@click.pass_context
+@pass_repo
+def status(repo, ctx, src, all):
+    """Repository status."""
+    repos, url_pattern, _, _ = get_repos("pyproject.toml")
+    if src:
+        for repo_entry in repos:
+            if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
+                status_repo(repo_entry, url_pattern, repo)
+                return  # Stop after updating the requested repo
+        click.echo(f"Repository '{src}' not found.")
+        return
+
+    if all:
+        click.echo(f"Status of {len(repos)} repositories...")
+        for repo_entry in repos:
+            status_repo(repo_entry, url_pattern, repo)
+        return
+
     if ctx.args == []:
         click.echo(ctx.get_help())

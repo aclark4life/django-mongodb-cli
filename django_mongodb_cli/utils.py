@@ -221,8 +221,15 @@ def install_repo(clone_path):
 def pull(clone_path):
     try:
         repo = git.Repo(clone_path)
-        click.echo(f"Updating {clone_path}")
         repo.git.pull()
+    except git.exc.NoSuchPathError:
+        click.echo("Not a valid Git repository.")
+
+
+def status(clone_path):
+    try:
+        repo = git.Repo(clone_path)
+        click.echo(click.style(repo.git.status(), fg="blue"))
     except git.exc.NoSuchPathError:
         click.echo("Not a valid Git repository.")
 
@@ -240,5 +247,22 @@ def update_repo(repo_entry, url_pattern, repo):
     if os.path.exists(clone_path):
         click.echo(f"Updating {repo_name}...")
         pull(clone_path)
+    else:
+        click.echo(f"Skipping {repo_name}: Repository not found at {clone_path}")
+
+
+def status_repo(repo_entry, url_pattern, repo):
+    """Helper function to update a single repository."""
+    url_match = url_pattern.search(repo_entry)
+    if not url_match:
+        return
+
+    repo_url = url_match.group(0)
+    repo_name = os.path.basename(repo_url)
+    clone_path = os.path.join(repo.home, repo_name)
+
+    if os.path.exists(clone_path):
+        click.echo(f"Status of {repo_name}...")
+        status(clone_path)
     else:
         click.echo(f"Skipping {repo_name}: Repository not found at {clone_path}")
