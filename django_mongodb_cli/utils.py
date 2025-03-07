@@ -221,7 +221,7 @@ def install_repo(clone_path):
 def pull(clone_path):
     try:
         repo = git.Repo(clone_path)
-        repo.git.pull()
+        click.echo(click.style(repo.git.pull(), fg="blue"))
     except git.exc.NoSuchPathError:
         click.echo("Not a valid Git repository.")
 
