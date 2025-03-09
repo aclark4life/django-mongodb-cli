@@ -5,7 +5,7 @@ test_settings_map = {
         "cmd": "./runtests.py",
         "cwd": join("src", "django", "tests"),
         "repo": join("src", "django"),
-        "migrations_dir": {
+        "migrations": {
             "src": join(
                 "src",
                 "django-mongodb-templates",
@@ -40,7 +40,7 @@ test_settings_map = {
         },
         "cmd": "./runtests.py",
         "cwd": join("src", "django-filter"),
-        "migrations_dir": {
+        "migrations": {
             "src": join(
                 "src",
                 "django-mongodb-templates",
@@ -71,7 +71,7 @@ test_settings_map = {
             "src": join("settings", "rest_framework_apps.py"),
             "target": join("src", "django-rest-framework", "tests", "mongo_apps.py"),
         },
-        "migrations_dir": {
+        "migrations": {
             "src": join("src", "django-mongodb-project", "mongo_migrations"),
             "target": join("src", "django-rest-framework", "tests", "mongo_migrations"),
         },
@@ -99,7 +99,7 @@ test_settings_map = {
             "src": join("settings", "apps_wagtail.py"),
             "target": join("src", "wagtail", "wagtail", "test", "mongo_apps.py"),
         },
-        "migrations_dir": {
+        "migrations": {
             "src": join(
                 "src",
                 "django-mongodb-templates",
@@ -186,7 +186,7 @@ test_settings_map = {
             "test": "allauth.mongo_settings",
             "migrate": "allauth.mongo_settings",
         },
-        "migrations_dir": {
+        "migrations": {
             "src": join("src", "django-mongodb-project", "mongo_migrations"),
             "target": join("src", "django-allauth", "allauth", "mongo_migrations"),
         },
