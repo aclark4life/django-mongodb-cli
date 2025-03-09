@@ -4,6 +4,7 @@ test_settings_map = {
     "django": {
         "cwd": join("src", "django", "tests"),
         "command": "./runtests.py",
+        "project_dir": join("src", "django"),
         "migrations_dir": {
             "src": join(
                 "src",
@@ -13,7 +14,6 @@ test_settings_map = {
             ),
             "target": join("src", "django", "tests"),
         },
-        "project_dir": join("src", "django"),
         "settings_file": {
             "test": {
                 "src": join("settings", "django_settings.py"),
@@ -28,7 +28,6 @@ test_settings_map = {
             "test": "mongo_settings",
             "migrate": "mongo_settings",
         },
-        "target": join("src", "django", "tests", "mongo_settings.py"),
         "test_dirs": [
             join("src", "django", "tests"),
             join("src", "django-mongodb-backend", "tests"),
