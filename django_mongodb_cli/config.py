@@ -28,7 +28,7 @@ test_settings_map = {
             "test": "mongo_settings",
             "migrate": "mongo_settings",
         },
-        "test_dirs": [
+        "tests": [
             join("src", "django", "tests"),
             join("src", "django-mongodb-backend", "tests"),
         ],
@@ -64,7 +64,7 @@ test_settings_map = {
             "test": "tests.settings",
             "migrate": "tests.settings",
         },
-        "test_dirs": [join("src", "django-filter", "tests")],
+        "tests": [join("src", "django-filter", "tests")],
     },
     "django-rest-framework": {
         "apps": {
@@ -92,7 +92,7 @@ test_settings_map = {
             "test": "tests.conftest",
             "migrate": "tests.conftest",
         },
-        "test_dirs": [join("src", "django-rest-framework", "tests")],
+        "tests": [join("src", "django-rest-framework", "tests")],
     },
     "wagtail": {
         "apps": {
@@ -129,7 +129,7 @@ test_settings_map = {
             "test": "wagtail.test.mongo_settings",
             "migrate": "wagtail.test.mongo_settings",
         },
-        "test_dirs": [
+        "tests": [
             join("src", "wagtail", "wagtail", "tests"),
             join("src", "wagtail", "wagtail", "test"),
         ],
@@ -162,7 +162,7 @@ test_settings_map = {
             "test": "debug_toolbar.mongo_settings",
             "migrate": "debug_toolbar.mongo_settings",
         },
-        "test_dirs": ["tests"],
+        "tests": ["tests"],
     },
     "django-allauth": {
         "apps": {
@@ -190,6 +190,6 @@ test_settings_map = {
             "src": join("src", "django-mongodb-project", "mongo_migrations"),
             "target": join("src", "django-allauth", "allauth", "mongo_migrations"),
         },
-        "test_dirs": [join("src", "django-allauth", "tests")],
+        "tests": [join("src", "django-allauth", "tests")],
     },
 }
