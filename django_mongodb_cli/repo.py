@@ -323,15 +323,20 @@ def test(
     "--all",
     is_flag=True,
 )
+@click.option(
+    "-r",
+    "--reset",
+    is_flag=True,
+)
 @click.pass_context
 @pass_repo
-def status(repo, ctx, src, all):
+def status(repo, ctx, src, all, reset):
     """Repository status."""
     repos, url_pattern, _, _ = get_repos("pyproject.toml")
     if src:
         for repo_entry in repos:
             if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
-                status_repo(repo_entry, url_pattern, repo)
+                status_repo(repo_entry, url_pattern, repo, reset=reset)
                 return  # Stop after updating the requested repo
         click.echo(f"Repository '{src}' not found.")
         return
@@ -339,7 +344,7 @@ def status(repo, ctx, src, all):
     if all:
         click.echo(f"Status of {len(repos)} repositories...")
         for repo_entry in repos:
-            status_repo(repo_entry, url_pattern, repo)
+            status_repo(repo_entry, url_pattern, repo, reset=reset)
         return
 
     if ctx.args == []:
