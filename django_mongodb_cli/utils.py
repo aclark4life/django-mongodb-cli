@@ -52,17 +52,17 @@ def fetch_repo(repo_entry, upstream_pattern, url_pattern, repo):
 
 def apply_patches(repo_name):
     """Apply a patch file to the specified project directory."""
-    project_dir = test_settings_map[repo_name]["project_dir"]
+    repo_dir = test_settings_map[repo_name]["repo"]
     patch_dir = os.path.join("patches", repo_name)
     if os.path.exists(patch_dir):
         for patch_file in os.listdir(patch_dir):
             shutil.copyfile(
                 os.path.join(patch_dir, patch_file),
-                os.path.join(project_dir, patch_file),
+                os.path.join(repo_dir, patch_file),
             )
             click.echo(click.style(f"Applying patch {patch_file}", fg="blue"))
             # Ensure the repository is valid
-            repo = git.Repo(project_dir)
+            repo = git.Repo(repo_dir)
             if not repo.bare:
                 try:
                     # Apply the patch
@@ -150,10 +150,10 @@ def copy_mongo_settings(src, target):
     shutil.copyfile(src, target)
 
 
-def delete_mongo_migrations(mongo_migrations, project_dir):
+def delete_mongo_migrations(mongo_migrations, repo_dir):
     click.echo(click.style(f"Deleting mongo migrations {mongo_migrations}", fg="blue"))
     shutil.rmtree(mongo_migrations, ignore_errors=True)
-    for root, dirs, files in os.walk(project_dir):
+    for root, dirs, files in os.walk(repo_dir):
         for dir_name in dirs:
             if dir_name == "migrations":
                 dir_path = os.path.join(root, dir_name)

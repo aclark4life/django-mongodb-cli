@@ -4,7 +4,7 @@ test_settings_map = {
     "django": {
         "cmd": "./runtests.py",
         "cwd": join("src", "django", "tests"),
-        "project_dir": join("src", "django"),
+        "repo": join("src", "django"),
         "migrations_dir": {
             "src": join(
                 "src",
@@ -49,7 +49,7 @@ test_settings_map = {
             ),
             "target": join("src", "django-filter", "tests", "mongo_migrations"),
         },
-        "project_dir": join("src", "django-filter"),
+        "repo": join("src", "django-filter"),
         "settings_file": {
             "test": {
                 "src": join("settings", "filter_settings.py"),
@@ -77,7 +77,7 @@ test_settings_map = {
         },
         "cmd": "./runtests.py",
         "cwd": join("src", "django-rest-framework"),
-        "project_dir": join("src", "django-rest-framework"),
+        "repo": join("src", "django-rest-framework"),
         "settings_file": {
             "test": {
                 "src": join("settings", "rest_framework_settings.py"),
@@ -110,7 +110,7 @@ test_settings_map = {
         },
         "cmd": "./runtests.py",
         "cwd": join("src", "wagtail"),
-        "project_dir": join("src", "wagtail"),
+        "repo": join("src", "wagtail"),
         "settings_file": {
             "test": {
                 "src": join("settings", "settings_wagtail.py"),
@@ -143,7 +143,7 @@ test_settings_map = {
         },
         "cmd": "python",
         "cwd": join("src", "django-debug-toolbar"),
-        "project_dir": join("src", "django-debug-toolbar"),
+        "repo": join("src", "django-debug-toolbar"),
         "settings_file": {
             "test": {
                 "src": join("settings", "debug_toolbar_settings.py"),
@@ -171,7 +171,7 @@ test_settings_map = {
         },
         "cmd": "python",
         "cwd": join("src", "django-allauth"),
-        "project_dir": join("src", "django-allauth"),
+        "repo": join("src", "django-allauth"),
         "settings_file": {
             "test": {
                 "src": join("settings", "allauth_settings.py"),
