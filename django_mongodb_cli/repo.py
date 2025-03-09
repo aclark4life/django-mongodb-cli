@@ -273,7 +273,7 @@ def test(
                                 "target"
                             ],
                         )
-                        command = [test_settings_map[repo_name]["command"]]
+                        command = [test_settings_map[repo_name]["cmd"]]
                         apply_patches(repo_name)
                         copy_mongo_migrations(repo_name)
                         copy_mongo_apps(repo_name)

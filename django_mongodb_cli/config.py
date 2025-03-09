@@ -2,8 +2,8 @@ from os.path import join
 
 test_settings_map = {
     "django": {
+        "cmd": "./runtests.py",
         "cwd": join("src", "django", "tests"),
-        "command": "./runtests.py",
         "project_dir": join("src", "django"),
         "migrations_dir": {
             "src": join(
@@ -38,7 +38,7 @@ test_settings_map = {
             "src": join("settings", "filter_apps.py"),
             "target": join("src", "django-filter", "tests", "mongo_apps.py"),
         },
-        "command": "./runtests.py",
+        "cmd": "./runtests.py",
         "cwd": join("src", "django-filter"),
         "migrations_dir": {
             "src": join(
@@ -75,7 +75,7 @@ test_settings_map = {
             "src": join("src", "django-mongodb-project", "mongo_migrations"),
             "target": join("src", "django-rest-framework", "tests", "mongo_migrations"),
         },
-        "command": "./runtests.py",
+        "cmd": "./runtests.py",
         "cwd": join("src", "django-rest-framework"),
         "project_dir": join("src", "django-rest-framework"),
         "settings_file": {
@@ -108,7 +108,7 @@ test_settings_map = {
             ),
             "target": join("src", "wagtail", "wagtail", "test", "mongo_migrations"),
         },
-        "command": "./runtests.py",
+        "cmd": "./runtests.py",
         "cwd": join("src", "wagtail"),
         "project_dir": join("src", "wagtail"),
         "settings_file": {
@@ -141,7 +141,7 @@ test_settings_map = {
                 "src", "django-debug-toolbar", "debug_toolbar", "mongo_apps.py"
             ),
         },
-        "command": "python",
+        "cmd": "python",
         "cwd": join("src", "django-debug-toolbar"),
         "project_dir": join("src", "django-debug-toolbar"),
         "settings_file": {
@@ -169,7 +169,7 @@ test_settings_map = {
             "src": join("settings", "allauth_apps.py"),
             "target": join("src", "django-allauth", "allauth", "mongo_apps.py"),
         },
-        "command": "python",
+        "cmd": "python",
         "cwd": join("src", "django-allauth"),
         "project_dir": join("src", "django-allauth"),
         "settings_file": {
