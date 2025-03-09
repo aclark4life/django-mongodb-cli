@@ -6,6 +6,7 @@ dependencies = [
     "Sphinx",  # For django-mongodb-backend documentation
     "click",
     "django-extensions",  # <3 django-extensions
+    "django-debug-toolbar",
     "dj-database-url",  # For startproject and testing with postgres
     "html5lib",  # Required by django-debug-toolbar
     "pytest",

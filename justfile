@@ -6,12 +6,14 @@ alias i := install
 
 dev-install:
     dm repo install django-mongodb-backend
+    dm repo install django-mongodb-extensions
 
 # ---------------------------------------- git ----------------------------------------
 [group('git')]
 git-clone:
     dm repo clone django-mongodb-app
     dm repo clone django-mongodb-backend
+    dm repo clone django-mongodb-extensions
     dm repo clone django-mongodb-project
     dm repo clone django-mongodb-templates
 
