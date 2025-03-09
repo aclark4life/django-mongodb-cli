@@ -312,6 +312,7 @@ def test(
                             ]["settings_module"]["test"]
                             command.extend(["-m", "django", "test"])
                         subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
+        return
     if ctx.args == []:
         click.echo(ctx.get_help())
 
