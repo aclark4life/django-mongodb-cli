@@ -104,16 +104,19 @@ def clone(repo, ctx, repo_names, all_repos, list):
     "--all-repos",
     is_flag=True,
 )
-@click.argument("src", nargs=-1)
+@click.argument("repo_names", nargs=-1)
 @click.pass_context
 @pass_repo
-def install(repo, ctx, src, all_repos):
+def install(repo, ctx, repo_names, all_repos):
     """Install development repositories."""
 
-    if src:
-        for r in src:
-            clone_path = os.path.join("src", r)
-            install_repo(clone_path)
+    if repo_names:
+        for repo_name in repo_names:
+            clone_path = os.path.join("src", repo_name)
+            if os.path.exists(clone_path):
+                install_repo(clone_path)
+            else:
+                click.echo(f"Repository '{repo_name}' not found.")
         return
 
     if all_repos:
