@@ -56,7 +56,7 @@ def repo(ctx, list):
 
 
 @repo.command()
-@click.argument("src", nargs=-1, required=False)
+@click.argument("repo_names", nargs=-1, required=False)
 @click.option(
     "-a",
     "--all-repos",
@@ -70,14 +70,17 @@ def repo(ctx, list):
 )
 @click.pass_context
 @pass_repo
-def clone(repo, ctx, src, all_repos, list):
+def clone(repo, ctx, repo_names, all_repos, list):
     """Clone repositories from `pyproject.toml`."""
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
 
-    if src:
-        for r in src:
+    if repo_names:
+        for repo_name in repo_names:
             for repo_entry in repos:
-                if os.path.basename(url_pattern.search(repo_entry).group(0)) == r:
+                if (
+                    os.path.basename(url_pattern.search(repo_entry).group(0))
+                    == repo_name
+                ):
                     clone_repo(repo_entry, url_pattern, branch_pattern, repo)
         return
 
