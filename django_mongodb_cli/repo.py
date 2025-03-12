@@ -59,7 +59,7 @@ def repo(ctx, list):
 @click.argument("src", nargs=-1, required=False)
 @click.option(
     "-a",
-    "--all",
+    "--all-repos",
     is_flag=True,
 )
 @click.option(
@@ -70,7 +70,7 @@ def repo(ctx, list):
 )
 @click.pass_context
 @pass_repo
-def clone(repo, ctx, src, all, list):
+def clone(repo, ctx, src, all_repos, list):
     """Clone repositories from `pyproject.toml`."""
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
 
@@ -81,7 +81,7 @@ def clone(repo, ctx, src, all, list):
                     clone_repo(repo_entry, url_pattern, branch_pattern, repo)
         return
 
-    if all:
+    if all_repos:
         click.echo(f"Cloning {len(repos)} repositories...")
         for repo_entry in repos:
             clone_repo(repo_entry, url_pattern, branch_pattern, repo)
@@ -94,13 +94,13 @@ def clone(repo, ctx, src, all, list):
 @repo.command()
 @click.option(
     "-a",
-    "--all",
+    "--all-repos",
     is_flag=True,
 )
 @click.argument("src", nargs=-1)
 @click.pass_context
 @pass_repo
-def install(repo, ctx, src, all):
+def install(repo, ctx, src, all_repos):
     """Install development repositories."""
 
     if src:
@@ -109,7 +109,7 @@ def install(repo, ctx, src, all):
             install_repo(clone_path)
         return
 
-    if all:
+    if all_repos:
         repos, url_pattern, branch_pattern, upstream_pattern = get_repos(
             "pyproject.toml"
         )
@@ -129,12 +129,12 @@ def install(repo, ctx, src, all):
 @click.argument("src", required=False)
 @click.option(
     "-a",
-    "--all",
+    "--all-repos",
     is_flag=True,
 )
 @click.pass_context
 @pass_repo
-def fetch(repo, ctx, src, all):
+def fetch(repo, ctx, src, all_repos):
     """Fetch upstream remotes for repositories."""
     repos, url_pattern, _, upstream_pattern = get_repos("pyproject.toml")
     if src:
@@ -146,7 +146,7 @@ def fetch(repo, ctx, src, all):
         click.echo(f"Repository '{src}' not found.")
         return
 
-    if all:
+    if all_repos:
         click.echo(f"Fetching upstream remotes for {len(repos)} repositories...")
         for repo_entry in repos:
             fetch_repo(repo_entry, upstream_pattern, url_pattern, repo)
@@ -160,12 +160,12 @@ def fetch(repo, ctx, src, all):
 @click.argument("src", required=False)
 @click.option(
     "-a",
-    "--all",
+    "--all-repos",
     is_flag=True,
 )
 @click.pass_context
 @pass_repo
-def update(repo, ctx, src, all):
+def update(repo, ctx, src, all_repos):
     """Update repositories."""
     repos, url_pattern, _, _ = get_repos("pyproject.toml")
     if src:
@@ -176,7 +176,7 @@ def update(repo, ctx, src, all):
         click.echo(f"Repository '{src}' not found.")
         return
 
-    if all:
+    if all_repos:
         click.echo(f"Updating {len(repos)} repositories...")
         for repo_entry in repos:
             update_repo(repo_entry, url_pattern, repo)
@@ -321,7 +321,7 @@ def test(
 @click.argument("src", required=False)
 @click.option(
     "-a",
-    "--all",
+    "--all-repos",
     is_flag=True,
 )
 @click.option(
@@ -331,7 +331,7 @@ def test(
 )
 @click.pass_context
 @pass_repo
-def status(repo, ctx, src, all, reset):
+def status(repo, ctx, src, all_repos, reset):
     """Repository status."""
     repos, url_pattern, _, _ = get_repos("pyproject.toml")
     if src:
@@ -342,7 +342,7 @@ def status(repo, ctx, src, all, reset):
         click.echo(f"Repository '{src}' not found.")
         return
 
-    if all:
+    if all_repos:
         click.echo(f"Status of {len(repos)} repositories...")
         for repo_entry in repos:
             status_repo(repo_entry, url_pattern, repo, reset=reset)
