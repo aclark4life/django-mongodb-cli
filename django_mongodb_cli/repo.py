@@ -83,6 +83,7 @@ def clone(repo, ctx, repo_names, all_repos, list):
                     == repo_name
                 ):
                     clone_repo(repo_entry, url_pattern, branch_pattern, repo)
+                    return
                 else:
                     not_found.add(repo_name)
             click.echo(f"Repository '{not_found.pop()}' not found.")
