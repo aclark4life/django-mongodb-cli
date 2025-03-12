@@ -317,6 +317,9 @@ def test(
                             repo_name
                         ]["settings_module"]["test"]
                         command.extend(["-m", "django", "test"])
+
+                    if repo_name == "mongo-python-driver":
+                        command.extend(["run-tests"])
                     subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
                 else:
                     click.echo(f"Settings for '{repo_name}' not found.")
