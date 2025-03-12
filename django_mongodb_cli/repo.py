@@ -262,9 +262,9 @@ def test(
     if repo_name:
         for repo_entry in repos:
             url_match = url_pattern.search(repo_entry)
-            click.echo(f"URL Match: {url_match}")
-            # if url_match:
-            #     repo_url = url_match.group(0)
+            repo_url = url_match.group(0)
+            if repo_name == os.path.basename(repo_url):
+                click.echo(f"Running tests for {repo_name}...")
             #     repo_name = os.path.basename(repo_url)
             #     if repo_name in test_settings_map.keys():
             #         test_dirs = test_settings_map[repo_name]["tests"]
