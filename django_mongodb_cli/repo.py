@@ -4,10 +4,8 @@ import subprocess
 import click
 from .config import test_settings_map
 from .utils import (
-    apply_patches,
     clone_repo,
     copy_mongo_apps,
-    copy_mongo_migrations,
     copy_mongo_settings,
     fetch_repo,
     get_management_command,
@@ -245,14 +243,14 @@ def makemigrations(
 
 
 @repo.command()
-@click.argument("src", required=False)
+@click.argument("repo_name", required=False)
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
 @click.pass_context
 def test(
     ctx,
-    src,
+    repo_name,
     modules,
     keyword,
     list_tests,
@@ -261,67 +259,68 @@ def test(
     Run tests for Django and third-party libraries.
     """
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
-    if src:
+    if repo_name:
         for repo_entry in repos:
             url_match = url_pattern.search(repo_entry)
-            if url_match:
-                repo_url = url_match.group(0)
-                repo_name = os.path.basename(repo_url)
-                if repo_name in test_settings_map.keys():
-                    test_dirs = test_settings_map[repo_name]["tests"]
-                    if repo_name == src:
-                        if list_tests:
-                            for test_dir in test_dirs:
-                                for module in sorted(os.listdir(test_dir)):
-                                    click.echo(module)
-                            return
-                        copy_mongo_settings(
-                            test_settings_map[repo_name]["settings_file"]["test"][
-                                "src"
-                            ],
-                            test_settings_map[repo_name]["settings_file"]["test"][
-                                "target"
-                            ],
-                        )
-                        command = [test_settings_map[repo_name]["cmd"]]
-                        apply_patches(repo_name)
-                        copy_mongo_migrations(repo_name)
-                        copy_mongo_apps(repo_name)
-                        if (
-                            repo_name != "django-rest-framework"
-                            and repo_name != "django-allauth"
-                            and repo_name != "django-debug-toolbar"
-                            and repo_name != "drf-extensions"
-                        ):
-                            command.extend(
-                                [
-                                    "--settings",
-                                    test_settings_map[repo_name]["settings_module"][
-                                        "test"
-                                    ],
-                                    "--parallel",
-                                    "1",
-                                    "--verbosity",
-                                    "3",
-                                    "--debug-sql",
-                                    "--noinput",
-                                ]
-                            )
-                        command.extend(modules)
-                        if keyword:
-                            command.extend(["-k", keyword])
-                        click.echo(
-                            click.style(f"Running {' '.join(command)}", fg="blue")
-                        )
-                        if (
-                            repo_name == "django-debug-toolbar"
-                            or repo_name == "django-allauth"
-                        ):
-                            os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[
-                                repo_name
-                            ]["settings_module"]["test"]
-                            command.extend(["-m", "django", "test"])
-                        subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
+            click.echo(f"URL Match: {url_match}")
+            # if url_match:
+            #     repo_url = url_match.group(0)
+            #     repo_name = os.path.basename(repo_url)
+            #     if repo_name in test_settings_map.keys():
+            #         test_dirs = test_settings_map[repo_name]["tests"]
+            #         if repo_name == src:
+            #             if list_tests:
+            #                 for test_dir in test_dirs:
+            #                     for module in sorted(os.listdir(test_dir)):
+            #                         click.echo(module)
+            #                 return
+            #             copy_mongo_settings(
+            #                 test_settings_map[repo_name]["settings_file"]["test"][
+            #                     "src"
+            #                 ],
+            #                 test_settings_map[repo_name]["settings_file"]["test"][
+            #                     "target"
+            #                 ],
+            #             )
+            #             command = [test_settings_map[repo_name]["cmd"]]
+            #             apply_patches(repo_name)
+            #             copy_mongo_migrations(repo_name)
+            #             copy_mongo_apps(repo_name)
+            #             if (
+            #                 repo_name != "django-rest-framework"
+            #                 and repo_name != "django-allauth"
+            #                 and repo_name != "django-debug-toolbar"
+            #                 and repo_name != "drf-extensions"
+            #             ):
+            #                 command.extend(
+            #                     [
+            #                         "--settings",
+            #                         test_settings_map[repo_name]["settings_module"][
+            #                             "test"
+            #                         ],
+            #                         "--parallel",
+            #                         "1",
+            #                         "--verbosity",
+            #                         "3",
+            #                         "--debug-sql",
+            #                         "--noinput",
+            #                     ]
+            #                 )
+            #             command.extend(modules)
+            #             if keyword:
+            #                 command.extend(["-k", keyword])
+            #             click.echo(
+            #                 click.style(f"Running {' '.join(command)}", fg="blue")
+            #             )
+            #             if (
+            #                 repo_name == "django-debug-toolbar"
+            #                 or repo_name == "django-allauth"
+            #             ):
+            #                 os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[
+            #                     repo_name
+            #                 ]["settings_module"]["test"]
+            #                 command.extend(["-m", "django", "test"])
+            #             subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
         return
     if ctx.args == []:
         click.echo(ctx.get_help())
