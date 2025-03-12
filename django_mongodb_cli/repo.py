@@ -4,8 +4,10 @@ import subprocess
 import click
 from .config import test_settings_map
 from .utils import (
+    apply_patches,
     clone_repo,
     copy_mongo_apps,
+    copy_mongo_migrations,
     copy_mongo_settings,
     fetch_repo,
     get_management_command,
@@ -264,63 +266,55 @@ def test(
             url_match = url_pattern.search(repo_entry)
             repo_url = url_match.group(0)
             if repo_name == os.path.basename(repo_url):
-                click.echo(f"Running tests for {repo_name}...")
-            #     repo_name = os.path.basename(repo_url)
-            #     if repo_name in test_settings_map.keys():
-            #         test_dirs = test_settings_map[repo_name]["tests"]
-            #         if repo_name == src:
-            #             if list_tests:
-            #                 for test_dir in test_dirs:
-            #                     for module in sorted(os.listdir(test_dir)):
-            #                         click.echo(module)
-            #                 return
-            #             copy_mongo_settings(
-            #                 test_settings_map[repo_name]["settings_file"]["test"][
-            #                     "src"
-            #                 ],
-            #                 test_settings_map[repo_name]["settings_file"]["test"][
-            #                     "target"
-            #                 ],
-            #             )
-            #             command = [test_settings_map[repo_name]["cmd"]]
-            #             apply_patches(repo_name)
-            #             copy_mongo_migrations(repo_name)
-            #             copy_mongo_apps(repo_name)
-            #             if (
-            #                 repo_name != "django-rest-framework"
-            #                 and repo_name != "django-allauth"
-            #                 and repo_name != "django-debug-toolbar"
-            #                 and repo_name != "drf-extensions"
-            #             ):
-            #                 command.extend(
-            #                     [
-            #                         "--settings",
-            #                         test_settings_map[repo_name]["settings_module"][
-            #                             "test"
-            #                         ],
-            #                         "--parallel",
-            #                         "1",
-            #                         "--verbosity",
-            #                         "3",
-            #                         "--debug-sql",
-            #                         "--noinput",
-            #                     ]
-            #                 )
-            #             command.extend(modules)
-            #             if keyword:
-            #                 command.extend(["-k", keyword])
-            #             click.echo(
-            #                 click.style(f"Running {' '.join(command)}", fg="blue")
-            #             )
-            #             if (
-            #                 repo_name == "django-debug-toolbar"
-            #                 or repo_name == "django-allauth"
-            #             ):
-            #                 os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[
-            #                     repo_name
-            #                 ]["settings_module"]["test"]
-            #                 command.extend(["-m", "django", "test"])
-            #             subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
+                if repo_name in test_settings_map.keys():
+                    click.echo(f"Running tests for {repo_name}...")
+                    test_dirs = test_settings_map[repo_name]["tests"]
+                    if list_tests:
+                        for test_dir in test_dirs:
+                            for module in sorted(os.listdir(test_dir)):
+                                click.echo(module)
+                        return
+                    copy_mongo_settings(
+                        test_settings_map[repo_name]["settings_file"]["test"]["src"],
+                        test_settings_map[repo_name]["settings_file"]["test"]["target"],
+                    )
+                    command = [test_settings_map[repo_name]["cmd"]]
+                    apply_patches(repo_name)
+                    copy_mongo_migrations(repo_name)
+                    copy_mongo_apps(repo_name)
+                    if (
+                        repo_name != "django-rest-framework"
+                        and repo_name != "django-allauth"
+                        and repo_name != "django-debug-toolbar"
+                        and repo_name != "drf-extensions"
+                    ):
+                        command.extend(
+                            [
+                                "--settings",
+                                test_settings_map[repo_name]["settings_module"]["test"],
+                                "--parallel",
+                                "1",
+                                "--verbosity",
+                                "3",
+                                "--debug-sql",
+                                "--noinput",
+                            ]
+                        )
+                    command.extend(modules)
+                    if keyword:
+                        command.extend(["-k", keyword])
+                    click.echo(click.style(f"Running {' '.join(command)}", fg="blue"))
+                    if (
+                        repo_name == "django-debug-toolbar"
+                        or repo_name == "django-allauth"
+                    ):
+                        os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[
+                            repo_name
+                        ]["settings_module"]["test"]
+                        command.extend(["-m", "django", "test"])
+                    subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
+                else:
+                    click.echo(f"Settings for '{repo_name}' not found.")
         return
     if ctx.args == []:
         click.echo(ctx.get_help())
