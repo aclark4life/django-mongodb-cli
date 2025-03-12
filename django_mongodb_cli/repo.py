@@ -76,12 +76,16 @@ def clone(repo, ctx, repo_names, all_repos, list):
 
     if repo_names:
         for repo_name in repo_names:
+            not_found = set()
             for repo_entry in repos:
                 if (
                     os.path.basename(url_pattern.search(repo_entry).group(0))
                     == repo_name
                 ):
                     clone_repo(repo_entry, url_pattern, branch_pattern, repo)
+                else:
+                    not_found.add(repo_name)
+            click.echo(f"Repository '{not_found.pop()}' not found.")
         return
 
     if all_repos:
