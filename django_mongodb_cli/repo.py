@@ -274,10 +274,15 @@ def test(
                             for module in sorted(os.listdir(test_dir)):
                                 click.echo(module)
                         return
-                    copy_mongo_settings(
-                        test_settings_map[repo_name]["settings_file"]["test"]["src"],
-                        test_settings_map[repo_name]["settings_file"]["test"]["target"],
-                    )
+                    if "settings_file" in test_settings_map[repo_name]:
+                        copy_mongo_settings(
+                            test_settings_map[repo_name]["settings_file"]["test"][
+                                "src"
+                            ],
+                            test_settings_map[repo_name]["settings_file"]["test"][
+                                "target"
+                            ],
+                        )
                     command = [test_settings_map[repo_name]["cmd"]]
                     apply_patches(repo_name)
                     copy_mongo_migrations(repo_name)
@@ -286,7 +291,7 @@ def test(
                         repo_name != "django-rest-framework"
                         and repo_name != "django-allauth"
                         and repo_name != "django-debug-toolbar"
-                        and repo_name != "drf-extensions"
+                        and repo_name != "mongo-python-driver"
                     ):
                         command.extend(
                             [

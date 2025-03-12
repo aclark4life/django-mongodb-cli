@@ -1,6 +1,14 @@
 from os.path import join
 
 test_settings_map = {
+    "mongo-python-driver": {
+        "cmd": "just",
+        "cwd": join("src", "mongo-python-driver", "test"),
+        "repo": join("src", "mongo-python-driver"),
+        "tests": [
+            join("src", "mongo-python-driver", "test"),
+        ],
+    },
     "django": {
         "cmd": "./runtests.py",
         "cwd": join("src", "django", "tests"),
