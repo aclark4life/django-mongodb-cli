@@ -34,6 +34,11 @@ django-migrate:
     dm manage migrate
 alias m := django-migrate
 
+[group('django')]
+django-createsuperuser:
+    dm createsuperuser
+alias su := django-createsuperuser
+
 # ---------------------------------------- mongodb ----------------------------------------
 
 [group('mongodb')]
