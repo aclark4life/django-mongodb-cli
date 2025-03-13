@@ -9,6 +9,7 @@ dev-install:
     dm repo install django-mongodb-extensions
 
 # ---------------------------------------- git ----------------------------------------
+
 [group('git')]
 git-clone:
     dm repo clone django-mongodb-app
