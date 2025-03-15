@@ -306,7 +306,6 @@ def test(
                                 "--noinput",
                             ]
                         )
-                    command.extend(modules)
                     if keyword:
                         command.extend(["-k", keyword])
                     click.echo(click.style(f"Running {' '.join(command)}", fg="blue"))
@@ -321,6 +320,8 @@ def test(
 
                     if repo_name == "mongo-python-driver":
                         command.extend(["run-tests"])
+
+                    command.extend(modules)
                     subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
                 else:
                     click.echo(f"Settings for '{repo_name}' not found.")
