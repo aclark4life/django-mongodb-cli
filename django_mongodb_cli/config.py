@@ -170,7 +170,9 @@ test_settings_map = {
             "test": "debug_toolbar.mongo_settings",
             "migrate": "debug_toolbar.mongo_settings",
         },
-        "tests": ["tests"],
+        "tests": [
+            join("src", "django-debug-toolbar", "tests"),
+        ],
     },
     "django-allauth": {
         "apps": {
