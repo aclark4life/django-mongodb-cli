@@ -7,6 +7,7 @@ alias i := install
 dev-install:
     dm repo install django-mongodb-backend
     dm repo install django-mongodb-extensions
+    dm repo install mongo-python-driver
 
 # ---------------------------------------- git ----------------------------------------
 
@@ -17,6 +18,7 @@ git-clone:
     dm repo clone django-mongodb-extensions
     dm repo clone django-mongodb-project
     dm repo clone django-mongodb-templates
+    dm repo clone mongo-python-driver
 
 # ---------------------------------------- django ----------------------------------------
 
