@@ -316,7 +316,6 @@ def test(
                         )
                     if keyword:
                         command.extend(["-k", keyword])
-                    click.echo(click.style(f"Running {' '.join(command)}", fg="blue"))
                     if (
                         repo_name == "django-debug-toolbar"
                         or repo_name == "django-allauth"
@@ -332,6 +331,7 @@ def test(
                         command.extend(["run-tests"])
 
                     command.extend(modules)
+                    click.echo(click.style(f"Running {' '.join(command)}", fg="blue"))
                     subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
                 else:
                     click.echo(f"Settings for '{repo_name}' not found.")
