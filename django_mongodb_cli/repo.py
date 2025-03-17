@@ -332,7 +332,13 @@ def test(
 
                     command.extend(modules)
                     click.echo(click.style(f"Running {' '.join(command)}", fg="blue"))
-                    subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
+                    result = subprocess.run(
+                        command,
+                        cwd=test_settings_map[repo_name]["cwd"],
+                        capture_output=True,
+                    )
+                    if result.returncode != 0:
+                        click.echo(click.style("Failed to run tests!", fg="red"))
                 else:
                     click.echo(f"Settings for '{repo_name}' not found.")
         return
