@@ -250,6 +250,7 @@ def makemigrations(
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
+@click.option("-s", "--setup", help="Setup tests", is_flag=True)
 @click.pass_context
 def test(
     ctx,
@@ -257,6 +258,7 @@ def test(
     modules,
     keyword,
     list_tests,
+    setup,
 ):
     """
     Run tests for Django and third-party libraries.
@@ -318,7 +320,9 @@ def test(
                         ]["settings_module"]["test"]
                         command.extend(["-m", "django", "test"])
 
-                    if repo_name == "mongo-python-driver":
+                    if repo_name == "mongo-python-driver" and setup:
+                        command.extend(["setup-tests"])
+                    elif repo_name == "mongo-python-driver":
                         command.extend(["run-tests"])
 
                     command.extend(modules)
