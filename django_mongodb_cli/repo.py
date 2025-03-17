@@ -270,12 +270,18 @@ def test(
             repo_url = url_match.group(0)
             if repo_name == os.path.basename(repo_url):
                 if repo_name in test_settings_map.keys():
-                    click.echo(f"Running tests for {repo_name}...")
                     test_dirs = test_settings_map[repo_name]["tests"]
                     if list_tests:
                         for test_dir in test_dirs:
-                            for module in sorted(os.listdir(test_dir)):
-                                click.echo(module)
+                            try:
+                                for module in sorted(os.listdir(test_dir)):
+                                    click.echo(module)
+                            except FileNotFoundError:
+                                click.echo(
+                                    click.style(
+                                        f"Directory '{test_dir}' not found.", fg="red"
+                                    )
+                                )
                         return
                     if "settings_file" in test_settings_map[repo_name]:
                         copy_mongo_settings(
