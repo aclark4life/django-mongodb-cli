@@ -273,6 +273,9 @@ def test(
                     test_dirs = test_settings_map[repo_name]["tests"]
                     if list_tests:
                         for test_dir in test_dirs:
+                            click.echo(
+                                click.style(f"Tests for '{test_dir}':", fg="blue")
+                            )
                             try:
                                 for module in sorted(os.listdir(test_dir)):
                                     click.echo(module)
