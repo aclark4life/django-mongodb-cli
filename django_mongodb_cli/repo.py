@@ -323,6 +323,8 @@ def test(
                         os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[
                             repo_name
                         ]["settings_module"]["test"]
+
+                    if repo_name == "django-debug-toolbar":
                         command.extend(["-m", "django", "test"])
 
                     if repo_name == "mongo-python-driver" and setup:

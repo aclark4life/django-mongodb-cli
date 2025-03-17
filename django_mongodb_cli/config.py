@@ -175,13 +175,13 @@ test_settings_map = {
         ],
     },
     "django-allauth": {
+        "cmd": "pytest",
+        "cwd": join("src", "django-allauth"),
+        "repo": join("src", "django-allauth"),
         "apps": {
             "src": join("settings", "allauth_apps.py"),
             "target": join("src", "django-allauth", "allauth", "mongo_apps.py"),
         },
-        "cmd": "python",
-        "cwd": join("src", "django-allauth"),
-        "repo": join("src", "django-allauth"),
         "settings_file": {
             "test": {
                 "src": join("settings", "allauth_settings.py"),
