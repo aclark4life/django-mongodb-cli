@@ -200,6 +200,61 @@ test_settings_map = {
             "src": join("src", "django-mongodb-project", "mongo_migrations"),
             "target": join("src", "django-allauth", "allauth", "mongo_migrations"),
         },
-        "tests": [join("src", "django-allauth", "tests")],
+        "tests": [
+            join("src", "django-allauth", "allauth", "usersessions", "tests"),
+            join("src", "django-allauth", "allauth", "core", "tests"),
+            join("src", "django-allauth", "allauth", "core", "internal", "tests"),
+            join("src", "django-allauth", "allauth", "tests"),
+            join("src", "django-allauth", "allauth", "mfa", "recovery_codes", "tests"),
+            join("src", "django-allauth", "allauth", "mfa", "webauthn", "tests"),
+            join("src", "django-allauth", "allauth", "mfa", "totp", "tests"),
+            join("src", "django-allauth", "allauth", "mfa", "base", "tests"),
+            join(
+                "src",
+                "django-allauth",
+                "allauth",
+                "socialaccount",
+                "providers",
+                "oauth2",
+                "tests",
+            ),
+            join("src", "django-allauth", "allauth", "socialaccount", "tests"),
+            join(
+                "src", "django-allauth", "allauth", "socialaccount", "internal", "tests"
+            ),
+            join("src", "django-allauth", "allauth", "templates", "tests"),
+            join(
+                "src", "django-allauth", "allauth", "headless", "usersessions", "tests"
+            ),
+            join("src", "django-allauth", "allauth", "headless", "tests"),
+            join("src", "django-allauth", "allauth", "headless", "spec", "tests"),
+            join("src", "django-allauth", "allauth", "headless", "internal", "tests"),
+            join("src", "django-allauth", "allauth", "headless", "mfa", "tests"),
+            join(
+                "src", "django-allauth", "allauth", "headless", "socialaccount", "tests"
+            ),
+            join(
+                "src",
+                "django-allauth",
+                "allauth",
+                "headless",
+                "contrib",
+                "ninja",
+                "tests",
+            ),
+            join(
+                "src",
+                "django-allauth",
+                "allauth",
+                "headless",
+                "contrib",
+                "rest_framework",
+                "tests",
+            ),
+            join("src", "django-allauth", "allauth", "headless", "account", "tests"),
+            join("src", "django-allauth", "allauth", "headless", "base", "tests"),
+            join("src", "django-allauth", "allauth", "account", "tests"),
+            join("src", "django-allauth", "tests"),
+        ],
     },
 }
