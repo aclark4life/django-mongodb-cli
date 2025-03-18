@@ -52,7 +52,7 @@ def fetch_repo(repo_entry, upstream_pattern, url_pattern, repo):
 
 def apply_patches(repo_name):
     """Apply a patch file to the specified project directory."""
-    repo_dir = test_settings_map[repo_name]["repo"]
+    repo_dir = test_settings_map[repo_name]["clone_dir"]
     patch_dir = os.path.join("patches", repo_name)
     if os.path.exists(patch_dir):
         for patch_file in os.listdir(patch_dir):

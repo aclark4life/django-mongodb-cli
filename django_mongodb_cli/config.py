@@ -4,7 +4,7 @@ test_settings_map = {
     "mongo-python-driver": {
         "cmd": "just",
         "cwd": join("src", "mongo-python-driver", "test"),
-        "repo": join("src", "mongo-python-driver"),
+        "clone_dir": join("src", "mongo-python-driver"),
         "test_dirs": [
             join("src", "mongo-python-driver", "test"),
         ],
@@ -13,7 +13,7 @@ test_settings_map = {
         "apps": {},
         "cmd": "./runtests.py",
         "cwd": join("src", "django", "tests"),
-        "repo": join("src", "django"),
+        "clone_dir": join("src", "django"),
         "migrations": {
             "source": join(
                 "src",
@@ -58,7 +58,7 @@ test_settings_map = {
             ),
             "target": join("src", "django-filter", "tests", "mongo_migrations"),
         },
-        "repo": join("src", "django-filter"),
+        "clone_dir": join("src", "django-filter"),
         "settings": {
             "test": {
                 "source": join("settings", "filter_settings.py"),
@@ -86,7 +86,7 @@ test_settings_map = {
         },
         "cmd": "./runtests.py",
         "cwd": join("src", "django-rest-framework"),
-        "repo": join("src", "django-rest-framework"),
+        "clone_dir": join("src", "django-rest-framework"),
         "settings": {
             "test": {
                 "source": join("settings", "rest_framework_settings.py"),
@@ -119,7 +119,7 @@ test_settings_map = {
         },
         "cmd": "./runtests.py",
         "cwd": join("src", "wagtail"),
-        "repo": join("src", "wagtail"),
+        "clone_dir": join("src", "wagtail"),
         "settings": {
             "test": {
                 "source": join("settings", "settings_wagtail.py"),
@@ -152,7 +152,7 @@ test_settings_map = {
         },
         "cmd": "python",
         "cwd": join("src", "django-debug-toolbar"),
-        "repo": join("src", "django-debug-toolbar"),
+        "clone_dir": join("src", "django-debug-toolbar"),
         "settings": {
             "test": {
                 "source": join("settings", "debug_toolbar_settings.py"),
@@ -178,7 +178,7 @@ test_settings_map = {
     "django-allauth": {
         "cmd": "pytest",
         "cwd": join("src", "django-allauth"),
-        "repo": join("src", "django-allauth"),
+        "clone_dir": join("src", "django-allauth"),
         "apps": {
             "source": join("settings", "allauth_apps.py"),
             "target": join("src", "django-allauth", "allauth", "mongo_apps.py"),
