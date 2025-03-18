@@ -12,6 +12,7 @@ dependencies = [
     "pytest",
     "pytest-django",  # For django-rest-framework and django-debug-toolbar
     "python-webpack-boilerplate",  # For startproject
+    "rich",  # For django-mongodb-cli
     "setuptools",  # For django-rest-framework
     "toml",
 ]
