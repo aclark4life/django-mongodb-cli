@@ -294,4 +294,5 @@ INSTALLED_APPS = [
     "allauth.mongo_apps.MongoHeadlessConfig",
     "django.contrib.messages",
     "django.contrib.sessions",
+    "django.contrib.humanize",
 ]
