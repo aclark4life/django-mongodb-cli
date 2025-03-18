@@ -68,10 +68,10 @@ test_settings_map = {
                 "src": join("settings", "filter_settings.py"),
                 "target": join("src", "django-filter", "tests", "settings.py"),
             },
-        },
-        "settings_module": {
-            "test": "tests.settings",
-            "migrate": "tests.settings",
+            "module": {
+                "test": "tests.settings",
+                "migrate": "tests.settings",
+            },
         },
         "tests": [join("src", "django-filter", "tests")],
     },
@@ -96,10 +96,10 @@ test_settings_map = {
                 "src": join("settings", "rest_framework_migrate.py"),
                 "target": join("src", "django-rest-framework", "tests", "conftest.py"),
             },
-        },
-        "settings_module": {
-            "test": "tests.conftest",
-            "migrate": "tests.conftest",
+            "module": {
+                "test": "tests.conftest",
+                "migrate": "tests.conftest",
+            },
         },
         "tests": [join("src", "django-rest-framework", "tests")],
     },
@@ -133,10 +133,10 @@ test_settings_map = {
                     "src", "wagtail", "wagtail", "test", "mongo_settings.py"
                 ),
             },
-        },
-        "settings_module": {
-            "test": "wagtail.test.mongo_settings",
-            "migrate": "wagtail.test.mongo_settings",
+            "module": {
+                "test": "wagtail.test.mongo_settings",
+                "migrate": "wagtail.test.mongo_settings",
+            },
         },
         "tests": [
             join("src", "wagtail", "wagtail", "tests"),
@@ -166,10 +166,10 @@ test_settings_map = {
                     "src", "django-debug-toolbar", "debug_toolbar", "mongo_settings.py"
                 ),
             },
-        },
-        "settings_module": {
-            "test": "debug_toolbar.mongo_settings",
-            "migrate": "debug_toolbar.mongo_settings",
+            "module": {
+                "test": "debug_toolbar.mongo_settings",
+                "migrate": "debug_toolbar.mongo_settings",
+            },
         },
         "tests": [
             join("src", "django-debug-toolbar", "tests"),
@@ -192,10 +192,10 @@ test_settings_map = {
                 "src": join("settings", "allauth_settings.py"),
                 "target": join("src", "django-allauth", "allauth", "mongo_settings.py"),
             },
-        },
-        "settings_module": {
-            "test": "allauth.mongo_settings",
-            "migrate": "allauth.mongo_settings",
+            "module": {
+                "test": "allauth.mongo_settings",
+                "migrate": "allauth.mongo_settings",
+            },
         },
         "migrations": {
             "src": join("src", "django-mongodb-project", "mongo_migrations"),
