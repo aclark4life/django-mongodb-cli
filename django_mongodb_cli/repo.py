@@ -287,14 +287,22 @@ def test(
                                 )
                         return
                     if "settings_file" in test_settings_map[repo_name]:
-                        copy_mongo_settings(
-                            test_settings_map[repo_name]["settings_file"]["test"][
-                                "src"
-                            ],
-                            test_settings_map[repo_name]["settings_file"]["test"][
-                                "target"
-                            ],
-                        )
+                        if os.path.exists(os.path.join("src", repo_name)):
+                            copy_mongo_settings(
+                                test_settings_map[repo_name]["settings_file"]["test"][
+                                    "src"
+                                ],
+                                test_settings_map[repo_name]["settings_file"]["test"][
+                                    "target"
+                                ],
+                            )
+                        else:
+                            click.echo(
+                                click.style(
+                                    f"Repository '{repo_name}' not found.", fg="red"
+                                )
+                            )
+                            return
                     command = [test_settings_map[repo_name]["cmd"]]
                     apply_patches(repo_name)
                     copy_mongo_migrations(repo_name)
