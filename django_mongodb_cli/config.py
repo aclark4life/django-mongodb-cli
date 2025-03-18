@@ -28,13 +28,13 @@ test_settings_map = {
                 "source": join("settings", "django_settings.py"),
                 "target": join("src", "django", "tests", "mongo_settings.py"),
             },
-            "migrate": {
+            "migrations": {
                 "source": join("settings", "django_settings.py"),
                 "target": join("src", "django", "tests", "mongo_settings.py"),
             },
             "module": {
                 "test": "mongo_settings",
-                "migrate": "mongo_settings",
+                "migrations": "mongo_settings",
             },
         },
         "test_dirs": [
@@ -64,13 +64,13 @@ test_settings_map = {
                 "source": join("settings", "filter_settings.py"),
                 "target": join("src", "django-filter", "tests", "settings.py"),
             },
-            "migrate": {
+            "migrations": {
                 "source": join("settings", "filter_settings.py"),
                 "target": join("src", "django-filter", "tests", "settings.py"),
             },
             "module": {
                 "test": "tests.settings",
-                "migrate": "tests.settings",
+                "migrations": "tests.settings",
             },
         },
         "test_dirs": [join("src", "django-filter", "tests")],
@@ -92,13 +92,13 @@ test_settings_map = {
                 "source": join("settings", "rest_framework_settings.py"),
                 "target": join("src", "django-rest-framework", "tests", "conftest.py"),
             },
-            "migrate": {
+            "migrations": {
                 "source": join("settings", "rest_framework_migrate.py"),
                 "target": join("src", "django-rest-framework", "tests", "conftest.py"),
             },
             "module": {
                 "test": "tests.conftest",
-                "migrate": "tests.conftest",
+                "migrations": "tests.conftest",
             },
         },
         "test_dirs": [join("src", "django-rest-framework", "tests")],
@@ -127,7 +127,7 @@ test_settings_map = {
                     "src", "wagtail", "wagtail", "test", "mongo_settings.py"
                 ),
             },
-            "migrate": {
+            "migrations": {
                 "source": join("settings", "settings_wagtail.py"),
                 "target": join(
                     "src", "wagtail", "wagtail", "test", "mongo_settings.py"
@@ -135,7 +135,7 @@ test_settings_map = {
             },
             "module": {
                 "test": "wagtail.test.mongo_settings",
-                "migrate": "wagtail.test.mongo_settings",
+                "migrations": "wagtail.test.mongo_settings",
             },
         },
         "test_dirs": [
@@ -160,7 +160,7 @@ test_settings_map = {
                     "src", "django-debug-toolbar", "debug_toolbar", "mongo_settings.py"
                 ),
             },
-            "migrate": {
+            "migrations": {
                 "source": join("settings", "debug_toolbar_settings.py"),
                 "target": join(
                     "src", "django-debug-toolbar", "debug_toolbar", "mongo_settings.py"
@@ -168,7 +168,7 @@ test_settings_map = {
             },
             "module": {
                 "test": "debug_toolbar.mongo_settings",
-                "migrate": "debug_toolbar.mongo_settings",
+                "migrations": "debug_toolbar.mongo_settings",
             },
         },
         "test_dirs": [
@@ -188,13 +188,13 @@ test_settings_map = {
                 "source": join("settings", "allauth_settings.py"),
                 "target": join("src", "django-allauth", "allauth", "mongo_settings.py"),
             },
-            "migrate": {
+            "migrations": {
                 "source": join("settings", "allauth_settings.py"),
                 "target": join("src", "django-allauth", "allauth", "mongo_settings.py"),
             },
             "module": {
                 "test": "allauth.mongo_settings",
-                "migrate": "allauth.mongo_settings",
+                "migrations": "allauth.mongo_settings",
             },
         },
         "migrations": {
