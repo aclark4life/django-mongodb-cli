@@ -218,16 +218,16 @@ def makemigrations(
                 if repo_name in test_settings_map.keys() and repo_name == src:
                     copy_mongo_apps(repo_name)
                     copy_mongo_settings(
-                        test_settings_map[repo_name]["settings_file"]["migrate"]["src"],
-                        test_settings_map[repo_name]["settings_file"]["migrate"][
-                            "target"
-                        ],
+                        test_settings_map[repo_name]["settings"]["migrate"]["src"],
+                        test_settings_map[repo_name]["settings"]["migrate"]["target"],
                     )
                     command = get_management_command("makemigrations")
                     command.extend(
                         [
                             "--settings",
-                            test_settings_map[repo_name]["settings_module"]["migrate"],
+                            test_settings_map[repo_name]["settings"]["module"][
+                                "migrate"
+                            ],
                         ]
                     )
                     if not repo_name == "django-filter":
@@ -305,13 +305,11 @@ def test(
                                     )
                                 )
                         return
-                    if "settings_file" in test_settings_map[repo_name]:
+                    if "settings" in test_settings_map[repo_name]:
                         if os.path.exists(os.path.join("src", repo_name)):
                             copy_mongo_settings(
-                                test_settings_map[repo_name]["settings_file"]["test"][
-                                    "src"
-                                ],
-                                test_settings_map[repo_name]["settings_file"]["test"][
+                                test_settings_map[repo_name]["settings"]["test"]["src"],
+                                test_settings_map[repo_name]["settings"]["test"][
                                     "target"
                                 ],
                             )
@@ -335,7 +333,9 @@ def test(
                         command.extend(
                             [
                                 "--settings",
-                                test_settings_map[repo_name]["settings_module"]["test"],
+                                test_settings_map[repo_name]["settings"]["module"][
+                                    "test"
+                                ],
                                 "--parallel",
                                 "1",
                                 "--verbosity",
@@ -352,7 +352,7 @@ def test(
                     ):
                         os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[
                             repo_name
-                        ]["settings_module"]["test"]
+                        ]["settings"]["module"]["test"]
 
                     if repo_name == "django-debug-toolbar":
                         command.extend(["-m", "django", "test"])

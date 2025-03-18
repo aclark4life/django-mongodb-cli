@@ -23,7 +23,7 @@ test_settings_map = {
             ),
             "target": join("src", "django", "tests"),
         },
-        "settings_file": {
+        "settings": {
             "test": {
                 "src": join("settings", "django_settings.py"),
                 "target": join("src", "django", "tests", "mongo_settings.py"),
@@ -32,10 +32,10 @@ test_settings_map = {
                 "src": join("settings", "django_settings.py"),
                 "target": join("src", "django", "tests", "mongo_settings.py"),
             },
-        },
-        "settings_module": {
-            "test": "mongo_settings",
-            "migrate": "mongo_settings",
+            "module": {
+                "test": "mongo_settings",
+                "migrate": "mongo_settings",
+            },
         },
         "tests": [
             join("src", "django", "tests"),
