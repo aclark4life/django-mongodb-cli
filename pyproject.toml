@@ -10,6 +10,7 @@ dependencies = [
     "django-debug-toolbar",
     "dj-database-url",  # For startproject and testing with postgres
     "html5lib",  # Required by django-debug-toolbar
+    "psycopg2",  # For django-allauth
     "pytest",
     "pytest-django",  # For django-rest-framework and django-debug-toolbar
     "python-webpack-boilerplate",  # For startproject
