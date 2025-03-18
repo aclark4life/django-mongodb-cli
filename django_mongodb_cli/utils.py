@@ -116,12 +116,12 @@ def copy_mongo_apps(repo_name):
     if "apps" in test_settings_map[repo_name] and repo_name != "django":
         click.echo(
             click.style(
-                f"Copying {os.path.join(test_settings_map[repo_name]['apps']['src'])} to {os.path.join(test_settings_map[repo_name]['apps']['target'])}",
+                f"Copying {os.path.join(test_settings_map[repo_name]['apps']['source'])} to {os.path.join(test_settings_map[repo_name]['apps']['target'])}",
                 fg="blue",
             )
         )
         shutil.copyfile(
-            os.path.join(test_settings_map[repo_name]["apps"]["src"]),
+            os.path.join(test_settings_map[repo_name]["apps"]["source"]),
             os.path.join(test_settings_map[repo_name]["apps"]["target"]),
         )
 
@@ -132,22 +132,22 @@ def copy_mongo_migrations(repo_name):
         if not os.path.exists(test_settings_map[repo_name]["migrations"]["target"]):
             click.echo(
                 click.style(
-                    f"Copying migrations from {test_settings_map[repo_name]['migrations']['src']} to {test_settings_map[repo_name]['migrations']['target']}",
+                    f"Copying migrations from {test_settings_map[repo_name]['migrations']['source']} to {test_settings_map[repo_name]['migrations']['target']}",
                     fg="blue",
                 )
             )
             shutil.copytree(
-                test_settings_map[repo_name]["migrations"]["src"],
+                test_settings_map[repo_name]["migrations"]["source"],
                 test_settings_map[repo_name]["migrations"]["target"],
             )
     else:
         click.echo(click.style("No migrations to copy", fg="yellow"))
 
 
-def copy_mongo_settings(src, target):
+def copy_mongo_settings(source, target):
     """Copy mongo_settings to the specified test directory."""
-    click.echo(click.style(f"Copying {src} to {target}", fg="blue"))
-    shutil.copyfile(src, target)
+    click.echo(click.style(f"Copying {source} to {target}", fg="blue"))
+    shutil.copyfile(source, target)
 
 
 def delete_mongo_migrations(mongo_migrations, repo_dir):
