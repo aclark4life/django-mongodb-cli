@@ -265,6 +265,9 @@ def test(
     """
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if repo_name:
+        if setup and not repo_name == "mongo-python-driver":
+            click.echo(click.style("Setup only for use with pymongo", fg="red"))
+            return
         for repo_entry in repos:
             url_match = url_pattern.search(repo_entry)
             repo_url = url_match.group(0)
