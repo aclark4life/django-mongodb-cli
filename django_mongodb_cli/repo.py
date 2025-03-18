@@ -289,7 +289,7 @@ def test(
             repo_url = url_match.group(0)
             if repo_name == os.path.basename(repo_url):
                 if repo_name in test_settings_map.keys():
-                    test_dirs = test_settings_map[repo_name]["tests"]
+                    test_dirs = test_settings_map[repo_name]["test_dirs"]
                     if list_tests:
                         for test_dir in test_dirs:
                             click.echo(

@@ -5,7 +5,7 @@ test_settings_map = {
         "cmd": "just",
         "cwd": join("src", "mongo-python-driver", "test"),
         "repo": join("src", "mongo-python-driver"),
-        "tests": [
+        "test_dirs": [
             join("src", "mongo-python-driver", "test"),
         ],
     },
@@ -37,7 +37,7 @@ test_settings_map = {
                 "migrate": "mongo_settings",
             },
         },
-        "tests": [
+        "test_dirs": [
             join("src", "django", "tests"),
             join("src", "django-mongodb-backend", "tests"),
         ],
@@ -73,7 +73,7 @@ test_settings_map = {
                 "migrate": "tests.settings",
             },
         },
-        "tests": [join("src", "django-filter", "tests")],
+        "test_dirs": [join("src", "django-filter", "tests")],
     },
     "django-rest-framework": {
         "apps": {
@@ -101,7 +101,7 @@ test_settings_map = {
                 "migrate": "tests.conftest",
             },
         },
-        "tests": [join("src", "django-rest-framework", "tests")],
+        "test_dirs": [join("src", "django-rest-framework", "tests")],
     },
     "wagtail": {
         "apps": {
@@ -138,7 +138,7 @@ test_settings_map = {
                 "migrate": "wagtail.test.mongo_settings",
             },
         },
-        "tests": [
+        "test_dirs": [
             join("src", "wagtail", "wagtail", "tests"),
             join("src", "wagtail", "wagtail", "test"),
         ],
@@ -171,7 +171,7 @@ test_settings_map = {
                 "migrate": "debug_toolbar.mongo_settings",
             },
         },
-        "tests": [
+        "test_dirs": [
             join("src", "django-debug-toolbar", "tests"),
         ],
     },
@@ -201,7 +201,7 @@ test_settings_map = {
             "source": join("src", "django-mongodb-project", "mongo_migrations"),
             "target": join("src", "django-allauth", "allauth", "mongo_migrations"),
         },
-        "tests": [
+        "test_dirs": [
             join("src", "django-allauth", "allauth", "usersessions", "tests"),
             join("src", "django-allauth", "allauth", "core", "tests"),
             join("src", "django-allauth", "allauth", "core", "internal", "tests"),
