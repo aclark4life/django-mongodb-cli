@@ -285,6 +285,7 @@ SILENCED_SYSTEM_CHECKS = [
 ]
 
 INSTALLED_APPS = [
+    "allauth",
     "allauth.mongo_apps.MongoContentTypesConfig",
     "allauth.mongo_apps.MongoAuthConfig",
     "allauth.mongo_apps.MongoAccountConfig",
