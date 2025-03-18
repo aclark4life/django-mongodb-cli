@@ -218,7 +218,7 @@ def makemigrations(
                 if repo_name in test_settings_map.keys() and repo_name == src:
                     copy_mongo_apps(repo_name)
                     copy_mongo_settings(
-                        test_settings_map[repo_name]["settings"]["migrate"]["src"],
+                        test_settings_map[repo_name]["settings"]["migrate"]["source"],
                         test_settings_map[repo_name]["settings"]["migrate"]["target"],
                     )
                     command = get_management_command("makemigrations")
@@ -308,7 +308,9 @@ def test(
                     if "settings" in test_settings_map[repo_name]:
                         if os.path.exists(os.path.join("src", repo_name)):
                             copy_mongo_settings(
-                                test_settings_map[repo_name]["settings"]["test"]["src"],
+                                test_settings_map[repo_name]["settings"]["test"][
+                                    "source"
+                                ],
                                 test_settings_map[repo_name]["settings"]["test"][
                                     "target"
                                 ],
