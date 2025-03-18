@@ -269,8 +269,17 @@ def test(
     if repo_name:
         if show:
             from rich import print
+            from black import format_str as format
+            from black import Mode
 
-            click.echo(print(dict(sorted(test_settings_map[repo_name].items()))))
+            click.echo(
+                print(
+                    format(
+                        str(dict(sorted(test_settings_map[repo_name].items()))),
+                        mode=Mode(),
+                    )
+                )
+            )
             return
         if setup and not repo_name == "mongo-python-driver":
             click.echo(click.style("Setup only for use with pymongo", fg="red"))
