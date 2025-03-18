@@ -251,6 +251,7 @@ def makemigrations(
 @click.option("-k", "--keyword", help="Filter tests by keyword")
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
 @click.option("-s", "--setup", help="Setup tests", is_flag=True)
+@click.option("--show", help="Show settings", is_flag=True)
 @click.pass_context
 def test(
     ctx,
@@ -259,12 +260,18 @@ def test(
     keyword,
     list_tests,
     setup,
+    show,
 ):
     """
     Run tests for Django and third-party libraries.
     """
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if repo_name:
+        if show:
+            from pprint import pprint
+
+            click.echo(pprint(test_settings_map[repo_name]))
+            return
         if setup and not repo_name == "mongo-python-driver":
             click.echo(click.style("Setup only for use with pymongo", fg="red"))
             return
