@@ -113,7 +113,7 @@ def clone_repo(repo_entry, url_pattern, branch_pattern, repo):
 
 def copy_mongo_apps(repo_name):
     """Copy the appropriate mongo_apps file based on the repo name."""
-    if "apps" in test_settings_map[repo_name]:
+    if "apps" in test_settings_map[repo_name] and repo_name != "django":
         click.echo(
             click.style(
                 f"Copying {os.path.join(test_settings_map[repo_name]['apps']['src'])} to {os.path.join(test_settings_map[repo_name]['apps']['target'])}",

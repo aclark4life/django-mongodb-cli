@@ -10,6 +10,7 @@ test_settings_map = {
         ],
     },
     "django": {
+        "apps": {},
         "cmd": "./runtests.py",
         "cwd": join("src", "django", "tests"),
         "repo": join("src", "django"),
