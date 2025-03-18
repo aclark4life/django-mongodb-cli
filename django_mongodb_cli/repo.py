@@ -36,18 +36,18 @@ pass_repo = click.make_pass_decorator(Repo)
 @click.group(invoke_without_command=True)
 @click.option(
     "-l",
-    "--list",
+    "--list-repos",
     is_flag=True,
     help="List all repositories in `pyproject.toml`.",
 )
 @click.pass_context
-def repo(ctx, list):
+def repo(ctx, list_repos):
     """
     Manage development repositories for testing.
     """
     ctx.obj = Repo()
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
-    if list:
+    if list_repos:
         for repo_entry in repos:
             click.echo(repo_entry)
         return
@@ -62,15 +62,9 @@ def repo(ctx, list):
     "--all-repos",
     is_flag=True,
 )
-@click.option(
-    "-l",
-    "--list",
-    is_flag=True,
-    help="List all branches/tracked files.",
-)
 @click.pass_context
 @pass_repo
-def clone(repo, ctx, repo_names, all_repos, list):
+def clone(repo, ctx, repo_names, all_repos):
     """Clone repositories from `pyproject.toml`."""
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
 
