@@ -59,7 +59,7 @@ test_settings_map = {
             "target": join("src", "django-filter", "tests", "mongo_migrations"),
         },
         "repo": join("src", "django-filter"),
-        "settings_file": {
+        "settings": {
             "test": {
                 "source": join("settings", "filter_settings.py"),
                 "target": join("src", "django-filter", "tests", "settings.py"),
@@ -87,7 +87,7 @@ test_settings_map = {
         "cmd": "./runtests.py",
         "cwd": join("src", "django-rest-framework"),
         "repo": join("src", "django-rest-framework"),
-        "settings_file": {
+        "settings": {
             "test": {
                 "source": join("settings", "rest_framework_settings.py"),
                 "target": join("src", "django-rest-framework", "tests", "conftest.py"),
@@ -120,7 +120,7 @@ test_settings_map = {
         "cmd": "./runtests.py",
         "cwd": join("src", "wagtail"),
         "repo": join("src", "wagtail"),
-        "settings_file": {
+        "settings": {
             "test": {
                 "source": join("settings", "settings_wagtail.py"),
                 "target": join(
@@ -153,7 +153,7 @@ test_settings_map = {
         "cmd": "python",
         "cwd": join("src", "django-debug-toolbar"),
         "repo": join("src", "django-debug-toolbar"),
-        "settings_file": {
+        "settings": {
             "test": {
                 "source": join("settings", "debug_toolbar_settings.py"),
                 "target": join(
@@ -183,7 +183,7 @@ test_settings_map = {
             "source": join("settings", "allauth_apps.py"),
             "target": join("src", "django-allauth", "allauth", "mongo_apps.py"),
         },
-        "settings_file": {
+        "settings": {
             "test": {
                 "source": join("settings", "allauth_settings.py"),
                 "target": join("src", "django-allauth", "allauth", "mongo_settings.py"),
