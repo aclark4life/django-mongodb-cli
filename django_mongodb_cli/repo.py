@@ -266,19 +266,25 @@ def test(
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if repo_name:
         if show:
-            from rich import print
-            from black import format_str as format
-            from black import Mode
+            if repo_name in test_settings_map.keys():
+                from rich import print
+                from black import format_str as format
+                from black import Mode
 
-            click.echo(
-                print(
-                    format(
-                        str(dict(sorted(test_settings_map[repo_name].items()))),
-                        mode=Mode(),
+                click.echo(
+                    print(
+                        format(
+                            str(dict(sorted(test_settings_map[repo_name].items()))),
+                            mode=Mode(),
+                        )
                     )
                 )
-            )
-            return
+                return
+            else:
+                click.echo(
+                    click.style(f"Settings for '{repo_name}' not found.", fg="red")
+                )
+                return
         if setup and not repo_name == "mongo-python-driver":
             click.echo(click.style("Setup only for use with pymongo", fg="red"))
             return
