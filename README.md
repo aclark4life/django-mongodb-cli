@@ -58,3 +58,11 @@ Same as above but with `django` replaced by 3rd party library name e.g. `django-
 ```bash
 dm startproject mysite
 ```
+
+## Supported third party libraries
+
+- django-allauth
+- django-debug-toolbar
+- django-filter
+- django-rest-framework
+- wagtail
