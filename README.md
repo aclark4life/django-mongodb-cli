@@ -51,13 +51,7 @@ dm repo test django queries_
 
 #### 3rd Party Libraries
 
-Same as above with `django` replaced by the 3rd party library name.
-
-##### List 3rd party libraries
-
-```
-dm repo -l
-```
+Same as above with `django` replaced by the 3rd party library names.
 
 ### Start project
 
