@@ -363,6 +363,9 @@ def test(
                     if repo_name == "django-debug-toolbar":
                         command.extend(["-m", "django", "test"])
 
+                    if repo_name == "django-allauth":
+                        command.extend(["--continue-on-collection-errors"])
+
                     if repo_name == "mongo-python-driver" and setup:
                         command.extend(["setup-tests"])
                     elif repo_name == "mongo-python-driver":
