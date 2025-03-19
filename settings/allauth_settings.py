@@ -297,4 +297,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.sites",
+    "allauth.socialaccount.providers.openid",
+    "allauth.socialaccount.providers.openid_connect",
 ]
