@@ -12,7 +12,8 @@ dev-install:
 
 demo:
     dm repo test django queries_
-    dm repo test django-filter
+    dm repo test django-filter tests.test_filters
+    dm repo test django-debug-toolbar
 alias d := demo
 
 # ---------------------------------------- git ----------------------------------------
