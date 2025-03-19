@@ -372,6 +372,13 @@ def test(
                         command.extend(["run-tests"])
 
                     command.extend(modules)
+                    if os.environ.get("DJANGO_SETTINGS_MODULE"):
+                        click.echo(
+                            click.style(
+                                f"DJANGO_SETTINGS_MODULE={os.environ['DJANGO_SETTINGS_MODULE']}",
+                                fg="blue",
+                            )
+                        )
                     click.echo(click.style(f"Running {' '.join(command)}", fg="blue"))
                     subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
                 else:
