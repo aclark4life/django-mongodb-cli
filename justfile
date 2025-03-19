@@ -13,6 +13,7 @@ dev-install:
 demo:
     dm repo test django queries_
     dm repo test django-filter
+alias d := demo
 
 # ---------------------------------------- git ----------------------------------------
 
