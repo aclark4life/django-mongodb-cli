@@ -29,3 +29,4 @@ home/
 Dockerfile
 requirements.txt
 search/
+uv.lock
