@@ -60,6 +60,7 @@ db-init:
 # install python dependencies and activate pre-commit hooks
 [group('python')]
 pip-install: check-venv
+    brew install libxml2 libxmlsec1 pkg-config
     pip install -U pip
     pip install -e .
     pre-commit install
