@@ -125,6 +125,7 @@ def install(repo, ctx, repo_names, all_repos):
                 repo_name = os.path.basename(repo_url)
                 clone_path = os.path.join("src", repo_name)
                 install_repo(clone_path)
+        return
 
     if ctx.args == []:
         click.echo(ctx.get_help())
