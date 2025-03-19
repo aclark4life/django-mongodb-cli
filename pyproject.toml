@@ -11,6 +11,7 @@ dependencies = [
     "dj-database-url",  # For startproject and testing with postgres
     "html5lib",  # Required by django-debug-toolbar
     "psycopg2",  # For django-allauth
+    "python3-saml",  # For django-allauth
     "pyjwt[crypto]",  # For django-allauth
     "pytest",
     "pytest-django",  # For django-rest-framework and django-debug-toolbar
