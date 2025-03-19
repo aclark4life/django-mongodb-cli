@@ -8,6 +8,7 @@ dependencies = [
     "click",
     "django-extensions",  # <3 django-extensions
     "django-debug-toolbar",
+    "django-ninja",  # For django-allauth
     "dj-database-url",  # For startproject and testing with postgres
     "html5lib",  # Required by django-debug-toolbar
     "psycopg2",  # For django-allauth
