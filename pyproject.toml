@@ -19,6 +19,7 @@ dependencies = [
     "pytest",
     "pytest-django",  # For django-rest-framework and django-debug-toolbar
     "python-webpack-boilerplate",  # For startproject
+    "pytz",  # For django-filter
     "requests-oauthlib",  # For django-allauth
     "rich",
     "setuptools",  # For django-rest-framework
