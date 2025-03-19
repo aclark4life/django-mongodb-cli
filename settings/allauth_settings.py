@@ -293,6 +293,7 @@ INSTALLED_APPS = [
     "allauth.mongo_apps.MongoUserSessionsConfig",
     "allauth.mongo_apps.MongoHeadlessConfig",
     "allauth.mongo_apps.MongoSocialAccountConfig",
+    "allauth.mongo_apps.MongoMFAConfig",
     "django.contrib.humanize",
     "django.contrib.messages",
     "django.contrib.sessions",
