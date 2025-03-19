@@ -45,6 +45,7 @@ dev = [
     "mongo-python-driver @ git+ssh://git@github.com/aclark4life/mongo-python-driver@master # upstream: mongodb",
     "wagtail-mongodb-project @ git+ssh://git@github.com/aclark4life/wagtail-mongodb-project@main",
     "wagtail @ git+ssh://git@github.com/wagtail/wagtail@main",
+    "xmlsec @ git+ssh://git@github.com/xmlsec/python-xmlsec@main",
 ]
 
 [project.scripts]
