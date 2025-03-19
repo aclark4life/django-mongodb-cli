@@ -51,7 +51,7 @@ dm repo test django queries_
 
 #### 3rd Party Libraries
 
-Same as above but with `django` replaced by 3rd party library name e.g. `django-filter`.
+Same as above but with `django` replaced by [3rd party][] library name e.g. `django-filter`.
 
 ### Start project
 
@@ -59,7 +59,9 @@ Same as above but with `django` replaced by 3rd party library name e.g. `django-
 dm startproject mysite
 ```
 
-## Supported third party libraries
+## Third party libraries
+
+These 3rd party libaries are supported:
 
 - django-allauth
 - django-debug-toolbar
