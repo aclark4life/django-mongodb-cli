@@ -248,7 +248,7 @@ def makemigrations(
 @click.argument("modules", nargs=-1)
 @click.option("-k", "--keyword", help="Filter tests by keyword")
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
-@click.option("-s", "--setup", help="Setup tests", is_flag=True)
+@click.option("-s", "--setup", help="Setup tests (pymongo only)", is_flag=True)
 @click.option("--show", help="Show settings", is_flag=True)
 @click.pass_context
 def test(
