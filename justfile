@@ -9,6 +9,11 @@ dev-install:
     dm repo install django-mongodb-extensions
     dm repo install mongo-python-driver
 
+
+demo:
+    dm repo test django queries_
+    dm repo test django-filter
+
 # ---------------------------------------- git ----------------------------------------
 
 [group('git')]
