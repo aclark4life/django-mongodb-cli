@@ -62,9 +62,14 @@ def repo(ctx, list_repos):
     "--all-repos",
     is_flag=True,
 )
+@click.option(
+    "-i",
+    "--install",
+    is_flag=True,
+)
 @click.pass_context
 @pass_repo
-def clone(repo, ctx, repo_names, all_repos):
+def clone(repo, ctx, repo_names, all_repos, install):
     """Clone repositories from `pyproject.toml`."""
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
 
@@ -77,6 +82,10 @@ def clone(repo, ctx, repo_names, all_repos):
                     == repo_name
                 ):
                     clone_repo(repo_entry, url_pattern, branch_pattern, repo)
+                    if install:
+                        clone_path = os.path.join("src", repo_name)
+                        if os.path.exists(clone_path):
+                            install_repo(clone_path)
                     return
                 else:
                     not_found.add(repo_name)
