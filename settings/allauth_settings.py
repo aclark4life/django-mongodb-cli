@@ -300,4 +300,5 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "allauth.socialaccount.providers.openid",
     "allauth.socialaccount.providers.openid_connect",
+    "allauth.socialaccount.providers.agave",
 ]

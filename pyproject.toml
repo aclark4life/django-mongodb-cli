@@ -10,6 +10,7 @@ dependencies = [
     "django-debug-toolbar",
     "django-ninja",  # For django-allauth
     "dj-database-url",  # For startproject and testing with postgres
+    "fido2",  # For django-allauth
     "html5lib",  # Required by django-debug-toolbar
     "psycopg2",  # For django-allauth
     "python3-openid",  # For django-allauth
