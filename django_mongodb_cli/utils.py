@@ -58,16 +58,16 @@ def copy_mongo_apps(repo_name):
 def copy_mongo_migrations(repo_name):
     """Copy mongo_migrations to the specified test directory."""
     if "migrations" in test_settings_map[repo_name]:
-        if not os.path.exists(test_settings_map[repo_name]["migrations"]["target"]):
+        if not os.path.exists(test_settings_map[repo_name]["migrations_dir"]["target"]):
             click.echo(
                 click.style(
-                    f"Copying migrations from {test_settings_map[repo_name]['migrations']['source']} to {test_settings_map[repo_name]['migrations']['target']}",
+                    f"Copying migrations from {test_settings_map[repo_name]['migrations_dir']['source']} to {test_settings_map[repo_name]['migrations_dir']['target']}",
                     fg="blue",
                 )
             )
             shutil.copytree(
-                test_settings_map[repo_name]["migrations"]["source"],
-                test_settings_map[repo_name]["migrations"]["target"],
+                test_settings_map[repo_name]["migrations_dir"]["source"],
+                test_settings_map[repo_name]["migrations_dir"]["target"],
             )
     else:
         click.echo(click.style("No migrations to copy", fg="yellow"))
