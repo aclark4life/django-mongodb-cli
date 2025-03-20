@@ -225,15 +225,23 @@ def makemigrations(
                     repo_name in test_settings_map.keys()
                     and repo_name == os.path.basename(repo_url)
                 ):
-                    copy_mongo_apps(repo_name)
-                    copy_mongo_settings(
-                        test_settings_map[repo_name]["settings"]["migrations"][
-                            "source"
-                        ],
-                        test_settings_map[repo_name]["settings"]["migrations"][
-                            "target"
-                        ],
-                    )
+                    try:
+                        copy_mongo_apps(repo_name)
+                        copy_mongo_settings(
+                            test_settings_map[repo_name]["settings"]["migrations"][
+                                "source"
+                            ],
+                            test_settings_map[repo_name]["settings"]["migrations"][
+                                "target"
+                            ],
+                        )
+                    except FileNotFoundError:
+                        click.echo(
+                            click.style(
+                                f"Settings for '{repo_name}' not found.", fg="red"
+                            )
+                        )
+                        return
                     command = get_management_command("makemigrations")
                     command.extend(
                         [
