@@ -141,7 +141,7 @@ def install(repo, ctx, repo_names, all_repos):
 
 
 @repo.command()
-@click.argument("src", required=False)
+@click.argument("repo_names", nargs=-1)
 @click.option(
     "-a",
     "--all-repos",
@@ -149,16 +149,19 @@ def install(repo, ctx, repo_names, all_repos):
 )
 @click.pass_context
 @pass_repo
-def fetch(repo, ctx, src, all_repos):
+def fetch(repo, ctx, repo_names, all_repos):
     """Fetch upstream remotes for repositories."""
     repos, url_pattern, _, upstream_pattern = get_repos("pyproject.toml")
-    if src:
-        click.echo(f"Fetching upstream for {src}...")
-        for repo_entry in repos:
-            if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
-                repo_fetch(repo_entry, upstream_pattern, url_pattern, repo)
-                return  # Stop after finding the requested repo
-        click.echo(f"Repository '{src}' not found.")
+    if repo_names:
+        for repo_name in repo_names:
+            click.echo(f"Fetching upstream for {repo_name}...")
+            for repo_entry in repos:
+                if (
+                    os.path.basename(url_pattern.search(repo_entry).group(0))
+                    == repo_name
+                ):
+                    repo_fetch(repo_entry, upstream_pattern, url_pattern, repo)
+            click.echo(f"Repository '{repo_name}' not found.")
         return
 
     if all_repos:
