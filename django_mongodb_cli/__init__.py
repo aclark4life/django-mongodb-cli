@@ -13,7 +13,7 @@ if os.path.exists("manage.py"):
 
 @click.group()
 def cli():
-    pass
+    """Django MongoDB CLI"""
 
 
 cli.add_command(repo)

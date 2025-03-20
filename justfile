@@ -86,3 +86,8 @@ npm-install:
 sphinx-build:
     sphinx-build -b html docs docs/_build
 alias b := sphinx-build
+
+[group('sphinx')]
+sphinx-serve:
+    cd docs/_build && python -m http.server
+alias ss := sphinx-serve
