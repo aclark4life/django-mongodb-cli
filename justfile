@@ -80,3 +80,9 @@ check-venv:
 [group('npm')]
 npm-install:
     npm install
+
+# ---------------------------------------- sphinx ----------------------------------------
+[group('sphinx')]
+sphinx-build:
+    sphinx-build -b html docs docs/_build
+alias b := sphinx-build
