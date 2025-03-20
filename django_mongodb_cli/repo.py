@@ -416,7 +416,7 @@ def test(
 
 
 @repo.command()
-@click.argument("src", required=False)
+@click.argument("repo_names", nargs=-1)
 @click.option(
     "-a",
     "--all-repos",
@@ -429,15 +429,18 @@ def test(
 )
 @click.pass_context
 @pass_repo
-def status(repo, ctx, src, all_repos, reset):
+def status(repo, ctx, repo_names, all_repos, reset):
     """Repository status."""
     repos, url_pattern, _, _ = get_repos("pyproject.toml")
-    if src:
-        for repo_entry in repos:
-            if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
-                repo_status(repo_entry, url_pattern, repo, reset=reset)
-                return  # Stop after updating the requested repo
-        click.echo(f"Repository '{src}' not found.")
+    if repo_names:
+        for repo_name in repo_names:
+            for repo_entry in repos:
+                if (
+                    os.path.basename(url_pattern.search(repo_entry).group(0))
+                    == repo_name
+                ):
+                    repo_status(repo_entry, url_pattern, repo, reset=reset)
+            click.echo(f"Repository '{repo_name}' not found.")
         return
 
     if all_repos:
