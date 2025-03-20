@@ -57,7 +57,7 @@ def copy_mongo_apps(repo_name):
 
 def copy_mongo_migrations(repo_name):
     """Copy mongo_migrations to the specified test directory."""
-    if "migrations" in test_settings_map[repo_name]:
+    if "migrations_dir" in test_settings_map[repo_name]:
         if not os.path.exists(test_settings_map[repo_name]["migrations_dir"]["target"]):
             click.echo(
                 click.style(
