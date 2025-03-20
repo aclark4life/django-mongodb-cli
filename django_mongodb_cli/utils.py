@@ -79,17 +79,6 @@ def copy_mongo_settings(source, target):
     shutil.copyfile(source, target)
 
 
-def delete_mongo_migrations(mongo_migrations, repo_dir):
-    click.echo(click.style(f"Deleting mongo migrations {mongo_migrations}", fg="blue"))
-    shutil.rmtree(mongo_migrations, ignore_errors=True)
-    for root, dirs, files in os.walk(repo_dir):
-        for dir_name in dirs:
-            if dir_name == "migrations":
-                dir_path = os.path.join(root, dir_name)
-                click.echo(f"Removing: {dir_path}")
-                shutil.rmtree(dir_path, ignore_errors=True)
-
-
 def get_management_command(command=None):
     REQUIRES_MANAGE_PY = {
         "createsuperuser",
