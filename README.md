@@ -1,7 +1,5 @@
 # django-mongodb-cli
 
-For [django-mongodb-backend](https://github.com/mongodb-labs/django-mongodb-backend) development.
-
 ## About
 
 For testing [django-mongodb-backend](https://github.com/mongodb-labs/django-mongodb-backend)
