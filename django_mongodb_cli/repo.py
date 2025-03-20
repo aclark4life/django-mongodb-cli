@@ -175,7 +175,7 @@ def fetch(repo, ctx, repo_names, all_repos):
 
 
 @repo.command()
-@click.argument("src", required=False)
+@click.argument("repo_names", nargs=-1)
 @click.option(
     "-a",
     "--all-repos",
@@ -183,15 +183,18 @@ def fetch(repo, ctx, repo_names, all_repos):
 )
 @click.pass_context
 @pass_repo
-def update(repo, ctx, src, all_repos):
+def update(repo, ctx, repo_names, all_repos):
     """Update repositories."""
     repos, url_pattern, _, _ = get_repos("pyproject.toml")
-    if src:
-        for repo_entry in repos:
-            if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
-                repo_update(repo_entry, url_pattern, repo)
-                return  # Stop after updating the requested repo
-        click.echo(f"Repository '{src}' not found.")
+    if repo_names:
+        for repo_name in repo_names:
+            for repo_entry in repos:
+                if (
+                    os.path.basename(url_pattern.search(repo_entry).group(0))
+                    == repo_name
+                ):
+                    repo_update(repo_entry, url_pattern, repo)
+            click.echo(f"Repository '{repo_name}' not found.")
         return
 
     if all_repos:
