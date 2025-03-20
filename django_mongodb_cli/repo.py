@@ -5,16 +5,16 @@ import click
 from .config import test_settings_map
 from .utils import (
     apply_patches,
-    clone_repo,
     copy_mongo_apps,
     copy_mongo_migrations,
     copy_mongo_settings,
-    fetch_repo,
     get_management_command,
     get_repos,
-    install_repo,
-    update_repo,
-    status_repo,
+    repo_clone,
+    repo_fetch,
+    repo_install,
+    repo_status,
+    repo_update,
 )
 
 
@@ -81,11 +81,11 @@ def clone(repo, ctx, repo_names, all_repos, install):
                     os.path.basename(url_pattern.search(repo_entry).group(0))
                     == repo_name
                 ):
-                    clone_repo(repo_entry, url_pattern, branch_pattern, repo)
+                    repo_clone(repo_entry, url_pattern, branch_pattern, repo)
                     if install:
                         clone_path = os.path.join("src", repo_name)
                         if os.path.exists(clone_path):
-                            install_repo(clone_path)
+                            repo_install(clone_path)
                     return
                 else:
                     not_found.add(repo_name)
@@ -95,7 +95,7 @@ def clone(repo, ctx, repo_names, all_repos, install):
     if all_repos:
         click.echo(f"Cloning {len(repos)} repositories...")
         for repo_entry in repos:
-            clone_repo(repo_entry, url_pattern, branch_pattern, repo)
+            repo_clone(repo_entry, url_pattern, branch_pattern, repo)
         return
 
     if ctx.args == []:
@@ -118,7 +118,7 @@ def install(repo, ctx, repo_names, all_repos):
         for repo_name in repo_names:
             clone_path = os.path.join("src", repo_name)
             if os.path.exists(clone_path):
-                install_repo(clone_path)
+                repo_install(clone_path)
             else:
                 click.echo(f"Repository '{repo_name}' not found.")
         return
@@ -133,7 +133,7 @@ def install(repo, ctx, repo_names, all_repos):
                 repo_url = url_match.group(0)
                 repo_name = os.path.basename(repo_url)
                 clone_path = os.path.join("src", repo_name)
-                install_repo(clone_path)
+                repo_install(clone_path)
         return
 
     if ctx.args == []:
@@ -156,7 +156,7 @@ def fetch(repo, ctx, src, all_repos):
         click.echo(f"Fetching upstream for {src}...")
         for repo_entry in repos:
             if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
-                fetch_repo(repo_entry, upstream_pattern, url_pattern, repo)
+                repo_fetch(repo_entry, upstream_pattern, url_pattern, repo)
                 return  # Stop after finding the requested repo
         click.echo(f"Repository '{src}' not found.")
         return
@@ -164,7 +164,7 @@ def fetch(repo, ctx, src, all_repos):
     if all_repos:
         click.echo(f"Fetching upstream remotes for {len(repos)} repositories...")
         for repo_entry in repos:
-            fetch_repo(repo_entry, upstream_pattern, url_pattern, repo)
+            repo_fetch(repo_entry, upstream_pattern, url_pattern, repo)
         return
 
     if ctx.args == []:
@@ -186,7 +186,7 @@ def update(repo, ctx, src, all_repos):
     if src:
         for repo_entry in repos:
             if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
-                update_repo(repo_entry, url_pattern, repo)
+                repo_update(repo_entry, url_pattern, repo)
                 return  # Stop after updating the requested repo
         click.echo(f"Repository '{src}' not found.")
         return
@@ -194,7 +194,7 @@ def update(repo, ctx, src, all_repos):
     if all_repos:
         click.echo(f"Updating {len(repos)} repositories...")
         for repo_entry in repos:
-            update_repo(repo_entry, url_pattern, repo)
+            repo_update(repo_entry, url_pattern, repo)
         return
 
     if ctx.args == []:
@@ -418,7 +418,7 @@ def status(repo, ctx, src, all_repos, reset):
     if src:
         for repo_entry in repos:
             if os.path.basename(url_pattern.search(repo_entry).group(0)) == src:
-                status_repo(repo_entry, url_pattern, repo, reset=reset)
+                repo_status(repo_entry, url_pattern, repo, reset=reset)
                 return  # Stop after updating the requested repo
         click.echo(f"Repository '{src}' not found.")
         return
@@ -426,7 +426,7 @@ def status(repo, ctx, src, all_repos, reset):
     if all_repos:
         click.echo(f"Status of {len(repos)} repositories...")
         for repo_entry in repos:
-            status_repo(repo_entry, url_pattern, repo, reset=reset)
+            repo_status(repo_entry, url_pattern, repo, reset=reset)
         return
 
     if ctx.args == []:

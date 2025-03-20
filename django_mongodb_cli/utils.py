@@ -11,7 +11,7 @@ import subprocess
 from .config import test_settings_map
 
 
-def fetch_repo(repo_entry, upstream_pattern, url_pattern, repo):
+def repo_fetch(repo_entry, upstream_pattern, url_pattern, repo):
     """Helper function to fetch upstream remotes for a repository."""
     url_match = url_pattern.search(repo_entry)
     upstream_match = upstream_pattern.search(repo_entry)
@@ -79,7 +79,7 @@ def apply_patches(repo_name):
             click.echo(click.style("Patch applied", fg="green"))
 
 
-def clone_repo(repo_entry, url_pattern, branch_pattern, repo):
+def repo_clone(repo_entry, url_pattern, branch_pattern, repo):
     """Helper function to clone a single repo entry."""
     url_match = url_pattern.search(repo_entry)
     branch_match = branch_pattern.search(repo_entry)
@@ -204,7 +204,7 @@ def get_management_command(command=None):
     return base_command
 
 
-def install_repo(clone_path):
+def repo_install(clone_path):
     if os.path.exists(os.path.join(clone_path, "pyproject.toml")):
         subprocess.run([sys.executable, "-m", "pip", "install", "-e", clone_path])
     elif os.path.exists(os.path.join(clone_path, "setup.py")):
@@ -237,7 +237,7 @@ def status(clone_path, reset):
         click.echo("Not a valid Git repository.")
 
 
-def update_repo(repo_entry, url_pattern, repo):
+def repo_update(repo_entry, url_pattern, repo):
     """Helper function to update a single repository."""
     url_match = url_pattern.search(repo_entry)
     if not url_match:
@@ -254,7 +254,7 @@ def update_repo(repo_entry, url_pattern, repo):
         click.echo(f"Skipping {repo_name}: Repository not found at {clone_path}")
 
 
-def status_repo(repo_entry, url_pattern, repo, reset=False):
+def repo_status(repo_entry, url_pattern, repo, reset=False):
     """Helper function to update a single repository."""
     url_match = url_pattern.search(repo_entry)
     if not url_match:
