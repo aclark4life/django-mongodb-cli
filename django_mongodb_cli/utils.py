@@ -179,14 +179,6 @@ def repo_install(clone_path):
         click.echo(click.style("No valid installation method found", fg="red"))
 
 
-def pull(clone_path):
-    try:
-        repo = git.Repo(clone_path)
-        click.echo(click.style(repo.git.pull(), fg="blue"))
-    except git.exc.NoSuchPathError:
-        click.echo("Not a valid Git repository.")
-
-
 def status(clone_path, reset):
     try:
         repo = git.Repo(clone_path)
@@ -249,7 +241,11 @@ def repo_update(repo_entry, url_pattern, repo):
 
     if os.path.exists(clone_path):
         click.echo(f"Updating {repo_name}...")
-        pull(clone_path)
+        try:
+            repo = git.Repo(clone_path)
+            click.echo(click.style(repo.git.pull(), fg="blue"))
+        except git.exc.NoSuchPathError:
+            click.echo("Not a valid Git repository.")
     else:
         click.echo(f"Skipping {repo_name}: Repository not found at {clone_path}")
 
