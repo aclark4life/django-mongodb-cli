@@ -259,7 +259,8 @@ def makemigrations(
                             [
                                 "--pythonpath",
                                 os.path.join(
-                                    os.getcwd(), test_settings_map[repo_name]["cwd"]
+                                    os.getcwd(),
+                                    test_settings_map[repo_name]["test_dir"],
                                 ),
                             ]
                         )
@@ -407,7 +408,9 @@ def test(
                             )
                         )
                     click.echo(click.style(f"Running {' '.join(command)}", fg="blue"))
-                    subprocess.run(command, cwd=test_settings_map[repo_name]["cwd"])
+                    subprocess.run(
+                        command, cwd=test_settings_map[repo_name]["test_dir"]
+                    )
                 else:
                     click.echo(f"Settings for '{repo_name}' not found.")
         return
