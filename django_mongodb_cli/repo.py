@@ -324,12 +324,15 @@ def test(
                     test_dirs = test_settings_map[repo_name]["test_dirs"]
                     if list_tests:
                         for test_dir in test_dirs:
-                            click.echo(
-                                click.style(f"Tests for '{test_dir}':", fg="blue")
-                            )
+                            click.echo(click.style(f"{test_dir}", fg="blue"))
                             try:
                                 for module in sorted(os.listdir(test_dir)):
-                                    click.echo(module)
+                                    if (
+                                        module != "__pycache__"
+                                        and module != "__init__.py"
+                                    ):
+                                        click.echo(module)
+                                click.echo()
                             except FileNotFoundError:
                                 click.echo(
                                     click.style(
