@@ -10,8 +10,8 @@ with [MongoDB's Django fork](https://github.com/mongodb-forks/django)
 and third party libraries.
 
 > [!NOTE]
-> MongoDB's Django fork is for testing only and is not a requirement for using
-> django-mongodb-backend.
+> MongoDB's Django fork is for testing django-mongodb-backend only and is not
+> a requirement for using django-mongodb-backend.
 
 ## Installation
 
