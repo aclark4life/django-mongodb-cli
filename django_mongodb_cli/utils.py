@@ -11,45 +11,6 @@ import subprocess
 from .config import test_settings_map
 
 
-def repo_fetch(repo_entry, upstream_pattern, url_pattern, repo):
-    """Helper function to fetch upstream remotes for a repository."""
-    url_match = url_pattern.search(repo_entry)
-    upstream_match = upstream_pattern.search(repo_entry)
-
-    if not url_match or not upstream_match:
-        return
-
-    repo_url = url_match.group(0)
-    repo_name = os.path.basename(repo_url)
-    clone_path = os.path.join(repo.home, repo_name)
-
-    if os.path.exists(clone_path):
-        click.echo(f"Adding upstream remote for {repo_name}...")
-        remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
-        if os.path.exists(clone_path):
-            repo = git.Repo(clone_path)
-            try:
-                repo.create_remote("upstream", remote)
-                click.echo(click.style(f"Added remote {remote}", fg="green"))
-            except git.exc.GitCommandError:
-                click.echo(
-                    click.style(
-                        f"Remote {repo.remotes.upstream.name} exists! {repo.remotes.upstream.url}",
-                        fg="yellow",
-                    )
-                )
-            repo.remotes.upstream.fetch()
-            try:
-                repo.git.rebase("upstream/main")
-                click.echo(click.style(f"Rebased {repo_name}", fg="green"))
-            except git.exc.GitCommandError:
-                click.echo(click.style(f"Failed to rebase {repo_name}", fg="red"))
-        else:
-            click.echo(click.style(f"Skipping {remote}", fg="yellow"))
-    else:
-        click.echo(f"Skipping {repo_name}: Repository not found at {clone_path}")
-
-
 def apply_patches(repo_name):
     """Apply a patch file to the specified project directory."""
     repo_dir = test_settings_map[repo_name]["clone_dir"]
@@ -77,38 +38,6 @@ def apply_patches(repo_name):
                 click.echo("Not a valid Git repository.")
                 return
             click.echo(click.style("Patch applied", fg="green"))
-
-
-def repo_clone(repo_entry, url_pattern, branch_pattern, repo):
-    """Helper function to clone a single repo entry."""
-    url_match = url_pattern.search(repo_entry)
-    branch_match = branch_pattern.search(repo_entry)
-    if not url_match:
-        click.echo(f"Invalid repository entry: {repo_entry}")
-        return
-
-    repo_url = url_match.group(0)
-    repo_name = os.path.basename(repo_url)
-    branch = branch_match.group(1) if branch_match else "main"
-    clone_path = os.path.join(repo.home, repo_name)
-
-    if os.path.exists(clone_path):
-        click.echo(f"Skipping: {repo_name} already exists.")
-    else:
-        click.echo(
-            f"Cloning {repo_name} from {repo_url} into {clone_path} (branch: {branch})"
-        )
-        if not os.path.exists(clone_path):
-            click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
-            try:
-                git.Repo.clone_from(repo_url, clone_path, branch=branch)
-            except git.exc.GitCommandError:
-                try:
-                    git.Repo.clone_from(repo_url, clone_path)
-                except git.exc.GitCommandError as e:
-                    click.echo(f"Failed to clone repository: {e}")
-        else:
-            click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
 
 
 def copy_mongo_apps(repo_name):
@@ -204,6 +133,38 @@ def get_management_command(command=None):
     return base_command
 
 
+def repo_clone(repo_entry, url_pattern, branch_pattern, repo):
+    """Helper function to clone a single repo entry."""
+    url_match = url_pattern.search(repo_entry)
+    branch_match = branch_pattern.search(repo_entry)
+    if not url_match:
+        click.echo(f"Invalid repository entry: {repo_entry}")
+        return
+
+    repo_url = url_match.group(0)
+    repo_name = os.path.basename(repo_url)
+    branch = branch_match.group(1) if branch_match else "main"
+    clone_path = os.path.join(repo.home, repo_name)
+
+    if os.path.exists(clone_path):
+        click.echo(f"Skipping: {repo_name} already exists.")
+    else:
+        click.echo(
+            f"Cloning {repo_name} from {repo_url} into {clone_path} (branch: {branch})"
+        )
+        if not os.path.exists(clone_path):
+            click.echo(f"Cloning {repo_url} into {clone_path} (branch: {branch})")
+            try:
+                git.Repo.clone_from(repo_url, clone_path, branch=branch)
+            except git.exc.GitCommandError:
+                try:
+                    git.Repo.clone_from(repo_url, clone_path)
+                except git.exc.GitCommandError as e:
+                    click.echo(f"Failed to clone repository: {e}")
+        else:
+            click.echo(f"Skipping {repo_url} in {clone_path} (branch: {branch})")
+
+
 def repo_install(clone_path):
     if os.path.exists(os.path.join(clone_path, "pyproject.toml")):
         subprocess.run([sys.executable, "-m", "pip", "install", "-e", clone_path])
@@ -235,6 +196,45 @@ def status(clone_path, reset):
             click.echo(click.style(repo.git.status(), fg="blue"))
     except git.exc.NoSuchPathError:
         click.echo("Not a valid Git repository.")
+
+
+def repo_fetch(repo_entry, upstream_pattern, url_pattern, repo):
+    """Helper function to fetch upstream remotes for a repository."""
+    url_match = url_pattern.search(repo_entry)
+    upstream_match = upstream_pattern.search(repo_entry)
+
+    if not url_match or not upstream_match:
+        return
+
+    repo_url = url_match.group(0)
+    repo_name = os.path.basename(repo_url)
+    clone_path = os.path.join(repo.home, repo_name)
+
+    if os.path.exists(clone_path):
+        click.echo(f"Adding upstream remote for {repo_name}...")
+        remote = f"https://github.com/{upstream_match.group(1)}/{repo_name}"
+        if os.path.exists(clone_path):
+            repo = git.Repo(clone_path)
+            try:
+                repo.create_remote("upstream", remote)
+                click.echo(click.style(f"Added remote {remote}", fg="green"))
+            except git.exc.GitCommandError:
+                click.echo(
+                    click.style(
+                        f"Remote {repo.remotes.upstream.name} exists! {repo.remotes.upstream.url}",
+                        fg="yellow",
+                    )
+                )
+            repo.remotes.upstream.fetch()
+            try:
+                repo.git.rebase("upstream/main")
+                click.echo(click.style(f"Rebased {repo_name}", fg="green"))
+            except git.exc.GitCommandError:
+                click.echo(click.style(f"Failed to rebase {repo_name}", fg="red"))
+        else:
+            click.echo(click.style(f"Skipping {remote}", fg="yellow"))
+    else:
+        click.echo(f"Skipping {repo_name}: Repository not found at {clone_path}")
 
 
 def repo_update(repo_entry, url_pattern, repo):
