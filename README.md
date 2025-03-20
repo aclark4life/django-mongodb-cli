@@ -7,7 +7,7 @@ with [MongoDB's Django fork](https://github.com/mongodb-forks/django) and [third
 
 > [!NOTE]
 > [MongoDB's Django fork](https://github.com/mongodb-forks/django) is for *testing* [django-mongodb-backend](https://github.com/mongodb-labs/django-mongodb-backend)
-> and is not a requirement for *using* django-mongodb-backend. To use django-mongodb-backend, `pip install django-mongodb-backend` is all that is needed.
+> and is not a requirement for *using* [django-mongodb-backend](https://github.com/mongodb-labs/django-mongodb-backend). To use django-mongodb-backend, `pip install django-mongodb-backend` is all that is needed.
 
 ## Installation
 
