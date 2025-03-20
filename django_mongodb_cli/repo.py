@@ -353,7 +353,7 @@ def test(
                                 )
                             )
                             return
-                    command = [test_settings_map[repo_name]["cmd"]]
+                    command = [test_settings_map[repo_name]["test_command"]]
                     apply_patches(repo_name)
                     copy_mongo_migrations(repo_name)
                     copy_mongo_apps(repo_name)
