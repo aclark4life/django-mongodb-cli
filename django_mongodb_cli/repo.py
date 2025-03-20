@@ -205,24 +205,26 @@ def update(repo, ctx, src, all_repos):
 
 
 @repo.command(context_settings={"ignore_unknown_options": True})
-@click.argument("src", required=False)
+@click.argument("repo_name", required=False)
 @click.argument("args", nargs=-1)
 @click.pass_context
 def makemigrations(
     ctx,
-    src,
+    repo_name,
     args,
 ):
     """Run makemigrations for test suites."""
 
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
-    if src:
+    if repo_name:
         for repo_entry in repos:
             url_match = url_pattern.search(repo_entry)
             if url_match:
                 repo_url = url_match.group(0)
-                repo_name = os.path.basename(repo_url)
-                if repo_name in test_settings_map.keys() and repo_name == src:
+                if (
+                    repo_name in test_settings_map.keys()
+                    and repo_name == os.path.basename(repo_url)
+                ):
                     copy_mongo_apps(repo_name)
                     copy_mongo_settings(
                         test_settings_map[repo_name]["settings"]["migrations"][
@@ -252,6 +254,7 @@ def makemigrations(
                         )
                     click.echo(f"Running command {' '.join(command)} {' '.join(args)}")
                     subprocess.run(command + [*args])
+        return
     if ctx.args == []:
         click.echo(ctx.get_help())
 
