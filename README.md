@@ -6,7 +6,7 @@ For testing [django-mongodb-backend](https://github.com/mongodb-labs/django-mong
 with [MongoDB's Django fork](https://github.com/mongodb-forks/django) and [third party libraries](#third-party-libraries).
 
 > [!NOTE]
-> MongoDB's Django fork is for testing django-mongodb-backend and is not a
+> [MongoDB's Django fork](https://github.com/mongodb-forks/django) is for testing django-mongodb-backend and is not a
 > requirement for using django-mongodb-backend.
 
 ## Installation
