@@ -179,17 +179,6 @@ def repo_install(clone_path):
         click.echo(click.style("No valid installation method found", fg="red"))
 
 
-def status(clone_path, reset):
-    try:
-        repo = git.Repo(clone_path)
-        if reset:
-            click.echo(click.style(repo.git.reset("--hard"), fg="blue"))
-        else:
-            click.echo(click.style(repo.git.status(), fg="blue"))
-    except git.exc.NoSuchPathError:
-        click.echo("Not a valid Git repository.")
-
-
 def repo_fetch(repo_entry, upstream_pattern, url_pattern, repo):
     """Helper function to fetch upstream remotes for a repository."""
     url_match = url_pattern.search(repo_entry)
@@ -262,6 +251,13 @@ def repo_status(repo_entry, url_pattern, repo, reset=False):
 
     if os.path.exists(clone_path):
         click.echo(f"Status of {repo_name}...")
-        status(clone_path, reset)
+        try:
+            repo = git.Repo(clone_path)
+            if reset:
+                click.echo(click.style(repo.git.reset("--hard"), fg="blue"))
+            else:
+                click.echo(click.style(repo.git.status(), fg="blue"))
+        except git.exc.NoSuchPathError:
+            click.echo("Not a valid Git repository.")
     else:
         click.echo(f"Skipping {repo_name}: Repository not found at {clone_path}")
