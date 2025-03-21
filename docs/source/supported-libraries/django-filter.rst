@@ -68,4 +68,4 @@ Results
 
 Via ``dm repo test django-filter``
 
-`Test Results <../_static/django-filter.txt>`_
+- `django-filter.txt <../_static/django-filter.txt>`_
