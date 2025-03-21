@@ -12,7 +12,7 @@ with [MongoDB's Django fork](https://github.com/mongodb-forks/django) and [third
 ## Installation
 
 ```bash
-git clone https://github.com/aclark4life/django-mongodb-cli
+git clone https://github.com/mongodb-labs/django-mongodb-cli
 cd django-mongodb-cli
 python -m venv .venv
 source .venv/bin/activate
