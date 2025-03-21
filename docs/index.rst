@@ -9,8 +9,8 @@ Django MongoDB CLI
 Third party library support
 ===========================
 
-Support for third party libraries is determined by the following criteria:
+Support for third party libraries is determined by the following:
 
-- Test suite results
-- Project integration testing
+- Test suites
+- Project integrations
 - Known limitations
