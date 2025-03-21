@@ -35,8 +35,8 @@ Via ``dm repo test django-filter --show``
     }
 
 
-Test suite tests
-----------------
+Test suite
+----------
 
 Via ``dm repo test django-filter -l``
 
