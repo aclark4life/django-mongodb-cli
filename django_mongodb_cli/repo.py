@@ -366,7 +366,10 @@ def test(
                     copy_mongo_apps(repo_name)
 
                     # Configure test command
-                    if test_settings_map[repo_name]["test_command"] == "./runtests.py":
+                    if (
+                        test_settings_map[repo_name]["test_command"] == "./runtests.py"
+                        and repo_name != "django-rest-framework"
+                    ):
                         command.extend(
                             [
                                 "--settings",
