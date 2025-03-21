@@ -4,10 +4,12 @@ Django filter
 Test suite settings
 -------------------
 
+Via ``dm repo test django-filter --show``::
+
 ::
 
     {
-        "apps": {
+        "apps_file": {
             "source": "settings/filter_apps.py",
             "target": "src/django-filter/tests/mongo_apps.py",
         },
