@@ -82,6 +82,7 @@ npm-install:
     npm install
 
 # ---------------------------------------- sphinx ----------------------------------------
+
 [group('sphinx')]
 sphinx-build:
     sphinx-build -b html docs docs/_build
