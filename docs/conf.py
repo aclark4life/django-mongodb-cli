@@ -7,8 +7,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "Django MongoDB CLI"
-copyright = "2025, MongoDB Python DBX Team"
-author = "MongoDB Python DBX Team"
+copyright = "2025, The MongoDB Python Team"
+author = "The MongoDB Python Team"
 release = "0.1.0"
 
 # -- General configuration ---------------------------------------------------
