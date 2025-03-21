@@ -28,4 +28,6 @@ For each third party library that is supported, the following tasks are performe
 
 - The test suite is run with Django MongoDB Backend
 - The test results are recorded
-- The test suite is updated to be backend agnostic
+- The test suite is updated
+
+  - Replace static primary key references with dynamic references or static `ObjectId` references
