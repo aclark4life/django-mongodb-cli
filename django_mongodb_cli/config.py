@@ -150,7 +150,7 @@ test_settings_map = {
                 "src", "django-debug-toolbar", "debug_toolbar", "mongo_apps.py"
             ),
         },
-        "test_command": "python",
+        "test_command": "pytest",
         "test_dir": join("src", "django-debug-toolbar"),
         "clone_dir": join("src", "django-debug-toolbar"),
         "settings": {

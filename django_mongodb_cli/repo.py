@@ -391,9 +391,6 @@ def test(
                             repo_name
                         ]["settings"]["module"]["test"]
 
-                    if repo_name == "django-debug-toolbar":
-                        command.extend(["-m", "django", "test"])
-
                     if repo_name == "django-allauth":
                         command.extend(
                             [
