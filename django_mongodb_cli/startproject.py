@@ -15,7 +15,7 @@ def startproject(
     wagtail,
     project_name,
 ):
-    """Run `startproject` command with custom templates."""
+    """Run `startproject` with custom templates."""
     if os.path.exists("manage.py"):
         click.echo("manage.py already exists")
         if not delete:
