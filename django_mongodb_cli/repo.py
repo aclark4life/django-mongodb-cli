@@ -361,12 +361,7 @@ def test(
                     apply_patches(repo_name)
                     copy_mongo_migrations(repo_name)
                     copy_mongo_apps(repo_name)
-                    if (
-                        repo_name != "django-rest-framework"
-                        and repo_name != "django-allauth"
-                        and repo_name != "django-debug-toolbar"
-                        and repo_name != "mongo-python-driver"
-                    ):
+                    if test_settings_map[repo_name]["test_command"] == "./runtests.py":
                         command.extend(
                             [
                                 "--settings",
