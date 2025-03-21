@@ -4,7 +4,7 @@ Django filter
 Test suite settings
 -------------------
 
-Via ``dm repo test django-filter --show``::
+Via ``dm repo test django-filter --show``:
 
 ::
 
