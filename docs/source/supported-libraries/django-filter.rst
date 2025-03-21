@@ -1,8 +1,8 @@
 Django filter
 =============
 
-Test suite settings
--------------------
+Settings
+--------
 
 Via ``dm repo test django-filter --show``
 
@@ -35,8 +35,8 @@ Via ``dm repo test django-filter --show``
     }
 
 
-Test suite
-----------
+Tests
+-----
 
 Via ``dm repo test django-filter -l``
 
@@ -63,8 +63,8 @@ Via ``dm repo test django-filter -l``
         └── utils.py
 
 
-Test suite results
-------------------
+Results
+-------
 
 Via ``dm repo test django-filter``
 
