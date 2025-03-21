@@ -417,6 +417,7 @@ def test(
                             )
                         )
                     click.echo(click.style(f"Running {' '.join(command)}", fg="blue"))
+                    # Run test command
                     subprocess.run(
                         command, cwd=test_settings_map[repo_name]["test_dir"]
                     )
