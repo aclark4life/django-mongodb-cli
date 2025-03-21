@@ -83,7 +83,7 @@ def clone(repo, ctx, repo_names, all_repos, install):
                 ):
                     repo_clone(repo_entry, url_pattern, branch_pattern, repo)
                     if install:
-                        clone_path = os.path.join("src", repo_name)
+                        clone_path = os.path.join(ctx.obj.home, repo_name)
                         if os.path.exists(clone_path):
                             repo_install(clone_path)
                     return
@@ -116,7 +116,7 @@ def install(repo, ctx, repo_names, all_repos):
 
     if repo_names:
         for repo_name in repo_names:
-            clone_path = os.path.join("src", repo_name)
+            clone_path = os.path.join(ctx.obj.home, repo_name)
             if os.path.exists(clone_path):
                 repo_install(clone_path)
             else:
@@ -132,7 +132,7 @@ def install(repo, ctx, repo_names, all_repos):
             if url_match:
                 repo_url = url_match.group(0)
                 repo_name = os.path.basename(repo_url)
-                clone_path = os.path.join("src", repo_name)
+                clone_path = os.path.join(ctx.obj.home, repo_name)
                 repo_install(clone_path)
         return
 
@@ -341,7 +341,7 @@ def test(
                                 )
                         return
                     if "settings" in test_settings_map[repo_name]:
-                        if os.path.exists(os.path.join("src", repo_name)):
+                        if os.path.exists(os.path.join(ctx.obj.home, repo_name)):
                             copy_mongo_settings(
                                 test_settings_map[repo_name]["settings"]["test"][
                                     "source"
