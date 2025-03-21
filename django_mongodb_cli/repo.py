@@ -150,7 +150,7 @@ def install(repo, ctx, repo_names, all_repos):
 @click.pass_context
 @pass_repo
 def fetch(repo, ctx, repo_names, all_repos):
-    """Fetch upstream remotes for repositories."""
+    """Add and fetch upstream remotes for cloned repositories."""
     repos, url_pattern, _, upstream_pattern = get_repos("pyproject.toml")
     if repo_names:
         for repo_name in repo_names:
