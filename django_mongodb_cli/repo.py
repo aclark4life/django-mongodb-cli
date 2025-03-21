@@ -395,7 +395,13 @@ def test(
                         command.extend(["-m", "django", "test"])
 
                     if repo_name == "django-allauth":
-                        command.extend(["--continue-on-collection-errors"])
+                        command.extend(
+                            [
+                                "--continue-on-collection-errors",
+                                "--html=report.html",
+                                "--self-contained-html",
+                            ]
+                        )
 
                     if repo_name == "mongo-python-driver" and setup:
                         command.extend(["setup-tests"])
