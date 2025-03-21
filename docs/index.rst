@@ -24,6 +24,7 @@ For each third party library that is supported, the following tasks are performe
   - Update django settings
   - Update or disable migrations
   - Evaluate the test runner configuration
+
 - The test suite is run with Django MongoDB Backend
 - The test results are recorded
 - The test suite is updated to integrate with Django MongoDB Backend
