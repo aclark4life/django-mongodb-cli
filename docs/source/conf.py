@@ -7,8 +7,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "Django MongoDB CLI"
-copyright = "2025, The MongoDB Python Team"
-author = "The MongoDB Python Team"
+copyright = "2025, MongoDB Python Team"
+author = "MongoDB Python Team"
 release = "0.1.0"
 
 # -- General configuration ---------------------------------------------------
@@ -17,7 +17,7 @@ release = "0.1.0"
 extensions = []
 
 templates_path = ["_templates"]
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = []
 
 
 # -- Options for HTML output -------------------------------------------------

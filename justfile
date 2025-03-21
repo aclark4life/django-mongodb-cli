@@ -85,7 +85,7 @@ npm-install:
 
 [group('sphinx')]
 sphinx-build:
-    sphinx-build -b html docs docs/_build
+    sphinx-build -b html docs/source docs/_build
 alias b := sphinx-build
 
 [group('sphinx')]
