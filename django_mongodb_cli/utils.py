@@ -42,7 +42,7 @@ def apply_patches(repo_name):
 
 def copy_mongo_apps(repo_name):
     """Copy the appropriate mongo_apps file based on the repo name."""
-    if "apps" in test_settings_map[repo_name] and repo_name != "django":
+    if "apps_file" in test_settings_map[repo_name] and repo_name != "django":
         click.echo(
             click.style(
                 f"Copying {os.path.join(test_settings_map[repo_name]['apps_file']['source'])} to {os.path.join(test_settings_map[repo_name]['apps_file']['target'])}",
@@ -50,8 +50,8 @@ def copy_mongo_apps(repo_name):
             )
         )
         shutil.copyfile(
-            os.path.join(test_settings_map[repo_name]["apps"]["source"]),
-            os.path.join(test_settings_map[repo_name]["apps"]["target"]),
+            os.path.join(test_settings_map[repo_name]["apps_file"]["source"]),
+            os.path.join(test_settings_map[repo_name]["apps_file"]["target"]),
         )
 
 
