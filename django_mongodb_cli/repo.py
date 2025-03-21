@@ -289,10 +289,15 @@ def test(
     show,
 ):
     """
-    Run tests for Django and third-party libraries.
+    Run tests for Django fork and third-party libraries.
     """
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if repo_name:
+        # Setup only for pymongo
+        if setup and not repo_name == "mongo-python-driver":
+            click.echo(click.style("Setup only for use with pymongo", fg="red"))
+            return
+        # Show test settings
         if show:
             if repo_name in test_settings_map.keys():
                 from rich import print
@@ -313,9 +318,6 @@ def test(
                     click.style(f"Settings for '{repo_name}' not found.", fg="red")
                 )
                 return
-        if setup and not repo_name == "mongo-python-driver":
-            click.echo(click.style("Setup only for use with pymongo", fg="red"))
-            return
         for repo_entry in repos:
             url_match = url_pattern.search(repo_entry)
             repo_url = url_match.group(0)
@@ -340,6 +342,7 @@ def test(
                                     )
                                 )
                         return
+                    # Copy settings for test run
                     if "settings" in test_settings_map[repo_name]:
                         if os.path.exists(os.path.join(ctx.obj.home, repo_name)):
                             copy_mongo_settings(
@@ -361,6 +364,8 @@ def test(
                     apply_patches(repo_name)
                     copy_mongo_migrations(repo_name)
                     copy_mongo_apps(repo_name)
+
+                    # Configure test command
                     if test_settings_map[repo_name]["test_command"] == "./runtests.py":
                         command.extend(
                             [
