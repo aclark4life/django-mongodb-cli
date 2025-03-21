@@ -1,5 +1,5 @@
-Libraries
-=========
+Supported Libraries
+===================
 
 .. toctree::
    django-filter
