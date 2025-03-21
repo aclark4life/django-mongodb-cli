@@ -61,3 +61,11 @@ Via ``dm repo test django-filter -l``
         ├── test_widgets.py
         ├── urls.py
         └── utils.py
+
+
+Test suite results
+------------------
+
+Via ``dm repo test django-filter``
+
+`Test Results <../_static/django-filter.txt>`_
