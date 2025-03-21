@@ -1,16 +1,14 @@
-.. Django MongoDB CLI documentation master file, created by
-   sphinx-quickstart on Thu Mar 20 18:05:33 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+==================
+Django MongoDB CLI
+==================
 
-Django MongoDB CLI documentation
-================================
+.. rubric:: Everything you need to know about Django MongoDB Backend and third party library integrations.
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
+First steps
+===========
 
+**Getting started:**
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+- :doc:`Installation <intro/install>`
+- :doc:`Configuring a project <intro/configure>`
+- :doc:`howto/contrib-apps`
