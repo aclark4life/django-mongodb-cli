@@ -390,8 +390,6 @@ def test(
                         os.environ["DJANGO_SETTINGS_MODULE"] = test_settings_map[
                             repo_name
                         ]["settings"]["module"]["test"]
-
-                    if repo_name == "django-allauth":
                         command.extend(
                             [
                                 "--continue-on-collection-errors",
