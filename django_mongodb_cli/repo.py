@@ -216,7 +216,7 @@ def makemigrations(
     repo_name,
     args,
 ):
-    """Run makemigrations for test suites."""
+    """Run `makemigrations` for cloned repositories."""
 
     repos, url_pattern, branch_pattern, upstream_pattern = get_repos("pyproject.toml")
     if repo_name:
