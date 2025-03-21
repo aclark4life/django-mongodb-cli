@@ -2,4 +2,4 @@ Libraries
 =========
 
 .. toctree::
-   django-allauth
+   django-filter
