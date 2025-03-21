@@ -10,7 +10,7 @@ test_settings_map = {
         ],
     },
     "django": {
-        "apps": {},
+        "apps_file": {},
         "test_command": "./runtests.py",
         "test_dir": join("src", "django", "tests"),
         "clone_dir": join("src", "django"),
@@ -43,7 +43,7 @@ test_settings_map = {
         ],
     },
     "django-filter": {
-        "apps": {
+        "apps_file": {
             "source": join("settings", "filter_apps.py"),
             "target": join("src", "django-filter", "tests", "mongo_apps.py"),
         },
@@ -76,7 +76,7 @@ test_settings_map = {
         "test_dirs": [join("src", "django-filter", "tests")],
     },
     "django-rest-framework": {
-        "apps": {
+        "apps_file": {
             "source": join("settings", "rest_framework_apps.py"),
             "target": join("src", "django-rest-framework", "tests", "mongo_apps.py"),
         },
@@ -104,7 +104,7 @@ test_settings_map = {
         "test_dirs": [join("src", "django-rest-framework", "tests")],
     },
     "wagtail": {
-        "apps": {
+        "apps_file": {
             "source": join("settings", "apps_wagtail.py"),
             "target": join("src", "wagtail", "wagtail", "test", "mongo_apps.py"),
         },
@@ -144,7 +144,7 @@ test_settings_map = {
         ],
     },
     "django-debug-toolbar": {
-        "apps": {
+        "apps_file": {
             "source": join("settings", "debug_toolbar_apps.py"),
             "target": join(
                 "src", "django-debug-toolbar", "debug_toolbar", "mongo_apps.py"
@@ -179,7 +179,7 @@ test_settings_map = {
         "test_command": "pytest",
         "test_dir": join("src", "django-allauth"),
         "clone_dir": join("src", "django-allauth"),
-        "apps": {
+        "apps_file": {
             "source": join("settings", "allauth_apps.py"),
             "target": join("src", "django-allauth", "allauth", "mongo_apps.py"),
         },
