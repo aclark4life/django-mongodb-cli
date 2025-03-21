@@ -43,21 +43,21 @@ Via ``dm repo test django-filter -l``
 
 ::
 
-    src/django-filter/tests/
-        models.py
-        mongo_apps.py
-        mongo_migrations
-        rest_framework
-        settings.py
-        templates
-        test_conf.py
-        test_fields.py
-        test_filtering.py
-        test_filters.py
-        test_filterset.py
-        test_forms.py
-        test_utils.py
-        test_views.py
-        test_widgets.py
-        urls.py
-        utils.py
+    src/django-filter/tests
+        ├── models.py
+        ├── mongo_apps.py
+        ├── mongo_migrations
+        ├── rest_framework
+        ├── settings.py
+        ├── templates
+        ├── test_conf.py
+        ├── test_fields.py
+        ├── test_filtering.py
+        ├── test_filters.py
+        ├── test_filterset.py
+        ├── test_forms.py
+        ├── test_utils.py
+        ├── test_views.py
+        ├── test_widgets.py
+        ├── urls.py
+        └── utils.py
