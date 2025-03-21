@@ -112,7 +112,7 @@ def clone(repo, ctx, repo_names, all_repos, install):
 @click.pass_context
 @pass_repo
 def install(repo, ctx, repo_names, all_repos):
-    """Install development repositories."""
+    """`pip install -e` cloned repositories."""
 
     if repo_names:
         for repo_name in repo_names:
