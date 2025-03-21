@@ -9,4 +9,4 @@ Django MongoDB CLI
 .. toctree::
    installation
    third-party-library-support
-   supported-libraries
+   supported-libraries/index

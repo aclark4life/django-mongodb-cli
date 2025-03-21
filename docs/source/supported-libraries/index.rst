@@ -1,4 +1,4 @@
-Supported Libraries
+Supported libraries
 ===================
 
 .. toctree::
