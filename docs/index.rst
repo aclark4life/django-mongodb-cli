@@ -22,9 +22,11 @@ For each third party library that is supported, the following tasks are performe
 
 - The test suite is configured to run with Django MongoDB Backend
 
+  - Evaluate test runner configuration
+    - Replace with ``pytest`` if possible
+
   - Update django settings
   - Update or disable migrations
-  - Evaluate the test runner configuration
 
 - The test suite is run with Django MongoDB Backend
 - The test results are recorded
