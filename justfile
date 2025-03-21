@@ -14,6 +14,7 @@ demo:
     dm repo test django queries_
     dm repo test django-filter tests.test_filters
     dm repo test django-debug-toolbar
+    dm repo test django-allauth allauth/account/tests
 alias d := demo
 
 # ---------------------------------------- git ----------------------------------------

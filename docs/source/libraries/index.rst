@@ -1,0 +1,5 @@
+Libraries
+=========
+
+.. toctree::
+   django-allauth
