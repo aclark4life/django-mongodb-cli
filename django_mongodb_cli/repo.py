@@ -328,12 +328,18 @@ def test(
                         for test_dir in test_dirs:
                             click.echo(click.style(f"{test_dir}", fg="blue"))
                             try:
-                                for module in sorted(os.listdir(test_dir)):
+                                modules = sorted(os.listdir(test_dir))
+                                count = 0
+                                for module in modules:
+                                    count += 1
                                     if (
                                         module != "__pycache__"
                                         and module != "__init__.py"
                                     ):
-                                        click.echo(module)
+                                        if count == len(modules):
+                                            click.echo(f"    └── {module}")
+                                        else:
+                                            click.echo(f"    ├── {module}")
                                 click.echo()
                             except FileNotFoundError:
                                 click.echo(
