@@ -184,7 +184,7 @@ def fetch(repo, ctx, repo_names, all_repos):
 @click.pass_context
 @pass_repo
 def update(repo, ctx, repo_names, all_repos):
-    """Update repositories."""
+    """Update cloned repositories."""
     repos, url_pattern, _, _ = get_repos("pyproject.toml")
     if repo_names:
         for repo_name in repo_names:
