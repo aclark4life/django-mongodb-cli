@@ -210,6 +210,8 @@ def repo_update(repo_entry, url_pattern, repo):
             click.echo(click.style(repo.git.pull(), fg="blue"))
         except git.exc.NoSuchPathError:
             click.echo("Not a valid Git repository.")
+        except git.exc.GitCommandError:
+            click.echo(click.style(f"Failed to update {repo_name}", fg="red"))
     else:
         click.echo(f"Skipping {repo_name}: Repository not found at {clone_path}")
 
