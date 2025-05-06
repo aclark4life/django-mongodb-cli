@@ -368,7 +368,7 @@ def test(
                             ]
                         )
                     elif repo_name == "mongo-python-driver":
-                        command.extend(["test"])
+                        command.extend(["test", "-s"])
 
                     command.extend(modules)
                     if os.environ.get("DJANGO_SETTINGS_MODULE"):
