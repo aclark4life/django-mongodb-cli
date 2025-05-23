@@ -49,6 +49,7 @@ dev = [
     "flask-pymongo @ git+ssh://git@github.com/mongodb-labs/flask-pymongo",
     "langchain-mongodb @ git+ssh://git@github.com/langchain-ai/langchain-mongodb@main",
     "libmongocrypt @ git+ssh://git@github.com/mongodb-labs/libmongocrypt@main",
+    "mongo-arrow @ git+ssh://git@github.com/mongodb-labs/mongo-arrow@main",
     "mongo-orchestration @ git+ssh://git@github.com/mongodb-labs/mongo-orchestration@master",
     "mongo-python-driver @ git+ssh://git@github.com/mongodb/mongo-python-driver@master",
     "pymongo-auth-aws @ git+ssh://git@github.com/mongodb/pymongo-auth-aws@main",
