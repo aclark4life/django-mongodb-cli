@@ -137,6 +137,8 @@ def repo_clone(repo_entry, url_pattern, branch_pattern, repo):
 
 
 def repo_install(clone_path):
+    if clone_path.endswith("mongo-arrow"):
+        clone_path = os.path.join(clone_path, "bindings", "python")
     if os.path.exists(os.path.join(clone_path, "pyproject.toml")):
         subprocess.run([sys.executable, "-m", "pip", "install", "-e", clone_path])
     elif os.path.exists(os.path.join(clone_path, "setup.py")):
