@@ -179,7 +179,7 @@ def repo_update(repo_entry, url_pattern, repo):
         click.echo(f"Skipping {repo_name}: Repository not found at {clone_path}")
 
 
-def repo_status(repo_entry, url_pattern, repo, reset=False):
+def repo_status(repo_entry, url_pattern, repo, reset=False, diff=False):
     """Helper function to update a single repository."""
     url_match = url_pattern.search(repo_entry)
     if not url_match:
@@ -207,6 +207,8 @@ def repo_status(repo_entry, url_pattern, repo, reset=False):
                 )
                 click.echo()
                 click.echo(click.style(repo.git.status(), fg="blue"))
+                if diff:
+                    click.echo(click.style(repo.git.diff(), fg="red"))
                 click.echo()
                 click.echo()
                 click.echo()
