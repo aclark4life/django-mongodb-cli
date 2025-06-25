@@ -44,6 +44,7 @@ alias su := django-createsuperuser
 db-init:
     # mongosh `echo ${MONGODB_URI}` --eval 'db.dropDatabase()'
     mongosh `echo mongodb://0.0.0.0/backend` --eval 'db.dropDatabase()'
+    mongosh `echo mongodb://0.0.0.0/test_djangotests` --eval 'db.dropDatabase()'
 
 # ---------------------------------------- python ----------------------------------------
 
