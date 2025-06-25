@@ -99,41 +99,6 @@ def clone(repo, ctx, repo_names, all_repos, install):
         click.echo(ctx.get_help())
 
 
-# @repo.command()
-# @click.argument("repo_names", nargs=-1)
-# @click.option(
-#     "-a",
-#     "--all-repos",
-#     is_flag=True,
-# )
-# @click.pass_context
-# @pass_repo
-# def update(repo, ctx, repo_names, all_repos):
-#     """Update cloned repositories with `git pull`."""
-#     repos, url_pattern, _ = get_repos("pyproject.toml")
-#     if repo_names:
-#         for repo_name in repo_names:
-#             for repo_entry in repos:
-#                 if (
-#                     os.path.basename(url_pattern.search(repo_entry).group(0))
-#                     == repo_name
-#                 ):
-#                     repo_update(repo_entry, url_pattern, repo)
-#                     return
-#             click.echo(f"Repository '{repo_name}' not found.")
-#         return
-#
-#     if all_repos:
-#         click.echo(f"Updating {len(repos)} repositories...")
-#         for repo_entry in repos:
-#             repo_update(repo_entry, url_pattern, repo)
-#         return
-#
-#     if ctx.args == []:
-#         click.echo(ctx.get_help())
-#
-
-
 @repo.command(context_settings={"ignore_unknown_options": True})
 @click.argument("repo_name", required=False)
 @click.argument("args", nargs=-1)
