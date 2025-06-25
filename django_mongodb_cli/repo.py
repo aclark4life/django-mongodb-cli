@@ -169,6 +169,7 @@ def makemigrations(
 @click.option("-k", "--keyword", help="Filter tests by keyword")
 @click.option("-l", "--list-tests", help="List tests", is_flag=True)
 @click.option("-s", "--show", help="Show settings", is_flag=True)
+@click.option("--keepdb", help="Keep db", is_flag=True)
 @click.pass_context
 def test(
     ctx,
@@ -177,6 +178,7 @@ def test(
     keyword,
     list_tests,
     show,
+    keepdb,
 ):
     """
     Run tests for Django fork and third-party libraries.
@@ -282,11 +284,12 @@ def test(
                                 "3",
                                 "--debug-sql",
                                 "--noinput",
-                                "--keepdb",
                             ]
                         )
                     if keyword:
                         command.extend(["-k", keyword])
+                    if keepdb:
+                        command.extend(["--keepdb"])
                     if (
                         repo_name == "django-debug-toolbar"
                         or repo_name == "django-allauth"
