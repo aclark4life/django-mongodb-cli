@@ -8,7 +8,6 @@ HOME = os.environ.get("HOME")
 
 auto_encryption_opts = encryption.get_auto_encryption_opts(
     kms_providers=kms_providers,
-    crypt_shared_lib_path=f"{HOME}/Downloads/mongo_crypt_shared_v1-macos-arm64-enterprise-8.0.10/lib/mongo_crypt_v1.dylib",
 )
 
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017/djangotests")
