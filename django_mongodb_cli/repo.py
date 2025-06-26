@@ -356,9 +356,14 @@ def test(
     "--update",
     is_flag=True,
 )
+@click.option(
+    "-l",
+    "--log",
+    is_flag=True,
+)
 @click.pass_context
 @pass_repo
-def status(repo, ctx, repo_names, all_repos, reset, diff, branch, update):
+def status(repo, ctx, repo_names, all_repos, reset, diff, branch, update, log):
     """Repository status."""
     repos, url_pattern, _ = get_repos("pyproject.toml")
     if repo_names:
@@ -377,6 +382,7 @@ def status(repo, ctx, repo_names, all_repos, reset, diff, branch, update):
                         diff=diff,
                         branch=branch,
                         update=update,
+                        log=log,
                     )
                     return
                 else:
@@ -396,6 +402,7 @@ def status(repo, ctx, repo_names, all_repos, reset, diff, branch, update):
                 diff=diff,
                 branch=branch,
                 update=update,
+                log=log,
             )
         return
 

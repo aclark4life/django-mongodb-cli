@@ -172,7 +172,14 @@ def repo_update(repo_entry, url_pattern, clone_path):
 
 
 def repo_status(
-    repo_entry, url_pattern, repo, reset=False, diff=False, branch=False, update=False
+    repo_entry,
+    url_pattern,
+    repo,
+    reset=False,
+    diff=False,
+    branch=False,
+    update=False,
+    log=False,
 ):
     """Helper function to update a single repository."""
     url_match = url_pattern.search(repo_entry)
@@ -210,6 +217,10 @@ def repo_status(
                     click.echo(repo.git.branch("--all"))
                 if update:
                     repo_update(repo_entry, url_pattern, clone_path)
+                if log:
+                    click.echo(
+                        repo.git.log("--pretty=format:'%h - %an, %ar : %s'", "--graph")
+                    )
             click.echo()
         except git.exc.NoSuchPathError:
             click.echo("Not a valid Git repository.")
