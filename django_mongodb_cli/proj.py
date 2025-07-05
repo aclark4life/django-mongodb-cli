@@ -129,9 +129,7 @@ def start(
     elif django:
         template = os.path.join(os.path.join("src", "django-mongodb-project"))
     if not template:
-        template = os.path.join(
-            os.path.join("src", "django-mongodb-templates", "project_template")
-        )
+        template = os.path.join(os.path.join("templates", "project_template"))
     click.echo(f"Using template: {template}")
     subprocess.run(
         [
@@ -143,9 +141,7 @@ def start(
             template,
         ]
     )
-    frontend_template = os.path.join(
-        "src", "django-mongodb-templates", "frontend_template"
-    )
+    frontend_template = os.path.join("templates", "frontend_template")
     click.echo(f"Using template: {frontend_template}")
     subprocess.run(
         [
@@ -158,7 +154,7 @@ def start(
         ]
     )
     if not wagtail:
-        home_template = os.path.join("src", "django-mongodb-templates", "home_template")
+        home_template = os.path.join("templates", "home_template")
         click.echo(f"Using template: {home_template}")
         subprocess.run(
             [

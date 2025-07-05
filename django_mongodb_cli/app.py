@@ -35,7 +35,7 @@ def app(context):
 
 
 @app.command()
-@click.argument("app_name", required=False, default="mongo_app")
+@click.argument("app_name", required=False, default="app_test")
 def start(app_name):
     """Run startapp command with the template from src/django-mongodb-app."""
 
@@ -46,6 +46,6 @@ def start(app_name):
         + [
             app_name,
             "--template",
-            os.path.join("src", "django-project-templates", "app_template"),
+            os.path.join("src", "django-mongodb-templates", "app_template"),
         ],
     )

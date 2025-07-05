@@ -14,6 +14,7 @@ from .utils import (
     get_management_command,
     get_repos,
     get_status,
+    get_repo_name_map,
     install_package,
 )
 
@@ -33,15 +34,6 @@ class Repo:
 pass_repo = click.make_pass_decorator(Repo)
 
 
-def get_repo_name_map(repos, url_pattern):
-    """Return a dict mapping repo_name to repo_url from a list of repo URLs."""
-    return {
-        os.path.basename(url_pattern.search(url).group(0)): url
-        for url in repos
-        if url_pattern.search(url)
-    }
-
-
 @click.group(invoke_without_command=True)
 @click.option(
     "-l",
@@ -52,7 +44,7 @@ def get_repo_name_map(repos, url_pattern):
 @click.pass_context
 def repo(context, list_repos):
     """
-    Run Django fork and third-party library tests.
+    Run tests configured to test django-mongodb-backend.
     """
     context.obj = Repo()
     repos, url_pattern, branch_pattern = get_repos("pyproject.toml")

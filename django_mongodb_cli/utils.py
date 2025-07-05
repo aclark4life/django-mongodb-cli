@@ -267,6 +267,15 @@ def clone_repo(repo_entry, url_pattern, branch_pattern, repo):
         )
 
 
+def get_repo_name_map(repos, url_pattern):
+    """Return a dict mapping repo_name to repo_url from a list of repo URLs."""
+    return {
+        os.path.basename(url_pattern.search(url).group(0)): url
+        for url in repos
+        if url_pattern.search(url)
+    }
+
+
 def install_package(clone_path):
     """
     Install a package from the given clone path.
