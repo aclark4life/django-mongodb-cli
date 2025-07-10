@@ -1,3 +1,18 @@
+import sys
+import os
+
+
+# Add test app path to sys.path
+sys.path.append(os.path.join(os.curdir, "src", "django-mongodb-backend", "tests"))
+
+import pprint
+
+pprint.pprint(sys.path)
+
+INSTALLED_APPS = [
+    "encryption_",
+]
+
 # import os
 #
 # from django_mongodb_backend import encryption, parse_uri
