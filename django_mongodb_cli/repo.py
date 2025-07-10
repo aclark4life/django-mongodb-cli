@@ -168,7 +168,7 @@ def makemigrations(context, repo_name, args):
             )
         if args:
             command.extend(args)
-        click.echo(f"Running command: {' '.join(command)}")
+        click.echo(click.style(f"Running command: {' '.join(command)}", fg="blue"))
         subprocess.run(command)
         return
 
