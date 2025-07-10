@@ -24,7 +24,7 @@ test_settings_map = {
                 "target": join("src", "django", "tests", "mongo_settings.py"),
             },
             "migrations": {
-                "source": join("test", "settings", "django.py"),
+                "source": join("test", "settings", "django_migrations.py"),
                 "target": join("src", "django", "tests", "mongo_settings.py"),
             },
             "module": {

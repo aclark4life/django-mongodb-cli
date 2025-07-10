@@ -67,9 +67,6 @@ def copy_mongo_apps(repo_name):
     try:
         click.echo(click.style(f"Copying {source} → {target}", fg="blue"))
         shutil.copyfile(source, target)
-        click.echo(
-            click.style(f"Copied {source} to {target} successfully.", fg="green")
-        )
     except FileNotFoundError as e:
         click.echo(click.style(f"File not found: {e.filename}", fg="red"))
     except Exception as e:
@@ -123,9 +120,6 @@ def copy_mongo_migrations(repo_name):
             click.style(f"Copying migrations from {source} to {target}", fg="blue")
         )
         shutil.copytree(source, target)
-        click.echo(
-            click.style(f"Copied migrations to {target} successfully.", fg="green")
-        )
     except Exception as e:
         click.echo(click.style(f"Failed to copy migrations: {e}", fg="red"))
 
@@ -150,7 +144,6 @@ def copy_mongo_settings(source, target):
     try:
         click.echo(click.style(f"Copying {source} → {target}", fg="blue"))
         shutil.copyfile(source, target)
-        click.echo(click.style(f"Copied settings to {target}.", fg="green"))
     except Exception as e:
         click.echo(click.style(f"Failed to copy settings: {e}", fg="red"))
 
