@@ -91,7 +91,6 @@ def clone(repo, context, repo_names, all_repos, install):
                     install_package(clone_path)
         return
 
-    # No options provided, show help
     click.echo(context.get_help())
 
 
@@ -128,7 +127,6 @@ def install(repo, context, repo_names, all_repos):
             click.echo(f"Repository '{name}' not found.")
         return
 
-    # No options provided, show help
     click.echo(context.get_help())
 
 
@@ -228,7 +226,6 @@ def status(repo, context, repo_names, all_repos, reset, diff, branch, update, lo
             )
         return
 
-    # No options provided, show help
     click.echo(context.get_help())
 
 
@@ -369,7 +366,6 @@ def test(
         click.echo("Can only use --all-repos with --show-settings")
         return
 
-    # No options provided, show help
     click.echo(context.get_help())
 
 
@@ -422,5 +418,4 @@ def update(repo, context, repo_names, all_repos):
             click.echo(f"Repository '{name}' not found.")
         return
 
-    # No options provided, show help
     click.echo(context.get_help())
