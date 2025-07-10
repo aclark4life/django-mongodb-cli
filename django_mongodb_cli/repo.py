@@ -22,10 +22,6 @@ from .utils import (
 class Repo:
     def __init__(self):
         self.home = "src"
-        self.config = {}
-
-    def set_config(self, key, value):
-        self.config[key] = value
 
     def __repr__(self):
         return f"<Repo {self.home}>"
@@ -39,13 +35,9 @@ pass_repo = click.make_pass_decorator(Repo)
     "-l",
     "--list-repos",
     is_flag=True,
-    help="List all repositories in `pyproject.toml`.",
 )
 @click.pass_context
 def repo(context, list_repos):
-    """
-    Run tests configured to test django-mongodb-backend.
-    """
     context.obj = Repo()
     repos, url_pattern, branch_pattern = get_repos("pyproject.toml")
     if list_repos:
@@ -62,22 +54,17 @@ def repo(context, list_repos):
     "-a",
     "--all-repos",
     is_flag=True,
-    help="Clone all repositories listed in pyproject.toml.",
 )
 @click.option(
     "-i",
     "--install",
     is_flag=True,
-    help="Install repository after cloning.",
 )
 @click.pass_context
 @pass_repo
 def clone(repo, context, repo_names, all_repos, install):
-    """Clone and optionally install repositories from pyproject.toml."""
     repos, url_pattern, branch_pattern = get_repos("pyproject.toml")
     repo_name_map = get_repo_name_map(repos, url_pattern)
-
-    # If specific repo names are given
     if repo_names:
         not_found = []
         for name in repo_names:
@@ -94,8 +81,6 @@ def clone(repo, context, repo_names, all_repos, install):
             for name in not_found:
                 click.echo(f"Repository '{name}' not found.")
         return
-
-    # If -a/--all-repos is given
     if all_repos:
         click.echo(f"Cloning {len(repos)} repositories...")
         for name, repo_url in repo_name_map.items():
@@ -106,17 +91,16 @@ def clone(repo, context, repo_names, all_repos, install):
                     install_package(clone_path)
         return
 
-    # If no args/options, show help
+    # No options provided, show help
     click.echo(context.get_help())
 
 
 @repo.command()
 @click.argument("repo_names", nargs=-1)
-@click.option("-a", "--all-repos", is_flag=True, help="Install all repositories")
+@click.option("-a", "--all-repos", is_flag=True)
 @click.pass_context
 @pass_repo
 def install(repo, context, repo_names, all_repos):
-    """Install repositories (like 'clone -i')."""
     repos, url_pattern, _ = get_repos("pyproject.toml")
     repo_name_map = get_repo_name_map(repos, url_pattern)
 
@@ -124,7 +108,6 @@ def install(repo, context, repo_names, all_repos):
         click.echo("Cannot specify both repo names and --all-repos")
         return
 
-    # If -a/--all-repos is given
     if all_repos:
         click.echo(f"Updating {len(repo_name_map)} repositories...")
         for repo_name, repo_url in repo_name_map.items():
@@ -133,7 +116,6 @@ def install(repo, context, repo_names, all_repos):
                 install_package(clone_path)
         return
 
-    # If specific repo names are given
     if repo_names:
         not_found = []
         for repo_name in repo_names:
@@ -146,6 +128,7 @@ def install(repo, context, repo_names, all_repos):
             click.echo(f"Repository '{name}' not found.")
         return
 
+    # No options provided, show help
     click.echo(context.get_help())
 
 
@@ -154,17 +137,13 @@ def install(repo, context, repo_names, all_repos):
 @click.argument("args", nargs=-1)
 @click.pass_context
 def makemigrations(context, repo_name, args):
-    """Run `makemigrations` for a cloned repository."""
     repos, url_pattern, _ = get_repos("pyproject.toml")
 
     if repo_name:
         repo_name_map = get_repo_name_map(repos, url_pattern)
-        # Check if repo exists
         if repo_name not in repo_name_map or repo_name not in test_settings_map:
             click.echo(click.style(f"Repository '{repo_name}' not found.", fg="red"))
             return
-
-        # Try settings copy
         try:
             copy_mongo_apps(repo_name)
             copy_mongo_settings(
@@ -201,20 +180,18 @@ def makemigrations(context, repo_name, args):
 
 @repo.command()
 @click.argument("repo_names", nargs=-1)
-@click.option("-a", "--all-repos", is_flag=True, help="Status for all repositories")
-@click.option("-r", "--reset", is_flag=True, help="Reset")
-@click.option("-d", "--diff", is_flag=True, help="Show diff")
-@click.option("-b", "--branch", is_flag=True, help="Show branch")
-@click.option("-u", "--update", is_flag=True, help="Update repos")
-@click.option("-l", "--log", is_flag=True, help="Show log")
+@click.option("-a", "--all-repos", is_flag=True)
+@click.option("-r", "--reset", is_flag=True)
+@click.option("-d", "--diff", is_flag=True)
+@click.option("-b", "--branch", is_flag=True)
+@click.option("-u", "--update", is_flag=True)
+@click.option("-l", "--log", is_flag=True)
 @click.pass_context
 @pass_repo
 def status(repo, context, repo_names, all_repos, reset, diff, branch, update, log):
-    """Repository status."""
     repos, url_pattern, _ = get_repos("pyproject.toml")
     repo_name_map = get_repo_name_map(repos, url_pattern)
 
-    # Status for specified repo names
     if repo_names:
         not_found = []
         for repo_name in repo_names:
@@ -236,7 +213,6 @@ def status(repo, context, repo_names, all_repos, reset, diff, branch, update, lo
             click.echo(f"Repository '{name}' not found.")
         return
 
-    # Status for all repos
     if all_repos:
         click.echo(f"Status of {len(repos)} repositories...")
         for repo_name, repo_url in repo_name_map.items():
@@ -252,23 +228,22 @@ def status(repo, context, repo_names, all_repos, reset, diff, branch, update, lo
             )
         return
 
-    # Show help if nothing selected
+    # No options provided, show help
     click.echo(context.get_help())
 
 
 @repo.command()
 @click.argument("repo_name", required=False)
 @click.argument("modules", nargs=-1)
-@click.option("-k", "--keyword", help="Filter tests by keyword")
-@click.option("-l", "--list-tests", is_flag=True, help="List tests")
-@click.option("-s", "--show-settings", is_flag=True, help="Show settings")
-@click.option("-a", "--all-repos", is_flag=True, help="All repos")
-@click.option("--keepdb", is_flag=True, help="Keep db")
+@click.option("-k", "--keyword")
+@click.option("-l", "--list-tests", is_flag=True)
+@click.option("-s", "--show-settings", is_flag=True)
+@click.option("-a", "--all-repos", is_flag=True)
+@click.option("--keepdb", is_flag=True)
 @click.pass_context
 def test(
     context, repo_name, modules, keyword, list_tests, show_settings, keepdb, all_repos
 ):
-    """Run tests for Django fork and third-party libraries."""
     repos, url_pattern, _ = get_repos("pyproject.toml")
     repo_name_map = get_repo_name_map(repos, url_pattern)
 
@@ -306,7 +281,6 @@ def test(
                     )
             return
 
-        # Prepare and copy settings, etc.
         if "settings" in settings:
             repo_dir = os.path.join(context.obj.home, repo_name)
             if not os.path.exists(repo_dir):
@@ -395,17 +369,16 @@ def test(
         click.echo("Can only use --all-repos with --show-settings")
         return
 
-    # No repo_name, show help
+    # No options provided, show help
     click.echo(context.get_help())
 
 
 @repo.command()
 @click.argument("repo_names", nargs=-1)
-@click.option("-a", "--all-repos", is_flag=True, help="Update all repositories")
+@click.option("-a", "--all-repos", is_flag=True)
 @click.pass_context
 @pass_repo
 def update(repo, context, repo_names, all_repos):
-    """Update repositories (like 'status -u')."""
     repos, url_pattern, _ = get_repos("pyproject.toml")
     repo_name_map = get_repo_name_map(repos, url_pattern)
 
@@ -449,4 +422,5 @@ def update(repo, context, repo_names, all_repos):
             click.echo(f"Repository '{name}' not found.")
         return
 
+    # No options provided, show help
     click.echo(context.get_help())
