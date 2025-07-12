@@ -24,6 +24,10 @@ pass_app = click.make_pass_decorator(App)
 @click.group(invoke_without_command=True)
 @click.pass_context
 def app(context):
+    """
+    Creates a Django app in ./apps with django-mongodb-backend configured.
+    """
+
     context.obj = App()
     if context.invoked_subcommand is None:
         click.echo(context.get_help())
