@@ -48,10 +48,8 @@ def start(app_name):
 
     click.echo(f"Creating app '{app_name}' in ./apps")
 
-    # Make sure ./apps exists
     os.makedirs("apps", exist_ok=True)
 
-    # Run the Django startapp command
     command = get_management_command("startapp")
     subprocess.run(
         command
