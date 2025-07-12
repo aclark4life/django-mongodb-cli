@@ -40,7 +40,6 @@ def proj(context, delete):
                 click.echo(f"Skipping: {item} does not exist")
         return
 
-    # Show help only if no subcommand is invoked
     if context.invoked_subcommand is None:
         click.echo(context.get_help())
         context.exit()
