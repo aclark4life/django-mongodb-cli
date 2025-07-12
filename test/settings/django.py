@@ -2,11 +2,11 @@ import os
 
 from django_mongodb_backend import encryption, parse_uri
 
-# Queryable Encryption settings
-KEY_VAULT_NAMESPACE = encryption.get_key_vault_namespace()
 KMS_PROVIDERS = encryption.get_kms_providers()
+KMS_PROVIDER = "local"
+
 AUTO_ENCRYPTION_OPTS = encryption.get_auto_encryption_opts(
-    key_vault_namespace=KEY_VAULT_NAMESPACE,
+    key_vault_namespace=encryption.KEY_VAULT_NAMESPACE,
     kms_providers=KMS_PROVIDERS,
 )
 
