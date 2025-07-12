@@ -24,9 +24,6 @@ pass_app = click.make_pass_decorator(App)
 @click.group(invoke_without_command=True)
 @click.pass_context
 def app(context):
-    """
-    Create Django apps configured to test django-mongodb-backend.
-    """
     context.obj = App()
 
     # Show help only if no subcommand is invoked
@@ -38,8 +35,6 @@ def app(context):
 @app.command()
 @click.argument("app_name", required=False)
 def start(app_name):
-    """Run startapp with a custom template and move the app into ./apps/."""
-
     if not app_name:
         app_name = random_app_name()
 

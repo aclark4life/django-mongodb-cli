@@ -25,9 +25,6 @@ pass_proj = click.make_pass_decorator(Proj)
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
 @click.pass_context
 def proj(context, delete):
-    """
-    Create Django projects configured to test django-mongodb-backend.
-    """
     context.obj = Proj()
 
     if delete:
@@ -61,8 +58,6 @@ def manage(args):
 
 @proj.command()
 def run():
-    """Start the Django development server."""
-
     if os.environ.get("MONGODB_URI"):
         click.echo(os.environ["MONGODB_URI"])
 
@@ -91,7 +86,6 @@ def start(
     wagtail,
     project_name,
 ):
-    """Run Django's `startproject` with custom templates."""
     if os.path.exists("manage.py"):
         click.echo("manage.py already exists")
         return
@@ -146,7 +140,6 @@ def start(
 
 @proj.command()
 def su():
-    """Create a superuser with the username 'admin' and the email from git config."""
     try:
         user_email = subprocess.check_output(
             ["git", "config", "user.email"], text=True
