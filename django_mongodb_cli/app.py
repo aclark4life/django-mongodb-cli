@@ -25,8 +25,6 @@ pass_app = click.make_pass_decorator(App)
 @click.pass_context
 def app(context):
     context.obj = App()
-
-    # Show help only if no subcommand is invoked
     if context.invoked_subcommand is None:
         click.echo(context.get_help())
         context.exit()
