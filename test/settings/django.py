@@ -1,13 +1,20 @@
 import os
 
 from django_mongodb_backend import encryption, parse_uri
+from pymongo.encryption import AutoEncryptionOpts
 
-KMS_PROVIDER = "local"
+schema_map = {
+    "fields": [
+        {
+            "bsonType": "string",
+            "path": "ssn",
+            "queries": {"queryType": "equality", "contention": 1},
+        },
+        {"bsonType": "int", "path": "patient_id"},
+        {"bsonType": "string", "path": "patient_name"},
+    ]
+}
 
-AUTO_ENCRYPTION_OPTS = encryption.get_auto_encryption_opts(
-    key_vault_namespace=encryption.KEY_VAULT_NAMESPACE,
-    kms_providers=encryption.KMS_PROVIDERS,
-)
 
 DATABASE_ROUTERS = [encryption.EncryptedRouter()]
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
@@ -18,7 +25,13 @@ DATABASES = {
     ),
     "encrypted": parse_uri(
         DATABASE_URL,
-        options={"auto_encryption_opts": AUTO_ENCRYPTION_OPTS},
+        options={
+            "auto_encryption_opts": AutoEncryptionOpts(
+                key_vault_namespace=encryption.KEY_VAULT_NAMESPACE,
+                kms_providers=encryption.KMS_PROVIDERS,
+                schema_map=schema_map,
+            )
+        },
         db_name="encrypted",
     ),
 }
