@@ -3,16 +3,29 @@ import os
 from django_mongodb_backend import encryption, parse_uri
 from pymongo.encryption import AutoEncryptionOpts
 
-schema_map = {
-    "fields": [
-        {
-            "bsonType": "string",
-            "path": "ssn",
-            "queries": {"queryType": "equality", "contention": 1},
-        },
-        {"bsonType": "int", "path": "patient_id"},
-        {"bsonType": "string", "path": "patient_name"},
-    ]
+SCHEMA_MAP = {
+    "encryption_.encryption__patientrecord": {
+        "fields": [
+            {"bsonType": "string", "path": "ssn", "queries": {"queryType": "equality"}}
+        ]
+    },
+    "encryption_.encryption__patient": {
+        "fields": [
+            {"bsonType": "int", "path": "patient_id"},
+            {
+                "bsonType": "int",
+                "path": "patient_age",
+                "queries": {"queryType": "range"},
+            },
+            {"bsonType": "string", "path": "patient_name"},
+        ]
+    },
+    "encryption_.encryption__post": {
+        "fields": [{"bsonType": "string", "path": "title"}]
+    },
+    "encryption_.encryption__integermodel": {
+        "fields": [{"bsonType": "int", "path": "value"}]
+    },
 }
 
 
@@ -29,7 +42,7 @@ DATABASES = {
             "auto_encryption_opts": AutoEncryptionOpts(
                 key_vault_namespace=encryption.KEY_VAULT_NAMESPACE,
                 kms_providers=encryption.KMS_PROVIDERS,
-                schema_map=schema_map,
+                schema_map=SCHEMA_MAP,
             )
         },
         db_name="encrypted",
