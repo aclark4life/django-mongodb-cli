@@ -22,6 +22,7 @@ DATABASES = {
         db_name="encrypted",
     ),
 }
+DATABASES["encrypted"]["KMS_PROVIDERS"] = encryption.KMS_PROVIDERS
 
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher",)
