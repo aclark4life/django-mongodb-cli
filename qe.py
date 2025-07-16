@@ -17,9 +17,9 @@ client_encryption = ClientEncryption(
     KMS_PROVIDERS, KEY_VAULT_NAMESPACE, client, codec_options
 )
 
-client.drop_database("test")
+client.drop_database("qe")
 
-database = client["test"]
+database = client["qe"]
 
 encrypted_fields = {
     "fields": [
