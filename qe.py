@@ -36,10 +36,10 @@ encrypted_fields = {
     ]
 }
 try:
-    encrypted_collection = client_encryption.create_encrypted_collection(
+    collection = client_encryption.create_encrypted_collection(
         database, "patient", encrypted_fields, "local"
     )
-    patient_document = {
+    patient = {
         "patientName": "Jon Doe",
         "patientId": 12345678,
         "patientRecord": {
@@ -51,9 +51,9 @@ try:
             "billAmount": 1500,
         },
     }
-    encrypted_collection = client[DB_NAME][COLLECTION_NAME]
-    encrypted_collection.insert_one(patient_document)
-    print(encrypted_collection.find_one({"patientRecord.ssn": "987-65-4320"}))
+    collection = client[DB_NAME][COLLECTION_NAME]
+    collection.insert_one(patient)
+    print(collection.find_one({"patientRecord.ssn": "987-65-4320"}))
 
 except EncryptedCollectionError as e:
     print(f"Encrypted collection error: {e}")
