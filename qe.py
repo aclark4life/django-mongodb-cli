@@ -36,7 +36,7 @@ encrypted_fields = {
 }
 try:
     encrypted_collection = client_encryption.create_encrypted_collection(
-        database, "encrypted_collection", encrypted_fields, "local"
+        database, "patient", encrypted_fields, "local"
     )
     patient_document = {
         "patientName": "Jon Doe",
