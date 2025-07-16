@@ -17,9 +17,10 @@ client_encryption = ClientEncryption(
     KMS_PROVIDERS, KEY_VAULT_NAMESPACE, client, codec_options
 )
 
-client.drop_database("qe")
-
-database = client["qe"]
+COLLECTION_NAME = "patient"
+DB_NAME = "qe"
+client.drop_database(DB_NAME)
+database = client[DB_NAME]
 
 encrypted_fields = {
     "fields": [
@@ -50,7 +51,7 @@ try:
             "billAmount": 1500,
         },
     }
-    encrypted_collection = client["test"]["encrypted_collection"]
+    encrypted_collection = client[DB_NAME][COLLECTION_NAME]
     encrypted_collection.insert_one(patient_document)
     print(encrypted_collection.find_one({"patientRecord.ssn": "987-65-4320"}))
 
