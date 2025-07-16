@@ -1,27 +1,20 @@
-from bson.binary import STANDARD
 from bson.codec_options import CodecOptions
 from pymongo import MongoClient
-from pymongo.encryption import ClientEncryption
+from pymongo.encryption import ClientEncryption, AutoEncryptionOpts
 from pymongo.errors import EncryptedCollectionError
-from django_mongodb_backend.encryption import (
-    get_auto_encryption_opts,
-    get_kms_providers,
-    get_key_vault_namespace,
-)
 
-kms_providers = get_kms_providers()
-key_vault_namespace = get_key_vault_namespace()
+from django_mongodb_backend.encryption import KEY_VAULT_NAMESPACE, KMS_PROVIDERS
 
 client = MongoClient(
-    auto_encryption_opts=get_auto_encryption_opts(
-        key_vault_namespace=key_vault_namespace,
-        kms_providers=kms_providers,
+    auto_encryption_opts=AutoEncryptionOpts(
+        key_vault_namespace=KEY_VAULT_NAMESPACE,
+        kms_providers=KMS_PROVIDERS,
     )
 )
 
-codec_options = CodecOptions(uuid_representation=STANDARD)
+codec_options = CodecOptions()
 client_encryption = ClientEncryption(
-    kms_providers, key_vault_namespace, client, codec_options
+    KMS_PROVIDERS, KEY_VAULT_NAMESPACE, client, codec_options
 )
 
 client.drop_database("test")
