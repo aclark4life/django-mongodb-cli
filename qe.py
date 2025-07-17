@@ -3,7 +3,9 @@ from pymongo import MongoClient
 from pymongo.encryption import ClientEncryption, AutoEncryptionOpts
 from pymongo.errors import EncryptedCollectionError
 
-from django_mongodb_backend.encryption import KEY_VAULT_NAMESPACE, KMS_PROVIDERS
+from django_mongodb_backend.encryption import KMS_PROVIDERS
+
+KEY_VAULT_NAMESPACE = "encryption.__keyVault"
 
 client = MongoClient(
     auto_encryption_opts=AutoEncryptionOpts(
