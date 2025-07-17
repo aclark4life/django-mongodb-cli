@@ -41,6 +41,7 @@ SCHEMA_MAP = {
 
 DATABASE_ROUTERS = [encryption.EncryptedRouter()]
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
+KEY_VAULT_NAMESPACE = "encrypted.__keyvault"
 DATABASES = {
     "default": parse_uri(
         DATABASE_URL,
@@ -50,7 +51,7 @@ DATABASES = {
         DATABASE_URL,
         options={
             "auto_encryption_opts": AutoEncryptionOpts(
-                key_vault_namespace=encryption.KEY_VAULT_NAMESPACE,
+                key_vault_namespace=KEY_VAULT_NAMESPACE,
                 kms_providers=encryption.KMS_PROVIDERS,
                 schema_map=SCHEMA_MAP,
             )
