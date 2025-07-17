@@ -46,6 +46,7 @@ dev = [
     "django-mongodb-project @ git+ssh://git@github.com/mongodb-labs/django-mongodb-project@5.2.x",
     "django-mongodb-templates @ git+ssh://git@github.com/aclark4life/django-mongodb-templates@main",
     "django-rest-framework @ git+ssh://git@github.com/encode/django-rest-framework@main",
+    "drivers-evergreen-tools @ git+ssh://git@github.com/mongodb-labs/drivers-evergreen-tools@master",
     "docs @ git+ssh://git@github.com/mongodb/docs@main",
     "flask-pymongo @ git+ssh://git@github.com/mongodb-labs/flask-pymongo",
     "langchain-mongodb @ git+ssh://git@github.com/langchain-ai/langchain-mongodb@main",
