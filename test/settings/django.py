@@ -3,39 +3,41 @@ import os
 from django_mongodb_backend import encryption, parse_uri
 from pymongo.encryption import AutoEncryptionOpts
 
-SCHEMA_MAP = {
-    "encryption__billing": {
+EXPECTED_ENCRYPTED_FIELDS_MAP = {
+    "encrypted.billing": {
         "fields": [
             {
                 "bsonType": "string",
-                "path": "cc_type",
+                "path": "billing.cc_type",
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "int",
-                "path": "cc_number",
+                "path": "billing.cc_number",
                 "queries": {"queryType": "equality"},
             },
         ]
     },
-    "encryption__patientrecord": {
+    "encrypted.patientrecord": {
         "fields": [
-            {"bsonType": "string", "path": "ssn", "queries": {"queryType": "equality"}}
+            {
+                "bsonType": "string",
+                "path": "patientrecord.ssn",
+                "queries": {"queryType": "equality"},
+            }
         ]
     },
-    "encryption__patient": {
+    "encrypted.patient": {
         "fields": [
-            {"bsonType": "int", "path": "patient_id"},
             {
                 "bsonType": "int",
-                "path": "patient_age",
+                "path": "patient.patient_age",
                 "queries": {"queryType": "range"},
             },
-            {"bsonType": "string", "path": "patient_name"},
+            {"bsonType": "int", "path": "patient.patient_id"},
+            {"bsonType": "string", "path": "patient.patient_name"},
         ]
     },
-    "encryption__post": {"fields": [{"bsonType": "string", "path": "title"}]},
-    "encryption__integermodel": {"fields": [{"bsonType": "int", "path": "value"}]},
 }
 
 
@@ -53,7 +55,7 @@ DATABASES = {
             "auto_encryption_opts": AutoEncryptionOpts(
                 key_vault_namespace=KEY_VAULT_NAMESPACE,
                 kms_providers=encryption.KMS_PROVIDERS,
-                schema_map=SCHEMA_MAP,
+                schema_map=EXPECTED_ENCRYPTED_FIELDS_MAP,
             )
         },
         db_name="encrypted",
