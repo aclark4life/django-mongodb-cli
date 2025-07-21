@@ -55,7 +55,7 @@ DATABASES = {
             "auto_encryption_opts": AutoEncryptionOpts(
                 key_vault_namespace=KEY_VAULT_NAMESPACE,
                 kms_providers=encryption.KMS_PROVIDERS,
-                schema_map=EXPECTED_ENCRYPTED_FIELDS_MAP,
+                # schema_map=EXPECTED_ENCRYPTED_FIELDS_MAP,
             )
         },
         db_name="encrypted",
