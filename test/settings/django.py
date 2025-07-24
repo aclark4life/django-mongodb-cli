@@ -111,7 +111,7 @@ DATABASES = {
         DATABASE_URL,
         db_name="test",
     ),
-    "encrypted": parse_uri(
+    "my_encrypted_database": parse_uri(
         DATABASE_URL,
         options={
             "auto_encryption_opts": AutoEncryptionOpts(
@@ -120,10 +120,10 @@ DATABASES = {
                 # schema_map=EXPECTED_ENCRYPTED_FIELDS_MAP,
             )
         },
-        db_name="encrypted",
+        db_name="my_encrypted_database",
     ),
 }
-DATABASES["encrypted"]["KMS_CREDENTIALS"] = encryption.KMS_CREDENTIALS
+DATABASES["my_encrypted_database"]["KMS_CREDENTIALS"] = encryption.KMS_CREDENTIALS
 
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher",)
