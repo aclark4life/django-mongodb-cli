@@ -5,7 +5,6 @@ dependencies = [
     "GitPython",  # For git integration
     "Sphinx",  # For django-mongodb-backend documentation
     "black",
-    "click",
     "django-extensions",  # <3 django-extensions
     "django-debug-toolbar",
     "django-ninja",  # For django-allauth
@@ -28,6 +27,7 @@ dependencies = [
     "sphinx-autobuild",  # For django-mongodb-backend documentation
     "sphinx-copybutton",  # For django-mongodb-backend documentation
     "toml",
+    "typer",
     "wagtail",  # For django-mongodb-templates
 ]
 
