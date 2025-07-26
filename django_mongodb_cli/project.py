@@ -7,7 +7,7 @@ import subprocess
 from .utils import DELETE_DIRS_AND_FILES, get_management_command
 
 
-class Proj:
+class Project:
     def __init__(self):
         self.config = {}
 
@@ -18,14 +18,14 @@ class Proj:
         return f"<Proj {self}>"
 
 
-pass_proj = click.make_pass_decorator(Proj)
+pass_project = click.make_pass_decorator(Project)
 
 
 @click.group(invoke_without_command=True)
 @click.option("-d", "--delete", is_flag=True, help="Delete existing project files")
 @click.pass_context
-def proj(context, delete):
-    context.obj = Proj()
+def project(context, delete):
+    context.obj = Project()
 
     if delete:
         for item, check_function in DELETE_DIRS_AND_FILES.items():
@@ -45,7 +45,7 @@ def proj(context, delete):
         context.exit()
 
 
-@proj.command(context_settings={"ignore_unknown_options": True})
+@project.command(context_settings={"ignore_unknown_options": True})
 @click.argument("args", nargs=-1)
 def manage(args):
     """Run management commands."""
@@ -55,7 +55,7 @@ def manage(args):
     subprocess.run(command + [*args])
 
 
-@proj.command()
+@project.command()
 def run():
     if os.environ.get("MONGODB_URI"):
         click.echo(os.environ["MONGODB_URI"])
@@ -76,7 +76,7 @@ def run():
     django_process.wait()
 
 
-@proj.command()
+@project.command()
 @click.option("-dj", "--django", is_flag=True, help="Use django mongodb template")
 @click.option("-w", "--wagtail", is_flag=True, help="Use wagtail mongodb template")
 @click.argument("project_name", required=False, default="backend")
@@ -137,7 +137,7 @@ def start(
         )
 
 
-@proj.command()
+@project.command()
 def su():
     try:
         user_email = subprocess.check_output(

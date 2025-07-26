@@ -2,7 +2,7 @@ import click
 import sys
 
 from .app import app
-from .proj import proj
+from .project import project
 from .repo import repo
 
 
@@ -19,5 +19,5 @@ def cli():
 
 
 cli.add_command(app)
-cli.add_command(proj)
+cli.add_command(project)
 cli.add_command(repo)
