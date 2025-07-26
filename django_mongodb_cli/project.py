@@ -80,7 +80,7 @@ def run():
 @click.option("-dj", "--django", is_flag=True, help="Use django mongodb template")
 @click.option("-w", "--wagtail", is_flag=True, help="Use wagtail mongodb template")
 @click.argument("project_name", required=False, default="backend")
-def start(
+def new(
     django,
     wagtail,
     project_name,
