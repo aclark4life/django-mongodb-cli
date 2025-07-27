@@ -1,11 +1,16 @@
 import typer
 
+from git import Repo
+
 repo = typer.Typer()
 
 
 @repo.command()
-def run():
-    typer.echo("Running app!")
+def status():
+    repo = Repo(".")
+    typer.echo(f"Active branch: {repo.active_branch}")
+    for item in repo.index.diff(None):
+        typer.echo(f"Modified: {item.a_path}")
 
 
 # import os
