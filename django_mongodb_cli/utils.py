@@ -7,6 +7,7 @@ import subprocess
 import tempfile
 
 from git import Repo as GitRepo
+from git import GitCommandError
 from pathlib import Path
 
 URL_PATTERN = re.compile(r"git\+ssh://(?:[^@]+@)?([^/]+)/([^@]+)")
@@ -25,11 +26,16 @@ class Repo:
     def __init__(self, pyproject_file: Path = Path("pyproject.toml")):
         self.pyproject_file = pyproject_file
         self.config = self._load_config()
-        self.path = Path(self.config["tool"]["django_mongodb_cli"]["path"])
+
+        # This is the parent directory where repositories will be cloned
+        self.clone_dir = Path(
+            self.config.get("tool", {})
+            .get("django-mongodb-cli", {})
+            .get("clone_dir", ".")
+        ).resolve()
+
         self.map = self.get_map()
         self.branch = None
-        self.user = None
-        self.reset = False
 
     def _load_config(self) -> dict:
         return toml.load(self.pyproject_file)
@@ -259,13 +265,65 @@ class Repo:
     def get_map(self) -> dict:
         """
         Return a dict mapping repo_name to repo_url from repos in
-        [tool.django_mongodb_cli.repos].
+        [tool.django-mongodb-cli.repos].
         """
         return {
             repo.split("@", 1)[0].strip(): repo.split("@", 1)[1].strip()
-            for repo in self.config["tool"]["django_mongodb_cli"].get("repos", [])
+            for repo in self.config.get("tool", {})
+            .get("django-mongodb-cli", {})
+            .get("repos", [])
             if "@" in repo
         }
+
+    def get_repo_branch(self, repo_name: str) -> list:
+        """
+        Get the current branch of the specified repository.
+        If the repository does not exist, return an empty list.
+        """
+        path = self.get_repo_path(repo_name)
+        repo = self.get_repo(path)
+
+        # Checkout or create branch if self.branch is set
+        if self.branch:
+            try:
+                typer.echo(
+                    typer.style(
+                        f"Checking out branch: {self.branch}", fg=typer.colors.CYAN
+                    )
+                )
+                repo.git.checkout(self.branch)
+                return
+            except GitCommandError:
+                typer.echo(
+                    typer.style(
+                        f"Branch '{self.branch}' does not exist. Creating new branch.",
+                        fg=typer.colors.YELLOW,
+                    )
+                )
+                repo.git.checkout("-b", self.branch)
+                return
+
+        typer.echo(
+            typer.style(f"Getting current branch for {repo_name}", fg=typer.colors.CYAN)
+        )
+
+        if not os.path.exists(path):
+            typer.echo(
+                typer.style(
+                    f"Repository '{repo_name}' not found at path: {path}",
+                    fg=typer.colors.RED,
+                )
+            )
+            return []
+
+        current_branch = repo.active_branch.name
+        typer.echo(
+            typer.style(
+                f"Current branch for {repo_name}: {current_branch}",
+                fg=typer.colors.GREEN,
+            )
+        )
+        return [current_branch]
 
     def get_repo_branches(self, repo_name: str) -> list:
         """
@@ -295,13 +353,6 @@ class Repo:
             if ref.name != "origin/HEAD"
         ]
 
-        if self.branch:
-            typer.echo(
-                typer.style(f"Checking out branch: {self.branch}", fg=typer.colors.CYAN)
-            )
-            repo.git.checkout(self.branch)
-            return
-
         typer.echo(
             typer.style(
                 f"Getting branches for repository: {repo_name}", fg=typer.colors.CYAN
@@ -313,9 +364,9 @@ class Repo:
         for name in sorted(all_branches):
             typer.echo(f"  - {name}")
 
-    def get_repo_origin(self, repo_name: str) -> str:
+    def get_repo_origin(self, repo_name: str, repo_user: str) -> str:
         """
-        Get the origin URL of the specified repository.
+        Get or set then get the origin URL of the specified repository.
         """
         typer.echo(
             typer.style(
@@ -335,24 +386,31 @@ class Repo:
 
         repo = self.get_repo(path)
         origin_url = repo.remotes.origin.url
+
+        # Set origin URL if user is in origin_users
         origin_users = (
-            self.config.get("tool").get("django_mongodb_cli").get("origin", [])
+            self.config.get("tool").get("django-mongodb-cli").get("origin", [])
         )
-        if repo_name in origin_users and self.user:
+        if repo_name in origin_users and repo_user:
             for user in origin_users[repo_name]:
                 if user.get("user") == self.user:
+                    typer.echo(
+                        typer.style(
+                            f"Setting origin URL for {repo_name}: {origin_url}",
+                            fg=typer.colors.GREEN,
+                        )
+                    )
                     origin_url = user.get("repo")
                     origin = repo.remotes.origin
                     origin.set_url(origin_url)
-            typer.echo(
-                typer.style(
-                    f"Origin URL for {repo_name}: {origin_url}", fg=typer.colors.GREEN
-                )
+        typer.echo(
+            typer.style(
+                f"Origin URL for {repo_name}: {origin_url}", fg=typer.colors.GREEN
             )
-        return origin_url
+        )
 
-    def get_repo_path(self, name: str) -> Path:
-        return (self.path / name).resolve()
+    def get_repo_path(self, repo_name: str) -> Path:
+        return (self.clone_dir / repo_name).resolve()
 
     def get_repo(self, path: str) -> GitRepo:
         return GitRepo(path)
@@ -361,32 +419,6 @@ class Repo:
         """
         Get the status of a repository.
         """
-        if self.reset:
-            typer.echo(
-                typer.style(f"Resetting repository: {repo_name}", fg=typer.colors.CYAN)
-            )
-            path = self.get_repo_path(repo_name)
-            if not os.path.exists(path):
-                typer.echo(
-                    typer.style(
-                        f"Repository '{repo_name}' not found at path: {path}",
-                        fg=typer.colors.RED,
-                    )
-                )
-                return
-            repo = self.get_repo(path)
-            repo.git.reset("--hard")
-            typer.echo(
-                typer.style(
-                    f"✅ Repository {repo_name} has been reset.", fg=typer.colors.GREEN
-                )
-            )
-            return
-        typer.echo(
-            typer.style(
-                f"Getting status for repository: {repo_name}", fg=typer.colors.CYAN
-            )
-        )
 
         path = self.get_repo_path(repo_name)
         if not os.path.exists(path):
@@ -444,7 +476,7 @@ class Repo:
 
     def list_repos(self) -> None:
         """
-        List all repositories found either in self.map or as directories in self.path.
+        List all repositories found either in self.map or as directories in self.clone_dir.
         """
         typer.echo(typer.style("Listing repositories...", fg=typer.colors.CYAN))
 
@@ -453,11 +485,11 @@ class Repo:
 
         # Set from filesystem
         try:
-            fs_entries = os.listdir(self.path)
+            fs_entries = os.listdir(self.clone_dir)
             fs_repos = {
                 entry
                 for entry in fs_entries
-                if os.path.isdir(os.path.join(self.path, entry))
+                if os.path.isdir(os.path.join(self.clone_dir, entry))
             }
         except Exception as e:
             typer.echo(
@@ -540,16 +572,10 @@ class Repo:
                 )
             )
 
-    def run_tests(self, repo_name: str) -> None:
-        """
-        Run tests for the specified repository.
-        """
+    def reset_repo(self, repo_name: str) -> None:
         typer.echo(
-            typer.style(
-                f"Running tests for repository: {repo_name}", fg=typer.colors.CYAN
-            )
+            typer.style(f"Resetting repository: {repo_name}", fg=typer.colors.CYAN)
         )
-
         path = self.get_repo_path(repo_name)
         if not os.path.exists(path):
             typer.echo(
@@ -559,14 +585,62 @@ class Repo:
                 )
             )
             return
-
-        Test().run_tests(repo_name)
+        repo = self.get_repo(path)
+        repo.git.reset("--hard")
         typer.echo(
             typer.style(
-                f"✅ Tests completed successfully for {repo_name}.",
-                fg=typer.colors.GREEN,
+                f"✅ Repository {repo_name} has been reset.", fg=typer.colors.GREEN
             )
         )
+
+    def _list_tests(self, repo_name: str) -> None:
+        """
+        List all tests for the specified repository.
+        """
+        typer.echo(
+            typer.style(
+                f"Listing tests for repository: {repo_name}", fg=typer.colors.CYAN
+            )
+        )
+
+        test_dir = (
+            self.config.get("tool")
+            .get("django-mongodb-cli")
+            .get("test")
+            .get(repo_name)
+            .get("test_dir")
+        )
+        if not os.path.exists(test_dir):
+            typer.echo(
+                typer.style(
+                    f"Test directory '{test_dir}' does not exist for {repo_name}.",
+                    fg=typer.colors.RED,
+                )
+            )
+            return
+        try:
+            test_files = [
+                f
+                for f in os.listdir(test_dir)
+                if f.endswith(".py") and not f.startswith("__")
+            ]
+            if not test_files:
+                typer.echo(
+                    typer.style(
+                        f"No tests found in {test_dir} for {repo_name}.",
+                        fg=typer.colors.YELLOW,
+                    )
+                )
+                return
+            typer.echo(typer.style("Found tests:", fg=typer.colors.GREEN))
+            for test_file in sorted(test_files):
+                typer.echo(f"  - {test_file}")
+        except Exception as e:
+            typer.echo(
+                typer.style(
+                    f"❌ Failed to list tests for {repo_name}: {e}", fg=typer.colors.RED
+                )
+            )
 
     def set_branch(self, branch: str) -> None:
         self.branch = branch
@@ -575,12 +649,7 @@ class Repo:
         self.reset = reset
 
     def set_user(self, user: str) -> None:
-        """
-        Set the user for the repository operations.
-        This can be used to specify which user to use for operations like cloning.
-        """
         self.user = user
-        typer.echo(typer.style(f"User set to: {self.user}", fg=typer.colors.CYAN))
 
     def sync_repo(self, repo_name: str) -> None:
         """
@@ -603,13 +672,18 @@ class Repo:
                     f"Pulling latest changes for {repo_name}...", fg=typer.colors.CYAN
                 )
             )
-            repo.remotes.origin.pull()
+            typer.echo(repo.git.pull())
             typer.echo(
                 typer.style(
                     f"✅ Successfully pulled latest changes for {repo_name}.",
                     fg=typer.colors.GREEN,
                 )
             )
+        except Exception as e:
+            typer.echo(
+                typer.style(f"❌ Failed to pull {repo_name}: {e}", fg=typer.colors.RED)
+            )
+        try:
             # Identify current branch
             current_branch = repo.active_branch.name
             typer.echo(
@@ -631,10 +705,12 @@ class Repo:
                     fg=typer.colors.GREEN,
                 )
             )
-        except Exception as e:
+        except Exception:
             typer.echo(
                 typer.style(
-                    f"❌ Failed to synchronize {repo_name}: {e}", fg=typer.colors.RED
+                    # f"❌ Failed to push {repo_name}: {e}", fg=typer.colors.RED
+                    f"Failed to push to repository: '{repo_name}'",
+                    fg=typer.colors.RED,
                 )
             )
 
@@ -734,6 +810,7 @@ class Test(Repo):
         self.keep_db = False
         self.keyword = None
         self.setenv = False
+        self.list_tests = False
 
     def copy_settings(self, repo_name: str) -> None:
         """
@@ -801,21 +878,21 @@ class Test(Repo):
         )
         project_name = (
             self.config.get("tool", {})
-            .get("django_mongodb_cli", {})
+            .get("django-mongodb-cli", {})
             .get("evergreen", {})
             .get(repo_name)
             .get("project_name")
         )
         subprocess.run(
-            ["evergreen", "patch", "-p", project_name, "-u", "--finalize"],
+            ["evergreen", "patch", "-p", project_name, "-u"],
             check=True,
             cwd=self.get_repo_path(repo_name),
         )
 
-    def run_tests(self, repo_name: str) -> None:
+    def _run_tests(self, repo_name: str) -> None:
         self.test_settings = (
             self.config.get("tool", {})
-            .get("django_mongodb_cli", {})
+            .get("django-mongodb-cli", {})
             .get("test", {})
             .get(repo_name, {})
         )
@@ -867,6 +944,44 @@ class Test(Repo):
             cwd=test_dir,
         )
 
+    def run_tests(self, repo_name: str) -> None:
+        """
+        Run tests for the specified repository.
+        """
+
+        if self.list_tests:
+            typer.echo(
+                typer.style(
+                    f"Listing tests for repository: {repo_name}", fg=typer.colors.CYAN
+                )
+            )
+            self._list_tests(repo_name)
+            return
+
+        typer.echo(
+            typer.style(
+                f"Running tests for repository: {repo_name}", fg=typer.colors.CYAN
+            )
+        )
+
+        path = self.get_repo_path(repo_name)
+        if not os.path.exists(path):
+            typer.echo(
+                typer.style(
+                    f"Repository '{repo_name}' not found at path: {path}",
+                    fg=typer.colors.RED,
+                )
+            )
+            return
+
+        self._run_tests(repo_name)
+        typer.echo(
+            typer.style(
+                f"✅ Tests completed successfully for {repo_name}.",
+                fg=typer.colors.GREEN,
+            )
+        )
+
     def set_modules(self, modules: list) -> None:
         self.modules = modules
 
@@ -878,6 +993,117 @@ class Test(Repo):
         """Set a keyword to filter tests."""
         self.keyword = keyword
 
+    def set_list_tests(self, list_tests: bool) -> None:
+        """Set whether to list tests instead of running them."""
+        self.list_tests = list_tests
+
     def set_env(self, setenv: bool) -> None:
         """Set whether to set DJANGO_SETTINGS_MODULE environment variable."""
         self.setenv = setenv
+
+
+class Docs(Repo):
+    """
+    Docs is a subclass of Repo that provides additional functionality
+    for generating and managing documentation.
+    It inherits methods from the Repo class and can be extended with
+    more documentation-specific methods if needed.
+    """
+
+    def __init__(self, pyproject_file: Path = Path("pyproject.toml")):
+        super().__init__(pyproject_file)
+        self.docs_dir = (
+            self.config.get("tool", {})
+            .get("django-mongodb-cli", {})
+            .get("docs", {})
+            .get("docs_dir", "docs")
+        )
+
+    def sphinx_build(self, repo_name: str) -> None:
+        """
+        Generate documentation for the specified repository.
+        """
+        typer.echo(
+            typer.style(
+                f"Generating documentation for repository: {repo_name}",
+                fg=typer.colors.CYAN,
+            )
+        )
+
+        if not os.path.exists(self.clone_dir):
+            typer.echo(
+                typer.style(
+                    f"Repository '{repo_name}' not found at path: {self.clone_dir}",
+                    fg=typer.colors.RED,
+                )
+            )
+            return
+
+        docs_path = os.path.join(self.clone_dir, self.docs_dir)
+        if not os.path.exists(docs_path):
+            typer.echo(
+                typer.style(
+                    f"Documentation directory '{docs_path}' does not exist for {repo_name}.",
+                    fg=typer.colors.RED,
+                )
+            )
+            return
+
+        try:
+            subprocess.run(["make", "html"], cwd=docs_path, check=True)
+            typer.echo(
+                typer.style(
+                    f"✅ Documentation generated successfully for {repo_name}.",
+                    fg=typer.colors.GREEN,
+                )
+            )
+        except subprocess.CalledProcessError as e:
+            typer.echo(
+                typer.style(
+                    f"❌ Failed to generate documentation for {repo_name}: {e}",
+                    fg=typer.colors.RED,
+                )
+            )
+
+    def sphinx_open(self, repo_name: str) -> None:
+        """
+        Open the generated documentation for the specified repository.
+        """
+        typer.echo(
+            typer.style(f"Opening documentation for: {repo_name}", fg=typer.colors.CYAN)
+        )
+
+        if not os.path.exists(self.clone_dir):
+            typer.echo(
+                typer.style(
+                    f"Repository '{repo_name}' not found at path: {self.clone_dir}",
+                    fg=typer.colors.RED,
+                )
+            )
+            return
+
+        docs_path = os.path.join(self.clone_dir, self.docs_dir, "_build", "html")
+        if not os.path.exists(docs_path):
+            typer.echo(
+                typer.style(
+                    f"Documentation build directory '{docs_path}' does not exist for {repo_name}.",
+                    fg=typer.colors.RED,
+                )
+            )
+            return
+
+        try:
+            subprocess.run(["xdg-open", docs_path], check=True)
+            typer.echo(
+                typer.style(
+                    f"✅ Successfully opened documentation for {repo_name}.",
+                    fg=typer.colors.GREEN,
+                )
+            )
+        except subprocess.CalledProcessError as e:
+            typer.echo(
+                typer.style(
+                    f"❌ Failed to open documentation for {repo_name}: {e}",
+                    fg=typer.colors.RED,
+                )
+            )

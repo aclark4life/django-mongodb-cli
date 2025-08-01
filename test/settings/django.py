@@ -1,8 +1,67 @@
 import os
 
 from bson.binary import Binary
-from django_mongodb_backend import encryption, parse_uri
+from django_mongodb_backend import parse_uri
 from pymongo.encryption import AutoEncryptionOpts
+
+from django_mongodb_backend.fields import has_encrypted_fields
+
+
+KMS_CREDENTIALS = {
+    "aws": {
+        "key": os.getenv("AWS_KEY_ARN", ""),
+        "region": os.getenv("AWS_KEY_REGION", ""),
+    },
+    "azure": {
+        "keyName": os.getenv("AZURE_KEY_NAME", ""),
+        "keyVaultEndpoint": os.getenv("AZURE_KEY_VAULT_ENDPOINT", ""),
+    },
+    "gcp": {
+        "projectId": os.getenv("GCP_PROJECT_ID", ""),
+        "location": os.getenv("GCP_LOCATION", ""),
+        "keyRing": os.getenv("GCP_KEY_RING", ""),
+        "keyName": os.getenv("GCP_KEY_NAME", ""),
+    },
+    "kmip": {},
+    "local": {},
+}
+
+KMS_PROVIDERS = {
+    "aws": {},
+    "azure": {},
+    "gcp": {},
+    "kmip": {
+        "endpoint": os.getenv("KMIP_KMS_ENDPOINT", "not a valid endpoint"),
+    },
+    "local": {
+        "key": bytes.fromhex(
+            "000102030405060708090a0b0c0d0e0f"
+            "101112131415161718191a1b1c1d1e1f"
+            "202122232425262728292a2b2c2d2e2f"
+            "303132333435363738393a3b3c3d3e3f"
+            "404142434445464748494a4b4c4d4e4f"
+            "505152535455565758595a5b5c5d5e5f"
+        )
+    },
+}
+
+
+class EncryptedRouter:
+    def allow_migrate(self, db, app_label, model_name=None, model=None, **hints):
+        if model:
+            return db == ("encrypted" if has_encrypted_fields(model) else "default")
+        return db == "default"
+
+    def db_for_read(self, model, **hints):
+        if has_encrypted_fields(model):
+            return "encrypted"
+        return "default"
+
+    db_for_write = db_for_read
+
+    def kms_provider(self, model):
+        return "local"
+
 
 EXPECTED_ENCRYPTED_FIELDS_MAP = {
     "billing": {
@@ -103,7 +162,7 @@ EXPECTED_ENCRYPTED_FIELDS_MAP = {
         ]
     },
 }
-DATABASE_ROUTERS = [encryption.EncryptedRouter()]
+DATABASE_ROUTERS = [EncryptedRouter()]
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
 KEY_VAULT_NAMESPACE = "encrypted.__keyvault"
 DATABASES = {
@@ -111,19 +170,19 @@ DATABASES = {
         DATABASE_URL,
         db_name="test",
     ),
-    "my_encrypted_database": parse_uri(
+    "encrypted": parse_uri(
         DATABASE_URL,
         options={
             "auto_encryption_opts": AutoEncryptionOpts(
                 key_vault_namespace=KEY_VAULT_NAMESPACE,
-                kms_providers=encryption.KMS_PROVIDERS,
+                kms_providers=KMS_PROVIDERS,
                 # schema_map=EXPECTED_ENCRYPTED_FIELDS_MAP,
             )
         },
-        db_name="my_encrypted_database",
+        db_name="encrypted",
     ),
 }
-DATABASES["my_encrypted_database"]["KMS_CREDENTIALS"] = encryption.KMS_CREDENTIALS
+DATABASES["encrypted"]["KMS_CREDENTIALS"] = KMS_CREDENTIALS
 
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher",)
