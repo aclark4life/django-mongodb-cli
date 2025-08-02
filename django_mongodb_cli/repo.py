@@ -349,6 +349,30 @@ def sphinxbuild(
 
 
 @repo.command()
+def sphinxopen(
+    repo_name: str = typer.Argument(None),
+    all_repos: bool = typer.Option(
+        False,
+        "--all-repos",
+        "-a",
+        help="Open Sphinx documentation for all repositories",
+    ),
+):
+    """
+    Serve Sphinx documentation for the specified repository.
+    If --all-repos is used, serve documentation for all repositories.
+    """
+    repo_command(
+        all_repos,
+        repo_name,
+        all_msg="Serving Sphinx documentation for all repositories...",
+        missing_msg="Please specify a repository name or use --all-repos to serve documentation for all repositories.",
+        single_func=lambda repo_name: Docs().sphinx_open(repo_name),
+        all_func=lambda repo_name: Docs().sphinx_open(repo_name),
+    )
+
+
+@repo.command()
 def status(
     repo_name: str = typer.Argument(None),
     all_repos: bool = typer.Option(

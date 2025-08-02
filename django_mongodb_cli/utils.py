@@ -1052,3 +1052,47 @@ class Docs(Repo):
                     fg=typer.colors.RED,
                 )
             )
+
+    def sphinx_open(self, repo_name: str) -> None:
+        """
+        Open the generated documentation for the specified repository.
+        """
+        typer.echo(
+            typer.style(f"Opening documentation for: {repo_name}", fg=typer.colors.CYAN)
+        )
+
+        path = self.get_repo_path(repo_name)
+        if not os.path.exists(path):
+            typer.echo(
+                typer.style(
+                    f"Repository '{repo_name}' not found at path: {path}",
+                    fg=typer.colors.RED,
+                )
+            )
+            return
+
+        docs_path = os.path.join(path, self.docs_dir, "_build", "html")
+        if not os.path.exists(docs_path):
+            typer.echo(
+                typer.style(
+                    f"Documentation build directory '{docs_path}' does not exist for {repo_name}.",
+                    fg=typer.colors.RED,
+                )
+            )
+            return
+
+        try:
+            subprocess.run(["xdg-open", docs_path], check=True)
+            typer.echo(
+                typer.style(
+                    f"✅ Successfully opened documentation for {repo_name}.",
+                    fg=typer.colors.GREEN,
+                )
+            )
+        except subprocess.CalledProcessError as e:
+            typer.echo(
+                typer.style(
+                    f"❌ Failed to open documentation for {repo_name}: {e}",
+                    fg=typer.colors.RED,
+                )
+            )
