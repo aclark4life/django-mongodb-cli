@@ -82,7 +82,7 @@ repos = [
     "specifications @ git+ssh://git@github.com/mongodb/specifications@master",
     "winkerberos @ git+ssh://git@github.com/mongodb-labs/winkerberos@main",
 ]
-path = "src"
+base_path = "src"
 
 [tool.django-mongodb-cli.test.mongo-python-driver]
 test_command = "just"
