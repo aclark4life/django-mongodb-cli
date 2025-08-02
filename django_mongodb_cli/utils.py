@@ -987,3 +987,68 @@ class Test(Repo):
     def set_env(self, setenv: bool) -> None:
         """Set whether to set DJANGO_SETTINGS_MODULE environment variable."""
         self.setenv = setenv
+
+
+class Docs(Repo):
+    """
+    Docs is a subclass of Repo that provides additional functionality
+    for generating and managing documentation.
+    It inherits methods from the Repo class and can be extended with
+    more documentation-specific methods if needed.
+    """
+
+    def __init__(self, pyproject_file: Path = Path("pyproject.toml")):
+        super().__init__(pyproject_file)
+        self.docs_dir = (
+            self.config.get("tool", {})
+            .get("django-mongodb-cli", {})
+            .get("docs", {})
+            .get("docs_dir", "docs")
+        )
+
+    def sphinx_build(self, repo_name: str) -> None:
+        """
+        Generate documentation for the specified repository.
+        """
+        typer.echo(
+            typer.style(
+                f"Generating documentation for repository: {repo_name}",
+                fg=typer.colors.CYAN,
+            )
+        )
+
+        path = self.get_repo_path(repo_name)
+        if not os.path.exists(path):
+            typer.echo(
+                typer.style(
+                    f"Repository '{repo_name}' not found at path: {path}",
+                    fg=typer.colors.RED,
+                )
+            )
+            return
+
+        docs_path = os.path.join(path, self.docs_dir)
+        if not os.path.exists(docs_path):
+            typer.echo(
+                typer.style(
+                    f"Documentation directory '{docs_path}' does not exist for {repo_name}.",
+                    fg=typer.colors.RED,
+                )
+            )
+            return
+
+        try:
+            subprocess.run(["make", "html"], cwd=docs_path, check=True)
+            typer.echo(
+                typer.style(
+                    f"✅ Documentation generated successfully for {repo_name}.",
+                    fg=typer.colors.GREEN,
+                )
+            )
+        except subprocess.CalledProcessError as e:
+            typer.echo(
+                typer.style(
+                    f"❌ Failed to generate documentation for {repo_name}: {e}",
+                    fg=typer.colors.RED,
+                )
+            )

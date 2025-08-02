@@ -1,7 +1,7 @@
 import typer
 import os
 
-from .utils import Package, Repo, Test
+from .utils import Docs, Package, Repo, Test
 
 repo = typer.Typer()
 
@@ -62,15 +62,6 @@ def branch(
     repo = Repo()
     if branch_name:
         repo.set_branch(branch_name)
-
-    # else:
-    #     typer.echo(
-    #         typer.style(
-    #             "Create or set branch cannot be used with --all-repos.",
-    #             fg=typer.colors.RED,
-    #         )
-    #     )
-    #     return
 
     repo_command(
         all_repos,
@@ -330,6 +321,30 @@ def reset(
         missing_msg="Please specify a repository name or use --all-repos to reset all repositories.",
         single_func=reset_repo,
         all_func=reset_repo,
+    )
+
+
+@repo.command()
+def sphinxbuild(
+    repo_name: str = typer.Argument(None),
+    all_repos: bool = typer.Option(
+        False,
+        "--all-repos",
+        "-a",
+        help="Build Sphinx documentation for all repositories",
+    ),
+):
+    """
+    Build Sphinx documentation for the specified repository.
+    If --all-repos is used, build documentation for all repositories.
+    """
+    repo_command(
+        all_repos,
+        repo_name,
+        all_msg="Building Sphinx documentation for all repositories...",
+        missing_msg="Please specify a repository name or use --all-repos to build documentation for all repositories.",
+        single_func=lambda repo_name: Docs().sphinx_build(repo_name),
+        all_func=lambda repo_name: Docs().sphinx_build(repo_name),
     )
 
 
