@@ -1017,17 +1017,16 @@ class Docs(Repo):
             )
         )
 
-        path = self.get_repo_path(repo_name)
-        if not os.path.exists(path):
+        if not os.path.exists(self.path):
             typer.echo(
                 typer.style(
-                    f"Repository '{repo_name}' not found at path: {path}",
+                    f"Repository '{repo_name}' not found at path: {self.path}",
                     fg=typer.colors.RED,
                 )
             )
             return
 
-        docs_path = os.path.join(path, self.docs_dir)
+        docs_path = os.path.join(self.path, self.docs_dir)
         if not os.path.exists(docs_path):
             typer.echo(
                 typer.style(
@@ -1061,17 +1060,16 @@ class Docs(Repo):
             typer.style(f"Opening documentation for: {repo_name}", fg=typer.colors.CYAN)
         )
 
-        path = self.get_repo_path(repo_name)
-        if not os.path.exists(path):
+        if not os.path.exists(self.path):
             typer.echo(
                 typer.style(
-                    f"Repository '{repo_name}' not found at path: {path}",
+                    f"Repository '{repo_name}' not found at path: {self.path}",
                     fg=typer.colors.RED,
                 )
             )
             return
 
-        docs_path = os.path.join(path, self.docs_dir, "_build", "html")
+        docs_path = os.path.join(self.path, self.docs_dir, "_build", "html")
         if not os.path.exists(docs_path):
             typer.echo(
                 typer.style(
