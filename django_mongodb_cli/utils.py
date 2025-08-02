@@ -28,10 +28,10 @@ class Repo:
         self.config = self._load_config()
 
         # This is the parent directory where repositories will be cloned
-        self.base_path = Path(
+        self.clone_dir = Path(
             self.config.get("tool", {})
             .get("django-mongodb-cli", {})
-            .get("base_path", ".")
+            .get("clone_dir", ".")
         ).resolve()
 
         self.map = self.get_map()
@@ -409,7 +409,7 @@ class Repo:
         )
 
     def get_repo_path(self, repo_name: str) -> Path:
-        return (self.base_path / repo_name).resolve()
+        return (self.clone_dir / repo_name).resolve()
 
     def get_repo(self, path: str) -> GitRepo:
         return GitRepo(path)
@@ -475,7 +475,7 @@ class Repo:
 
     def list_repos(self) -> None:
         """
-        List all repositories found either in self.map or as directories in self.base_path.
+        List all repositories found either in self.map or as directories in self.clone_dir.
         """
         typer.echo(typer.style("Listing repositories...", fg=typer.colors.CYAN))
 
@@ -484,11 +484,11 @@ class Repo:
 
         # Set from filesystem
         try:
-            fs_entries = os.listdir(self.base_path)
+            fs_entries = os.listdir(self.clone_dir)
             fs_repos = {
                 entry
                 for entry in fs_entries
-                if os.path.isdir(os.path.join(self.base_path, entry))
+                if os.path.isdir(os.path.join(self.clone_dir, entry))
             }
         except Exception as e:
             typer.echo(
@@ -1022,16 +1022,16 @@ class Docs(Repo):
             )
         )
 
-        if not os.path.exists(self.base_path):
+        if not os.path.exists(self.clone_dir):
             typer.echo(
                 typer.style(
-                    f"Repository '{repo_name}' not found at path: {self.base_path}",
+                    f"Repository '{repo_name}' not found at path: {self.clone_dir}",
                     fg=typer.colors.RED,
                 )
             )
             return
 
-        docs_path = os.path.join(self.base_path, self.docs_dir)
+        docs_path = os.path.join(self.clone_dir, self.docs_dir)
         if not os.path.exists(docs_path):
             typer.echo(
                 typer.style(
@@ -1065,16 +1065,16 @@ class Docs(Repo):
             typer.style(f"Opening documentation for: {repo_name}", fg=typer.colors.CYAN)
         )
 
-        if not os.path.exists(self.base_path):
+        if not os.path.exists(self.clone_dir):
             typer.echo(
                 typer.style(
-                    f"Repository '{repo_name}' not found at path: {self.base_path}",
+                    f"Repository '{repo_name}' not found at path: {self.clone_dir}",
                     fg=typer.colors.RED,
                 )
             )
             return
 
-        docs_path = os.path.join(self.base_path, self.docs_dir, "_build", "html")
+        docs_path = os.path.join(self.clone_dir, self.docs_dir, "_build", "html")
         if not os.path.exists(docs_path):
             typer.echo(
                 typer.style(
