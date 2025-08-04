@@ -470,3 +470,22 @@ def test(
         repo_list=test_runner.map,
         all_func=None,
     )
+
+
+@repo.command()
+def upstream(
+    repo_name: str = typer.Argument(None),
+    upstream_name: str = typer.Argument(None, help="Upstream repository name"),
+):
+    """
+    Show or set the upstream of a repository.
+    """
+    repo = Repo()
+    repo_command(
+        False,
+        repo_name,
+        all_msg=None,
+        missing_msg="Please specify a repository name.",
+        single_func=lambda name: repo.get_repo_upstream(name, upstream_name),
+        all_func=None,
+    )

@@ -393,7 +393,7 @@ class Repo:
         )
         if repo_name in origin_users and repo_user:
             for user in origin_users[repo_name]:
-                if user.get("user") == self.user:
+                if user.get("user") == repo_user:
                     typer.echo(
                         typer.style(
                             f"Setting origin URL for {repo_name}: {origin_url}",
@@ -648,9 +648,6 @@ class Repo:
     def set_reset(self, reset: bool) -> None:
         self.reset = reset
 
-    def set_user(self, user: str) -> None:
-        self.user = user
-
     def sync_repo(self, repo_name: str) -> None:
         """
         Synchronize the repository by pulling the latest changes and then pushing local changes.
@@ -713,6 +710,53 @@ class Repo:
                     fg=typer.colors.RED,
                 )
             )
+
+    def get_repo_upstream(self, repo_name: str, upstream_name: str) -> None:
+        """
+        Get or set then get the upstream branch for the current branch of the specified repository.
+        """
+        typer.echo(
+            typer.style(
+                f"Setting upstream for repository: {repo_name}", fg=typer.colors.CYAN
+            )
+        )
+
+        path = self.get_repo_path(repo_name)
+        if not os.path.exists(path):
+            typer.echo(
+                typer.style(
+                    f"Repository '{repo_name}' not found at path: {path}",
+                    fg=typer.colors.RED,
+                )
+            )
+            return
+
+        repo = self.get_repo(path)
+        origin_users = (
+            self.config.get("tool").get("django-mongodb-cli").get("origin", [])
+        )
+        if repo_name in origin_users and upstream_name:
+            for user in origin_users[repo_name]:
+                if user.get("user") == upstream_name:
+                    origin_url = user.get("repo")
+                    typer.echo(
+                        typer.style(
+                            f"Setting upstream URL for {repo_name}: {origin_url}",
+                            fg=typer.colors.GREEN,
+                        )
+                    )
+                    # Add the upstream remote if it doesn't exist
+                    if "upstream" not in [remote.name for remote in repo.remotes]:
+                        repo.create_remote("upstream", origin_url)
+                    else:
+                        upstream = repo.remotes.upstream
+                        upstream.set_url(origin_url)
+                    typer.echo(
+                        typer.style(
+                            f"Upstream URL for {repo_name}: {origin_url}",
+                            fg=typer.colors.GREEN,
+                        )
+                    )
 
 
 class Package(Repo):
