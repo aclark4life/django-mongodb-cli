@@ -364,7 +364,7 @@ class Repo:
         for name in sorted(all_branches):
             typer.echo(f"  - {name}")
 
-    def get_repo_origin(self, repo_name: str, repo_user: str) -> str:
+    def get_repo_origin(self, repo_name: str, repo_user: str = None) -> str:
         """
         Get or set then get the origin URL of the specified repository.
         """
