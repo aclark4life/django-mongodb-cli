@@ -64,104 +64,161 @@ class EncryptedRouter:
 
 
 EXPECTED_ENCRYPTED_FIELDS_MAP = {
-    "billing": {
+    "encryption__appointment": {
+        "fields": [
+            {
+                "bsonType": "date",
+                "path": "time",
+                "queries": {"queryType": "equality"},
+                "keyId": Binary(b"\xc7K\xd8\x0b0>H]\x9d\xc2)\x07l\x07\x86;", 4),
+            }
+        ]
+    },
+    "encryption__billing": {
         "fields": [
             {
                 "bsonType": "string",
                 "path": "cc_type",
                 "queries": {"queryType": "equality"},
-                "keyId": Binary(b" \x901\x89\x1f\xafAX\x9b*\xb1\xc7\xc5\xfdl\xa4", 4),
+                "keyId": Binary(
+                    b"\x14\x08\xe7\xa92\xdeO\x01\xa4\x17(\x16p\xfb\xc6i", 4
+                ),
             },
             {
                 "bsonType": "long",
                 "path": "cc_number",
                 "queries": {"queryType": "equality"},
-                "keyId": Binary(
-                    b"\x97\xb4\x9d\xb8\xd5\xa6Ay\x85\xfe\x00\xc0\xd4{\xa2\xff", 4
-                ),
+                "keyId": Binary(b"\x06FY\xfd7-Br\xaa7A[\xf0/\x0b=", 4),
             },
             {
                 "bsonType": "decimal",
                 "path": "account_balance",
                 "queries": {"queryType": "range"},
-                "keyId": Binary(b"\xcc\x01-s\xea\xd9B\x8d\x80\xd7\xf8!n\xc6\xf5U", 4),
+                "keyId": Binary(b"o\xc2]:\x83\x9eO\x1e\xb1?\x19\x17\xfa=ah", 4),
             },
         ]
     },
-    "patientrecord": {
+    "encryption__patientportaluser": {
+        "fields": [
+            {
+                "bsonType": "string",
+                "path": "ip_address",
+                "queries": {"queryType": "equality"},
+                "keyId": Binary(b"^\x99\xde\\rHF\x94\x90\x90\x97)/2b#", 4),
+            },
+            {
+                "bsonType": "string",
+                "path": "url",
+                "queries": {"queryType": "equality"},
+                "keyId": Binary(
+                    b"\xabs\x1b\xe5\x12\x89H\x93\xa9\xc56\x02\x10\xfbsv", 4
+                ),
+            },
+        ]
+    },
+    "encryption__patientrecord": {
         "fields": [
             {
                 "bsonType": "string",
                 "path": "ssn",
                 "queries": {"queryType": "equality"},
                 "keyId": Binary(
-                    b"\x14F\x89\xde\x8d\x04K7\xa9\x9a\xaf_\xca\x8a\xfb&", 4
+                    b"\x08}\x99S\xc5\xa6F\xb9\xad\x02\xd1\xbe\xd9\x8a\xcb\xb0", 4
                 ),
             },
             {
                 "bsonType": "date",
                 "path": "birth_date",
                 "queries": {"queryType": "range"},
-                "keyId": Binary(b"@\xdd\xb4\xd2%\xc2B\x94\xb5\x07\xbc(ER[s", 4),
+                "keyId": Binary(b"g\x8e)\x89T\x9fHm\xa1\x95\x9d\xac\x93\t\x8b\xbc", 4),
             },
             {
                 "bsonType": "binData",
                 "path": "profile_picture",
                 "queries": {"queryType": "equality"},
-                "keyId": Binary(b"Q\xa2\xebc!\xecD,\x8b\xe4$\xb6ul9\x9a", 4),
+                "keyId": Binary(b"u\x13\xfe\xff\xeb\x9dM9\x8b\xbe\xaa\x7f*DW{", 4),
             },
             {
                 "bsonType": "int",
                 "path": "patient_age",
                 "queries": {"queryType": "range"},
-                "keyId": Binary(b"\ro\x80\x1e\x8e1K\xde\xbc_\xc3bi\x95\xa6j", 4),
+                "keyId": Binary(b"\xa5b\xb1S\xb0\xd2A\xf8\xbc3c@\xba\x9dAA", 4),
             },
             {
                 "bsonType": "double",
                 "path": "weight",
                 "queries": {"queryType": "range"},
                 "keyId": Binary(
-                    b"\x9b\xfd:n\xe1\xd0N\xdd\xb3\xe7e)\x06\xea\x8a\x1d", 4
+                    b"\x9fi`\xcf\xbc!L\x80\x84\x14\xe9\\\xcd\x04\xef\xd9", 4
                 ),
             },
         ]
     },
-    "patient": {
+    "encryption__patient": {
         "fields": [
             {
                 "bsonType": "int",
                 "path": "patient_id",
                 "queries": {"queryType": "equality"},
-                "keyId": Binary(b"\x8ft\x16:\x8a\x91D\xc7\x8a\xdf\xe5O\n[\xfd\\", 4),
+                "keyId": Binary(b"\xfe\xbf\xe9*+0E!\x88\x13~\x8c\xfbk:\xc0", 4),
             },
             {
                 "bsonType": "string",
                 "path": "patient_name",
-                "keyId": Binary(
-                    b"<\x9b\xba\xeb:\xa4@m\x93\x0e\x0c\xcaN\x03\xfb\x05", 4
-                ),
+                "keyId": Binary(b"3HV\xf0q\xbaAQ\x9d\xf8\xeb[\x03\xcb\xbf\x8b", 4),
             },
             {
                 "bsonType": "string",
                 "path": "patient_notes",
                 "queries": {"queryType": "equality"},
-                "keyId": Binary(b"\x01\xe7\xd1isnB$\xa9(gwO\xca\x10\xbd", 4),
+                "keyId": Binary(b"\xe0}\x96\x1cH\\I\xf8\xa3\rA\x04\x8bNpI", 4),
             },
             {
                 "bsonType": "date",
                 "path": "registration_date",
                 "queries": {"queryType": "equality"},
-                "keyId": Binary(b"F\xfb\xae\x82\xd5\x9a@\xee\xbfJ\xaf#\x9c:-I", 4),
+                "keyId": Binary(b"\xc5\xee\xabW\xa0JN|\x90\x90\xb9\xca\x193v\xd5", 4),
             },
             {
                 "bsonType": "bool",
                 "path": "is_active",
                 "queries": {"queryType": "equality"},
-                "keyId": Binary(b"\xb2\xb5\xc4K53A\xda\xb9V\xa6\xa9\x97\x94\xea;", 4),
+                "keyId": Binary(
+                    b"\xce\xee\x9d_\x97_@Z\x85\xf4\xf0 \x18\xf4\xa6\xf8", 4
+                ),
+            },
+            {
+                "bsonType": "string",
+                "path": "email",
+                "queries": {"queryType": "equality"},
+                "keyId": Binary(b"q5J/{\xdfJ\xf5\xb6?h\xf0M@\x8c\xba", 4),
+            },
+        ]
+    },
+    "encryption__encryptednumbers": {
+        "fields": [
+            {
+                "bsonType": "int",
+                "path": "pos_bigint",
+                "queries": {"queryType": "equality"},
+                "keyId": Binary(b"9\xdf\xc4u\xa0yO\xda\x8c%h\x92\xda\xf0\xd6\x0f", 4),
+            },
+            {
+                "bsonType": "int",
+                "path": "pos_smallint",
+                "queries": {"queryType": "equality"},
+                "keyId": Binary(b"h\x02O-DYGh\x99\x15\xdfd\xc4\x9aL\x97", 4),
+            },
+            {
+                "bsonType": "int",
+                "path": "smallint",
+                "queries": {"queryType": "equality"},
+                "keyId": Binary(b"K)\xe2\xd6\xadUDf\xbdu\xb7-n\x934\xfa", 4),
             },
         ]
     },
 }
+
 DATABASE_ROUTERS = [EncryptedRouter()]
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
 KEY_VAULT_NAMESPACE = "encrypted.__keyvault"
@@ -176,7 +233,7 @@ DATABASES = {
             "auto_encryption_opts": AutoEncryptionOpts(
                 key_vault_namespace=KEY_VAULT_NAMESPACE,
                 kms_providers=KMS_PROVIDERS,
-                # schema_map=EXPECTED_ENCRYPTED_FIELDS_MAP,
+                # encrypted_fields_map=EXPECTED_ENCRYPTED_FIELDS_MAP,
             )
         },
         db_name="encrypted",
