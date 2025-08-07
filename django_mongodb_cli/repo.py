@@ -232,10 +232,10 @@ def open(
 @repo.command()
 def origin(
     repo_name: str = typer.Argument(None),
-    repo_user: str = typer.Argument(None),
     all_repos: bool = typer.Option(
         False, "--all-repos", "-a", help="Show origin of all repositories"
     ),
+    repo_user: str = typer.Option(None, "--user", "-u", help="Specify repository user"),
 ):
     """
     Show or set the origin of a repository.
