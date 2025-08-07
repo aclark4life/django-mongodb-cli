@@ -589,7 +589,9 @@ class Repo:
         repo.git.reset("--hard")
         typer.echo(
             typer.style(
-                f"✅ Repository {repo_name} has been reset.", fg=typer.colors.GREEN
+                # f"✅ Repository {repo_name} has been reset.", fg=typer.colors.GREEN
+                f"Repository {repo_name} has been reset.",
+                fg=typer.colors.GREEN,
             )
         )
 
@@ -672,7 +674,9 @@ class Repo:
             typer.echo(repo.git.pull())
             typer.echo(
                 typer.style(
-                    f"✅ Successfully pulled latest changes for {repo_name}.",
+                    # f"✅ Successfully pulled latest changes for {repo_name}.",
+                    # fg=typer.colors.GREEN,
+                    f"Successfully pulled latest changes for {repo_name}.",
                     fg=typer.colors.GREEN,
                 )
             )
@@ -1097,7 +1101,9 @@ class Docs(Repo):
             subprocess.run(["make", "html"], cwd=docs_path, check=True)
             typer.echo(
                 typer.style(
-                    f"✅ Documentation generated successfully for {repo_name}.",
+                    # f"✅ Documentation generated successfully for {repo_name}.",
+                    # fg=typer.colors.GREEN,
+                    f"Documentation generated successfully for {repo_name}.",
                     fg=typer.colors.GREEN,
                 )
             )
@@ -1140,7 +1146,9 @@ class Docs(Repo):
             subprocess.run(["xdg-open", docs_path], check=True)
             typer.echo(
                 typer.style(
-                    f"✅ Successfully opened documentation for {repo_name}.",
+                    # f"✅ Successfully opened documentation for {repo_name}.",
+                    # fg=typer.colors.GREEN,
+                    f"Successfully opened documentation for {repo_name}.",
                     fg=typer.colors.GREEN,
                 )
             )
