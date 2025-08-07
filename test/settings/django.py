@@ -4,35 +4,37 @@ from bson.binary import Binary
 from django_mongodb_backend import parse_uri
 from pymongo.encryption import AutoEncryptionOpts
 
-from django_mongodb_backend.fields import has_encrypted_fields
+from django_mongodb_backend.model_utils import has_encrypted_fields
 
 
-KMS_CREDENTIALS = {
-    "aws": {
-        "key": os.getenv("AWS_KEY_ARN", ""),
-        "region": os.getenv("AWS_KEY_REGION", ""),
-    },
-    "azure": {
-        "keyName": os.getenv("AZURE_KEY_NAME", ""),
-        "keyVaultEndpoint": os.getenv("AZURE_KEY_VAULT_ENDPOINT", ""),
-    },
-    "gcp": {
-        "projectId": os.getenv("GCP_PROJECT_ID", ""),
-        "location": os.getenv("GCP_LOCATION", ""),
-        "keyRing": os.getenv("GCP_KEY_RING", ""),
-        "keyName": os.getenv("GCP_KEY_NAME", ""),
-    },
-    "kmip": {},
-    "local": {},
-}
+KMS_CREDENTIALS = {}
+
+# KMS_CREDENTIALS = {
+#     "aws": {
+#         "key": os.getenv("AWS_KEY_ARN", ""),
+#         "region": os.getenv("AWS_KEY_REGION", ""),
+#     },
+#     "azure": {
+#         "keyName": os.getenv("AZURE_KEY_NAME", ""),
+#         "keyVaultEndpoint": os.getenv("AZURE_KEY_VAULT_ENDPOINT", ""),
+#     },
+#     "gcp": {
+#         "projectId": os.getenv("GCP_PROJECT_ID", ""),
+#         "location": os.getenv("GCP_LOCATION", ""),
+#         "keyRing": os.getenv("GCP_KEY_RING", ""),
+#         "keyName": os.getenv("GCP_KEY_NAME", ""),
+#     },
+#     "kmip": {},
+#     "local": {},
+# }
 
 KMS_PROVIDERS = {
-    "aws": {},
-    "azure": {},
-    "gcp": {},
-    "kmip": {
-        "endpoint": os.getenv("KMIP_KMS_ENDPOINT", "not a valid endpoint"),
-    },
+    # "aws": {},
+    # "azure": {},
+    # "gcp": {},
+    # "kmip": {
+    #     "endpoint": os.getenv("KMIP_KMS_ENDPOINT", "not a valid endpoint"),
+    # },
     "local": {
         "key": bytes.fromhex(
             "000102030405060708090a0b0c0d0e0f"
