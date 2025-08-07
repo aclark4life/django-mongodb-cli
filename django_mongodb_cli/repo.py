@@ -46,13 +46,13 @@ def main(
 @repo.command()
 def branch(
     repo_name: str = typer.Argument(None),
-    branch_name: str = typer.Argument(None),
     list_branches: bool = typer.Option(
         False, "--list-branches", "-l", help="List branches of the repository"
     ),
     all_repos: bool = typer.Option(
         False, "--all-repos", "-a", help="Show branches of all repositories"
     ),
+    branch_name: str = typer.Option(None, "--checkout", "-c", help="Specify branch"),
 ):
     """
     Checkout or create a branch in a repository.
