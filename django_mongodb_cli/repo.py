@@ -489,3 +489,6 @@ def upstream(
         single_func=lambda name: repo.get_repo_upstream(name, upstream_name),
         all_func=None,
     )
+
+
+repo.command(name="update")(sync)  # Alias for sync command
