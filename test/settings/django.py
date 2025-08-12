@@ -73,9 +73,7 @@ EXPECTED_ENCRYPTED_FIELDS_MAP = {
             {
                 "bsonType": "date",
                 "path": "time",
-                "keyId": Binary(
-                    b"\xbd\xa6\x81\xa0\xea\xf0G\xd5\x87x\x15\xd6\xd0^\xed\xa7", 4
-                ),
+                "keyId": Binary(b"&Y\xea\xe4yhGZ\xb1\xc5R\xe2\x05OY\x15", 4),
                 "queries": {"queryType": "equality"},
             }
         ]
@@ -85,21 +83,19 @@ EXPECTED_ENCRYPTED_FIELDS_MAP = {
             {
                 "bsonType": "string",
                 "path": "cc_type",
-                "keyId": Binary(b"d=v\xef\xa3]@g\xac2\xe4\x1a3s\x94\xe0", 4),
+                "keyId": Binary(b"\x8a:r\x1a\x1a\x05Gd\xba\xc1\xc2\xa2z\xce8\x02", 4),
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "long",
                 "path": "cc_number",
-                "keyId": Binary(
-                    b"l\x1b\x99C\x1e\x8dE\xf8\xaf\xfe9\xbc\xf1\xda\t\x0c", 4
-                ),
+                "keyId": Binary(b"\\N<\x83\xb4\x9aA\xa7\x8b\xc3\xd5Z\x80\xd3\x96@", 4),
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "decimal",
                 "path": "account_balance",
-                "keyId": Binary(b"\xb3,\x05\xf5\x92'J\x17\x8a@?V\x82\x07c\x1d", 4),
+                "keyId": Binary(b'"z\x9f\x92\xbb\x1c@\xe5\x93+<\x06\x9d\xbe\x93:', 4),
                 "queries": {"queryType": "range"},
             },
         ]
@@ -109,17 +105,13 @@ EXPECTED_ENCRYPTED_FIELDS_MAP = {
             {
                 "bsonType": "string",
                 "path": "ip_address",
-                "keyId": Binary(
-                    b"\x18\xdc#\xe7f\xccC\xc7\x8d\xbb\xc1\x94\x08\x1b@\x19", 4
-                ),
+                "keyId": Binary(b"q\xc8\xfd)\xec\xdcOP\x9d\xb2j\x1b\xd6\xb6<<", 4),
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "string",
                 "path": "url",
-                "keyId": Binary(
-                    b"\re\x1a\xc1x\x11F\xa5\x8d\x8f\x1a\xc8\xaa\x7f\xa4'", 4
-                ),
+                "keyId": Binary(b"\xfcN\xeb\xd1N\x8bB\xa4\x8bs\xa3\xafA:\xeax", 4),
                 "queries": {"queryType": "equality"},
             },
         ]
@@ -129,33 +121,35 @@ EXPECTED_ENCRYPTED_FIELDS_MAP = {
             {
                 "bsonType": "string",
                 "path": "ssn",
-                "keyId": Binary(
-                    b"(\x18\x8b\x9e\x8e\x03A\xa2\xa40\x99\xd6\xae\x10\x1eT", 4
-                ),
+                "keyId": Binary(b"\x01\xbca\x08\t\xd6N\\\x81\xbfKg\x97\xb4\xf04", 4),
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "date",
                 "path": "birth_date",
-                "keyId": Binary(b"\xaa\xbd3#\x9f+N\x82\x8dZ^j\xb1\x1a\x0e\x1b", 4),
+                "keyId": Binary(b"M\xbc1\x0c\xb8'J7\x9bM\xf0\xb3\xb3\xc9Y\x14", 4),
                 "queries": {"queryType": "range"},
             },
             {
                 "bsonType": "binData",
                 "path": "profile_picture",
-                "keyId": Binary(b"\xb5N\x17\xafr\xc9It\x80\xb4\x88o\x92\xf57\x02", 4),
+                "keyId": Binary(
+                    b"\xc1\xc7a\xb9\xe0\x1eGz\xbc\x9c_\x1f[\xd8\xea\xe0", 4
+                ),
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "int",
                 "path": "patient_age",
-                "keyId": Binary(b"\xc7PWm9\x93L\x89\xbe'\xe8ti\xf1\xb5\xcc", 4),
+                "keyId": Binary(
+                    b"V\xa8X\x89\xbd\xd9J\x1f\x8d\x10\xd5\xae\xe7\x13{\xea", 4
+                ),
                 "queries": {"queryType": "range", "min": 0, "max": 100},
             },
             {
                 "bsonType": "double",
                 "path": "weight",
-                "keyId": Binary(b"1\xed\x057\xaa\x8bI\x8d\xb4\tV=\x8e\x96\xcd\xf8", 4),
+                "keyId": Binary(b"L\xf0$\xde\xfd\\Gs\xa2\xed\x0e\xe1Wn#I", 4),
                 "queries": {"queryType": "range"},
             },
         ]
@@ -165,36 +159,42 @@ EXPECTED_ENCRYPTED_FIELDS_MAP = {
             {
                 "bsonType": "int",
                 "path": "patient_id",
-                "keyId": Binary(b")\xe6\xb0i{ZE<\xb1Q\xff]\xf4\x06A\x80", 4),
+                "keyId": Binary(b"\xa4)\x10\x1fQ\xccH@\x95\xca\xf1]\x83\xed6\xbb", 4),
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "string",
                 "path": "patient_name",
-                "keyId": Binary(b"~Z\xa7\xe0\x7f/Jz\xa5\xf6vI\xeb\xd6,(", 4),
+                "keyId": Binary(
+                    b"\xda\x81\x85\xfb\x16\x8aD;\x83\xae\xd4\xe3_\xda#T", 4
+                ),
             },
             {
                 "bsonType": "string",
                 "path": "patient_notes",
-                "keyId": Binary(b"\xcd\x86DFXm@\xe3\x94\x8d\xb3\x80\x9b\xe5\xfaO", 4),
+                "keyId": Binary(
+                    b"\xc6\xc0\xdb\xb2\xf0\x1cO\x98\x9d\xe7k\xdaACK\x06", 4
+                ),
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "date",
                 "path": "registration_date",
-                "keyId": Binary(b"\x0e\x82\xc0\xfeJHK\x0e\xac\xfd\x83Nd\x90\xce\r", 4),
+                "keyId": Binary(b"\xc5K\xac\xd9\x04\xacEV\xaaPm\xe8\xdaa&\x9a", 4),
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "bool",
                 "path": "is_active",
-                "keyId": Binary(b"\x97\xc0UHV/B\xd9\x8e0T\xd9\x93a\xcb\x8d", 4),
+                "keyId": Binary(
+                    b"\xfc\xdd\xa0\x1b\xb8\xf9F\xa4\xac\xdfM\x8b\x89\xce\xc3\xdf", 4
+                ),
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "string",
                 "path": "email",
-                "keyId": Binary(b"0\xa7\x03[\xa3pD\x03\x82Iy\xa5\x19\x86\x01\xbc", 4),
+                "keyId": Binary(b"\x97\xefII\xe9\x9fE\xf8\xae\x8f6\xee.\xd3]K", 4),
                 "queries": {"queryType": "equality"},
             },
         ]
@@ -204,21 +204,19 @@ EXPECTED_ENCRYPTED_FIELDS_MAP = {
             {
                 "bsonType": "int",
                 "path": "pos_bigint",
-                "keyId": Binary(b"\x1e\xcapB\xce\xa4OS\x90:@\x93?\xa6\x9d\xcc", 4),
+                "keyId": Binary(b"\x16#3lusB8\x99\xa9q\xec\xa8\x94\x0b\x8b", 4),
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "int",
                 "path": "pos_smallint",
-                "keyId": Binary(b"\xeb\xbdo\xb7\xafUHH\xac\x12\n\x8c:v\xc6e", 4),
+                "keyId": Binary(b"H)=\xf4\xccfA\xef\x803(\xbf\x95\xc6jj", 4),
                 "queries": {"queryType": "equality"},
             },
             {
                 "bsonType": "int",
                 "path": "smallint",
-                "keyId": Binary(
-                    b"\xd6\x02\xc6\x00\xfd\xadIy\x8d&\xa2M\xde~\x95\xb1", 4
-                ),
+                "keyId": Binary(b"\x8e\xab\x11\x9c\xbbTJc\xbc(\x13+~z\xdc\x1e", 4),
                 "queries": {"queryType": "equality"},
             },
         ]
