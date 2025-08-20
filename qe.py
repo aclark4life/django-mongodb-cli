@@ -1,11 +1,11 @@
+import os
 from bson.codec_options import CodecOptions
 from pymongo import MongoClient
 from pymongo.encryption import ClientEncryption, AutoEncryptionOpts
 from pymongo.errors import EncryptedCollectionError
 
-from django_mongodb_backend.encryption import KMS_PROVIDERS
-
 KEY_VAULT_NAMESPACE = "encryption.__keyVault"
+KMS_PROVIDERS = {"local": {"key": os.urandom(96)}}
 
 client = MongoClient(
     auto_encryption_opts=AutoEncryptionOpts(
