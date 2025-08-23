@@ -4,8 +4,6 @@ from bson.binary import Binary
 from django_mongodb_backend import parse_uri
 from pymongo.encryption import AutoEncryptionOpts
 
-from django_mongodb_backend.model_utils import model_has_encrypted_fields
-
 
 KMS_CREDENTIALS = {}
 
@@ -49,15 +47,19 @@ KMS_PROVIDERS = {
 
 
 class EncryptedRouter:
+    from django_mongodb_backend.model_utils import model_has_encrypted_fields
+
+    model_has_encrypted_fields = model_has_encrypted_fields
+
     def allow_migrate(self, db, app_label, model_name=None, model=None, **hints):
         if model:
             return db == (
-                "encrypted" if model_has_encrypted_fields(model) else "default"
+                "encrypted" if self.model_has_encrypted_fields(model) else "default"
             )
         return db == "default"
 
     def db_for_read(self, model, **hints):
-        if model_has_encrypted_fields(model):
+        if self.model_has_encrypted_fields(model):
             return "encrypted"
         return "default"
 
