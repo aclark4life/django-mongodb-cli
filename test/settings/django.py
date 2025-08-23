@@ -225,7 +225,7 @@ EXPECTED_ENCRYPTED_FIELDS_MAP = {
     },
 }
 
-DATABASE_ROUTERS = [EncryptedRouter()]
+# DATABASE_ROUTERS = [EncryptedRouter()]
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
 KEY_VAULT_NAMESPACE = "keyvault.__keyvault"
 DATABASES = {
