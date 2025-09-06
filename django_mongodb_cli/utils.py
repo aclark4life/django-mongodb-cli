@@ -716,14 +716,17 @@ class Test(Repo):
                 test_files = [
                     f for f in files if f.endswith(".py") and not f.startswith("__")
                 ]
+                quiet = self.ctx.obj.get("quiet", False)
+
+                if not quiet or test_files:
+                    self.ok(f"\n📂 {display_path}")
 
                 if test_files:
-                    self.ok(f"\n📂 {display_path}")
                     found_any = True
                     for test_file in sorted(test_files):
                         typer.echo(f"  - {test_file}")
                 else:
-                    if not self.ctx.obj.get("quiet", False):
+                    if not quiet:
                         typer.echo("  (no test files)")
 
             if not found_any:
