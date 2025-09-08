@@ -1,7 +1,7 @@
 default:
     echo 'Hello, world!'
 
-install: pip-install git-clone
+install: pip-install git-clone add-remotes
 alias i := install
 
 # ---------------------------------------- git ----------------------------------------
@@ -10,8 +10,22 @@ alias i := install
 git-clone:
     dm repo clone django --install
     dm repo clone django-mongodb-backend --install
+    dm repo clone django-mongodb-extensions --install
+    dm repo clone drivers-evergreen-tools
     dm repo clone libmongocrypt --install
     dm repo clone mongo-python-driver --install
+
+[group('git')]
+add-remotes:
+    dm repo remote django \
+        add upstream git+ssh://git@github.com/django/django
+    dm repo remote django-mongodb-backend \
+        add downstream git+ssh://git@github.com/aclark4life/django-mongodb-backend
+    dm repo remote libmongocrypt \
+        add downstream git+ssh://git@github.com/aclark4life/libmongocrypt
+    dm repo remote mongo-python-driver \
+        add downstream git+ssh://git@github.com/aclark4life/mongo-python-driver
+    dm repo fetch --all-repos
 
 # ---------------------------------------- django ----------------------------------------
 
@@ -47,7 +61,7 @@ db-init:
 # install python dependencies and activate pre-commit hooks
 [group('python')]
 pip-install: check-venv
-    brew install libxml2 libxmlsec1 pkg-config
+    # brew install libxml2 libxmlsec1 pkg-config
     pip install lxml==5.3.2 --no-binary :all:
     pip install -U pip
     pip install -e .

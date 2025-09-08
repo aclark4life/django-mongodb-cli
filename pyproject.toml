@@ -67,17 +67,19 @@ repos = [
     "django-mongodb-extensions @ git+ssh://git@github.com/mongodb-labs/django-mongodb-extensions@main",
     "django-mongodb-project @ git+ssh://git@github.com/mongodb-labs/django-mongodb-project@5.2.x",
     "django-mongodb-project-benchmark @ git+ssh://git@github.com/NoahStapp/django-mongodb-backend-benchmark.git@main",
-    "mongo-python-driver @ git+ssh://git@github.com/mongodb/mongo-python-driver@master",
-
-    # 3. QE
-    "pymongo-auth-aws @ git+ssh://git@github.com/mongodb/pymongo-auth-aws@master",
     "libmongocrypt @ git+ssh://git@github.com/mongodb-labs/libmongocrypt@master",
+    "mongo-python-driver @ git+ssh://git@github.com/mongodb/mongo-python-driver@master",
+    "pymongo-auth-aws @ git+ssh://git@github.com/mongodb/pymongo-auth-aws@master",
+
+    # 3. LangChain
+    "langchain-mongodb @ git+ssh://git@github.com/langchain-ai/langchain-mongodb@main",
+    "pymongo-vectorsearch-utils@ git+ssh://git@github.com/mongodb-labs/pymongo-vectorsearch-utils@main",
 
     # 4. MongoDB
+    "mongo @ git+ssh://git@github.com/mongodb/mongo@master",
     "drivers-evergreen-tools @ git+ssh://git@github.com/mongodb-labs/drivers-evergreen-tools@master",
     "docs @ git+ssh://git@github.com/mongodb/docs@main",
     "flask-pymongo @ git+ssh://git@github.com/mongodb-labs/flask-pymongo",
-    "langchain-mongodb @ git+ssh://git@github.com/langchain-ai/langchain-mongodb@main",
     "mongo-arrow @ git+ssh://git@github.com/mongodb-labs/mongo-arrow@main",
     "mongo-orchestration @ git+ssh://git@github.com/mongodb-labs/mongo-orchestration@master",
     "specifications @ git+ssh://git@github.com/mongodb/specifications@master",
@@ -89,10 +91,18 @@ path = "src"
 install_dir = "bindings/python"
 
 [tool.django-mongodb-cli.test.mongo-python-driver]
-test_command = "pytest"
+test_command = "just"
 test_dir = "src/mongo-python-driver/test"
 clone_dir = "src/mongo-python-driver"
 test_dirs = ["src/mongo-python-driver/test"]
+
+[[tool.django-mongodb-cli.test.mongo-python-driver.env_vars]]
+name = "DRIVERS_TOOLS"
+value = "/Users/alex.clark/Developer/django-mongodb-cli/src/drivers-evergreen-tools"
+
+[[tool.django-mongodb-cli.test.mongo-python-driver.env_vars]]
+name = "AWS_PROFILE"
+value = "drivers-test-secrets-role-857654397073"
 
 [tool.django-mongodb-cli.test.django]
 test_command = "./runtests.py"
@@ -108,12 +118,17 @@ test_dir = "src/django/tests"
 clone_dir = "src/django"
 test_dirs = [ "src/django/tests", "src/django-mongodb-backend/tests" ]
 
+[[tool.django-mongodb-cli.test.django.env_vars]]
+name = "PYMONGOCRYPT_LIB"
+value = "/opt/homebrew/lib/libmongocrypt.dylib"
+
 [tool.django-mongodb-cli.test.django.migrations_dir]
 source = "mongo_migrations"
 target = "src/django/tests/mongo_migrations"
 
 [tool.django-mongodb-cli.test.django.settings.test]
-source = "test/settings/django.py"
+# source = "test/settings/django.py"
+source = "test/settings/qe.py"
 target = "src/django/tests/mongo_settings.py"
 
 [tool.django-mongodb-cli.test.django.settings.migrations]
@@ -299,6 +314,7 @@ migrations = "allauth.mongo_settings"
 [tool.django-mongodb-cli.test.django-allauth.migrations_dir]
 source = "mongo_migrations"
 target = "src/django-allauth/allauth/mongo_migrations"
+
 
 [[tool.django-mongodb-cli.origin.django-mongodb-backend]]
 user = "aclark4life"
