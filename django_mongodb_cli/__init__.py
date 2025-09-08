@@ -1,6 +1,8 @@
 import os
 import typer
 
+from .app import app
+from .project import project
 from .repo import repo
 
 help_text = (
@@ -25,4 +27,6 @@ def main(ctx: typer.Context):
         raise typer.Exit()
 
 
+dm.add_typer(app, name="app")
+dm.add_typer(project, name="project")
 dm.add_typer(repo, name="repo")

@@ -10,6 +10,8 @@ alias i := install
 git-clone:
     dm repo clone django --install
     dm repo clone django-mongodb-backend --install
+    dm repo clone django-mongodb-extensions --install
+    dm repo clone drivers-evergreen-tools
     dm repo clone libmongocrypt --install
     dm repo clone mongo-python-driver --install
 
@@ -47,7 +49,7 @@ db-init:
 # install python dependencies and activate pre-commit hooks
 [group('python')]
 pip-install: check-venv
-    brew install libxml2 libxmlsec1 pkg-config
+    # brew install libxml2 libxmlsec1 pkg-config
     pip install lxml==5.3.2 --no-binary :all:
     pip install -U pip
     pip install -e .
