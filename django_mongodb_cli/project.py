@@ -22,7 +22,7 @@ def add_project(name: str, directory: Path = Path(".")):
             "--template",
             str(template_path),
             name,
-            str(directory),
+            # str(directory),
         ]
         typer.echo(f"Creating project: {' '.join(cmd)}")
         subprocess.run(cmd, check=True)
