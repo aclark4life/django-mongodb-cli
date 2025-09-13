@@ -5,10 +5,10 @@ import subprocess
 from pathlib import Path
 import importlib.resources as resources
 
-project_app = typer.Typer(help="Manage Django projects.")
+project = typer.Typer(help="Manage Django projects.")
 
 
-@project_app.command("add")
+@project.command("add")
 def add_project(name: str, directory: Path = Path(".")):
     """
     Create a new Django project using bundled templates.
@@ -30,7 +30,7 @@ def add_project(name: str, directory: Path = Path(".")):
             subprocess.run(cmd, check=True)
 
 
-@project_app.command("remove")
+@project.command("remove")
 def remove_project(name: str, directory: Path = Path(".")):
     """
     Delete a Django project by name.
