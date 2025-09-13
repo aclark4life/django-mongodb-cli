@@ -13,7 +13,9 @@ def add_project(name: str, directory: Path = Path(".")):
     """
     Create a new Django project using bundled templates.
     """
-    with resources.path("dm.templates", "project_template") as template_path:
+    with resources.path(
+        "django_mongodb_cli.templates", "project_template"
+    ) as template_path:
         with tempfile.TemporaryDirectory() as tmpdir:
             tmpdir = Path(tmpdir)
             shutil.copytree(template_path, tmpdir / "project_template")
