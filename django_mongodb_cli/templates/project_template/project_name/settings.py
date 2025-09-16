@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third-party apps
     "debug_toolbar",
+    "django_mongodb_demo",
     "django_mongodb_extensions",
 ]
 
