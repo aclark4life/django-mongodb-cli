@@ -88,6 +88,9 @@ repos = [
     "mongo-orchestration @ git+ssh://git@github.com/mongodb-labs/mongo-orchestration@master",
     "specifications @ git+ssh://git@github.com/mongodb/specifications@master",
     "winkerberos @ git+ssh://git@github.com/mongodb-labs/winkerberos@main",
+
+    # 5. Other
+    "django-mongodb-demo @ git+ssh://git@github.com/aclark4life/django-mongodb-demo@main",
 ]
 path = "src"
 
