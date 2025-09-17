@@ -91,6 +91,7 @@ repos = [
 
     # 5. Other
     "django-mongodb-demo @ git+ssh://git@github.com/aclark4life/django-mongodb-demo@main",
+    "GenAI-Showcase @ git+ssh://git@github.com/aclark4life/GenAI-Showcase.git@main",
 ]
 path = "src"
 
