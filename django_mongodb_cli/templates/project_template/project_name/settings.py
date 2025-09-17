@@ -51,7 +51,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django_mongodb_backend",
         "HOST": os.getenv("MONGODB_URI"),
-        "NAME": "{{ project_name }}_db",
+        "NAME": "{{ project_name }}",
     }
 }
 
