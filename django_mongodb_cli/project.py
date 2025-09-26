@@ -35,7 +35,6 @@ def add_project(
             "--template",
             str(template_path),
             name,
-            str(directory),
         ]
         typer.echo(f"📦 Creating project: {name}")
         subprocess.run(cmd, check=True)
@@ -45,7 +44,7 @@ def add_project(
         typer.echo(f"🎨 Adding frontend to project '{name}'...")
         try:
             # Call the frontend create command
-            _add_frontend(name, directory)
+            _add_frontend(name, project_path)
         except Exception as e:
             typer.echo(
                 f"⚠️  Project created successfully, but frontend creation failed: {e}",
