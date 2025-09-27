@@ -172,6 +172,7 @@ def migrate_project(
     Run Django migrations using django-admin instead of manage.py.
     """
     cmd = ["migrate"]
+    directory = Path(name)
     if app_label:
         cmd.append(app_label)
     if migration_name:
