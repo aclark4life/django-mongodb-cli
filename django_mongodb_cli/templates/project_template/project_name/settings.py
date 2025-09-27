@@ -83,11 +83,11 @@ DEBUG_TOOLBAR_PANELS = [
 ]
 
 STATICFILES_DIRS = [
-    PROJECT_DIR / "frontend/build",
+    BASE_DIR / "frontend/build",
 ]
 
 WEBPACK_LOADER = {
-    "MANIFEST_FILE": PROJECT_DIR / "frontend/build/manifest.json",
+    "MANIFEST_FILE": BASE_DIR / "frontend/build/manifest.json",
 }
 
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
