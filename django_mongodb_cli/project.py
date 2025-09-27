@@ -149,7 +149,7 @@ def run_project(
     typer.echo(f"🚀 Running project '{name}' on http://{host}:{port}")
     _django_admin_cmd(
         name,
-        directory,
+        directory / name,
         "runserver",
         f"{host}:{port}",
         extra_env=_build_mongodb_env(mongodb_uri),

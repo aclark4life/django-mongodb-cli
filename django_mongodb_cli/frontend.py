@@ -39,7 +39,7 @@ def add_frontend(
             "--template",
             str(template_path),
             name,
-            str(project_path),
+            directory,
         ]
         subprocess.run(cmd, check=True)
 
