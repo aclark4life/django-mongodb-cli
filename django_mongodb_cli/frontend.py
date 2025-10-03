@@ -176,6 +176,6 @@ def django_admin_cmd(project_name: str, directory: Path, *args: str):
         raise typer.Exit(code=1)
     parent_dir = project_path.parent.resolve()
     env = os.environ.copy()
-    env["DJANGO_SETTINGS_MODULE"] = f"{project_name}.settings"
+    env["DJANGO_SETTINGS_MODULE"] = f"{project_name}.settings.base"
     env["PYTHONPATH"] = str(parent_dir) + os.pathsep + env.get("PYTHONPATH", "")
     subprocess.run(["django-admin", *args], cwd=parent_dir, env=env, check=True)
