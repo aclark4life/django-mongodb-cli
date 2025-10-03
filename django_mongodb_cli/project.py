@@ -136,7 +136,7 @@ def _django_admin_cmd(
         .get('settings', {})
         .get('path', 'settings.base')
     }"
-    env["PYTHONPATH"] = str(parent_dir) + os.pathsep + env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = str(name) + os.pathsep + env.get("PYTHONPATH", "")
     if extra_env:
         env.update(extra_env)
 
