@@ -163,7 +163,13 @@ def _django_admin_cmd(
                 frontend_proc.terminate()
     else:
         # Original behavior - just run django-admin
-        subprocess.run(["django-admin", *args], cwd=parent_dir, env=env, check=True)
+
+        try:
+            subprocess.run(["django-admin", *args], cwd=parent_dir, env=env, check=True)
+
+        except subprocess.CalledProcessError as e:
+            typer.echo(f"❌ Command failed with exit code {e.returncode}", err=True)
+            raise typer.Exit(code=e.returncode)
 
 
 def _build_mongodb_env(mongodb_uri: str | None):
