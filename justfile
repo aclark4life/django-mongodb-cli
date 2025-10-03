@@ -10,6 +10,7 @@ alias i := install
 git-clone:
     dm repo clone django --install
     dm repo clone django-mongodb-backend --install
+    dm repo clone django-mongodb-demo --install
     dm repo clone django-mongodb-extensions --install
     dm repo clone drivers-evergreen-tools
     dm repo clone libmongocrypt --install
