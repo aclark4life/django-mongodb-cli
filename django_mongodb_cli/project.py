@@ -73,8 +73,9 @@ authors = [
     {{name = "Your Name", email = "your.email@example.com"}},
 ]
 dependencies = [
-    "django-mongodb-backend",
     "django-debug-toolbar",
+    "django-mongodb-backend",
+    "python-webpack-boilerplate",
 ]
 
 [project.optional-dependencies]
