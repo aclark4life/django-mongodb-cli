@@ -30,6 +30,7 @@ dependencies = [
     "django-extensions",
     "dj-database-url",
     "djhtml",
+    "faker",
     "pymongocrypt",
     "pymongo-auth-aws",
     "pytest",
