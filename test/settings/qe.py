@@ -12,13 +12,18 @@ DATABASES = {
         "NAME": "django_mongodb_backend",
         "HOST": MONGODB_URI,
     },
+    "other": {
+        "ENGINE": "django_mongodb_backend",
+        "NAME": "other",
+        "HOST": MONGODB_URI,
+    },
     "encrypted": {
         "ENGINE": "django_mongodb_backend",
         "NAME": "encrypted",
         "HOST": MONGODB_URI,
         "OPTIONS": {
             "auto_encryption_opts": AutoEncryptionOpts(
-                key_vault_namespace="encrypted.keyvault",
+                key_vault_namespace="test_encrypted.__keyvault",
                 kms_providers={
                     "local": {"key": os.urandom(96)},
                 },

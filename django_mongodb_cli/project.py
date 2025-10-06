@@ -132,11 +132,9 @@ def _django_admin_cmd(
 
     parent_dir = project_path.parent.resolve()
     env = os.environ.copy()
-    env["DJANGO_SETTINGS_MODULE"] = f"{name}.{
-        repo._tool_cfg.get('project', {})
-        .get('settings', {})
-        .get('path', 'settings.base')
-    }"
+    env["DJANGO_SETTINGS_MODULE"] = (
+        f"{name}.{repo._tool_cfg.get('project', {}).get('settings', {}).get('path', 'settings.base')}"
+    )
     env["PYTHONPATH"] = str(name) + os.pathsep + env.get("PYTHONPATH", "")
     if extra_env:
         env.update(extra_env)
