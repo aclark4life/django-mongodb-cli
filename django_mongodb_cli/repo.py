@@ -128,6 +128,9 @@ def branch(
     repo = Repo()
     repo.ctx = ctx
     repo_list = repo.map
+
+    # Repo().checkout_branch(repo_name, branch_name)
+
     if delete_branch and branch_name:
         repo.delete_branch(repo_name, branch_name)
         raise typer.Exit()
@@ -163,28 +166,6 @@ def cd(
         missing_msg="Please specify a repository name.",
         single_func=repo.cd_repo,
         all_func=repo.cd_repo,
-    )
-
-
-@repo.command()
-def checkout(
-    repo_name: str = typer.Argument(None),
-    branch_name: str = typer.Argument(None, help="Branch name to checkout"),
-):
-    """
-    Checkout a branch in a repository.
-    """
-
-    def checkout_branch(name):
-        Repo().checkout_branch(repo_name, branch_name)
-
-    repo_command(
-        False,
-        repo_name,
-        all_msg=None,
-        missing_msg="Please specify a repository and branch name.",
-        single_func=checkout_branch,
-        all_func=checkout_branch,
     )
 
 

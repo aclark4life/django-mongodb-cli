@@ -271,7 +271,10 @@ class Repo:
         try:
             for remote in repo.remotes:
                 self.info(f"Fetching from remote: {remote.name}")
-                remote.fetch()
+                fetched = remote.fetch()
+                self.ok(f"Fetched {len(fetched)} objects from {remote.name}.")
+                for ref in fetched:
+                    self.info(f"  - {ref.commit.summary} ({ref.name})")
             self.ok(f"✅ Successfully fetched updates for {repo_name}.")
         except GitCommandError as e:
             self.err(f"❌ Failed to fetch updates: {e}")
@@ -291,8 +294,11 @@ class Repo:
                 "--date=relative",
                 "--graph",
             ).splitlines()
-            for entry in log_entries:
+            log_max = 10
+            for count, entry in enumerate(log_entries, start=1):
                 typer.echo(f"  - {entry}")
+                if count >= log_max:
+                    break
         except GitCommandError as e:
             self.err(f"❌ Failed to get log: {e}")
 
@@ -308,7 +314,7 @@ class Repo:
         self.info(f"Remotes for {repo_name}:")
         for remote in repo.remotes:
             try:
-                self.ok(f"- {remote.url}")
+                self.ok(f"- {remote.name} {remote.url}")
             except Exception as e:
                 if not quiet:
                     self.err(f"Could not get remote URL: {e}")
@@ -586,8 +592,15 @@ class Repo:
             self.ok(
                 f"✅ Successfully added remote '{remote_name}' with URL '{remote_url}'."
             )
-        except Exception as e:
-            self.err(f"❌ Failed to add remote '{remote_name}': {e}")
+        except Exception:
+            self.info(
+                f"Removing remote '{remote_name}' from repository: {self.ctx.obj.get('repo_name')}"
+            )
+            repo.delete_remote(remote_name)
+            repo.create_remote(remote_name, remote_url)
+            self.ok(
+                f"✅ Successfully added remote '{remote_name}' with URL '{remote_url}'."
+            )
 
     def remote_remove(self, remote_name: str) -> None:
         """
