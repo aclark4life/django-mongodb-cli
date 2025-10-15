@@ -538,11 +538,24 @@ class Repo:
             repo.remotes.origin.pull()
             self.ok(f"✅ Successfully pulled latest changes for {repo_name}.")
 
-            # current_branch = repo.active_branch.name
-            # repo.remotes.origin.push(refspec=current_branch)
-            # self.ok(f"✅ Successfully pushed latest commits to {repo_name}.")
         except Exception as e:
             self.err(f"❌ Failed to pull {repo_name}: {e}")
+
+    def push(self, repo_name: str) -> None:
+        """
+        Push the latest commits to the remote repository.
+        """
+
+        _, repo = self.ensure_repo(repo_name)
+        if not repo:
+            return
+
+        try:
+            current_branch = repo.active_branch.name
+            repo.remotes.origin.push(refspec=current_branch)
+            self.ok(f"✅ Successfully pushed latest commits to {repo_name}.")
+        except Exception as e:
+            self.err(f"❌ Failed to push {repo_name}: {e}")
 
     def remote_add(self, remote_name: str, remote_url: str) -> None:
         """

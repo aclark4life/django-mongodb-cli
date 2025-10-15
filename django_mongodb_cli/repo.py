@@ -487,7 +487,7 @@ def pull(
     ctx: typer.Context,
     repo_name: str = typer.Argument(None),
     all_repos: bool = typer.Option(
-        False, "--all-repos", "-a", help="Sync all repositories"
+        False, "--all-repos", "-a", help="Pull all repositories"
     ),
 ):
     """
@@ -508,10 +508,43 @@ def pull(
     repo_command(
         all_repos,
         repo_name,
-        all_msg="Syncing all repositories...",
-        missing_msg="Please specify a repository name or use -a,--all-repos to sync all repositories.",
+        all_msg="Pulling all repositories...",
+        missing_msg="Please specify a repository name or use -a,--all-repos to pull all repositories.",
         single_func=lambda repo_name: repo.pull(repo_name),
         all_func=lambda repo_name: repo.pull(repo_name),
+    )
+
+
+@repo.command()
+def push(
+    ctx: typer.Context,
+    repo_name: str = typer.Argument(None),
+    all_repos: bool = typer.Option(
+        False, "--all-repos", "-a", help="Push all repositories"
+    ),
+):
+    """
+    Push updates for the specified repository.
+    If --all-repos is used, push updates for all repositories.
+    """
+    repo = Repo()
+    repo.ctx = ctx
+    if not repo.map:
+        typer.echo(
+            typer.style(
+                f"No repositories found in {os.path.join(os.getcwd(), repo.pyproject_file)}.",
+                fg=typer.colors.RED,
+            )
+        )
+        raise typer.Exit()
+
+    repo_command(
+        all_repos,
+        repo_name,
+        all_msg="Pushing all repositories...",
+        missing_msg="Please specify a repository name or use -a,--all-repos to push all repositories.",
+        single_func=lambda repo_name: repo.push(repo_name),
+        all_func=lambda repo_name: repo.push(repo_name),
     )
 
 
