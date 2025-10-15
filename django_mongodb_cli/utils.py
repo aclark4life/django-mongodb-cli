@@ -558,9 +558,9 @@ class Repo:
     def set_user(self, user: str) -> None:
         self.user = user
 
-    def sync_repo(self, repo_name: str) -> None:
+    def pull(self, repo_name: str) -> None:
         """
-        Synchronize the repository by pulling the latest changes and then pushing local changes.
+        Pull the latest changes
         """
         _, repo = self.ensure_repo(repo_name)
         if not repo:
@@ -570,11 +570,11 @@ class Repo:
             repo.remotes.origin.pull()
             self.ok(f"✅ Successfully pulled latest changes for {repo_name}.")
 
-            current_branch = repo.active_branch.name
-            repo.remotes.origin.push(refspec=current_branch)
-            self.ok(f"✅ Successfully pushed latest commits to {repo_name}.")
+            # current_branch = repo.active_branch.name
+            # repo.remotes.origin.push(refspec=current_branch)
+            # self.ok(f"✅ Successfully pushed latest commits to {repo_name}.")
         except Exception as e:
-            self.err(f"❌ Failed to synchronize {repo_name}: {e}")
+            self.err(f"❌ Failed to pull {repo_name}: {e}")
 
     def remote_add(self, remote_name: str, remote_url: str) -> None:
         """

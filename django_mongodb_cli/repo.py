@@ -484,7 +484,7 @@ def status(
 
 
 @repo.command()
-def sync(
+def pull(
     ctx: typer.Context,
     repo_name: str = typer.Argument(None),
     all_repos: bool = typer.Option(
@@ -492,8 +492,8 @@ def sync(
     ),
 ):
     """
-    Sync a repository with its remote counterpart.
-    If --all-repos is used, sync all repositories.
+    Pull updates for the specified repository.
+    If --all-repos is used, pull updates for all repositories.
     """
     repo = Repo()
     repo.ctx = ctx
@@ -511,8 +511,8 @@ def sync(
         repo_name,
         all_msg="Syncing all repositories...",
         missing_msg="Please specify a repository name or use -a,--all-repos to sync all repositories.",
-        single_func=lambda repo_name: repo.sync_repo(repo_name),
-        all_func=lambda repo_name: repo.sync_repo(repo_name),
+        single_func=lambda repo_name: repo.pull(repo_name),
+        all_func=lambda repo_name: repo.pull(repo_name),
     )
 
 
