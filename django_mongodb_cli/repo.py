@@ -206,10 +206,9 @@ def commit(
     all_repos: bool = typer.Option(
         False, "--all-repos", "-a", help="Commit all repositories"
     ),
-    message: str = typer.Argument(None, help="Commit message"),
 ):
     """
-    Commit changes in a repository with message provided or prompt for message.
+    Commit changes in a repository
     """
 
     if all_repos:
@@ -218,7 +217,7 @@ def commit(
         )
 
     def do_commit(name):
-        Repo().commit_repo(name, message)
+        Repo().commit_repo(name)
 
     repo_command(
         all_repos,
