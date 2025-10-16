@@ -1,3 +1,4 @@
+from bson import ObjectId
 from pathlib import Path
 import os
 
@@ -13,6 +14,9 @@ INSTALLED_APPS = [
     "{{ project_name }}.apps.MongoDBAdminConfig",
     "{{ project_name }}.apps.MongoDBAuthConfig",
     "{{ project_name }}.apps.MongoDBContentTypesConfig",
+    "{{ project_name }}.apps.MongoDBFlatPagesConfig",
+    "{{ project_name }}.apps.MongoDBRedirectsConfig",
+    "{{ project_name }}.apps.MongoDBSitesConfig",
     # Default Django apps
     "django.contrib.messages",
     "django.contrib.sessions",
@@ -60,11 +64,10 @@ DATABASES = {
 
 STATIC_URL = "static/"
 
-# Debug Toolbar Configuration
+# Debug toolbar
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-
 DEBUG_TOOLBAR_PANELS = [
     "debug_toolbar.panels.history.HistoryPanel",
     "debug_toolbar.panels.versions.VersionsPanel",
@@ -83,6 +86,7 @@ DEBUG_TOOLBAR_PANELS = [
     "debug_toolbar.panels.profiling.ProfilingPanel",
 ]
 
+# Webpack
 FRONTEND_DIR = Path(__file__).resolve().parent.parent.parent
 STATICFILES_DIRS = [
     FRONTEND_DIR / "frontend/build",
@@ -98,3 +102,9 @@ MIGRATION_MODULES = {
     "auth": "{{ project_name }}.migrations.auth",
     "contenttypes": "{{ project_name }}.migrations.contenttypes",
 }
+
+# Sites framework
+SITE_ID = ObjectId("64b64c4f8f1d2c3a4b5c6d7e")
+SILENCED_SYSTEM_CHECKS = [
+    "sites.E101",
+]
