@@ -23,7 +23,7 @@ DATABASES = {
         "HOST": MONGODB_URI,
         "OPTIONS": {
             "auto_encryption_opts": AutoEncryptionOpts(
-                key_vault_namespace="djangotests_encrypted.__keyvault",
+                key_vault_namespace="djangotests_encrypted.__keyVault",
                 kms_providers={
                     "local": {"key": os.urandom(96)},
                 },
