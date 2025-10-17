@@ -16,3 +16,7 @@ DATABASES["encrypted"] = {  # noqa: F405
 }
 
 DATABASE_ROUTERS = [EncryptionRouter()]
+
+INSTALLED_APPS += [  # noqa: F405
+    "django_mongodb_backend",
+]
