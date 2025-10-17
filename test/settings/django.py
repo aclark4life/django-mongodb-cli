@@ -2,10 +2,6 @@ import os
 
 from bson.binary import Binary
 
-# from django_mongodb_backend import encryption, parse_uri
-from django_mongodb_backend import parse_uri
-
-# from pymongo.encryption import AutoEncryptionOpts
 
 EXPECTED_ENCRYPTED_FIELDS_MAP = {
     "billing": {
@@ -106,30 +102,14 @@ EXPECTED_ENCRYPTED_FIELDS_MAP = {
         ]
     },
 }
-# DATABASE_ROUTERS = [encryption.EncryptedRouter()]
 DATABASE_URL = os.environ.get("MONGODB_URI", "mongodb://localhost:27017")
-# KEY_VAULT_NAMESPACE = "encrypted.__keyvault"
 DATABASES = {
-    "default": parse_uri(
-        DATABASE_URL,
-        db_name="test",
-    ),
-    # "other": parse_uri(
-    #     DATABASE_URL,
-    #     options={
-    #         "auto_encryption_opts": AutoEncryptionOpts(
-    #             key_vault_namespace=KEY_VAULT_NAMESPACE,
-    #             kms_providers={
-    #                 "local": {"key": encryption.KMS_CREDENTIALS["local"]["key"]}
-    #             },
-    #             # schema_map=EXPECTED_ENCRYPTED_FIELDS_MAP,
-    #         )
-    #     },
-    #     db_name="other",
-    # ),
+    "default": {
+        "ENGINE": "django_mongodb_backend",
+        "NAME": "djangotests",
+        "HOST": DATABASE_URL,
+    }
 }
-# DATABASES["other"]["KMS_CREDENTIALS"] = encryption.KMS_CREDENTIALS
-
 DEFAULT_AUTO_FIELD = "django_mongodb_backend.fields.ObjectIdAutoField"
 PASSWORD_HASHERS = ("django.contrib.auth.hashers.MD5PasswordHasher",)
 SECRET_KEY = "django_tests_secret_key"
