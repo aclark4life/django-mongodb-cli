@@ -2,7 +2,13 @@
 name = "django-mongodb-cli"
 version = "0.1.0"
 dependencies = [
-    # --- allauth ---
+    "GitPython",
+    "toml",
+    "typer",
+]
+
+[project.optional-dependencies]
+django-allauth = [
     "django-ninja",
     "fido2",
     "psycopg2",
@@ -10,43 +16,29 @@ dependencies = [
     "python3-saml",
     "pyjwt[crypto]",
     "requests-oauthlib",
-
-    # --- DRF ---
-    "pytest-django",
-    "setuptools",
-
-    # --- debug toolbar ---
+]
+django-debug-toolbar = [
     "django-debug-toolbar",
     "html5lib",
     "pytest-django",
-
-    # --- filter ---
-    "pytz",
-
-    # --- everything else ---
-    "GitPython",
-    "Sphinx",
-    "black",
-    "django-extensions",
-    "dj-database-url",
-    "djhtml",
-    "faker",
-    "pymongocrypt",
-    "pymongo-auth-aws",
-    "pytest",
-    "pytest-asyncio",
-    "pytest-html",
-    "python-webpack-boilerplate",
-    "rich",
-    "sphinx-autobuild",
-    "sphinx-copybutton",
-    "toml",
-    "typer",
-    "wagtail",
 ]
-
-[project.optional-dependencies]
+django-filter = [
+    "pytz",
+]
+django-rest-framework = [
+    "pytest-django",
+    "setuptools",
+]
+langchain-mongodb = [
+    "langchain-core<1.0.0",
+    "langchain-community",
+    "langchain-ollama",
+    "langchain-openai",
+    "langchain-tests",
+    "syrupy",
+]
 docs = [
+    "Sphinx",
     "furo",
     "sphinx-copybutton",
 ]
@@ -107,6 +99,21 @@ path = "src"
 
 [tool.django-mongodb-cli.install.libmongocrypt]
 install_dir = "bindings/python"
+
+[tool.django-mongodb-cli.install.mongo-arrow]
+install_dir = "bindings/python"
+
+[[tool.django-mongodb-cli.install.mongo-arrow.env_vars]]
+name = "LDFLAGS"
+value = "-L/opt/homebrew/opt/mongo-c-driver@1/lib"
+
+[[tool.django-mongodb-cli.install.mongo-arrow.env_vars]]
+name = "CPPFLAGS"
+value = "-I/opt/homebrew/opt/mongo-c-driver@1/include"
+
+[[tool.django-mongodb-cli.install.mongo-arrow.env_vars]]
+name = "PKG_CONFIG_PATH"
+value = "/opt/homebrew/opt/mongo-c-driver@1/lib/pkgconfig"
 
 [tool.django-mongodb-cli.install.langchain-mongodb]
 install_dir = "libs/langchain-mongodb"
@@ -339,7 +346,6 @@ migrations = "allauth.mongo_settings"
 [tool.django-mongodb-cli.test.django-allauth.migrations_dir]
 source = "mongo_migrations"
 target = "src/django-allauth/allauth/mongo_migrations"
-
 
 [[tool.django-mongodb-cli.origin.django-mongodb-backend]]
 user = "aclark4life"
