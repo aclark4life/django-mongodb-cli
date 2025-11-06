@@ -35,6 +35,7 @@ langchain-mongodb = [
     "langchain-ollama",
     "langchain-openai",
     "langchain-tests",
+    "mongomock",
     "syrupy",
 ]
 docs = [
