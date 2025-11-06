@@ -36,6 +36,7 @@ langchain-mongodb = [
     "langchain-openai",
     "langchain-tests",
     "mongomock",
+    "pytest-mock",
     "syrupy",
 ]
 docs = [
