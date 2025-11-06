@@ -36,6 +36,7 @@ langchain-mongodb = [
     "langchain-ollama",
     "langchain-openai",
     "langchain-tests",
+    "langgraph",
     "mongomock",
     "pytest-mock",
     "syrupy",
