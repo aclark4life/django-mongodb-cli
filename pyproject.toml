@@ -73,7 +73,6 @@ repos = [
     "django-mongodb-app @ git+ssh://git@github.com/mongodb-labs/django-mongodb-app@5.2.x",
     "django-mongodb-backend @ git+ssh://git@github.com/mongodb/django-mongodb-backend@main",
     "django-mongodb-extensions @ git+ssh://git@github.com/mongodb-labs/django-mongodb-extensions@main",
-    "django-mongodb-polls @ git+ssh://git@github.com/aclark4life/django-mongodb-polls@main",
     "django-mongodb-project @ git+ssh://git@github.com/mongodb-labs/django-mongodb-project@5.2.x",
     "django-mongodb-project-benchmark @ git+ssh://git@github.com/NoahStapp/django-mongodb-backend-benchmark.git@main",
     "libmongocrypt @ git+ssh://git@github.com/mongodb-labs/libmongocrypt@master",
