@@ -3,7 +3,7 @@ import os
 
 from .utils import Package, Repo, Test
 
-repo = typer.Typer()
+repo = typer.Typer(help="Manage Git repositories")
 repo_remote = typer.Typer()
 repo.add_typer(repo_remote, name="remote", help="Manage Git repositories")
 
