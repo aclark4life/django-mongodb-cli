@@ -38,6 +38,7 @@ langchain-mongodb = [
     "langchain-tests",
     "langgraph<1.0",
     "mongomock",
+    "pymongo",
     "pytest-mock",
     "pypdf",
     "syrupy",
