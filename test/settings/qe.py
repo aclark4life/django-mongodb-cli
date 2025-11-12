@@ -28,8 +28,15 @@ DATABASES = {
                     "local": {
                         "key": os.urandom(96),
                     },
+                    "aws": {
+                        "accessKeyId": "YOUR_AWS_ACCESS_KEY_ID",
+                        "secretAccessKey": "YOUR_AWS_SECRET_ACCESS_KEY",
+                    },
                 },
             ),
+        },
+        "KMS_CREDENTIALS": {
+            "aws": {},
         },
     },
 }
@@ -52,6 +59,9 @@ class EncryptedRouter:
         if db == "encrypted":
             return False
         return None
+
+    def kms_provider(self, model):
+        return "local"
 
 
 DATABASE_ROUTERS = ["django_mongodb_backend.routers.MongoRouter", EncryptedRouter()]
