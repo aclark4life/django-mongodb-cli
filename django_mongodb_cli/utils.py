@@ -737,7 +737,7 @@ class Test(Repo):
             self.err(f"❌ No evergreen project_name configured for {repo_name}.")
             return
         self.run(
-            ["evergreen", "patch", "-p", project_name, "-u"],
+            ["evergreen", "patch", "-p", project_name, "-u", "-f"],
             cwd=self.get_repo_path(repo_name),
         )
 
