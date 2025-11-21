@@ -458,7 +458,7 @@ class Repo:
         except GitCommandError as e:
             self.err(f"❌ Failed to diff working tree: {e}")
 
-    def _list_repos(self) -> set:
+    def _list_repos(self) -> tuple[set, set]:
         map_repos = set(self.map.keys())
 
         try:
@@ -466,7 +466,7 @@ class Repo:
             fs_repos = {entry for entry in fs_entries if (self.path / entry).is_dir()}
         except Exception as e:
             self.err(f"❌ Failed to list repositories in filesystem: {e}")
-            return
+            return set(), set()
 
         return map_repos, fs_repos
 

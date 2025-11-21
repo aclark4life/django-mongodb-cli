@@ -107,8 +107,8 @@ alias d := drop
 # install python dependencies and activate pre-commit hooks
 [group('python')]
 pip-install: check-venv
-    brew install libxml2 libxmlsec1 mongo-c-driver mongo-c-driver@1 pkg-config
-    pip install lxml==5.3.2 --no-binary :all:
+    # brew install libxml2 libxmlsec1 mongo-c-driver mongo-c-driver@1 pkg-config
+    # pip install lxml==5.3.2 --no-binary :all:
     pip install -U pip
     pip install -e .
     pre-commit install
