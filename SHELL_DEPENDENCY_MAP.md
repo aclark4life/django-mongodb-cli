@@ -87,6 +87,14 @@ Core helper scripts under .evergreen/scripts
 
 ### 2.1 Dev/test environment flow
 
+Key scripts:
+- [`.evergreen/combine-coverage.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/combine-coverage.sh)
+- [`.evergreen/just.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/just.sh)
+- [`.evergreen/scripts/check-import-time.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/check-import-time.sh)
+- [`.evergreen/scripts/setup-dev-env.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/setup-dev-env.sh)
+- [`.evergreen/scripts/install-dependencies.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/install-dependencies.sh)
+- [`.evergreen/scripts/setup-uv-python.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/setup-uv-python.sh)
+
 ```text
 combine-coverage.sh
   -> .evergreen/scripts/setup-dev-env.sh
@@ -126,6 +134,13 @@ scripts/check-import-time.sh
 
 ### 2.2 System + spawn-host setup
 
+Key scripts:
+- [`.evergreen/scripts/setup-system.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/setup-system.sh)
+- [`.evergreen/scripts/configure-env.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/configure-env.sh)
+- [`.evergreen/scripts/setup-dev-env.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/setup-dev-env.sh)
+- [`.evergreen/setup-spawn-host.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/setup-spawn-host.sh)
+- [`.evergreen/sync-spawn-host.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/sync-spawn-host.sh)
+
 ```text
 scripts/setup-system.sh
   -> scripts/configure-env.sh
@@ -160,6 +175,14 @@ sync-spawn-host.sh
 - This means **any** test suite (sync/async, auth_aws, kms, ocsp, perf, etc.) can be run on a spawn host once `setup-system.sh` has prepared MongoDB + drivers-tools.
 
 ### 2.3 Test lifecycle (setup / run / teardown)
+
+Key scripts:
+- [`.evergreen/scripts/setup-tests.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/setup-tests.sh)
+- [`.evergreen/run-tests.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/run-tests.sh)
+- [`.evergreen/scripts/teardown-tests.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/teardown-tests.sh)
+- [`.evergreen/scripts/setup_tests.py`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/setup_tests.py)
+- [`.evergreen/scripts/run_tests.py`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/run_tests.py)
+- [`.evergreen/scripts/teardown_tests.py`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/teardown_tests.py)
 
 ```text
 scripts/setup-tests.sh
@@ -212,6 +235,11 @@ Sample tasks and the tests they run:
 
 ### 2.4 AWS / OIDC auth test flows
 
+Key scripts:
+- [`.evergreen/run-mongodb-aws-ecs-test.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/run-mongodb-aws-ecs-test.sh)
+- [`.evergreen/run-mongodb-oidc-test.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/run-mongodb-oidc-test.sh)
+- [`.evergreen/just.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/just.sh)
+
 ```text
 run-mongodb-aws-ecs-test.sh
   -> .evergreen/just.sh setup-tests auth_aws ecs-remote
@@ -253,6 +281,11 @@ run-mongodb-oidc-test.sh
 
 ### 2.5 Specs resync + PR creation
 
+Key scripts:
+- [`.evergreen/scripts/resync-all-specs.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/resync-all-specs.sh)
+- [`.evergreen/resync-specs.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/resync-specs.sh)
+- [`.evergreen/scripts/create-spec-pr.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/create-spec-pr.sh)
+
 ```text
 scripts/resync-all-specs.sh
   -> ../resync-specs.sh           (top-level .evergreen/resync-specs.sh)
@@ -280,6 +313,11 @@ resync-specs.sh (top-level)
   - If changes are detected, calls `scripts/create-spec-pr.sh` to open a `[Spec Resync]` pull request containing only spec-test updates.
 
 ### 2.6 Coverage download / upload
+
+Key scripts:
+- [`.evergreen/scripts/download-and-merge-coverage.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/download-and-merge-coverage.sh)
+- [`.evergreen/combine-coverage.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/combine-coverage.sh)
+- [`.evergreen/scripts/upload-coverage-report.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/upload-coverage-report.sh)
 
 ```text
 scripts/download-and-merge-coverage.sh
