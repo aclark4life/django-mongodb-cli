@@ -1,6 +1,7 @@
 # `.evergreen` Shell Script Dependency Map (mongo-python-driver)
 
-This document describes how the `.sh` scripts under `src/mongo-python-driver/.evergreen` depend on and call each other (and key external scripts).
+This document describes how the `.sh` scripts under `src/mongo-python-driver/.evergreen` and `src/drivers-evergreen-tools/.evergreen`
+depend on and call each other (and key external scripts).
 
 Arrows mean “calls or sources”.
 
