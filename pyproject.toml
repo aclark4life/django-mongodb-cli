@@ -363,6 +363,10 @@ repo = "git+ssh://git@github.com/mongodb/django-mongodb-backend"
 project_name = "django-mongodb"
 tasks = ["run-tests"]
 
+[tool.django-mongodb-cli.evergreen.mongo-python-driver]
+project_name = "mongo-python-driver"
+tasks = ["run-tests"]
+
 [tool.django-mongodb-cli.project.settings]
 # path = "settings.base"
 path = "settings.qe"
