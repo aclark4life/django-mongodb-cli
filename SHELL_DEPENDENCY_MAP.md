@@ -94,6 +94,15 @@ scripts/check-import-time.sh
        -> setup-uv-python.sh
 ```
 
+**Example tests using these scripts**
+
+- Any Evergreen task that uses the `run tests` function in `.evergreen/generated_configs/functions.yml` goes through `.evergreen/just.sh setup-tests` → `scripts/setup-dev-env.sh` → `scripts/setup-tests.sh` and finally `run-tests.sh`.
+- Examples:
+  - `test-no-toolchain-sync-noauth-nossl-standalone` → `TEST_NAME=default_sync` (sync CRUD-style tests against a standalone server).
+  - `test-no-toolchain-async-noauth-ssl-replica-set` → `TEST_NAME=default_async` (async tests against a replica set, SSL on).
+  - `test-aws-lambda-deployed` → `TEST_NAME=aws_lambda` (Lambda packaging/perf tests, still driven by `setup-tests` + `run-tests`).
+  - `test-min-deps-python3.10-sync-noauth-nossl-standalone` → `TEST_MIN_DEPS=1` and minimal dependency resolution, but still via the same `setup-dev-env.sh` + `setup-tests.sh` + `run-tests.sh` chain.
+
 ### 2.2 System + spawn-host setup
 
 ```text
@@ -121,6 +130,14 @@ sync-spawn-host.sh
   -> (rsync + fswatch loop; no extra .sh deps)
 ```
 
+**Example usages / test flows**
+
+- Evergreen tasks that use the `setup system` function in `.evergreen/generated_configs/functions.yml` invoke `scripts/setup-system.sh` before running their actual tests.
+- Typical pattern on a spawn host:
+  - Locally: `./.evergreen/setup-spawn-host.sh user@host` to rsync the repo and run `setup-system.sh` remotely.
+  - On the host: run `just setup-tests <TEST_NAME> <SUB_TEST_NAME>` followed by `just run-tests` (for example, `just setup-tests default_sync standalone` + `just run-tests`).
+- This means **any** test suite (sync/async, auth_aws, kms, ocsp, perf, etc.) can be run on a spawn host once `setup-system.sh` has prepared MongoDB + drivers-tools.
+
 ### 2.3 Test lifecycle (setup / run / teardown)
 
 ```text
@@ -143,6 +160,34 @@ scripts/teardown-tests.sh
   -> scripts/test-env.sh  (if present)
   -> (python) scripts/teardown_tests.py
 ```
+
+**Example Evergreen tasks hitting this lifecycle**
+
+All tasks that call the `run tests` function in `.evergreen/generated_configs/functions.yml` eventually invoke:
+
+```text
+.evergreen/just.sh setup-tests ${TEST_NAME} ${SUB_TEST_NAME}
+.evergreen/just.sh run-tests
+```
+
+which maps to `scripts/setup-tests.sh` and `run-tests.sh`.
+
+Sample tasks and the tests they run:
+
+- **Core sync/async suites**
+  - `test-no-toolchain-sync-noauth-nossl-standalone` → `TEST_NAME=default_sync` → sync tests against standalone, no auth, no SSL.
+  - `test-no-toolchain-async-noauth-ssl-replica-set` → `TEST_NAME=default_async` → async tests against a replica set with SSL.
+- **AWS lambda / performance**
+  - `test-aws-lambda-deployed` → `TEST_NAME=aws_lambda` → builds a Lambda-compatible wheel and runs `test/lambda` perf/functional tests.
+- **KMS / FLE**
+  - `test-gcpkms` → `TEST_NAME=kms`, `SUB_TEST_NAME=gcp` → KMS tests that ultimately drive remote or local KMS helpers via `kms_tester`.
+  - `test-gcpkms-fail` / `test-azurekms-fail` → same `TEST_NAME=kms` with failure scenarios and orchestration.
+- **OCSP**
+  - Any `test-ocsp-*` task (e.g. `test-ocsp-ecdsa-valid-cert-server-does-not-staple-v4.4-python3.10`) → `TEST_NAME=ocsp`, various `ORCHESTRATION_FILE`/`OCSP_SERVER_TYPE` combinations.
+- **mod_wsgi**
+  - `mod-wsgi-replica-set-python3.10` → `TEST_NAME=mod_wsgi`, `SUB_TEST_NAME=standalone` → WSGI integration tests.
+- **Perf harness**
+  - Tasks with `TEST_PERF` set (not shown here) use the same `run-tests.sh` entrypoint, but `run_tests.py` writes `results.json` / `report.json` via `handle_perf`.
 
 ### 2.4 AWS / OIDC auth test flows
 
@@ -172,6 +217,19 @@ run-mongodb-oidc-test.sh
             -> scripts/run_tests.py
 ```
 
+**Example AWS / OIDC tasks**
+
+- **AWS auth (Evergreen)** — from `.evergreen/generated_configs/tasks.yml`:
+  - `test-auth-aws-4.4-regular-python3.10` → `TEST_NAME=auth_aws`, `SUB_TEST_NAME=regular`.
+  - `test-auth-aws-6.0-ec2-python3.12` → `TEST_NAME=auth_aws`, `SUB_TEST_NAME=ec2`.
+  - `test-auth-aws-latest-ecs-python3.10` → `TEST_NAME=auth_aws`, `SUB_TEST_NAME=ecs`.
+  - All of these flow through the generic `run tests` function (`just setup-tests` + `just run-tests`) and therefore use `setup-tests.sh` / `run-tests.sh` on the Evergreen host.
+- **AWS ECS remote**
+  - For the **remote ECS host** itself, `.evergreen/run-mongodb-aws-ecs-test.sh` is the entrypoint; it consumes a `MONGODB_URI`, then invokes `just setup-tests auth_aws ecs-remote` and `just run-tests` inside the repo, reusing the same test harness.
+- **OIDC auth**
+  - OIDC Evergreen tasks use `TEST_NAME=auth_oidc` and various `SUB_TEST_NAME` values (e.g. `azure-remote`, `okta-remote`, `k8s-remote`).
+  - On the remote OIDC host, `.evergreen/run-mongodb-oidc-test.sh` uses `$OIDC_ENV` / `$K8S_VARIANT` to construct `SUB_TEST_NAME=${OIDC_ENV}-remote` and then runs `just setup-tests auth_oidc <sub>` + `just run-tests`.
+
 ### 2.5 Specs resync + PR creation
 
 ```text
@@ -187,6 +245,19 @@ resync-specs.sh (top-level)
   -> (no further .sh deps; does all work inline)
 ```
 
+**Examples of spec suites affected**
+
+- Running `.evergreen/resync-specs.sh crud` will:
+  - Replace JSON spec files under `test/crud/` with those from the `specifications` repo.
+  - Affect CRUD-related unified tests (e.g. `test_crud_unified_*` pytest cases) that load those JSONs.
+- Running `.evergreen/resync-specs.sh unified` will:
+  - Update `test/unified-test-format/` from `unified-test-format/tests/` in the `specifications` repo.
+  - Affect unified test runners that execute JSON test definitions across many areas (transactions, retryable reads/writes, SDAM, etc.).
+- The CI entrypoint `.evergreen/scripts/resync-all-specs.sh`:
+  - Clones `github.com/mongodb/specifications` if needed.
+  - Runs a Python helper to choose which specs to sync.
+  - If changes are detected, calls `scripts/create-spec-pr.sh` to open a `[Spec Resync]` pull request containing only spec-test updates.
+
 ### 2.6 Coverage download / upload
 
 ```text
@@ -200,6 +271,16 @@ combine-coverage.sh
 scripts/upload-coverage-report.sh
   -> (no .sh deps; uses aws cli)
 ```
+
+**Example coverage-related tasks**
+
+- Evergreen function `download and merge coverage` in `.evergreen/generated_configs/functions.yml`:
+  - Downloads raw `.coverage` files from S3 using `scripts/download-and-merge-coverage.sh`.
+  - Runs `.evergreen/combine-coverage.sh` to `coverage combine` all task coverage into a single DB and generate `htmlcov/`.
+  - Uploads the HTML report via `scripts/upload-coverage-report.sh`.
+- The `coverage-report` task in `.evergreen/generated_configs/tasks.yml`:
+  - Depends on all test tasks tagged with `coverage` and then runs the `download and merge coverage` function.
+  - Produces a combined report that includes coverage from suites such as `default_sync`, `default_async`, `auth_aws`, `kms`, `ocsp`, etc., i.e., anything that ran with `COVERAGE` enabled and uploaded a per-task `.coverage` file.
 
 ---
 
