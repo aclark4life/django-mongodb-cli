@@ -29,6 +29,38 @@ The `.evergreen/generated_configs/*.yml` files that reference these shell script
 
 ## 1. High-level overview
 
+Key top-level scripts (GitHub):
+- [`.evergreen/combine-coverage.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/combine-coverage.sh)
+- [`.evergreen/just.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/just.sh)
+- [`.evergreen/remove-unimplemented-tests.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/remove-unimplemented-tests.sh)
+- [`.evergreen/resync-specs.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/resync-specs.sh)
+- [`.evergreen/run-mongodb-aws-ecs-test.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/run-mongodb-aws-ecs-test.sh)
+- [`.evergreen/run-mongodb-oidc-test.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/run-mongodb-oidc-test.sh)
+- [`.evergreen/run-tests.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/run-tests.sh)
+- [`.evergreen/setup-spawn-host.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/setup-spawn-host.sh)
+- [`.evergreen/sync-spawn-host.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/sync-spawn-host.sh)
+
+Key helper scripts under `.evergreen/scripts/` (GitHub):
+- [`.evergreen/scripts/check-import-time.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/check-import-time.sh)
+- [`.evergreen/scripts/cleanup.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/cleanup.sh)
+- [`.evergreen/scripts/configure-env.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/configure-env.sh)
+- [`.evergreen/scripts/create-spec-pr.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/create-spec-pr.sh)
+- [`.evergreen/scripts/download-and-merge-coverage.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/download-and-merge-coverage.sh)
+- [`.evergreen/scripts/generate-config.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/generate-config.sh)
+- [`.evergreen/scripts/install-dependencies.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/install-dependencies.sh)
+- [`.evergreen/scripts/perf-submission-setup.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/perf-submission-setup.sh)
+- [`.evergreen/scripts/perf-submission.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/perf-submission.sh)
+- [`.evergreen/scripts/resync-all-specs.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/resync-all-specs.sh)
+- [`.evergreen/scripts/run-getdata.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/run-getdata.sh)
+- [`.evergreen/scripts/run-server.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/run-server.sh)
+- [`.evergreen/scripts/setup-dev-env.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/setup-dev-env.sh)
+- [`.evergreen/scripts/setup-system.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/setup-system.sh)
+- [`.evergreen/scripts/setup-tests.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/setup-tests.sh)
+- [`.evergreen/scripts/setup-uv-python.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/setup-uv-python.sh)
+- [`.evergreen/scripts/stop-server.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/stop-server.sh)
+- [`.evergreen/scripts/teardown-tests.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/teardown-tests.sh)
+- [`.evergreen/scripts/upload-coverage-report.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/upload-coverage-report.sh)
+
 ```text
 Top-level entry scripts (Evergreen / humans)
 ────────────────────────────────────────────
