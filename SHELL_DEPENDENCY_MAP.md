@@ -487,3 +487,162 @@ scripts/teardown-tests.sh
 scripts/upload-coverage-report.sh
   -> (no .sh deps)
 ```
+
+---
+
+## 4. drivers-evergreen-tools `.evergreen` dependency map
+
+This section summarizes the main shell scripts under `src/drivers-evergreen-tools/.evergreen` that are used by `mongo-python-driver`, and how they depend on each other. Links point to the upstream
+`mongodb-labs/drivers-evergreen-tools` repository.
+
+### 4.1 Orchestration core
+
+Key scripts:
+- [`.evergreen/run-orchestration.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/run-orchestration.sh)
+- [`.evergreen/start-orchestration.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/start-orchestration.sh)
+- [`.evergreen/stop-orchestration.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/stop-orchestration.sh)
+- [`.evergreen/orchestration/setup.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/orchestration/setup.sh)
+- [`.evergreen/orchestration/drivers-orchestration`](https://github.com/mongodb-labs/drivers-evergreen-tools/tree/master/.evergreen/orchestration)
+- [`.evergreen/handle-paths.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/handle-paths.sh)
+
+```text
+run-orchestration.sh
+  -> handle-paths.sh
+  -> orchestration/setup.sh
+  -> orchestration/drivers-orchestration run
+
+start-orchestration.sh
+  -> handle-paths.sh
+  -> orchestration/setup.sh
+  -> orchestration/drivers-orchestration start
+
+stop-orchestration.sh
+  -> handle-paths.sh
+  -> orchestration/setup.sh
+  -> orchestration/drivers-orchestration stop
+```
+
+These are the entrypoints pymongo uses (indirectly) to start/stop MongoDB topologies via drivers-evergreen-tools.
+
+### 4.2 drivers-evergreen-tools setup / teardown
+
+Key scripts:
+- [`.evergreen/setup.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/setup.sh)
+- [`.evergreen/teardown.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/teardown.sh)
+- [`.evergreen/orchestration/setup.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/orchestration/setup.sh)
+- [`.evergreen/docker/teardown.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/docker/teardown.sh)
+- [`.evergreen/run-load-balancer.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/run-load-balancer.sh)
+- [`.evergreen/get-distro.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/get-distro.sh)
+- [`.evergreen/find-python3.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/find-python3.sh)
+
+```text
+setup.sh (drivers-tools)
+  -> handle-paths.sh
+  -> find-python3.sh
+  -> orchestration/setup.sh
+
+teardown.sh (drivers-tools)
+  -> handle-paths.sh
+  -> stop-orchestration.sh
+  -> docker/teardown.sh
+  -> run-load-balancer.sh stop
+
+run-load-balancer.sh
+  -> handle-paths.sh
+  -> (haproxy binary, no further .sh deps)
+
+get-distro.sh
+  -> (no .sh deps; prints DISTRO string)
+```
+
+`mongo-python-driver` calls these via its `.evergreen/scripts/setup-system.sh` and `.evergreen/scripts/stop-server.sh` wrappers.
+
+### 4.3 Secrets and CSFLE helpers
+
+Key scripts:
+- [`.evergreen/secrets_handling/setup-secrets.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/secrets_handling/setup-secrets.sh)
+- [`.evergreen/csfle/setup-secrets.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/csfle/setup-secrets.sh)
+- [`.evergreen/csfle/start-servers.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/csfle/start-servers.sh)
+- [`.evergreen/csfle/stop-servers.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/csfle/stop-servers.sh)
+- [`.evergreen/csfle/await-servers.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/csfle/await-servers.sh)
+- [`.evergreen/process-utils.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/process-utils.sh)
+
+```text
+secrets_handling/setup-secrets.sh
+  -> ../handle-paths.sh
+  -> ../auth_aws/activate-authawsvenv.sh
+  -> (python) setup_secrets.py
+
+csfle/setup-secrets.sh
+  -> ../handle-paths.sh
+  -> ../secrets_handling/setup-secrets.sh
+  -> ./activate-kmstlsvenv.sh
+  -> (python) setup_secrets.py
+
+csfle/start-servers.sh
+  -> ../handle-paths.sh
+  -> ./stop-servers.sh
+  -> ../process-utils.sh (killport helper)
+  -> ./activate-kmstlsvenv.sh
+  -> (python) kms_*_server.py, bottle.py fake_azure:imds
+  -> ./await-servers.sh
+```
+
+These scripts provide the FLE/KMS test infrastructure that pymongo consumes via `TEST_NAME=encryption` / `kms`.
+
+### 4.4 OCSP helpers
+
+Key scripts:
+- [`.evergreen/ocsp/setup.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/ocsp/setup.sh)
+- [`.evergreen/ocsp/teardown.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/ocsp/teardown.sh)
+- [`.evergreen/ocsp/activate-ocspvenv.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/ocsp/activate-ocspvenv.sh)
+
+```text
+ocsp/setup.sh
+  -> ../handle-paths.sh
+  -> teardown.sh
+  -> ./activate-ocspvenv.sh
+  -> (python) ocsp_mock.py
+
+ocsp/teardown.sh
+  -> ../handle-paths.sh
+  -> (kills ocsp_mock.py via pid file)
+```
+
+`mongo-python-driver` calls this via `setup_tests.py` when `TEST_NAME=ocsp`, passing `OCSP_ALGORITHM` and `SERVER_TYPE`.
+
+### 4.5 AWS auth and Atlas helpers
+
+Key scripts:
+- [`.evergreen/auth_aws/aws_setup.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/auth_aws/aws_setup.sh)
+- [`.evergreen/auth_aws/activate-authawsvenv.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/auth_aws/activate-authawsvenv.sh)
+- [`.evergreen/auth_aws/setup-secrets.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/auth_aws/setup-secrets.sh)
+- [`.evergreen/atlas/setup-atlas-cluster.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/atlas/setup-atlas-cluster.sh)
+- [`.evergreen/atlas/setup-secrets.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/atlas/setup-secrets.sh)
+- [`.evergreen/atlas/atlas-utils.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/atlas/atlas-utils.sh)
+- [`.evergreen/atlas/setup-variables.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/atlas/setup-variables.sh)
+- [`.evergreen/aws_lambda/run-deployed-lambda-aws-tests.sh`](https://github.com/mongodb-labs/drivers-evergreen-tools/blob/master/.evergreen/aws_lambda/run-deployed-lambda-aws-tests.sh)
+
+```text
+auth_aws/aws_setup.sh
+  -> ../handle-paths.sh
+  -> ./activate-authawsvenv.sh
+  -> (optionally) ./setup-secrets.sh
+  -> (python) aws_tester.py
+  -> source ./test-env.sh
+
+atlas/setup-atlas-cluster.sh
+  -> ../handle-paths.sh
+  -> ./secrets-export.sh (if present)
+  -> (optionally) ./setup-secrets.sh
+  -> ./setup-variables.sh
+  -> ./atlas-utils.sh
+  -> (curl via atlas-utils.sh to create/check Atlas deployment)
+
+aws_lambda/run-deployed-lambda-aws-tests.sh
+  -> ../handle-paths.sh
+  -> ../atlas/secrets-export.sh (if present)
+  -> (AWS CLI + `sam` CLI to build/deploy/invoke Lambda)
+```
+
+Pymongo uses these indirectly when `TEST_NAME` is `auth_aws`, `aws_lambda`, or when `TEST_NAME=search_index` (which also relies on Atlas helpers).
