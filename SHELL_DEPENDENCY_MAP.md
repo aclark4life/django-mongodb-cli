@@ -6,6 +6,27 @@ Arrows mean “calls or sources”.
 
 ---
 
+## 0. Evergreen generated configs
+
+The `.evergreen/generated_configs/*.yml` files that reference these shell scripts are **generated**, not hand-written:
+
+- Entry config: `.evergreen/config.yml` includes:
+  - `.evergreen/generated_configs/functions.yml`
+  - `.evergreen/generated_configs/tasks.yml`
+  - `.evergreen/generated_configs/variants.yml`
+- Generator:
+  - Shell entrypoint: `.evergreen/scripts/generate-config.sh`
+  - Python generator: `.evergreen/scripts/generate_config.py`
+- To regenerate configs after changing the generator:
+
+  ```bash
+  bash .evergreen/scripts/generate-config.sh
+  ```
+
+  This re-writes the three `generated_configs` files based on the logic in `generate_config.py` / `generate_config_utils.py`.
+
+---
+
 ## 1. High-level overview
 
 ```text
