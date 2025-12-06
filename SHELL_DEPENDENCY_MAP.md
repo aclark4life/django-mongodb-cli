@@ -10,13 +10,13 @@ Arrows mean “calls or sources”.
 
 The `.evergreen/generated_configs/*.yml` files that reference these shell scripts are **generated**, not hand-written:
 
-- Entry config: `.evergreen/config.yml` includes:
-  - `.evergreen/generated_configs/functions.yml`
-  - `.evergreen/generated_configs/tasks.yml`
-  - `.evergreen/generated_configs/variants.yml`
+- Entry config: [`.evergreen/config.yml`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/config.yml) includes:
+  - [`.evergreen/generated_configs/functions.yml`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/generated_configs/functions.yml)
+  - [`.evergreen/generated_configs/tasks.yml`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/generated_configs/tasks.yml)
+  - [`.evergreen/generated_configs/variants.yml`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/generated_configs/variants.yml)
 - Generator:
-  - Shell entrypoint: `.evergreen/scripts/generate-config.sh`
-  - Python generator: `.evergreen/scripts/generate_config.py`
+  - Shell entrypoint: [`.evergreen/scripts/generate-config.sh`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/generate-config.sh)
+  - Python generator: [`.evergreen/scripts/generate_config.py`](https://github.com/mongodb/mongo-python-driver/blob/master/.evergreen/scripts/generate_config.py)
 - To regenerate configs after changing the generator:
 
   ```bash
