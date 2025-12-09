@@ -6,10 +6,11 @@ import os
 
 
 client = MongoClient(
+    os.getenv("MONGODB_URI", "mongodb://localhost:27017"),
     auto_encryption_opts=AutoEncryptionOpts(
         key_vault_namespace="encryption.__keyVault",
         kms_providers={"local": {"key": os.urandom(96)}},
-    )
+    ),
 )
 
 codec_options = CodecOptions()
