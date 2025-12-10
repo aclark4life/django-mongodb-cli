@@ -707,33 +707,110 @@ class Repo:
 
 
 class Package(Repo):
-    def install_package(self, repo_name: str) -> None:
+    def _run_install_commands(
+        self,
+        repo_name: str,
+        commands: list[dict] | None,
+        base_path: Path,
+        env: dict[str, str],
+        phase: str,
+    ) -> bool:
+        """Run a list of additional install commands.
+
+        Each command is a TOML table under
+        ``[tool.django-mongodb-cli.install.<repo_name>.<phase>]`` with keys:
+
+        - ``args`` (required): list of strings, the command and its arguments
+        - ``cwd`` (optional): directory relative to the repo root to run in
         """
-        Install a package from the cloned repository.
+        if not commands:
+            return True
+
+        for idx, step in enumerate(commands, start=1):
+            args = step.get("args")
+            if not args:
+                self.warn(
+                    f"Skipping {phase} step {idx} for {repo_name}: missing 'args' list"
+                )
+                continue
+
+            rel_cwd = step.get("cwd")
+            cwd = base_path / rel_cwd if rel_cwd else base_path
+
+            self.info(
+                f"[{phase}] {repo_name}: running step {idx} in {cwd}: {' '.join(args)}"
+            )
+            if not self.run(args, cwd=cwd, env=env):
+                self.err(
+                    f"Aborting installation for {repo_name}: {phase} step {idx} failed."
+                )
+                return False
+
+        return True
+
+    def install_package(self, repo_name: str) -> None:
+        """Install a package from the cloned repository.
+
+        Supports optional pre/post install steps configured under
+        ``[tool.django-mongodb-cli.install.<repo_name>]``:
+
+        - ``install_dir``: subdirectory containing the Python package (e.g. "bindings/python")
+        - ``env_vars``: list of ``{name, value}`` entries added to the environment
+        - ``[[...pre_install]]``: extra commands to run *before* ``uv pip install``
+        - ``[[...post_install]]``: extra commands to run *after* ``uv pip install``
         """
         self.info(f"Installing {repo_name}")
-        path, _ = self.ensure_repo(repo_name)
-        if not path:
+
+        # Always resolve the repo root first; extra steps are relative to it.
+        repo_path, _ = self.ensure_repo(repo_name)
+        if not repo_path:
             return
 
-        install_dir = (
-            self.tool_cfg.get("install", {}).get(repo_name, {}).get("install_dir")
-        )
-        if install_dir:
-            path = Path(path / install_dir).resolve()
-            self.info(f"Using custom install directory: {path}")
+        install_cfg = self.tool_cfg.get("install", {}).get(repo_name, {}) or {}
 
+        # Where to run the editable install from (may be a subdirectory).
+        install_dir = install_cfg.get("install_dir")
+        install_path = repo_path
+        if install_dir:
+            install_path = (repo_path / install_dir).resolve()
+            self.info(f"Using custom install directory: {install_path}")
+
+        # Base environment for all steps (pre/uv/post).
         env = os.environ.copy()
-        env_vars_list = (
-            self.tool_cfg.get("install", {}).get(repo_name, {}).get("env_vars")
-        )
+        env_vars_list = install_cfg.get("env_vars")
         if env_vars_list:
             typer.echo("Setting environment variables for installation:")
             typer.echo(env_vars_list)
             env.update({item["name"]: str(item["value"]) for item in env_vars_list})
 
-        if self.run(["uv", "pip", "install", "-e", str(path)], env=env):
-            self.ok(f"Installed {repo_name}")
+        # Optional pre-install commands (e.g. CMake configuration/build).
+        pre_install = install_cfg.get("pre_install") or []
+        if not self._run_install_commands(
+            repo_name,
+            pre_install,
+            base_path=repo_path,
+            env=env,
+            phase="pre-install",
+        ):
+            return
+
+        # Editable install of the Python package itself.
+        if not self.run(["uv", "pip", "install", "-e", str(install_path)], env=env):
+            self.err(f"Failed to install {repo_name}")
+            return
+
+        # Optional post-install commands (e.g. finalization steps).
+        post_install = install_cfg.get("post_install") or []
+        if not self._run_install_commands(
+            repo_name,
+            post_install,
+            base_path=repo_path,
+            env=env,
+            phase="post-install",
+        ):
+            return
+
+        self.ok(f"Installed {repo_name}")
 
     def uninstall_package(self, repo_name: str) -> None:
         """
