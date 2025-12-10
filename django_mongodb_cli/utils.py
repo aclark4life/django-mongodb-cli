@@ -77,7 +77,14 @@ class Repo:
     ) -> tuple[Path | None, GitRepo | None]:
         path = self.get_repo_path(repo_name)
         if must_exist and not path.exists():
-            if not self.ctx.obj.get("quiet", True):
+            # ``ctx`` is only present when called from Typer commands; callers like
+            # ``Package()`` may not set it. Fall back to a safe default when
+            # missing instead of raising ``AttributeError``.
+            quiet = True
+            ctx = getattr(self, "ctx", None)
+            if ctx is not None and getattr(ctx, "obj", None) is not None:
+                quiet = ctx.obj.get("quiet", True)
+            if not quiet:
                 self.err(f"Repository '{repo_name}' not found at path: {path}")
             return None, None
         repo = self.get_repo(str(path)) if path.exists() else None
@@ -760,6 +767,10 @@ class Package(Repo):
         - ``[[...post_install]]``: extra commands to run *after* ``uv pip install``
         """
         self.info(f"Installing {repo_name}")
+
+        if repo_name not in self.map:
+            self.err(f"Repository '{repo_name}' not found in configuration.")
+            return
 
         # Always resolve the repo root first; extra steps are relative to it.
         repo_path, _ = self.ensure_repo(repo_name)
