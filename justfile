@@ -36,11 +36,14 @@ git-remote repo:
         dm repo remote django-mongodb-extensions add upstream git+ssh://git@github.com/mongodb-labs/django-mongodb-extensions; \
         dm repo remote django-mongodb-project add origin git+ssh://git@github.com/aclark4life/django-mongodb-project; \
         dm repo remote django-mongodb-project add upstream git+ssh://git@github.com/mongodb-labs/django-mongodb-project; \
-        dm repo set-default django-mongodb-extensions; \
+        dm repo set-default django-mongodb-app; \
         dm repo set-default django-mongodb-backend; \
+        dm repo set-default django-mongodb-extensions; \
+        dm repo set-default django-mongodb-project; \
+        dm repo fetch django-mongodb-app; \
         dm repo fetch django-mongodb-backend; \
         dm repo fetch django-mongodb-extensions; \
-        dm repo fetch django-mongodb-extensions; \
+        dm repo fetch django-mongodb-project; \
     elif [ "{{repo}}" = "pymongo" ]; then \
         echo "Setting remotes for mongo-python-driver"; \
         dm repo remote mongo-python-driver add origin git+ssh://git@github.com/aclark4life/mongo-python-driver; \
