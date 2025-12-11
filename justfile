@@ -7,8 +7,10 @@ default:
 git-clone repo:
     @if [ "{{repo}}" = "django" ]; then \
         dm repo clone django --install; \
+        dm repo clone django-mongodb-app; \
         dm repo clone django-mongodb-backend --install; \
         dm repo clone django-mongodb-extensions --install; \
+        dm repo clone django-mongodb-project; \
         dm repo clone drivers-evergreen-tools; \
         dm repo clone libmongocrypt --install; \
         dm repo clone mongo-python-driver --install; \
@@ -26,13 +28,17 @@ git-clone repo:
 git-remote repo:
     @if [ "{{repo}}" = "django" ]; then \
         echo "Setting remotes for django-mongodb-backend"; \
+        dm repo remote django-mongodb-app add origin git+ssh://git@github.com/aclark4life/django-mongodb-app; \
+        dm repo remote django-mongodb-app add upstream git+ssh://git@github.com/mongodb-labs/django-mongodb-app; \
         dm repo remote django-mongodb-backend add origin git+ssh://git@github.com/aclark4life/django-mongodb-backend; \
         dm repo remote django-mongodb-backend add upstream git+ssh://git@github.com/mongodb/django-mongodb-backend; \
-        dm repo set-default django-mongodb-backend; \
-        dm repo fetch django-mongodb-backend; \
         dm repo remote django-mongodb-extensions add origin git+ssh://git@github.com/aclark4life/django-mongodb-extensions; \
         dm repo remote django-mongodb-extensions add upstream git+ssh://git@github.com/mongodb-labs/django-mongodb-extensions; \
+        dm repo remote django-mongodb-project add origin git+ssh://git@github.com/aclark4life/django-mongodb-project; \
+        dm repo remote django-mongodb-project add upstream git+ssh://git@github.com/mongodb-labs/django-mongodb-project; \
         dm repo set-default django-mongodb-extensions; \
+        dm repo set-default django-mongodb-backend; \
+        dm repo fetch django-mongodb-backend; \
         dm repo fetch django-mongodb-extensions; \
         dm repo fetch django-mongodb-extensions; \
     elif [ "{{repo}}" = "pymongo" ]; then \
