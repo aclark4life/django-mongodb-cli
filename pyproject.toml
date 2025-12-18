@@ -46,7 +46,7 @@ packages = ["django_mongodb_cli", "demo"]
 
 [tool.django-mongodb-cli]
 repos = [
-    "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-5.2.x",
+    "django @ git+ssh://git@github.com/mongodb-forks/django@mongodb-6.0.x",
     "django-allauth @ git+ssh://git@github.com/pennersr/django-allauth@main",
     "django-debug-toolbar @ git+ssh://git@github.com/django-commons/django-debug-toolbar@main",
     "django-filter @ git+ssh://git@github.com/carltongibson/django-filter@main",
