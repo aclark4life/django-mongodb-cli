@@ -65,6 +65,7 @@ repos = [
     "langchain-mongodb @ git+ssh://git@github.com/langchain-ai/langchain-mongodb@main",
     "libmongocrypt @ git+ssh://git@github.com/mongodb-labs/libmongocrypt@master",
     "llm-mongogpt @ git+https://https://github.com/10gen/llm-mongogpt.git",
+    "llm-tools-mongodb @ git+https://https://github.com/aclark4life/llm-tools-mongodb.git",
     "mongo @ git+ssh://git@github.com/mongodb/mongo@master",
     "mongo-arrow @ git+ssh://git@github.com/mongodb-labs/mongo-arrow@main",
     "mongo-orchestration @ git+ssh://git@github.com/mongodb-labs/mongo-orchestration@master",
